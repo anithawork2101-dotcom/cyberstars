@@ -1,4 +1,4 @@
-Two teachers give you homework for Friday, both with the same authority. Which comes first? The one that came last usually does: it's the most recent news. In CSS, when two rules have **exactly the same score**, the one further down the file wins.
+Two teachers give you homework for Friday, and both have the same power. Which one counts? Usually the one that came last: it's the newest news. In CSS, when two rules have **exactly the same score**, the one further down the file wins.
 
 ## A tie
 
@@ -26,15 +26,15 @@ Two teachers give you homework for Friday, both with the same authority. Which c
 </table>
 ```
 
-Both selectors have an id, a class and a tag: the same score. A row that's only `winner` is gold, a row that's only `late` is gray. And a row with **both** classes, `class="winner late"`? It's a tie, so the later rule wins: gray.
+Both selectors have an id, a class and a tag: the same score. A row that is only `winner` is gold, and a row that is only `late` is gray. And a row with **both** classes, `class="winner late"`? It's a tie, so the later rule wins: gray.
 
-Swap the two rules in the file, and the same row turns gold.
+Change the order of the two rules in the file, and the same row turns gold.
 
 ## Order on purpose
 
-That's useful: put the general rules first and the special cases after them. The special case is further down, so it wins the ties. A stylesheet often reads like that: the whole page first, then parts, then exceptions.
+That's useful. Put the general rules first, and the special cases after them. The special case is further down, so it wins the ties. A style sheet often reads like that: the whole page first, then the parts, then the special cases.
 
-Remember, order only decides a **tie**. A rule with a higher score wins wherever it is in the file.
+Remember, the order only decides a **tie**. A rule with a higher score wins, wherever it is in the file.
 
 ## Break it on purpose
 
@@ -70,11 +70,10 @@ A late winner is now gold: the gray rule lost the tie. When a rule you know is r
 
 ## Mission: Delayed, and cancelled after all
 
-SL-103 is delayed. And a flight can be delayed first, then cancelled: then it must show as cancelled.
+**What you will see**: SL-103's row is amber. A row that is both delayed and cancelled looks like a cancelled one, not like a delayed one.
 
-**Example**: SL-103's row shows in amber. A row that is both delayed and cancelled shows like a cancelled one, not like a delayed one.
+SL-103 is delayed. And a flight can be delayed first, then cancelled. Then it must show as cancelled.
 
-- The row of the delayed flight has the class `delayed`, and its cells have a text color the flights that are neither delayed nor cancelled don't have.
-- A row with both classes, `delayed` and `cancelled`, shows its cells unlike a row that is only delayed.
-
-Psst, when two rules tie, the one further down wins :)
+- The row of the delayed flight has the class `delayed`.
+- Its cells have a text color that flights which are neither delayed nor cancelled don't have.
+- A row with both classes, `delayed` and `cancelled`, shows its cells differently from a row that is only delayed.
