@@ -4,7 +4,7 @@ You order a pizza on the phone. Do you stand still next to the door for 30 minut
 
 Until now, everything a script needed was already in the page. The tracker is different: its starships are on another computer, far away. The page has to ask for them over the internet, and the answer comes back later: in a tenth of a second on a good day, in a few seconds on a slow phone.
 
-What should the page do meanwhile?
+What should the page do while it waits?
 
 ## A page that waited would freeze
 
@@ -12,7 +12,7 @@ If the script stopped and waited for the answer, the whole page would wait with 
 
 So JavaScript never waits like that. It **asks**, then goes on at once with the next line. When the answer arrives, a function you gave it runs. Code that works like this is called **asynchronous**, or **async**: it doesn't happen in the order the lines are written.
 
-You've seen it already, with `setTimeout`:
+You have seen it already, with `setTimeout`:
 
 ```js
 console.log("Ordering a pizza");
@@ -30,21 +30,19 @@ Laying the table
 The pizza is here!
 ```
 
-"Laying the table" comes before the pizza, even though its line is the last one. `setTimeout` starts the timer and the script goes on. Two seconds later, the function runs.
+"Laying the table" comes before the pizza, even though its line is the last one. `setTimeout` starts the timer, and the script goes on. Two seconds later, the function runs.
 
-Asking a computer far away works the same way. In the next lessons you'll ask for real starships. For now, `setTimeout` plays the part of the slow answer.
+Asking a computer far away works the same way. In the next lessons, you will ask for real starships. For now, `setTimeout` plays the part of the slow answer.
 
 ## Break it on purpose
 
-Put the last `console.log` inside the function, after "The pizza is here!". Now the table is laid only after the pizza came: everything waits for the slow part. On a page, that would be the frozen page from above. Then write `setTimeout(..., 2)` with the 2 meaning seconds. The pizza comes at once: the time is in milliseconds.
+Put the last `console.log` inside the function, after "The pizza is here!". Now the table is laid only after the pizza came: everything waits for the slow part. On a page, that would be the frozen page from above. Then write `setTimeout(..., 2)`, with the 2 meaning seconds. The pizza comes at once: the time is in milliseconds.
 
 ---
 
 ## Mission: Asking the tracker
 
-The tracker will soon ask for real starships. First, see how the page goes on while it waits.
-
-**Example**: open the tracker, and the console shows the first two lines at once, the third one a second later:
+**What you will see**: open the tracker. The console shows the first two lines at once, and the third one a second later:
 
 ```text
 Asking for the starships
@@ -52,8 +50,9 @@ Waiting for the answer
 The starships answered
 ```
 
-- The tracker gets a script of its own, `tracker.js`, that runs once the page is read. No other page loads it.
-- When the page opens, it logs `Asking for the starships`. One second later, a timer logs `The starships answered`.
-- Right after setting the timer, without waiting for it, the page logs `Waiting for the answer`.
+The tracker will soon ask for real starships. First, see how the page goes on while it waits.
 
-Psst, `setTimeout` takes milliseconds: a second is 1000 :)
+- The tracker gets its own script, `tracker.js`, which runs after the page is read. No other page loads it.
+- When the page opens, it writes `Asking for the starships` in the console.
+- One second later, a timer writes `The starships answered`.
+- Right after setting the timer, without waiting for it, the page writes `Waiting for the answer`.
