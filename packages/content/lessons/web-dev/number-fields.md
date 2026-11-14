@@ -13,7 +13,7 @@ Two small arrows show in the box. Click them, or press the up and down arrow key
 
 ## `min` and `max`
 
-`min` is the smallest number the box takes, and `max` the biggest:
+`min` is the smallest number the box takes, and `max` is the biggest:
 
 ```html preview
 <form>
@@ -23,7 +23,7 @@ Two small arrows show in the box. Click them, or press the up and down arrow key
 </form>
 ```
 
-Click the arrows: they stop at 1 and at 4. Now type `9` and click **Buy**. Nothing is sent: the browser shows a small message that the number must be 4 or less. Type `3`, and it is sent:
+Click the arrows: they stop at 1 and at 4. Now type `9` and click **Buy**. Nothing is sent. The browser shows a small message that says the number must be 4 or less. Type `3`, and it is sent:
 
 ```text
 The form was sent: tickets=3
@@ -41,7 +41,7 @@ A number box takes whole numbers: 1, 2, 3. The `step` attribute changes how big 
 </form>
 ```
 
-Click the up arrow a few times: 0, 0.5, 1, 1.5. Type `1.2` and save: not sent, and the browser gives the two closest numbers it takes, 1 and 1.5.
+Click the up arrow a few times: 0, 0.5, 1, 1.5. Type `1.2` and save: it isn't sent, and the browser gives the two closest numbers it takes, 1 and 1.5.
 
 Without `step`, it's like `step="1"`: only whole numbers.
 
@@ -69,11 +69,11 @@ The browser had no limit to check, so the form sent 400 tickets. Every limit you
 
 ## Mission: How many bags?
 
+**What you will see**: a box like "Number of bags", with small arrows. Type `2` and send: the console's line ends with `bags=2`. Type `4` and send: nothing is sent.
+
 Your booking form asks for the name, the email and the phone. Each passenger may bring up to three bags, or none at all.
 
-**Example**: a box such as "Number of bags", with small arrows. Type `2` and send: the console's line ends with `bags=2`. Type `4` and send: nothing is sent.
-
-- A number box with the id `bags`, sent as `bags`, with a label that puts the cursor in it.
-- It takes whole bags only, from 0 to 3: the browser doesn't send 4, -1 or 1.5.
-
-Psst, a passenger with no bags at all is fine too :)
+- Add a number box with the id `bags`, sent as `bags`.
+- It has a label that puts the cursor in it.
+- It only takes whole bags, from 0 to 3.
+- The browser doesn't send 4, -1 or 1.5.
