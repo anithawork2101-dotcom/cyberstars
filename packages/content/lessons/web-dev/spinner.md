@@ -1,4 +1,4 @@
-You open a video on your phone, and for a second it isn't there yet. What do you see? A small circle that turns. It tells you: "I'm working on it, don't leave." Without it you would think the phone froze. Today you'll make that circle yourself, with only CSS.
+You open a video on your phone, and for a second it isn't there yet. What do you see? A small circle that turns. It tells you: "I'm working on it, don't leave." Without it, you would think the phone stopped working. Today, you will make that circle yourself, only with CSS. It's called a **spinner**.
 
 ## A ring with one colored side
 
@@ -6,7 +6,7 @@ A spinner is a ring that turns. You already know every piece of it:
 
 - a box as wide as it is tall,
 - a border all around it,
-- corners rounded so much that the box becomes a circle (`border-radius: 50%`),
+- corners so round that the box becomes a circle (`border-radius: 50%`),
 - and one side of the border in another color, so you can see it turn.
 
 ```css preview
@@ -30,7 +30,7 @@ A spinner is a ring that turns. You already know every piece of it:
 <div class="loader"></div>
 ```
 
-What do you see? A dark ring, with its top quarter in yellow. `border` gives all four sides the same border, then `border-top-color` changes only the color of the top one. The order matters: written before `border`, it would be overwritten.
+What do you see? A dark ring, with its top quarter in yellow. `border` gives all four sides the same border, then `border-top-color` only changes the color of the top one. The order matters: written before `border`, it would be replaced.
 
 ## Make it turn
 
@@ -64,13 +64,13 @@ Now the animation you know from the settings page: `@keyframes` with `rotate()`,
 <div class="loader"></div>
 ```
 
-The ring turns once every second, forever. A keyframes rule with only `to` starts from how the element looks anyway, here not turned at all.
+The ring turns once every second, forever. A keyframes rule with only `to` starts from how the element looks anyway: here, not turned at all.
 
-Change `linear` to `ease` and look again: now it slows down at the end of every turn, as if it got tired. That's why spinners use `linear`.
+Change `linear` to `ease`, and look again. Now it slows down at the end of every turn, as if it got tired. That's why spinners use `linear`.
 
 ## A spinner in a line of text
 
-A spinner often sits in front of a text, like "Loading...". A `<span>` fits in a line, but a span is inline: it ignores `width` and `height`. `display: inline-block` makes it a box that still sits in the line:
+A spinner often sits before a text, like "Loading...". A `<span>` fits in a line, but a span is inline: it ignores `width` and `height`. `display: inline-block` makes it a box that still sits in the line:
 
 ```css preview
 <style>
@@ -104,23 +104,24 @@ A spinner often sits in front of a text, like "Loading...". A `<span>` fits in a
 <!-- /show -->
 ```
 
-The span is only for the eye, so `aria-hidden="true"` keeps a screen reader from meeting it. The words "Loading the video..." already say everything.
+The span is only for the eye, so `aria-hidden="true"` keeps a screen reader away from it. The words "Loading the video..." already say everything.
 
 ## Break it on purpose
 
-Remove `display: inline-block;` from the last example. The spinner becomes a thin sliver: the span has no width and height of its own any more, only its borders. Then remove `border-radius: 50%;`: a square turns, which looks like a broken fan more than a spinner.
+Remove `display: inline-block;` from the last example. The spinner becomes a very thin line: the span has no width and height of its own any more, only its borders. Then remove `border-radius: 50%;`: a square turns, which looks more like a broken fan than a spinner.
 
 ---
 
 ## Mission: The tracker is working on it
 
-The tracker's loading line only says it's loading. A turning spinner in front of it would show that the page is really working.
+**What you will see**: the loading line now starts with a small ring, about as big as the letters, with one side in another color. It turns round and round before `Loading the starships...`.
 
-**Example**: the line now starts with a small ring, about as big as the letters, with one side in another color, that turns round and round in front of `Loading the starships...`.
+The tracker's loading line only says it's loading. A spinner before it would show that the page is really working.
 
-- In the paragraph `tracker-status`, before its text, an element with the class `spinner` that only the eye meets.
-- The spinner is a round ring, a border of at least 2px all around it, between 16px and 48px wide and tall, with one side in another color.
-- It turns round and round, and never stops on its own.
-- It stands still for a visitor who asks for less motion: on their device, or with Less on the settings page.
+- In the paragraph `tracker-status`, before its text, add an element with the class `spinner` that only the eye meets.
+- The spinner is a round ring, with a border of at least 2px all around it.
+- It's between 16px and 48px wide and tall, with one side in another color.
+- It turns round and round, and never stops by itself.
+- It stands still for a visitor who asks for less movement: on their device, or with Less on the settings page.
 
-Psst, a span ignores `width` and `height` until it is an inline block :)
+A span ignores `width` and `height` until it is an inline block.
