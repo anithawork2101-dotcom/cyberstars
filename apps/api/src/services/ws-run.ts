@@ -35,7 +35,15 @@ function parseCookie(cookieHeader: string | undefined, name: string): string | n
     const idx = part.indexOf('=');
     if (idx === -1) continue;
     if (part.slice(0, idx).trim() === name) {
-      return decodeURIComponent(part.slice(idx + 1).trim());
+      const value = part.slice(idx + 1).trim();
+      // A client can send any bytes. A value that isn't valid percent-encoding
+      // is kept as it came, as the HTTP side's cookie-parser does, so it can't
+      // throw in the middle of an upgrade.
+      try {
+        return decodeURIComponent(value);
+      } catch {
+        return value;
+      }
     }
   }
   return null;
@@ -261,9 +269,16 @@ export function attachRunWebSocket(server: HttpServer): { close: () => void } {
   const userWss = new WebSocketServer({ noServer: true, maxPayload: 1024 });
   runWss.on('connection', handleConnection);
   presenceWss.on('connection', handlePresenceConnection);
-  userWss.on('connection', handleUserConnection);
+  userWss.on('connection', (ws: WebSocket, req: IncomingMessage, userId: number | null) => {
+    // Its role check reads the database. A failure there must close this
+    // socket, not crash the whole server as an unhandled rejection.
+    handleUserConnection(ws, req, userId).catch((err) => {
+      console.error('[ws/user] connection failed:', err);
+      ws.close(1011, 'Internal error');
+    });
+  });
 
-  const onUpgrade = async (req: IncomingMessage, socket: Duplex, head: Buffer) => {
+  const upgrade = async (req: IncomingMessage, socket: Duplex, head: Buffer) => {
     // Until `ws` takes the socket over, nothing listens for its errors: a client
     // resetting the connection while its session is checked (ECONNRESET) would
     // crash the whole server. The socket is closed then, nothing else to do.
@@ -308,6 +323,15 @@ export function attachRunWebSocket(server: HttpServer): { close: () => void } {
       // `ws` closes the socket itself, and each handler's 'close' cleans up.
       ws.on('error', ignoreError);
       wss.emit('connection', ws, req, userId);
+    });
+  };
+  // Anything an upgrade throws, a request path `new URL` can't read, say, would
+  // reject with no one listening and crash the whole server. It ends this
+  // connection only.
+  const onUpgrade = (req: IncomingMessage, socket: Duplex, head: Buffer) => {
+    upgrade(req, socket, head).catch((err) => {
+      console.error('[ws] upgrade failed:', err);
+      socket.destroy();
     });
   };
   server.on('upgrade', onUpgrade);

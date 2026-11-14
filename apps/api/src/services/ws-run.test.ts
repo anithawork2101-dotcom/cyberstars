@@ -182,6 +182,13 @@ describe('resolveOwner', () => {
     });
   });
 
+  it('keeps a guestId that is not valid percent-encoding as it came', () => {
+    expect(resolveOwner(fakeReq('guestId=%E0'), null)).toEqual({
+      ownerKey: 'guest:%E0',
+      isGuest: true,
+    });
+  });
+
   it('falls back to IP when a guest has no guestId cookie yet', () => {
     expect(resolveOwner(fakeReq(undefined, '9.9.9.9'), null)).toEqual({
       ownerKey: 'ip:9.9.9.9',
@@ -647,6 +654,20 @@ describe('upgrade routing', () => {
     expect(() => socket.emit('error', new Error('write EPIPE'))).not.toThrow();
   });
 
+  it('outlives a guest cookie that is not valid percent-encoding', async () => {
+    await upgrade('/ws/presence', 'guestId=%E0');
+    expect(openSessionMock).toHaveBeenCalledWith('guest:%E0');
+  });
+
+  it('drops an upgrade whose path is not a URL, and goes on', async () => {
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const socket = fakeSocket();
+    await upgrade('//ws%2Frun', undefined, socket);
+    expect(socket.destroy).toHaveBeenCalled();
+    expect(mockRun).not.toHaveBeenCalled();
+    errSpy.mockRestore();
+  });
+
   it('outlives an oversized frame on each socket, which still cleans up on close', async () => {
     const tooBig = () => new RangeError('Max payload size exceeded');
 
@@ -685,6 +706,16 @@ describe('upgrade routing', () => {
       await vi.waitFor(() => expect(ws.close).toHaveBeenCalledWith(4404, 'Not found'));
       expect(getRoleMock).toHaveBeenCalledWith(7);
       expect(registerUserSocketMock).not.toHaveBeenCalled();
+    });
+
+    it('closes the socket when the role check fails, and goes on', async () => {
+      getRoleMock.mockRejectedValue(new Error('db down'));
+      const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const ws = await upgrade('/ws/user', `session=${token(7)}`);
+
+      await vi.waitFor(() => expect(ws.close).toHaveBeenCalledWith(1011, 'Internal error'));
+      expect(registerUserSocketMock).not.toHaveBeenCalled();
+      errSpy.mockRestore();
     });
 
     it('lets an admin through the preview gate', async () => {
