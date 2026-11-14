@@ -1,6 +1,6 @@
-Think of a labelled jar in the kitchen: "Sugar". You don't have to remember what's inside, the label tells you. And whenever a recipe says "a spoon of sugar", you know which jar to open.
+Think of a jar in the kitchen with a label on it: "Sugar". You don't have to remember what's inside, because the label tells you. And when a recipe says "a spoon of sugar", you know which jar to open.
 
-Programs keep values in labelled jars too. A label and its value is a **variable**.
+Programs keep values in jars with labels too. A label with its value is a **variable**.
 
 ## `const`
 
@@ -13,13 +13,13 @@ console.log("Members:", members);
 Members: 12
 ```
 
-`const` makes a name, `members`, for a value, `12`. From then on, wherever the script says `members`, it means 12. You write the name without quotes: `members` is the jar, `"members"` would be the word "members".
+`const` makes a name, `members`, for a value, `12`. After that, every time the script says `members`, it means 12. You write the name without quotes. `members` is the jar, and `"members"` would be the word "members".
 
-The `=` here doesn't mean "is equal to" like in maths. It means "put this value in that name".
+The `=` here doesn't mean "is equal to", like in math. It means "put this value in that name".
 
-## Why bother?
+## Why do it?
 
-A value used in several places only needs changing once:
+A value you use in several places only needs to change once:
 
 ```js
 const club = "Game Club";
@@ -27,7 +27,7 @@ console.log("Welcome to the", club);
 console.log("Thanks for visiting the", club);
 ```
 
-Rename the club in one line, and both messages change.
+Change the club's name in one line, and both messages change.
 
 ## A constant stays the same
 
@@ -42,34 +42,33 @@ members = 13;
 TypeError: Assignment to constant variable.
 ```
 
-For values that do change, there's another word, which you'll meet in the next lesson.
+For values that do change, there is another word. You will meet it in the next lesson.
 
 ## Break it on purpose
 
-Use the name before it's made:
+Use the name before you make it:
 
 ```js
 console.log(club);
 const club = "Game Club";
 ```
 
-An error: the script reads from top to bottom, and on line 1 the jar doesn't exist yet. Make the name first, use it after.
+You get an error. The script reads from top to bottom, and on line 1 the jar doesn't exist yet. Make the name first, and use it after.
 
 ---
 
 ## Mission: Station numbers
 
-The station has a few numbers that never change. Keep them in `crew.js`, each under a name.
-
-**Example**: when `crew.html` opens, the console shows, among its other lines:
+**What you will see**: when `crew.html` opens, the console shows these lines, with its other lines:
 
 ```text
 Minutes per orbit: 92
 Crew on board: 4
 ```
 
+The station has a few numbers that never change. Keep them in `crew.js`, each under a name.
+
 - The console shows `Minutes per orbit: 92`.
 - The console shows `Crew on board: 4`.
-- Each number is kept under a name with `const`, and the line that logs it uses the name.
-
-Psst, the name goes without quotes when you use it :)
+- Each number is kept under a name made with `const`.
+- The line that writes each number uses its name.
