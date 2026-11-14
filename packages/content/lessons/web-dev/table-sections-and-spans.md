@@ -1,4 +1,4 @@
-A report has a title on top, a header, the body of the text, and a footer at the bottom of the page. Long tables are built the same way, in sections, so the browser and screen readers know which part is which.
+A report has a title on top, a header, the main text, and a footer at the bottom of the page. Long tables are built the same way, in parts. Then the browser and screen readers know which part is which.
 
 ## A title: `<caption>`
 
@@ -33,24 +33,24 @@ A report has a title on top, a header, the body of the text, and a footer at the
 ```
 
 - `<thead>`: the header rows, with the labels;
-- `<tbody>`: the body, the rows of data;
+- `<tbody>`: the body, with the rows of data;
 - `<tfoot>`: the footer, for totals or a note.
 
-On the screen they look like plain rows. But the sections let CSS style each part, and JavaScript find the data rows alone: "every row of the `tbody`". When a long table is printed, the browser can repeat the `thead` on every page.
+On the screen, they look like plain rows. But with these sections, CSS can style each part, and JavaScript can find only the rows of data: "every row of the `tbody`". When you print a long table, the browser can show the `thead` again on every page.
 
 ## Break it on purpose
 
-Put the caption at the end of the table, after `</tbody>`. It may still show on top in some browsers, but the HTML is wrong, and a screen reader may read it last, after all the numbers. The caption always comes first.
+Put the caption at the end of the table, after `</tbody>`. Some browsers may still show it on top, but the HTML is wrong, and a screen reader may read it last, after all the numbers. The caption always comes first.
 
 ---
 
 ## Mission: Sections
 
+**What you will see**: a title above the table, like `Departures today`. Then the labels, the five flights, and a last row with a note like `All times in station time`.
+
 The flight table needs a title and its sections.
 
-**Example**: the table now shows a title above it, like `Departures today`, then the labels, the five flights, and a last row with a note like `All times in station time`.
-
 - `#flights` has a caption, as its title.
-- Its header row is in a `<thead>`, the five flights in a `<tbody>`, and a last row with a note of your own in a `<tfoot>`.
-
-Psst, the caption goes right after `<table>` :)
+- Its header row is in a `<thead>`.
+- The five flights are in a `<tbody>`.
+- A last row, with a note of your own, is in a `<tfoot>`.
