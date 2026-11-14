@@ -249,6 +249,10 @@ async function handleUserConnection(
   ws.on('close', () => unregisterUserSocket(userId, ws));
 }
 
+// What a client does wrong on its own connection: the connection ends, the
+// server goes on
+function ignoreError(): void {}
+
 export function attachRunWebSocket(server: HttpServer): { close: () => void } {
   // Two paths share one HTTP server, so route upgrades manually (a `ws` server
   // can't reliably co-host paths via the `path` option; frames get crossed).
@@ -260,6 +264,10 @@ export function attachRunWebSocket(server: HttpServer): { close: () => void } {
   userWss.on('connection', handleUserConnection);
 
   const onUpgrade = async (req: IncomingMessage, socket: Duplex, head: Buffer) => {
+    // Until `ws` takes the socket over, nothing listens for its errors: a client
+    // resetting the connection while its session is checked (ECONNRESET) would
+    // crash the whole server. The socket is closed then, nothing else to do.
+    socket.on('error', ignoreError);
     // A browser always says which website opened the socket. Refuse any site not
     // on the list before the upgrade, or a page elsewhere could run code or read
     // a student's feed from its visitors' browsers. A client with no Origin isn't
@@ -293,7 +301,14 @@ export function attachRunWebSocket(server: HttpServer): { close: () => void } {
       socket.destroy();
       return;
     }
-    wss.handleUpgrade(req, socket, head, (ws) => wss.emit('connection', ws, req, userId));
+    socket.off('error', ignoreError);
+    wss.handleUpgrade(req, socket, head, (ws) => {
+      // A frame past `maxPayload`, or one that breaks the protocol, is an
+      // 'error' on the socket, which would crash the whole server unheard.
+      // `ws` closes the socket itself, and each handler's 'close' cleans up.
+      ws.on('error', ignoreError);
+      wss.emit('connection', ws, req, userId);
+    });
   };
   server.on('upgrade', onUpgrade);
 
