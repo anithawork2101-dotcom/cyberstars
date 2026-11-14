@@ -1,4 +1,4 @@
-A teacher calls the register: not just the first pupil, but every one of them. `querySelector` finds only the **first** element that matches. To find them all, there's a second tool.
+A teacher reads the class list and calls every pupil, not only the first one. `querySelector` finds only the **first** element that matches. To find all of them, there is a second tool.
 
 ## `querySelectorAll`
 
@@ -11,9 +11,9 @@ console.log(members.length);
 4
 ```
 
-`querySelectorAll` takes a selector, just like `querySelector`, and gives you **every** element that matches, in the order they are on the page. `"#members li"` picks every `li` inside the element with the id `members`.
+`querySelectorAll` takes a selector, like `querySelector`. It gives you **every** element that matches, in their order on the page. `"#members li"` chooses every `li` inside the element with the id `members`.
 
-What you get works like an array: it has a `length`, and its items have indexes from 0:
+What you get works like an array. It has a `length`, and its items have indexes from 0:
 
 ```js
 console.log(members[0].textContent);
@@ -25,7 +25,7 @@ Sam Green
 
 ## Counting what's on the page
 
-That's the big use: the page itself says how many there are. Add a member to the HTML, and the script counts one more, without changing a line of JavaScript.
+This is the big use: the page itself says how many there are. Add a member to the HTML, and the script counts one more, without changing any JavaScript.
 
 ```js
 const count = document.querySelectorAll(".card").length;
@@ -34,7 +34,7 @@ document.querySelector("#total").textContent = `${count} cards`;
 
 ## Nothing found
 
-If nothing matches, you don't get `null` like `querySelector` gives: you get an empty list, with a `length` of 0.
+If nothing matches, you don't get `null`, like with `querySelector`. You get an empty list, with a `length` of 0.
 
 ## Break it on purpose
 
@@ -49,22 +49,20 @@ console.log(members.length);
 undefined
 ```
 
-`querySelector` gave just the first `li`, one element, which has no length. One letter short of `All`, and the count is gone.
+`querySelector` gave only the first `li`: one element, which has no length. Without `All`, the count is gone.
 
 ---
 
 ## Mission: Count the crew
 
-The number of crew members should come from the crew list itself, not from a number you type.
-
-**Example**: `crew.html` shows, under the crew list:
+**What you will see**: `crew.html` shows this line under the crew list:
 
 ```text
 4 crew members on board
 ```
 
-- Under the crew list, a paragraph with the id `roster`.
-- The script writes in it how many items the crew list has, followed by ` crew members on board`.
-- Add a name to the list, and the number changes too.
+The number of crew members should come from the crew list itself, not from a number you type.
 
-Psst, `All`, and only the items inside `#crew` :)
+- Under the crew list, add a paragraph with the id `roster`.
+- The script writes in it how many items the crew list has, then ` crew members on board`.
+- Add a name to the list, and the number changes too.
