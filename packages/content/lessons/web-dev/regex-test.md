@@ -1,4 +1,4 @@
-In a group chat, you can tell your phone: "let me know when someone writes my name". It doesn't matter if they write `Sofia`, `sofia` or `SOFIA`. The phone looks for a pattern, not for exactly one text. JavaScript has a small language for patterns like that.
+In a group chat, you can tell your phone: "tell me when someone writes my name". It doesn't matter if they write `Sofia`, `sofia` or `SOFIA`. The phone looks for a pattern, not for exactly one text. JavaScript has a small language for patterns like that.
 
 ## A regular expression
 
@@ -46,7 +46,7 @@ So `/pizza/i.test(message)` does the same job as `message.toLowerCase().includes
 
 ## In a page
 
-A coach reads the team's messages and wants to see at once which ones are about the next game:
+A coach reads the team's messages, and wants to see at once which ones are about the next game:
 
 ```html preview
 <label for="message">Message</label>
@@ -68,27 +68,26 @@ A coach reads the team's messages and wants to see at once which ones are about 
 
 Type `Is the Game at 5?`: the page says `About the game: yes`. Delete it: `no`.
 
-So far, a pattern is only fixed letters, and `includes` could do the same. Next lesson, a pattern learns to say things like "any digit" or "exactly four of them", and that's where regex really helps.
+For now, a pattern is only fixed letters, and `includes` could do the same. In the next lesson, a pattern learns to say things like "any digit" or "exactly four of them", and that's where regex really helps.
 
 ## Break it on purpose
 
-Test the box instead of what is in it:
+Test the box, not what is in it:
 
 ```js
 if (/game/i.test(message)) {
 ```
 
-Type `Game today`: the page still says `no`. No error. `test` turns what it gets into a text first, and the box becomes `[object HTMLInputElement]`, which has no `game` in it. Test the text: `message.value`.
+Type `Game today`: the page still says `no`, with no error. `test` first turns what it gets into a text, and the box becomes `[object HTMLInputElement]`, which has no `game` in it. Test the text: `message.value`.
 
 ---
 
 ## Mission: Help at the gate
 
-Some passengers write in their notes that they use a wheelchair. The crew at the gate wants to see it on the pass, to have help ready.
+**What you will see**: when the page opens, the pass says `Help at the gate: no`. Type `I use a Wheelchair` in the notes box, and it says `Help at the gate: yes`.
 
-**Example**: when the page opens, the pass says `Help at the gate: no`. Type `I use a Wheelchair` in the notes box: it says `Help at the gate: yes`.
+Some passengers write in their notes that they use a wheelchair. The crew at the gate wants to see it on the pass, so they can have help ready.
 
-- On the pass, an element with the id `pass-help` says `yes` while the notes have the word `wheelchair` in them, written with any capitals, and `no` otherwise, as the notes are typed.
+- On the pass, an element with the id `pass-help` says `yes` while the notes have the word `wheelchair` in them, with any capitals.
+- If not, it says `no`, while the notes are typed.
 - It says `no` when the page opens, and after Escape empties the notes.
-
-Psst, test what is in the box, not the box :)

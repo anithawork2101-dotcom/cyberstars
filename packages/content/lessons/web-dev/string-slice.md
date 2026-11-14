@@ -1,8 +1,8 @@
-When a contact in your phone has no photo, the phone shows a circle with letters in it: Sofia Lind becomes `SL`. The phone takes the first letter of the name, finds the space, and takes the letter after it. A script can cut a text into pieces the same way.
+When a contact on your phone has no photo, the phone shows a circle with letters in it: Sofia Lind becomes `SL`. The phone takes the first letter of the name, finds the space, and takes the letter after it. A script can cut a text into pieces in the same way.
 
 ## Each letter has a place
 
-Each letter of a text has a number, its place, starting from `0`, as the items of an array do. Dots, spaces and digits count as letters here too:
+Each letter of a text has a number, its place, starting from `0`, like the items of an array. Dots, spaces and digits count as letters here too:
 
 ```text
  b  e  a  c  h  .  p  n  g
@@ -26,11 +26,11 @@ b
 png
 ```
 
-`slice(0, 5)` takes the places 0, 1, 2, 3 and 4: five letters. `slice(0, 1)` takes only the first one. With no `end`, `slice(6)` goes to the end of the text. Like `trim()`, `slice` doesn't change the text: it gives back a new one.
+`slice(0, 5)` takes the places 0, 1, 2, 3 and 4: five letters. `slice(0, 1)` only takes the first one. With no `end`, `slice(6)` goes to the end of the text. Like `trim()`, `slice` doesn't change the text: it gives back a new one.
 
 ## `indexOf`: where is it?
 
-`indexOf` gives the place where a piece first shows up in the text:
+`indexOf` gives the place where a piece first shows in the text:
 
 ```js
 const file = "beach.png";
@@ -43,7 +43,7 @@ console.log(file.indexOf("x"));
 -1
 ```
 
-The dot is at place 5. There's no `x` in the text, so `indexOf` gives `-1`: "not found".
+The dot is at place 5. There is no `x` in the text, so `indexOf` gives `-1`: "not found".
 
 ## Together
 
@@ -80,20 +80,22 @@ Forget the `+ 1`:
 document.querySelector("#type").textContent = file.value.slice(dot);
 ```
 
-Type `beach.png`: the page says `Type: .png`. The piece starts at the dot itself. Being one place off is the most common slip with `slice`: count the places on paper when you're not sure.
+Type `beach.png`: the page says `Type: .png`. The piece starts at the dot itself. Being one place wrong is the most common mistake with `slice`. When you're not sure, count the places on paper.
 
-And forget the `-1` check: type `notes`. The name says `note`, without its last letter. `slice(0, -1)` reads `-1` as "one place from the end", so it cuts the last letter.
+Now forget the `-1` check, and type `notes`. The name says `note`, without its last letter. `slice(0, -1)` reads `-1` as "one place from the end", so it cuts the last letter.
 
 ---
 
 ## Mission: Initials
 
-The crew at the gate writes each passenger's initials on their bags. Your pass can show them.
+**What you will see**: type `Ida Moreau` in the name box. The pass says `Initials: IM`. Type `Noah` alone: `Initials: N`.
 
-**Example**: type `Ida Moreau` in the name box. The pass says `Initials: IM`. Type `Noah` alone: `Initials: N`.
+The crew at the gate writes each passenger's **initials**, the first letters of their name, on their bags. Your pass can show them.
 
-- On the pass, an element with the id `pass-initials` shows the first letter of the name and the first letter after its first space, as the name is typed: `Clara Diaz Lopez` gives `CD`.
-- A name of one word gives its first letter only. With no name, `#pass-initials` is empty.
-- Spaces at the start and the end of the name don't count, as on the rest of the pass.
+- On the pass, an element with the id `pass-initials` shows the first letter of the name, and the first letter after its first space, while the name is typed.
+- `Clara Diaz Lopez` gives `CD`.
+- A name of one word gives only its first letter.
+- With no name, `#pass-initials` is empty.
+- Spaces at the start and the end of the name don't count, like on the rest of the pass.
 
-Psst, the letter after the space is one place after it :)
+The letter after the space is one place after it.
