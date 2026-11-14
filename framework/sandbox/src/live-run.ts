@@ -1,6 +1,6 @@
 import { spawn, execFile } from 'child_process';
 import { AppError } from '@cyberstars-framework/server-kit/errors';
-import { killLeftovers } from './docker.js';
+import { dockerExec, killLeftovers } from './docker.js';
 import type { Pool } from './pool.js';
 import type { SlotOptions } from './slots.js';
 
@@ -36,19 +36,8 @@ const EARLY_INPUT_MAX = 64 * 1024;
 // Write the user's source into the run container, wiping any leftover files from
 // the owner's previous run first so a stale binary/output can't resurface.
 function writeSource(containerId: string, sourceFile: string, code: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const script = `rm -rf /work/* 2>/dev/null; cat > /work/${sourceFile}`;
-    const proc = execFile(
-      'docker',
-      ['exec', '-i', containerId, 'sh', '-c', script],
-      { timeout: 10_000 },
-      (err, _stdout, stderr) => (err ? reject(new Error(stderr || err.message)) : resolve()),
-    );
-    // A container gone meanwhile ends the exec before it reads the code (EPIPE);
-    // the callback above reports it, and the write's error must not crash us
-    proc.stdin?.on('error', () => {});
-    proc.stdin?.end(code);
-  });
+  const script = `rm -rf /work/* 2>/dev/null; cat > /work/${sourceFile}`;
+  return dockerExec(['exec', '-i', containerId, 'sh', '-c', script], 10_000, code).then(() => {});
 }
 
 function compile(containerId: string, compileCmd: string): Promise<string | null> {
