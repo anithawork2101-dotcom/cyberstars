@@ -32,10 +32,13 @@ cyberstars/
 │       ├── curriculum.ts          # Every course and its lessons, in order
 │       ├── paths.ts               # courseDir: a course key (and language) to its folder
 │       ├── visuals.ts             # Puts a multi-language course's named visuals into its lessons
-│       ├── lessons/               # Courses: python (60), c (47), java (49), linux (55), and
-│       │                          #   trees-graphs (12, Beta) in python/, java/, c/ plus visuals/
+│       ├── lessons/               # Courses: python (60), c (47), java (49), linux (55),
+│       │                          #   trees-graphs (12, Beta) in python/, java/, c/ plus visuals/,
+│       │                          #   and web-dev (375, a preview feature)
 │       ├── algorithms/            # Challenge sets: python (20), java (20), c (32), and
 │       │                          #   trees-graphs (16, Beta) in python/, java/, c/
+│       ├── projects/              # Projects: python, java, c and linux, 10 each (a preview
+│       │                          #   feature), catalogued in packages/shared/projects.ts
 │       ├── variants/              # Accepted and rejected solutions per tested lesson
 │       └── scripts/               # Static-content generator
 │
@@ -95,6 +98,21 @@ Not API routes: static files generated from `packages/content/` at build time in
 | `/lessons/:courseKey/:language/...` | The same per language on a multi-language course |
 | `/almanac/...`                      | Almanac cards and articles, with `ro/` copies    |
 
+### Web lessons and the practice API
+
+The Web Development course is a preview feature: on production only admins and the founder open it.
+
+| Method | Endpoint                                    | Auth     | Description                                                                            |
+| ------ | ------------------------------------------- | -------- | -------------------------------------------------------------------------------------- |
+| GET    | `/api/lessons/:courseKey/:lessonSlug/start` | Optional | The site a web lesson starts from: the course's, or the student's last passing one     |
+| GET    | `/api/practice/starships`                   | No       | The practice data a student's page loads with `fetch` (`?wait=2` holds it two seconds) |
+| GET    | `/api/practice/starships/:id`               | No       | One starship, or a 404 that says why                                                   |
+| POST   | `/api/practice/starships`                   | No       | Report a starship: checked and answered with an id, never stored                       |
+| GET    | `/api/practice/crew`                        | No       | More practice data                                                                     |
+| GET    | `/api/practice/broken`                      | No       | Always a 500, for the lessons about errors                                             |
+
+The practice API answers any origin, with no cookies: it is mounted before the site's CORS and guest cookie, and reaches no other route.
+
 ### Code execution
 
 | Method | Endpoint                   | Auth  | Description                                                       |
@@ -134,6 +152,19 @@ The judge runs the student's code in the owner's container and the reference sol
 | POST   | `/api/terminal/exec`        | Owner | Run a command (30/min)                                 |
 | POST   | `/api/terminal/check`       | Owner | Check the sandbox's state; a pass completes the lesson |
 | DELETE | `/api/terminal/session/:id` | Owner | Close the terminal                                     |
+
+A Linux project opens the same terminal, with `{ project: <slug> }` in the session request, and is checked with `POST /api/terminal/project-check` (`{ sessionId, project }`), whose pass finishes it for a student.
+
+### Projects
+
+A preview feature: on production only admins and the founder open it.
+
+| Method | Endpoint                                  | Auth  | Description                                                       |
+| ------ | ----------------------------------------- | ----- | ----------------------------------------------------------------- |
+| POST   | `/api/projects/:language/:slug/run`       | Owner | Run the project's tests; a pass finishes it for a student. 10/min |
+| GET    | `/api/projects/checks`                    | Yes   | The steps the student ticked                                      |
+| PUT    | `/api/projects/:language/:slug/steps/:id` | Yes   | Tick or untick a step (only the student's note, never graded)     |
+| GET    | `/api/projects/completions`               | Yes   | The projects the student finished                                 |
 
 ### Forum
 
@@ -254,13 +285,15 @@ Visits keep no IP and no guest id: a visitor is a hash of the day's salt, the IP
 
 Defined in [`apps/api/prisma/schema.prisma`](apps/api/prisma/schema.prisma), camelCase in TypeScript mapped to snake_case columns.
 
-- **User**, **Curriculum**, **Lesson**: accounts, courses and lesson metadata (the content stays in files)
+- **User**, **Session**, **Curriculum**, **Lesson**: accounts, signed-in browsers (the SHA-256 of each token's secret, never the secret), courses and lesson metadata (the content stays in files)
 - **UserLessonProgress**, **UserSavedCode**, **LessonSubmission**, **DailyPick**: completion, saved code, judge attempts (the newest 20 per lesson) and the daily picks
 - **ForumCategory**, **ForumThread**, **ForumPost**, **ForumReaction**, **ForumThreadView**: the forum
-- **SupportTicket**, **SupportMessage**, **Notification**, **Announcement**, **Poll**, **PollOption**, **PollVoter**, **PollAnswer**: support, the bell, and the announcements and polls sent
+- **ProjectStepCheck**, **ProjectCompletion**: the project steps a student ticked, and the projects their tests passed
+- **SupportTicket**, **SupportMessage**, **Notification**, **Announcement**, **Poll**, **PollOption**, **PollVoter**, **PollViewer**, **PollAnswer**: support, the bell, and the announcements and polls sent (a voter and a viewer are kept only so each account counts once)
 - **Conversation**, **DirectMessage**, **DmReaction**, **Connection**: messages and connections
 - **TutorConversation**, **TutorMessage**, **UsageWindow**: the tutor's conversations and the usage limits
 - **LaniakeaPlanet**: a student's planet: level, last pass, questions seen and the test going on
+- **LaniakeaPass**: each test that moved a planet, its conquest or a recap, for the activity heatmap and the streak
 - **LaniakeaPlayer**: when a student last opened the game and was last told of open recaps
 - **LaniakeaQuestionStat**: how often each Laniakea question was answered, missed and each option picked, without who answered
 - **PageVisit**, **VisitSalt**, **VisitTotal**, **GuestVisit**, **VisitStep**: visitor counts
@@ -271,7 +304,7 @@ Code runs in Docker on the server, never in the browser: `python:3.10-slim`, `gc
 
 - **One container per owner**, on the language they last ran (a Java lesson and a Java challenge share it), reused across runs and swapped on a language change, dropped after 15 minutes idle or when the global cap (`CODE_MAX_CONTAINERS`) needs room. The sandbox package (`framework/sandbox`) does it; the app creates it once with its languages, label and limits (`apps/api/src/services/sandbox.ts`, limits in `config/sandbox.ts`).
 - **Locked down**: no network, 128 MB, 64 processes, no capabilities, a read-only root, an unprivileged uid (`SANDBOX_UID`), and tmpfs for `/work` and `/tmp`. Docker always gets an argument array, never a shell string.
-- **Limits**: 20 s per run (restarting with each line of input), 1 MB of output, 10 runs a minute per owner, and at most `SANDBOX_MAX_BUSY` sandboxes busy at once across the server; past it a run waits up to 30 s and the student sees a notice. Guests also get 10 runs in all and share limits per IP.
+- **Limits**: 20 s per run (restarting with each line of input), 1 MB of output and 1 MB of input, 10 runs a minute per owner, and at most `SANDBOX_MAX_BUSY` sandboxes busy at once across the server; past it a run waits up to 30 s and the student sees a notice. Guests also get 10 runs in all and share limits per IP.
 - **Cleanup**: a timeout or an abandoned run destroys the container; a normal exit kills what the program left behind and keeps it. The server removes every labelled sandbox when it starts.
 
 To add a language, describe it as a `LanguageRuntime` (the package ships Python, Java and C in `framework/sandbox/src/languages/`) and add it to `LANGUAGES` in `apps/api/src/runtimes/registry.ts`, where `languageOf` also maps a course key to its language (`algo-java` to `java`).
