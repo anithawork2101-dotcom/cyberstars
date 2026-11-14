@@ -1,19 +1,19 @@
-On a name badge at a party, someone writes your first name, a space, and your last name. Two pieces of text stuck together. Programs stick text together all the time: a greeting and a name, a label and a number.
+On a name badge at a party, someone writes your first name, a space, and your last name: two pieces of text put together. Programs put text together all the time: a greeting and a name, a label and a number.
 
 ## Strings
 
-A piece of text in JavaScript is a **string**, written in quotes, double or single:
+A piece of text in JavaScript is a **string**. You write it in quotes, double or single:
 
 ```js
 const firstName = "Sam";
 const lastName = 'Green';
 ```
 
-Both kinds work the same. Just start and end with the same kind.
+Both kinds work the same. Only start and end with the same kind.
 
 ## Joining with `+`
 
-`+` between two strings sticks them together into one:
+`+` between two strings joins them into one:
 
 ```js
 const fullName = firstName + " " + lastName;
@@ -24,9 +24,9 @@ console.log(fullName);
 Sam Green
 ```
 
-Notice the `" "` in the middle: a string with just a space in it. Without it, you'd get `SamGreen`. JavaScript never adds a space by itself.
+Look at the `" "` in the middle: a string with only a space in it. Without it, you would get `SamGreen`. JavaScript never adds a space by itself.
 
-You can join a label and a variable the same way:
+You can join a label and a variable in the same way:
 
 ```js
 console.log("Member: " + fullName);
@@ -52,7 +52,7 @@ Table 4
 22
 ```
 
-With a string on either side, `+` joins: the number becomes text and is stuck on. With two numbers, it adds. `"2" + "2"` is two strings, so you get `22`, not 4. Keep an eye on quotes.
+With a string on one side, `+` joins: the number becomes text and is added at the end. With two numbers, it adds. `"2" + "2"` is two strings, so you get `22`, not 4. Watch the quotes.
 
 ## Break it on purpose
 
@@ -66,21 +66,20 @@ console.log("Member:" + fullName);
 Member:Sam Green
 ```
 
-Squashed together. Spaces only appear where you put them, inside the quotes.
+The words touch. Spaces only show where you put them, inside the quotes.
 
 ---
 
 ## Mission: A new arrival
 
-A new crew member arrives: her first name is `Lena` and her last name is `Park`.
-
-**Example**: when `crew.html` opens, the console shows, among its other lines:
+**What you will see**: when `crew.html` opens, the console shows this line, with its other lines:
 
 ```text
 New arrival: Lena Park
 ```
 
-- In `crew.js`, her first name and her last name are kept under two names.
-- The console shows `New arrival: Lena Park`, joined from those two with `+`.
+A new crew member arrives. Her first name is `Lena` and her last name is `Park`.
 
-Psst, a space is a string too: `" "` :)
+- In `crew.js`, her first name and her last name are kept under two names.
+- The console shows `New arrival: Lena Park`.
+- That line is joined from those two names with `+`.
