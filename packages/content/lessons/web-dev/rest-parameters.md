@@ -1,8 +1,8 @@
-A birthday invitation says: "Bring whoever you like". One guest comes alone, another with three friends. The host doesn't need to know the number in advance: they just open the door to everyone who comes. Some functions are like that host.
+A birthday invitation says: "Bring anyone you like". One guest comes alone, another one comes with three friends. The host doesn't need to know the number before: they just open the door to everyone who comes. Some functions are like that host.
 
 ## Any number of values
 
-`console.log` takes one value, two, ten: `console.log("a", "b", "c")`. Your own functions so far take a fixed number of parameters. To take any number, write three dots in front of the **last** parameter:
+`console.log` takes one value, two, ten: `console.log("a", "b", "c")`. Your own functions until now take a fixed number of parameters. To take any number, write three dots before the **last** parameter:
 
 ```js
 function greetAll(...names) {
@@ -24,7 +24,7 @@ greetAll();
 
 ## Spread or rest?
 
-The same three dots, two jobs:
+The same three dots have two jobs:
 
 - In a **call**, they spread an array into separate values: `greetAll(...pupils)`.
 - In a **parameter**, they collect separate values into an array: `function greetAll(...names)`.
@@ -38,15 +38,13 @@ greetAll(...pupils);
 
 ## Break it on purpose
 
-Call `greetAll(pupils)` without the dots. `names` is an array with one item, which is itself the whole array: `[[Mia, Ben]]`. Then write the function as `function greetAll(names)` without dots, and call `greetAll("Mia", "Ben")`: `names` is only "Mia", and "Ben" is lost.
+Call `greetAll(pupils)` without the dots. `names` is an array with one item, which is itself the whole array: `[[Mia, Ben]]`. Then write the function as `function greetAll(names)` without dots, and call `greetAll("Mia", "Ben")`. `names` is only "Mia", and "Ben" is lost.
 
 ---
 
 ## Mission: Docked now
 
-The crew wants one line that names every starship docked at the station right now.
-
-**Example**: under the closest starships, a line:
+**What you will see**: under the closest starships, a line:
 
 ```text
 Docked now: Aurora, Silver Gull
@@ -54,7 +52,12 @@ Docked now: Aurora, Silver Gull
 
 When no starship is docked, it says `Docked now: none`.
 
-- In `tracker.js`, a function `listNames` takes any number of names, and returns them joined with `, `, or `none` when it got no name at all.
-- Between `#closest` and the list `ships`, a paragraph with the id `docked-now`. Once the starships are in, `loadShips` writes in it `Docked now: ` and what `listNames` gives for the names of the docked starships, spread into the call.
+The crew wants one line that names every starship docked at the station right now.
 
-Psst, the dots in the parameter collect, the dots in the call spread :)
+- In `tracker.js`, a function `listNames` takes any number of names.
+- It returns them joined with `, `, or `none` when it got no name at all.
+- Between `#closest` and the list `ships`, add a paragraph with the id `docked-now`.
+- When the starships are in, `loadShips` writes in it `Docked now: `, then what `listNames` gives for the names of the docked starships.
+- Those names are spread into the call.
+
+The dots in the parameter collect, and the dots in the call spread.
