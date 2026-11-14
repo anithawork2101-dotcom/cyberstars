@@ -1,4 +1,4 @@
-Photos hung edge to edge on a wall look like one big messy picture. Leave some empty wall between them and each one stands on its own. That empty wall is the last layer of the box: the **margin**.
+When photos hang on a wall with no space between them, they look like one big, messy picture. Leave some empty wall between them, and each one stands on its own. That empty wall is the last layer of the box: the **margin**.
 
 ## `margin`
 
@@ -29,25 +29,25 @@ Photos hung edge to edge on a wall look like one big messy picture. Leave some e
 </div>
 ```
 
-Now there are 24 pixels of empty space around each member box, on every side. Two boxes one under the other stand apart.
+Now there are 24 pixels of empty space around each member box, on every side. Two boxes, one under the other, don't touch any more.
 
 The four layers, from the inside out:
 
 1. the **content**: the text or picture itself;
-2. the **padding**: room inside, in the box's background;
+2. the **padding**: space inside, with the box's background;
 3. the **border**: the frame;
-4. the **margin**: empty space outside, always see-through.
+4. the **margin**: empty space outside. You can always see through it.
 
 ## Padding or margin?
 
 Both make space, so which one do you need? Ask: should the space have the box's color?
 
-- Room between the text and the box's own edge: **padding**, inside, colored.
-- Room between this box and the next: **margin**, outside, empty.
+- Space between the text and the box's own edge: **padding**, inside, with color.
+- Space between this box and the next: **margin**, outside, empty.
 
 ## Break it on purpose
 
-Try to separate the cards with padding instead:
+Try to move the cards apart with padding instead:
 
 ```css preview
 <style>
@@ -76,16 +76,14 @@ Try to separate the cards with padding instead:
 </div>
 ```
 
-The cards get bigger, with lots of blue around the text, but they still touch each other. Padding is inside the box: it can never push two boxes apart.
+The cards get bigger, with a lot of blue around the text, but they still touch. Padding is inside the box, so it can never push two boxes apart.
 
 ---
 
 ## Mission: Room between the cards
 
-Your crew cards are framed, but they're stacked right on top of each other.
+**What you will see**: a clear gap between each card and the next, where you see the page's night blue.
 
-**Example**: there's a clear gap between each card and the next, showing the page's night blue.
+Your crew cards have a frame, but they sit right on top of each other.
 
 - There are at least 16 pixels between each card and the next one.
-
-Psst, the space between boxes is outside them :)
