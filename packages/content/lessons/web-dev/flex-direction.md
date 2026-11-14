@@ -4,7 +4,7 @@ Books on a shelf stand side by side. Books in a pile on your desk lie one on top
 
 `flex-direction` says which way the items of a flex container go:
 
-- `row`: side by side, from left to right. This is what you get when you don't write it.
+- `row`: side by side, from left to right. You get this when you don't write it.
 - `column`: one under the other, from top to bottom.
 
 ```css preview
@@ -39,7 +39,7 @@ The three players stand one under the other. Change `column` to `row`, and they 
 
 ## Why a column?
 
-Paragraphs stand one under the other anyway. So a column of paragraphs looks the same as no flex at all. A column matters for elements that would sit side by side on their own, like links. In a column, each one takes a line of its own:
+Paragraphs stand one under the other anyway. So a column of paragraphs looks the same as no flex at all. A column matters for elements that would sit side by side by themselves, like links. In a column, each one takes its own line:
 
 ```css preview
 <style>
@@ -68,11 +68,11 @@ Paragraphs stand one under the other anyway. So a column of paragraphs looks the
 </nav>
 ```
 
-The shop's three links stand one under the other, like the menu of an app on a phone. Remove `flex-direction: column` and they sit side by side, on one line.
+The shop's three links stand one under the other, like the menu of an app on a phone. Remove `flex-direction: column`, and they sit side by side, on one line.
 
 ## Each container has its own direction
 
-A row can hold boxes whose own parts stand one under the other. `flex-direction` changes only the container's own items:
+A row can hold boxes whose own parts stand one under the other. `flex-direction` only changes the container's own items:
 
 ```css preview
 <style>
@@ -111,7 +111,7 @@ A row can hold boxes whose own parts stand one under the other. `flex-direction`
 </div>
 ```
 
-The players stand side by side: they are the items of `.team`. Inside each player, the name is above the position, as a heading and a paragraph always are, since `.player` is not a flex container.
+The players stand side by side: they are the items of `.team`. Inside each player, the name is above the position, like a heading and a paragraph always are, because `.player` isn't a flex container.
 
 ## Break it on purpose
 
@@ -154,18 +154,16 @@ Make each player a flex container too:
 </div>
 ```
 
-Now inside each player, the name and the position stand side by side. A flex container is a row unless you say otherwise. A box whose parts must stay one under the other doesn't need to be a flex container. If it is one, give it `flex-direction: column`.
+Now, inside each player, the name and the position stand side by side. A flex container is a row unless you say something else. A box whose parts must stay one under the other doesn't need to be a flex container. If it is one, give it `flex-direction: column`.
 
 ---
 
 ## Mission: Cards in a row
 
-Your wiki page lists its entries in `.wiki-list`, one under the other, each across the whole page.
+**What you will see**: the entries look like three cards on a table, side by side. Each card has its own background, and shows its heading, its sentence and its link one under the other.
 
-**Example**: the entries look like three cards on a table, side by side. Each card has a background of its own, and shows its heading, its sentence and its link one under the other.
+Your wiki page lists its entries in `.wiki-list`, one under the other, each one across the whole page.
 
 - On `wiki.html`, the entries of `.wiki-list` stand side by side, in one row.
-- Each entry has a background of its own, so you can see where its card ends.
+- Each entry has its own background, so you can see where its card ends.
 - Inside each card, the heading, the sentence and the link stay one under the other.
-
-Psst, a flex container is a row unless you say otherwise :)

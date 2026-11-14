@@ -1,4 +1,4 @@
-Hang three pictures of different sizes in a row on a wall. You can line up their tops, their bottoms, or their middles. Each way looks tidy. A mix of them looks messy.
+Hang three pictures of different sizes in a row on a wall. You can line up their tops, their bottoms, or their middles. Each way looks clean. A mix of them looks messy.
 
 ## `align-items`
 
@@ -36,13 +36,13 @@ Hang three pictures of different sizes in a row on a wall. You can line up their
 </div>
 ```
 
-The two names sit at the middle of the score, on one line with it. Try the other values in place of `center`:
+The two names sit at the middle of the score, on one line with it. Try the other values instead of `center`:
 
-- `stretch`: each item as tall as the row. This is what you get when you don't write it.
+- `stretch`: each item as tall as the row. You get this when you don't write it.
 - `flex-start`: at the top.
 - `flex-end`: at the bottom.
 
-With `stretch`, look at the names' boxes: they reach down as far as the score's box.
+With `stretch`, look at the names' boxes: they go down as far as the score's box.
 
 ## Why boxes in a row have the same height
 
@@ -75,7 +75,7 @@ Without `align-items`, you get `stretch`. So boxes in a row are as tall as the t
 </div>
 ```
 
-The short note's box is as tall as the long one. For cards in a row, that's often what you want. Add `align-items: flex-start;` and each box is only as tall as its own text.
+The short note's box is as tall as the long one. For cards in a row, that's often what you want. Add `align-items: flex-start;`, and each box is only as tall as its own text.
 
 ## Break it on purpose
 
@@ -119,10 +119,9 @@ The three boxes move to the middle of the width, and the names stay at the top. 
 
 ## Mission: One middle line
 
+**What you will see**: the name and the links read like one line of text, with the same space above and below the links.
+
 In your header, the station's name and the menu stand side by side. But the menu sits higher than the name: its links touch the top of the header.
 
-**Example**: the name and the links read like one line of text, with the same room above and below the links.
-
-- On every page, the menu's links sit in the middle of the header's height, on one line with the station's name.
-
-Psst, in a row, up and down is the job of `align-items` :)
+- On every page, the menu's links sit in the middle of the header's height.
+- They are on one line with the station's name.
