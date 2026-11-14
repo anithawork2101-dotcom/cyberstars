@@ -52,6 +52,23 @@ describe('dockerExec', () => {
     );
     await expect(dockerExec(['x'])).rejects.toThrow('exit 1');
   });
+
+  it('rejects, not crashes, when the process ends before reading its stdin', async () => {
+    const stdin = new EventEmitter() as EventEmitter & { end: () => void };
+    stdin.end = () => {
+      // Writing to a process already gone fails as the real pipe does
+      setImmediate(() => stdin.emit('error', new Error('write EPIPE')));
+    };
+    mockExecFile.mockImplementationOnce(
+      (_cmd: string, _args: string[], _opts: unknown, cb: ExecCallback) => {
+        setTimeout(() => cb(new Error('exit 1'), '', 'no such container'), 5);
+        return { stdin };
+      },
+    );
+    await expect(dockerExec(['exec', '-i', 'gone', 'cat'], 1000, 'payload')).rejects.toThrow(
+      'no such container',
+    );
+  });
 });
 
 describe('removeStraySandboxes', () => {

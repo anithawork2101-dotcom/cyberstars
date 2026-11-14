@@ -1,6 +1,6 @@
 import { spawn, execFile } from 'child_process';
 import { AppError } from '@cyberstars-framework/server-kit/errors';
-import { killLeftovers } from './docker.js';
+import { dockerExec, killLeftovers } from './docker.js';
 import type { Pool } from './pool.js';
 import type { SlotOptions } from './slots.js';
 
@@ -26,6 +26,9 @@ const TIMEOUT_MS = 20_000;
 const OUTPUT_FLUSH_MS = 50;
 const OUTPUT_BUFFER_MAX = 16 * 1024;
 const OUTPUT_TOTAL_MAX = 1024 * 1024;
+// All the input one run may take. Whatever its program hasn't read yet waits
+// in the server's memory, so the total is what bounds it
+const INPUT_TOTAL_MAX = 1024 * 1024;
 // Input the page sends before the program starts (a season pasted while the
 // container starts) waits for it, up to this much
 const EARLY_INPUT_MAX = 64 * 1024;
@@ -33,16 +36,8 @@ const EARLY_INPUT_MAX = 64 * 1024;
 // Write the user's source into the run container, wiping any leftover files from
 // the owner's previous run first so a stale binary/output can't resurface.
 function writeSource(containerId: string, sourceFile: string, code: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const script = `rm -rf /work/* 2>/dev/null; cat > /work/${sourceFile}`;
-    const proc = execFile(
-      'docker',
-      ['exec', '-i', containerId, 'sh', '-c', script],
-      { timeout: 10_000 },
-      (err, _stdout, stderr) => (err ? reject(new Error(stderr || err.message)) : resolve()),
-    );
-    proc.stdin?.end(code);
-  });
+  const script = `rm -rf /work/* 2>/dev/null; cat > /work/${sourceFile}`;
+  return dockerExec(['exec', '-i', containerId, 'sh', '-c', script], 10_000, code).then(() => {});
 }
 
 function compile(containerId: string, compileCmd: string): Promise<string | null> {
@@ -216,6 +211,10 @@ async function run(
   }
 
   const proc = spawn('docker', ['exec', '-i', containerId, 'sh', '-c', runtime.runCmd]);
+  // A program that ends, or is stopped, with input it never read makes the
+  // pending writes fail (EPIPE). Without a listener that error would crash the
+  // whole server; the run's end is told by 'close', so it's dropped here.
+  proc.stdin.on('error', () => {});
 
   let exited = false;
   let stdoutBuf = '';
@@ -310,8 +309,13 @@ async function run(
   proc.stdout.on('data', (chunk: Buffer) => appendOutput('stdout', chunk));
   proc.stderr.on('data', (chunk: Buffer) => appendOutput('stderr', chunk));
 
+  // Set when the program has ended on its own. Its exit is told a moment later,
+  // once its leftovers are stopped, and input that comes meanwhile goes nowhere.
+  let programEnded = false;
+
   proc.on('close', (exitCode) => {
     if (exited) return;
+    programEnded = true;
     // Finished: its slot frees up in a moment anyway
     stopForRoom = null;
     clearTimeout(timer);
@@ -340,11 +344,20 @@ async function run(
   // program reading until the input runs out gets its EOFError / -1 / null.
   // Nothing more can be written after that.
   let stdinEnded = false;
+  let inputTotal = 0;
   const onMessage = (msg: string) => {
     try {
-      const parsed = JSON.parse(msg) as { type: string; data?: string };
-      if (stdinEnded || proc.killed) return;
-      if (parsed.type === 'stdin' && parsed.data != null) {
+      const parsed = JSON.parse(msg) as { type: string; data?: unknown };
+      if (exited || programEnded || stdinEnded || proc.killed) return;
+      if (parsed.type === 'stdin' && typeof parsed.data === 'string') {
+        inputTotal += Buffer.byteLength(parsed.data);
+        if (inputTotal > INPUT_TOTAL_MAX) {
+          killAll();
+          stderrBuf += '\nInput limit exceeded, program stopped.\n';
+          flushOutput();
+          sendExit(124);
+          return;
+        }
         proc.stdin.write(parsed.data);
         resetTimer();
       } else if (parsed.type === 'eof') {

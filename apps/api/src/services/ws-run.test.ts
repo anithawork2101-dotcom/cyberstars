@@ -95,6 +95,12 @@ class FakeWs extends EventEmitter {
   close = vi.fn();
 }
 
+// The network socket of an upgrade. Its 'error' with no listener throws, as it
+// would crash the server.
+function fakeSocket() {
+  return Object.assign(new EventEmitter(), { write: vi.fn(), destroy: vi.fn() });
+}
+
 function fakeReq(cookie?: string, ip = '127.0.0.1'): IncomingMessage {
   return {
     headers: cookie ? { cookie } : {},
@@ -172,6 +178,13 @@ describe('resolveOwner', () => {
   it('keys guests by their per-browser guestId cookie', () => {
     expect(resolveOwner(fakeReq('guestId=abc-123'), null)).toEqual({
       ownerKey: 'guest:abc-123',
+      isGuest: true,
+    });
+  });
+
+  it('keeps a guestId that is not valid percent-encoding as it came', () => {
+    expect(resolveOwner(fakeReq('guestId=%E0'), null)).toEqual({
+      ownerKey: 'guest:%E0',
       isGuest: true,
     });
   });
@@ -479,7 +492,7 @@ describe('attachRunWebSocket', () => {
   it('rejects unknown upgrade paths and detaches the listener on close', () => {
     const server = new EventEmitter() as unknown as Parameters<typeof attachRunWebSocket>[0];
     const handle = attachRunWebSocket(server);
-    const socket = { destroy: vi.fn() };
+    const socket = fakeSocket();
 
     (server as unknown as EventEmitter).emit(
       'upgrade',
@@ -502,7 +515,7 @@ describe('upgrade origin check', () => {
     attachRunWebSocket(server as unknown as Parameters<typeof attachRunWebSocket>[0]);
     const ws = new FakeWs();
     upgradedSocket = ws as unknown as typeof upgradedSocket;
-    const socket = { write: vi.fn(), destroy: vi.fn() };
+    const socket = fakeSocket();
     server.emit(
       'upgrade',
       {
@@ -544,7 +557,7 @@ describe('upgrade origin check', () => {
 
 describe('upgrade routing', () => {
   /** Drives one upgrade through the real path router with a faked socket. */
-  async function upgrade(url: string, cookie?: string, socket = { destroy: vi.fn() }) {
+  async function upgrade(url: string, cookie?: string, socket = fakeSocket()) {
     const server = new EventEmitter();
     attachRunWebSocket(server as unknown as Parameters<typeof attachRunWebSocket>[0]);
     const ws = new FakeWs();
@@ -580,7 +593,7 @@ describe('upgrade routing', () => {
   it('drops the upgrade when the session check fails', async () => {
     sessionUserIdMock.mockRejectedValue(new Error('db down'));
     const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    const socket = { destroy: vi.fn() };
+    const socket = fakeSocket();
     await upgrade('/ws/user', `session=${token(7)}`, socket);
     expect(socket.destroy).toHaveBeenCalled();
     expect(registerUserSocketMock).not.toHaveBeenCalled();
@@ -608,6 +621,71 @@ describe('upgrade routing', () => {
     expect(unregisterUserSocketMock).toHaveBeenCalledWith(7, ws);
   });
 
+  it('outlives a client that resets the connection while its session is checked', async () => {
+    let finishCheck: (userId: number | null) => void = () => {};
+    sessionUserIdMock.mockReturnValue(new Promise((r) => (finishCheck = r)));
+    const server = new EventEmitter();
+    attachRunWebSocket(server as unknown as Parameters<typeof attachRunWebSocket>[0]);
+    const socket = fakeSocket();
+    server.emit(
+      'upgrade',
+      { url: '/ws/presence', headers: {}, socket: { remoteAddress: '127.0.0.1' } },
+      socket,
+      Buffer.alloc(0),
+    );
+
+    expect(() => socket.emit('error', new Error('read ECONNRESET'))).not.toThrow();
+    finishCheck(null);
+    await settle();
+    // Once `ws` has the socket, its errors are its own
+    expect(socket.listenerCount('error')).toBe(0);
+  });
+
+  it('outlives a refused origin whose client resets the connection', async () => {
+    const server = new EventEmitter();
+    attachRunWebSocket(server as unknown as Parameters<typeof attachRunWebSocket>[0]);
+    const socket = fakeSocket();
+    server.emit(
+      'upgrade',
+      { url: '/ws/run', headers: { origin: 'https://evil.example' }, socket: {} },
+      socket,
+      Buffer.alloc(0),
+    );
+    expect(() => socket.emit('error', new Error('write EPIPE'))).not.toThrow();
+  });
+
+  it('outlives a guest cookie that is not valid percent-encoding', async () => {
+    await upgrade('/ws/presence', 'guestId=%E0');
+    expect(openSessionMock).toHaveBeenCalledWith('guest:%E0');
+  });
+
+  it('drops an upgrade whose path is not a URL, and goes on', async () => {
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const socket = fakeSocket();
+    await upgrade('//ws%2Frun', undefined, socket);
+    expect(socket.destroy).toHaveBeenCalled();
+    expect(mockRun).not.toHaveBeenCalled();
+    errSpy.mockRestore();
+  });
+
+  it('outlives an oversized frame on each socket, which still cleans up on close', async () => {
+    const tooBig = () => new RangeError('Max payload size exceeded');
+
+    const run = await upgrade('/ws/run');
+    expect(() => run.emit('error', tooBig())).not.toThrow();
+
+    const presence = await upgrade('/ws/presence', `session=${token(7)}`);
+    expect(() => presence.emit('error', tooBig())).not.toThrow();
+    presence.emit('close');
+    expect(closeSessionMock).toHaveBeenCalledWith('user:7');
+
+    const user = await upgrade('/ws/user', `session=${token(8)}`);
+    await vi.waitFor(() => expect(registerUserSocketMock).toHaveBeenCalledWith(8, user));
+    expect(() => user.emit('error', tooBig())).not.toThrow();
+    user.emit('close');
+    expect(unregisterUserSocketMock).toHaveBeenCalledWith(8, user);
+  });
+
   describe('on production', () => {
     // The socket opens for either feature, so both go back to preview here,
     // whichever are launched
@@ -628,6 +706,16 @@ describe('upgrade routing', () => {
       await vi.waitFor(() => expect(ws.close).toHaveBeenCalledWith(4404, 'Not found'));
       expect(getRoleMock).toHaveBeenCalledWith(7);
       expect(registerUserSocketMock).not.toHaveBeenCalled();
+    });
+
+    it('closes the socket when the role check fails, and goes on', async () => {
+      getRoleMock.mockRejectedValue(new Error('db down'));
+      const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const ws = await upgrade('/ws/user', `session=${token(7)}`);
+
+      await vi.waitFor(() => expect(ws.close).toHaveBeenCalledWith(1011, 'Internal error'));
+      expect(registerUserSocketMock).not.toHaveBeenCalled();
+      errSpy.mockRestore();
     });
 
     it('lets an admin through the preview gate', async () => {

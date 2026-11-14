@@ -185,6 +185,7 @@ const RUN_RO: Record<string, string> = {
   'Internal error.': 'Eroare internă.',
   'Time limit exceeded (20s), program stopped.': 'Timpul a expirat (20s), programul a fost oprit.',
   'Output limit exceeded, program stopped.': 'Programul a afișat prea mult și a fost oprit.',
+  'Input limit exceeded, program stopped.': 'Programul a primit prea mult text și a fost oprit.',
   'Program stopped to make room for others: the server is full right now. Run it again in a moment.':
     'Programul a fost oprit ca să facă loc altora: serverul e plin acum. Rulează-l din nou peste câteva clipe.',
   'Too many runs in progress, wait for one to finish.':
