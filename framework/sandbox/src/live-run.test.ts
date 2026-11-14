@@ -43,11 +43,16 @@ const runLive = liveRun({
   acquireSlot: (...a: unknown[]) => acquireSlotMock(...a),
 });
 
-// Minimal child_process stand-ins: only the surface the service touches.
+// Minimal child_process stand-ins: only the surface the service touches. A
+// stream's 'error' with no listener throws, as it would crash the server.
+function fakeStdin() {
+  return Object.assign(new EventEmitter(), { write: vi.fn(), end: vi.fn() });
+}
+
 class FakeProc extends EventEmitter {
   stdout = new EventEmitter();
   stderr = new EventEmitter();
-  stdin = { write: vi.fn(), end: vi.fn() };
+  stdin = fakeStdin();
   kill = vi.fn();
   killed = false;
 }
@@ -74,7 +79,7 @@ beforeEach(() => {
     if (typeof cb === 'function') {
       (cb as (e: Error | null, o: string, s: string) => void)(null, '', '');
     }
-    return { stdin: { end: vi.fn() } };
+    return { stdin: fakeStdin() };
   });
 });
 
@@ -166,6 +171,22 @@ describe('liveRun', () => {
     expect(proc.stdin.end).toHaveBeenCalledTimes(1);
   });
 
+  it('outlives a program that ends with input it never read', async () => {
+    const proc = new FakeProc();
+    spawnMock.mockReturnValue(proc);
+    const ws = new FakeWs();
+
+    await runLive(ws, 'print(1)', 'python', 'user:epipe');
+    ws.emit('message', JSON.stringify({ type: 'stdin', data: 'never read\n' }));
+    // The pending write fails once the program is gone
+    expect(() => proc.stdin.emit('error', new Error('write EPIPE'))).not.toThrow();
+    proc.emit('close', 0);
+
+    await vi.waitFor(() => expect(releaseMock).toHaveBeenCalledWith('user:epipe'));
+    expect(sent(ws)).toContainEqual({ type: 'exit', code: 0 });
+    expect(destroyMock).not.toHaveBeenCalled();
+  });
+
   it('releases the container for reuse on a normal exit', async () => {
     const proc = new FakeProc();
     spawnMock.mockReturnValue(proc);
@@ -190,7 +211,7 @@ describe('liveRun', () => {
     execFileMock.mockImplementationOnce((_cmd: string, args: string[], _opts, cb) => {
       expect(args).toEqual(['exec', 'test-container', 'sh', '-c', 'kill -9 -1']);
       finishKill = () => (cb as (e: Error | null, o: string, s: string) => void)(null, '', '');
-      return { stdin: { end: vi.fn() } };
+      return { stdin: fakeStdin() };
     });
     proc.emit('close', 0);
     await vi.waitFor(() => expect(finishKill).toBeDefined());
@@ -246,7 +267,7 @@ describe('liveRun', () => {
       if (call === 2)
         finishCompile = () => cb(null, '', ''); // compile still running
       else cb(null, '', ''); // write source
-      return { stdin: { end: vi.fn() } };
+      return { stdin: fakeStdin() };
     });
     const ws = new FakeWs();
 
@@ -486,7 +507,7 @@ describe('liveRun', () => {
       if (call === 2)
         cb(new Error('compile failed'), '', 'Main.java:1: error: bad'); // compile
       else cb(null, '', ''); // write source
-      return { stdin: { end: vi.fn() } };
+      return { stdin: fakeStdin() };
     });
     const ws = new FakeWs();
 
@@ -502,7 +523,7 @@ describe('liveRun', () => {
     execFileMock.mockImplementation((...args: unknown[]) => {
       const cb = args[args.length - 1] as (e: Error | null, o: string, s: string) => void;
       cb(new Error('write failed'), '', 'no space left'); // writeSource fails
-      return { stdin: { end: vi.fn() } };
+      return { stdin: fakeStdin() };
     });
     const ws = new FakeWs();
 
@@ -510,5 +531,24 @@ describe('liveRun', () => {
 
     expect(spawnMock).not.toHaveBeenCalled();
     expect(destroyMock).toHaveBeenCalledWith('user:7');
+  });
+
+  it('reports a source write that a vanished container cut short, without crashing', async () => {
+    execFileMock.mockImplementation((...args: unknown[]) => {
+      const cb = args[args.length - 1] as (e: Error | null, o: string, s: string) => void;
+      const stdin = fakeStdin();
+      // The exec ends before it reads the code: the write fails, then the call
+      setImmediate(() => {
+        stdin.emit('error', new Error('write EPIPE'));
+        cb(new Error('exit 1'), '', 'No such container');
+      });
+      return { stdin };
+    });
+    const ws = new FakeWs();
+
+    await runLive(ws, 'print(1)', 'python', 'user:gone');
+
+    expect(sent(ws)).toContainEqual({ type: 'stderr', data: 'Could not prepare the run.\n' });
+    expect(destroyMock).toHaveBeenCalledWith('user:gone');
   });
 });

@@ -41,6 +41,9 @@ function writeSource(containerId: string, sourceFile: string, code: string): Pro
       { timeout: 10_000 },
       (err, _stdout, stderr) => (err ? reject(new Error(stderr || err.message)) : resolve()),
     );
+    // A container gone meanwhile ends the exec before it reads the code (EPIPE);
+    // the callback above reports it, and the write's error must not crash us
+    proc.stdin?.on('error', () => {});
     proc.stdin?.end(code);
   });
 }
@@ -216,6 +219,10 @@ async function run(
   }
 
   const proc = spawn('docker', ['exec', '-i', containerId, 'sh', '-c', runtime.runCmd]);
+  // A program that ends, or is stopped, with input it never read makes the
+  // pending writes fail (EPIPE). Without a listener that error would crash the
+  // whole server; the run's end is told by 'close', so it's dropped here.
+  proc.stdin.on('error', () => {});
 
   let exited = false;
   let stdoutBuf = '';

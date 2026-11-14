@@ -19,6 +19,9 @@ export function dockerExec(args: string[], timeout = 10_000, stdin?: string): Pr
       },
     );
     if (stdin != null) {
+      // A process that ends before reading it all makes the write fail (EPIPE);
+      // the callback above reports the outcome, and the error must not crash us
+      proc.stdin?.on('error', () => {});
       proc.stdin?.end(stdin);
     }
   });
