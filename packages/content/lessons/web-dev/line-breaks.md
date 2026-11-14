@@ -1,10 +1,10 @@
-An address on an envelope is one thing, but it's written on several lines: the name, the street, the town. A poem is the same: one poem, many short lines.
+An address on an envelope is one thing, but you write it on several lines: the name, the street, the town. A poem is the same: one poem, many short lines.
 
-Making each line its own paragraph would be wrong here. It's one address, not three ideas. What we want is a new line **inside** a paragraph.
+Here, it would be wrong to make each line its own paragraph. It's one address, not three ideas. What you want is a new line **inside** a paragraph.
 
 ## `<br>`
 
-`<br>` is short for **break**, a line break. It's like pressing Enter, but one the browser listens to:
+`<br>` is short for **break**: a line break. It's like pressing Enter, but the browser listens to this one:
 
 ```html preview
 <p>
@@ -14,13 +14,13 @@ Making each line its own paragraph would be wrong here. It's one address, not th
 </p>
 ```
 
-One paragraph, three lines. Like `<meta>`, `<br>` has nothing inside it, so it has no closing tag. The `/` before `>` is optional.
+One paragraph, three lines. Like `<meta>`, `<br>` has nothing inside it, so it has no closing tag. You can write the `/` before `>`, or leave it out.
 
-Notice there's no `<br>` after the last line. The paragraph ends there anyway.
+There is no `<br>` after the last line. The paragraph ends there anyway.
 
 ## When not to use it
 
-`<br>` is for line breaks that are part of the text itself: an address, a poem, the lines of a song. It's **not** for spacing things out.
+`<br>` is for line breaks that are part of the text itself: an address, a poem, the lines of a song. It's **not** for adding space between things.
 
 ```html preview
 <p>Clean your room.</p>
@@ -29,9 +29,9 @@ Notice there's no `<br>` after the last line. The paragraph ends there anyway.
 <p>Feed the cat.</p>
 ```
 
-This pushes the second paragraph further down, but it's a hack. The paragraphs are separate ideas, so `<p>` already puts space between them, and later CSS will let you choose exactly how much. A pile of `<br>`s is hard to change and means nothing.
+This moves the second paragraph further down, but it's the wrong tool. The paragraphs are different ideas, so `<p>` already puts space between them. Later, CSS will let you choose exactly how much space. Many `<br>`s are hard to change, and they mean nothing.
 
-And if each line is its own idea, like your station's rules, keep them as separate paragraphs.
+And if each line is its own idea, like your station's rules, keep them as different paragraphs.
 
 ## Break it on purpose
 
@@ -45,15 +45,13 @@ Write the address with Enters only, and no `<br>`:
 </p>
 ```
 
-As you saw last lesson, the Enters turn into spaces, and the address squeezes onto one line.
+You saw this in the last lesson: the Enters become spaces, and the whole address shows on one line.
 
 ---
 
 ## Mission: The station's address
 
-Your `index.html` has its parts and the rules at the end. Visitors also need to know where to find you.
-
-**Example**: in your first part, under About the Station, your page would show something like this:
+**What you will see**: in your first part, under About the Station, the station's address on three lines. For example:
 
 ```text
 Orbital Station 7
@@ -61,7 +59,8 @@ Docking Ring B
 Low Earth Orbit
 ```
 
-- Your first `<h2>` part has the station's address, in one paragraph.
-- The address shows on at least three lines.
+Your `index.html` has its parts, and the rules at the end. Visitors also need to know where to find you.
 
-Psst, no `<br>` after the last line :)
+- Your first `<h2>` part has the station's address.
+- The whole address is in one paragraph.
+- The address shows on at least three lines.
