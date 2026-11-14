@@ -2,7 +2,7 @@
 
 ## Three ways to round
 
-JavaScript has a toolbox called `Math`, with three rounding tools:
+JavaScript has a toolbox called `Math`, with three tools to round numbers:
 
 ```js
 console.log(Math.round(2.5));
@@ -16,8 +16,8 @@ console.log(Math.ceil(2.5));
 3
 ```
 
-- `Math.round` goes to the **nearest** whole number: 2.4 becomes 2, 2.5 becomes 3;
-- `Math.floor` always goes **down**: 2.9 becomes 2. Think of the floor, below you;
+- `Math.round` goes to the **nearest** whole number: 2.4 becomes 2, and 2.5 becomes 3;
+- `Math.floor` always goes **down**: 2.9 becomes 2. Think of the floor, under you;
 - `Math.ceil` always goes **up**: 2.1 becomes 3. Think of the ceiling, above you.
 
 ## Which one?
@@ -50,22 +50,21 @@ console.log(Math.round(9 / 4));
 2
 ```
 
-9 ÷ 4 is 2.25, the nearest whole number is 2, and one friend is left on the pavement. Rounding the wrong way gives a number that looks fine and is wrong.
+9 ÷ 4 is 2.25. The nearest whole number is 2, and one friend stays on the street. When you round the wrong way, you get a number that looks fine, but is wrong.
 
 ---
 
 ## Mission: Days of oxygen
 
-Your oxygen lasts 140 hours. The crew wants to know how that works out in days, and how many tanks to order for a 31-day trip.
-
-**Example**: when `crew.html` opens, the console shows, among its other lines:
+**What you will see**: when `crew.html` opens, the console shows these lines, with its other lines:
 
 ```text
 Full days of oxygen: 5
 Tanks for 31 days: 38
 ```
 
-- The console shows `Full days of oxygen: 5`: only the days the oxygen fully covers.
-- The console shows `Tanks for 31 days: 38`: enough 20-hour tanks for 31 days of 24 hours, rounded the way that never leaves the crew short.
+Your oxygen lasts 140 hours. The crew wants to know how many days that is, and how many tanks to order for a trip of 31 days.
 
-Psst, "full" rounds one way, "enough" the other :)
+- The console shows `Full days of oxygen: 5`: only the days the oxygen covers completely.
+- The console shows `Tanks for 31 days: 38`: enough tanks of 20 hours for 31 days of 24 hours.
+- The number of tanks never leaves the crew short.

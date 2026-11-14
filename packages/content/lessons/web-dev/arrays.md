@@ -1,8 +1,8 @@
-A shopping list isn't one thing: it's milk, bread and apples, in a row. You could keep each in its own variable, `item1`, `item2`, `item3`... but what if the list has 30 things? JavaScript has one value that holds a whole list: an **array**.
+A shopping list isn't one thing. It's milk, bread and apples, one after the other. You could keep each one in its own variable, `item1`, `item2`, `item3`... but what if the list has 30 things? JavaScript has one value that holds a whole list: an **array**.
 
 ## Making an array
 
-An array is written in square brackets, with commas between the values:
+You write an array in square brackets, with commas between the values:
 
 ```js
 const shopping = ["milk", "bread", "apples"];
@@ -17,7 +17,7 @@ One name, three values, in order. An array can hold numbers too, or a mix: `[3, 
 
 ## Reading one item: its index
 
-Each item has a number for its place, called its **index**. And here's the surprise: counting starts at **0**:
+Each item has a number for its place, called its **index**. And here is the surprise: counting starts at **0**:
 
 ```js
 console.log(shopping[0]);
@@ -31,7 +31,7 @@ bread
 apples
 ```
 
-`shopping[0]` is the first item, `shopping[1]` the second. Think of a building's ground floor: in many countries it's floor 0, and the first floor is one up.
+`shopping[0]` is the first item, and `shopping[1]` is the second. Think of a building: in many countries, the ground floor is floor 0, and the first floor is one up.
 
 ## The number of items
 
@@ -45,7 +45,7 @@ console.log(shopping.length);
 3
 ```
 
-So the **last** item is always at `length - 1`: here, `shopping[2]`. Counting from 0 means the last index is one less than the number of items.
+So the **last** item is always at `length - 1`: here, `shopping[2]`. Counting starts at 0, so the last index is one less than the number of items.
 
 ## Break it on purpose
 
@@ -59,22 +59,22 @@ console.log(shopping[3]);
 undefined
 ```
 
-There's no fourth item. `undefined` is JavaScript's word for "there's nothing there". When you get it, check your index: it's usually one too many.
+There is no fourth item. `undefined` is JavaScript's word for "there's nothing there". When you get it, check your index: usually it's one too many.
 
 ---
 
 ## Mission: The shifts
 
-The station runs three shifts a day: Morning, Day and Night, in that order.
-
-**Example**: when `crew.html` opens, the console shows, among its other lines:
+**What you will see**: when `crew.html` opens, the console shows these lines, with its other lines:
 
 ```text
 First shift: Morning
 Last shift: Night
 ```
 
-- In `crew.js`, the three shifts are kept in one array, in that order.
-- The console shows `First shift: Morning` and `Last shift: Night`, each read from the array by its index.
+The station has three shifts a day: Morning, Day and Night, in that order.
 
-Psst, the first item's index is 0 :)
+- In `crew.js`, the three shifts are kept in one array, in that order.
+- The console shows `First shift: Morning`.
+- The console shows `Last shift: Night`.
+- Each shift is read from the array by its index.
