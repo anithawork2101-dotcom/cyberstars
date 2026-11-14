@@ -2,7 +2,7 @@ Write a long sentence in your notebook. When the line ends, you go on at the sta
 
 ## One line, whatever happens
 
-A flex container keeps all its items on one line. When they don't fit, it squeezes them:
+A flex container keeps all its items on one line. When they don't fit, it makes them narrower:
 
 ```css preview
 <style>
@@ -37,11 +37,11 @@ A flex container keeps all its items on one line. When they don't fit, it squeez
 </div>
 ```
 
-Each photo should be 110 pixels wide. But seven photos don't fit in the cell, so they all get narrower, and the name Snow day breaks onto two lines. A photo can't get narrower than its longest word, so on a phone the row sticks out sideways.
+Each photo should be 110 pixels wide. But seven photos don't fit in the space, so they all get narrower, and the name Snow day goes onto two lines. A photo can't get narrower than its longest word, so on a phone, the row comes out sideways.
 
 ## `flex-wrap`
 
-`flex-wrap: wrap` lets the items go on to a new line when there's no room left:
+`flex-wrap: wrap` lets the items go on to a new line when there is no space left:
 
 ```css preview
 <style>
@@ -83,7 +83,7 @@ Without `flex-wrap`, you get `nowrap`: one line, whatever happens.
 
 ## Break it on purpose
 
-Give `flex-wrap` to the photos instead of the album:
+Give `flex-wrap` to the photos, not to the album:
 
 ```css preview
 <style>
@@ -122,17 +122,18 @@ Give `flex-wrap` to the photos instead of the album:
 </div>
 ```
 
-The photos are squeezed again. Wrapping decides where the items of a container go, so it goes on the container, like `display: flex` and `gap`.
+The photos are narrow again. Wrapping decides where the items of a container go, so it goes on the container, like `display: flex` and `gap`.
 
 ---
 
 ## Mission: A new row when there's no room
 
-Your cards stay in one row however narrow the screen is. On a phone they get squeezed, and the page sticks out sideways. Your preview is as wide as its panel, so make the panel narrow and look.
+**What you will see**: on a computer, the three cards stand in a row as before. When the screen gets narrower, the last card goes on to a new row. On a phone, the cards stand one under the other.
 
-**Example**: on a computer, the three cards stand in a row as before. When the screen gets narrower, the last card goes on to a new row. On a phone, the cards stand one under the other.
+Your cards stay in one row however narrow the screen is. On a phone, they get too narrow, and the page comes out sideways. Your preview is as wide as its panel, so make the panel narrow and look.
 
-- When the cards don't fit in one row, the next card goes on to a new row, with at least 16 pixels between the rows.
-- On a phone, the cards stand one under the other, each still between 200 and 300 pixels wide, and nothing sticks out sideways.
-
-Psst, `flex-wrap` goes on the list, like `display: flex` :)
+- When the cards don't fit in one row, the next card goes on to a new row.
+- There are at least 16 pixels between the rows.
+- On a phone, the cards stand one under the other.
+- Each card is still between 200 and 300 pixels wide.
+- Nothing comes out sideways.

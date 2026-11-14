@@ -1,8 +1,8 @@
-Before friends share what is left of a pizza, each one starts with a slice. First everyone gets the same start, then the rest is shared. In a flex container, each item can have a size to start from too.
+Before friends share what is left of a pizza, each one starts with a slice. First, everyone gets the same start, then the rest is shared. In a flex container, each item can have a size to start from too.
 
 ## `flex-basis`
 
-`flex-basis` is the size an item starts from along the line, before the room left is shared with `flex-grow`. In a row, it's a width to start from. A shop shows its products like this:
+`flex-basis` is the size an item starts from along the line, before the space left is shared with `flex-grow`. In a row, it's a width to start from. A shop shows its products like this:
 
 ```css preview
 <style>
@@ -40,7 +40,7 @@ Before friends share what is left of a pizza, each one starts with a slice. Firs
 </div>
 ```
 
-Each product starts at 120 pixels, and as many as fit go on one line. Then they grow to share the room left, so every line is full. Make the panel of your preview narrower: fewer products fit on a line, and each one grows a little more.
+Each product starts at 120 pixels, and as many as fit go on one line. Then they grow to share the space left, so every line is full. Make the panel of your preview narrower: fewer products fit on a line, and each one grows a little more.
 
 ## What an item starts from without it
 
@@ -78,7 +78,7 @@ Without `flex-basis`, an item starts from its `width`. With no width either, it 
 </div>
 ```
 
-The story starts as wide as its whole text on one line. That's wider than the line, so the score has no room left beside it and goes on to the next line. Now give the story a size to start from:
+The story starts as wide as its whole text on one line. That's wider than the line, so the score has no space left next to it, and goes on to the next line. Now give the story a size to start from:
 
 ```css preview
 <style>
@@ -113,11 +113,11 @@ The story starts as wide as its whole text on one line. That's wider than the li
 </div>
 ```
 
-The story starts at 200 pixels, so the score fits beside it, and the story grows to take the rest of the line. In a narrow panel, where 200 pixels and the score don't fit together, the score still goes under the story.
+The story starts at 200 pixels, so the score fits next to it, and the story grows to take the rest of the line. In a narrow panel, where 200 pixels and the score don't fit together, the score still goes under the story.
 
 ## Break it on purpose
 
-Give each product a size to start from that's wider than the line:
+Give each product a size to start from that is wider than the line:
 
 ```css preview
 <style>
@@ -155,18 +155,20 @@ Give each product a size to start from that's wider than the line:
 </div>
 ```
 
-Every product takes a line of its own: none of them fits beside another. A size to start from should be small enough for two items to fit on one line, where you want them side by side.
+Every product takes its own line: none of them fits next to another. A size to start from should be small enough for two items to fit on one line, where you want them side by side.
 
 ---
 
 ## Mission: The facts beside the article
 
+**What you will see**: on a computer, the fact box stands next to the article, on its right. The article takes the rest of the row. On a phone, the fact box goes under the article, like now.
+
 On your wiki pages, the fact box sits under the long article, and readers scroll all the way down to find it.
 
-**Example**: on a computer, the fact box stands beside the article, at its right. The article takes the rest of the row. On a phone, the fact box goes under the article, as now.
-
 - The `<main>` of each wiki page (the greenhouse, the airlock, the tools) has the class `wiki-page`.
-- On a computer, the fact box stands to the right of the article, between 200 and 300 pixels wide, and the article takes the rest of the row.
-- On a phone, the fact box goes under the article, and nothing sticks out sideways.
+- On a computer, the fact box stands to the right of the article.
+- The fact box is between 200 and 300 pixels wide.
+- The article takes the rest of the row.
+- On a phone, the fact box goes under the article, and nothing comes out sideways.
 
-Psst, without a size to start from, the article starts as wide as its longest paragraph on one line :)
+Without a size to start from, the article starts as wide as its longest paragraph on one line.
