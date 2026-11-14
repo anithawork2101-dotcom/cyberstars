@@ -2,7 +2,7 @@ Put your finger on a key of your phone's keyboard. You touch the key, but you al
 
 ## An event goes up through the parents
 
-Here, a button sits in a paragraph, and the paragraph in a box. All three listen for a click, and each one writes its name:
+Here, a button sits in a paragraph, and the paragraph sits in a box. All three listen for a click, and each one writes its name:
 
 ```html preview
 <div id="club">
@@ -30,7 +30,7 @@ Click **Join**, and the page says:
 button paragraph box
 ```
 
-One click, three listeners. The click starts on the element clicked, the button. Then it goes up to its parent, the paragraph, then to the parent's parent, the box, and on up to the page. Every listener on the way runs. A bubble goes up in water in the same way, so this is called **bubbling**.
+One click, three listeners. The click starts on the element that was clicked, the button. Then it goes up to its parent, the paragraph, then to the parent's parent, the box, and on up to the page. Every listener on the way runs. A bubble goes up in water in the same way, so this is called **bubbling**.
 
 Now click the words `Chess club`, next to the button. The page adds `paragraph box`: the click starts on the paragraph, so the button's listener doesn't run.
 
@@ -44,7 +44,7 @@ document.querySelector("#club").addEventListener("click", (event) => {
 });
 ```
 
-Click **Join**, and the box's listener logs:
+Click **Join**, and the box's listener writes in the console:
 
 ```text
 Join
@@ -91,16 +91,17 @@ Click `Dancing Queen`: it works. Click `by ABBA`: the page says `Now playing: Da
 
 ## Mission: Next to read
 
-Readers want to pick the page they will read next by clicking its card, without having to aim at a small heading.
-
-**Example**: click anywhere on the airlock's card, and over the list the page says:
+**What you will see**: click anywhere on the airlock's card, and over the list, the page says:
 
 ```text
 Next to read: The Airlock
 ```
 
-- Over the list, an element with the id `picked` holds the title of the card clicked last, and only the title: words like `Next to read:` go outside it.
-- A click anywhere on a card picks it: on its heading, on its text, or on the card itself.
+Readers want to choose the page they will read next by clicking its card, without having to aim at a small heading.
+
+- Over the list, an element with the id `picked` holds the title of the last card clicked.
+- It holds only the title: words like `Next to read:` go outside it.
+- A click anywhere on a card chooses it: on its heading, on its text, or on the card itself.
 - The title comes from the card on the page, so a new card with another title works too.
 
-Psst, `event.target` is what was clicked inside the card, not always the card :)
+`event.target` is what was clicked inside the card, not always the card.

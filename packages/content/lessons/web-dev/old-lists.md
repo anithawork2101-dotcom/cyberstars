@@ -1,4 +1,4 @@
-Take a photo of a crowd, then three more people walk in. Count the people in the photo: still the old number. The photo shows the moment you took it. A list from `querySelectorAll` is like that photo.
+Take a photo of a crowd. Then three more people walk in. Count the people in the photo: it's still the old number. The photo shows the moment you took it. A list from `querySelectorAll` is like that photo.
 
 ## A list is a snapshot
 
@@ -18,11 +18,11 @@ console.log(games.length);
 2
 ```
 
-The page now has 3 games, but `games` still says 2. `querySelectorAll` looked at the page **once**, when that line ran, and kept what it found then. Elements added or removed afterwards don't change it.
+The page now has 3 games, but `games` still says 2. `querySelectorAll` looked at the page **once**, when that line ran, and kept what it found then. Elements you add or remove later don't change it. A list like that is a **snapshot**: a quick photo of one moment.
 
 ## Look again when you need it
 
-To get the count **now**, ask again, right when you need it:
+To get the number **now**, ask again, at the moment you need it:
 
 ```js
 console.log(document.querySelectorAll("#games li").length);
@@ -54,17 +54,16 @@ function showCount() {
 }
 ```
 
-Add a game, call `showCount()`: the count doesn't move. It counts the old snapshot. A count that's stuck usually means an old list.
+Add a game, and call `showCount()`: the number doesn't change. It counts the old snapshot. When a count doesn't change, it's usually an old list.
 
 ---
 
 ## Mission: A roster that keeps up
 
-Your roster says how many crew members there are, but when you add or remove a rookie, it doesn't change.
+**What you will see**: the roster says `4 crew members on board`. Add a rookie, and it says `5 crew members on board`. Remove the last, and it says 4 again.
 
-**Example**: the roster says `4 crew members on board`. Add a rookie, and it says `5 crew members on board`. Remove the last, and it's back to 4.
+Your roster says how many crew members there are. But when you add or remove a rookie, it doesn't change.
 
-- After every click on `Add a rookie` and on `Remove the last`, the roster shows how many items the crew list has at that moment, followed by ` crew members on board`.
-- When the page opens, it's right too.
-
-Psst, count again each time, inside a function :)
+- After every click on `Add a rookie`, the roster shows how many items the crew list has at that moment, then ` crew members on board`.
+- After every click on `Remove the last`, it does the same.
+- When the page opens, the roster is right too.

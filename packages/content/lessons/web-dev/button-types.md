@@ -1,15 +1,15 @@
-On a TV remote, every button has its own job: one turns the TV on, one changes the channel, one makes it louder. Buttons in a form can have different jobs too, and their `type` says which job.
+On a TV remote, every button has its own job. One turns the TV on, one changes the channel, one makes it louder. Buttons in a form can have different jobs too, and their `type` says which job.
 
 ## `type="submit"`: send the form
 
-You already know this one. A button inside a form sends it, because a button's type is `submit` unless you say otherwise. These two buttons do exactly the same:
+You already know this one. A button inside a form sends it, because a button's type is `submit` unless you say something else. These two buttons do exactly the same thing:
 
 ```html preview
 <button>Join</button>
 <button type="submit">Join</button>
 ```
 
-Writing `type="submit"` makes the job clear to anyone who reads your HTML.
+`type="submit"` makes the job clear to anyone who reads your HTML.
 
 ## `type="reset"`: start again
 
@@ -28,11 +28,11 @@ A reset button puts the whole form back as it was when the page opened:
 
 Type a nickname, untick the news, then click **Start again**. The nickname is gone, and the news box is ticked again: back as it was at the start, not empty. Nothing is sent.
 
-Write clearly on it what it does, and keep it apart from the send button: a click on it by mistake removes everything the visitor typed.
+Write clearly on the button what it does, and keep it away from the send button. A click on it by mistake removes everything the visitor typed.
 
 ## `type="button"`: a button for your script
 
-In the crew page and the schedule, your buttons had `type="button"`, and a script gave them their job. Inside a form, that type matters even more:
+On the crew page and the schedule, your buttons had `type="button"`, and a script gave them their job. Inside a form, that type matters even more:
 
 ```html preview
 <form>
@@ -70,12 +70,11 @@ The visitor only wanted to read the rules, and the form was sent half empty. Wit
 
 ## Mission: Start again
 
+**What you will see**: next to "Book my seat", a second button like "Clear the form". Type a name, untick Wi-Fi, choose a flight, then click it. Every box is back as it was at the start, Wi-Fi is ticked again, and nothing is sent.
+
 Your booking form has one button, the one that sends it. A passenger who made a few mistakes wants to start again without reloading the page.
 
-**Example**: next to "Book my seat", a second button such as "Clear the form". Type a name, untick Wi-Fi, pick a flight, then click it: every box is back as it was at the start, with Wi-Fi ticked again, and nothing is sent.
-
-- A second button in the form clears it: every box, list and choice goes back as it was when the page opened.
+- A second button in the form clears it.
+- Every box, list and choice goes back as it was when the page opened.
 - Clearing the form sends nothing.
 - The first button still sends the form.
-
-Psst, the button that clears the form goes inside it, like the one that sends it :)

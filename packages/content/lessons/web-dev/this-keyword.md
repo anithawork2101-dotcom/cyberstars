@@ -27,7 +27,7 @@ Inside `win`, `this` is `player`: the object the method was called on. `this.sco
 
 ## Why not the object's name?
 
-`player.score` would work here too. But `this` is about the call: `player.win()` means "`win`, with `this` being `player`". Two objects can share the same code, and each call works on its own object:
+`player.score` would work here too. But `this` is about the call. `player.win()` means "`win`, with `this` being `player`". Two objects can share the same code, and each call works on its own object:
 
 ```js
 const win = function () {
@@ -45,7 +45,7 @@ console.log(mia.score, leo.score);
 1 6
 ```
 
-One function, two objects, and each call changed its own score. With `this`, a method also keeps working when you rename the variable that holds the object.
+One function, two objects, and each call changed its own score. With `this`, a method also keeps working when you change the name of the variable that holds the object.
 
 ## Methods calling methods
 
@@ -53,18 +53,20 @@ One function, two objects, and each call changed its own score. With `this`, a m
 
 ## Break it on purpose
 
-Write the method as an arrow function: `win: () => { this.score = this.score + 1; }`. Call `player.win()`, and the console shows ` has NaN points`: no name, and no number. The player's score didn't change at all. An arrow function has no `this` of its own: it uses the `this` of the code around it, which isn't the player. For a method that uses `this`, write it the short way, `win() { ... }`.
+Write the method as an arrow function: `win: () => { this.score = this.score + 1; }`. Call `player.win()`, and the console shows ` has NaN points`: no name, and no number. The player's score didn't change at all. An arrow function has no `this` of its own: it uses the `this` of the code around it, which isn't the player. For a method that uses `this`, write it the short way: `win() { ... }`.
 
 ---
 
 ## Mission: The chosen theme stays chosen
 
-The page says which theme was clicked, but the System button stays pressed whatever you click. The settings object should remember the theme, and press the right button.
+**What you will see**: click Dark. The page says `Theme: dark`, the Dark button is now the yellow, pressed one, and System isn't pressed any more.
 
-**Example**: click Dark: the page says `Theme: dark`, the Dark button is now the yellow, pressed one, and System isn't pressed any more.
+The page says which theme was clicked, but the System button stays pressed, whatever you click. The settings object should remember the theme, and press the right button.
 
-- The `settings` object holds the chosen theme in a property, `system` when the page opens.
-- A method of it chooses a theme: it keeps it in that property, then calls the method that shows it, using `this` for both.
-- Showing it writes `Theme: ` and the theme in `#current-theme`, and makes only the chosen theme's button say it's pressed: the other two say they aren't. A click on a theme button chooses its theme.
+- The `settings` object holds the chosen theme in a property: `system` when the page opens.
+- One of its methods chooses a theme: it keeps it in that property, then calls the method that shows it, using `this` for both.
+- Showing it writes `Theme: ` and the theme in `#current-theme`.
+- Showing it also makes only the chosen theme's button say it's pressed. The other two say they aren't.
+- A click on a theme button chooses its theme.
 
-Psst, a method that uses `this` is written `name() { }`, not as an arrow function :)
+A method that uses `this` is written `name() { }`, not as an arrow function.

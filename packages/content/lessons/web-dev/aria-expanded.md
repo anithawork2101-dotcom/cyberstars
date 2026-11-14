@@ -1,4 +1,4 @@
-On a help page, each question has a small arrow next to it. Click the question, and the answer opens under it, and the arrow turns down. Click again, and the answer closes. One look at the arrow tells you whether the answer is open. A screen reader can't see the arrow, so the page has to tell it in words.
+On a help page, each question has a small arrow next to it. Click the question, and the answer opens under it, and the arrow turns down. Click again, and the answer closes. One look at the arrow tells you if the answer is open. A screen reader can't see the arrow, so the page has to tell it in words.
 
 ## `aria-expanded`
 
@@ -26,16 +26,16 @@ On a help page, each question has a small arrow next to it. Click the question, 
 </script>
 ```
 
-Click **Club rules**: the rules open, and the button now has `aria-expanded="true"`. Click again: they close, and it says `"false"`. The page looks the same as without the attribute; the change is for the ear.
+Click **Club rules**: the rules open, and the button now has `aria-expanded="true"`. Click again: they close, and it says `"false"`. The page looks the same as without the attribute. The change is for the ear.
 
-`toggle` gives back `true` when it has just added `closed`, so the rules are now hidden. `!closed` is the opposite: `false` when they're hidden, `true` when they show. That is exactly what `aria-expanded` must say.
+`toggle` gives back `true` when it has just added `closed`, so the rules are now hidden. `!closed` is the opposite: `false` when they are hidden, `true` when they show. That's exactly what `aria-expanded` must say.
 
 ## Expanded or pressed?
 
-You've met `aria-pressed` on the flight schedule. The two are for different buttons:
+You met `aria-pressed` on the flight schedule. The two are for different buttons:
 
-- `aria-pressed` is for a switch that stays on or off, like mute or Hide cancelled. A screen reader says "pressed" or "not pressed".
-- `aria-expanded` is for a button that opens something you can then see, like an answer, a list or a menu. A screen reader says "expanded" or "collapsed".
+- `aria-pressed` is for a switch that stays on or off, like sound off or Hide cancelled. A screen reader says "pressed" or "not pressed".
+- `aria-expanded` is for a button that opens something you can then see, like an answer, a list or a menu. A screen reader says "expanded" (open) or "collapsed" (closed).
 
 A button gets one of them, never both.
 
@@ -49,18 +49,19 @@ rulesButton.addEventListener("click", () => {
 });
 ```
 
-The rules still open and close, and no error shows anywhere. But the screen reader says "collapsed" all the time, even while the rules are open. A visitor who can't see the screen is told the wrong thing. Each time the script opens or closes something, it also sets `aria-expanded`.
+The rules still open and close, and no error shows anywhere. But the screen reader says "collapsed" all the time, even while the rules are open. A visitor who can't see the screen hears the wrong thing. Each time the script opens or closes something, it also sets `aria-expanded`.
 
 ---
 
 ## Mission: Open or closed?
 
-Your Menu button hides and shows the menu. But a screen reader only says "Menu, button": it can't tell whether the menu is showing.
+**What you will see**: open any page. A screen reader on the button says "Menu, button, expanded", because the menu shows. Click the button: the menu hides, and the screen reader says "Menu, button, collapsed". Click again: "expanded".
 
-**Example**: open any page. A screen reader on the button says "Menu, button, expanded", since the menu shows. Click the button: the menu hides, and the screen reader says "Menu, button, collapsed". Click again: "expanded".
+Your Menu button hides and shows the menu. But a screen reader only says "Menu, button": it can't tell if the menu is showing.
 
 - When a page opens, the menu shows, and `#menu-button` has `aria-expanded="true"`.
-- Each click sets it to `"false"` when the menu hides, and back to `"true"` when it shows again, on every page.
+- Each click sets it to `"false"` when the menu hides.
+- It goes back to `"true"` when the menu shows again, on every page.
 - A page without the button still shows no error.
 
-Psst, it's `aria-expanded`, not `aria-pressed`: the button opens a menu :)
+The button opens a menu, so it's `aria-expanded`, not `aria-pressed`.

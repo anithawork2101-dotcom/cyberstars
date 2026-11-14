@@ -1,8 +1,8 @@
-On a pizza website, you tick "extra cheese", and the whole line lights up. You see at once what you picked. A small tick in a small box is easy to miss. Bright words aren't.
+On a pizza website, you tick "extra cheese", and the whole line lights up. You see at once what you chose. A small tick in a small box is easy to miss. Bright words aren't.
 
 ## `:checked`
 
-`:checked` picks a box to tick, or a round button, while it's ticked:
+`:checked` chooses a box to tick, or a round button, while it's ticked:
 
 ```css preview
 <style>
@@ -18,11 +18,11 @@ On a pizza website, you tick "extra cheese", and the whole line lights up. You s
 <label for="olives">Olives</label>
 ```
 
-Tick a box: an orange line shows around it. Untick it: the line disappears. It works, but the box is small, and the browser draws most of it.
+Tick a box: an orange line shows around it. Untick it: the line goes away. It works, but the box is small, and the browser draws most of it.
 
 ## The label after it, with `+`
 
-The label is what people read. It comes right after its box, so `+` reaches it. `input:checked + label` means "a label right after a ticked box":
+People read the label. It comes right after its box, so `+` reaches it. `input:checked + label` means "a label right after a ticked box":
 
 ```css preview
 <style>
@@ -39,7 +39,7 @@ The label is what people read. It comes right after its box, so `+` reaches it. 
 <label for="olives">Olives</label>
 ```
 
-Tick Olives: its words turn orange and bold. Untick it: they go back to normal. Round buttons work the same way: only the label of the one picked lights up.
+Tick Olives: its words turn orange and bold. Untick it: they go back to normal. Round buttons work the same way: only the label of the one chosen lights up.
 
 ## Break it on purpose
 
@@ -62,18 +62,19 @@ Use `~` instead of `+`:
 <label for="large">Large</label>
 ```
 
-Pick Small: all three labels light up. `~` picks every label after the ticked box, not only its own. `+` means right after.
+Choose Small: all three labels light up. `~` chooses every label after the ticked box, not only its own label. `+` means right after.
 
 ---
 
 ## Mission: What did I pick?
 
-Your form shows the seat and the extras a passenger picked only with a small dot or tick.
+**What you will see**: Wi-Fi is ticked at the start, so its label already stands out, for example in bold gold. Choose the aisle seat: "On the aisle" stands out, and "By the window" doesn't. Untick Wi-Fi: its label looks like the others again.
 
-**Example**: Wi-Fi is ticked at the start, so its label already stands out, for example in bold gold. Pick the aisle seat: "On the aisle" stands out, and "By the window" doesn't. Untick Wi-Fi: its label looks like the others again.
+Your form only shows the seat and the extras a passenger chose with a small dot or tick.
 
-- The label of every ticked box, and of the seat picked, stands out from the labels of the choices not picked.
-- When a choice is no longer picked, its label looks like the others again.
-- A label that stands out still reads well: a contrast of at least 4.5:1 with its background.
+- The label of every ticked box stands out from the labels of the choices not chosen.
+- The label of the chosen seat stands out too.
+- When a choice is no longer chosen, its label looks like the others again.
+- A label that stands out is still easy to read: a contrast of at least 4.5:1 with its background.
 
-Psst, each label comes right after its box :)
+Each label comes right after its box.

@@ -1,8 +1,8 @@
-On a crowded bus, everyone moves a little closer to make room. But the driver's seat never gets smaller. When there isn't enough room, some things should give up room, and others should keep their size.
+On a full bus, everyone moves a little closer to make space. But the driver's seat never gets smaller. When there isn't enough space, some things should give up space, and others should keep their size.
 
 ## When the line is too small
 
-When the items of a flex container don't fit in their line, they all shrink, the wide ones more than the narrow ones. In a chat app, that squeezes the round picture next to a long message:
+When the items of a flex container don't fit in their line, they all get narrower, the wide ones more than the narrow ones. In a chat app, that presses the round picture next to a long message:
 
 ```css preview
 <style>
@@ -41,11 +41,11 @@ When the items of a flex container don't fit in their line, they all shrink, the
 </div>
 ```
 
-The picture should be a circle 48 pixels wide. But the message is long, so the line is too small, and the picture gives up room too: it turns into a narrow oval.
+The picture should be a circle, 48 pixels wide. But the message is long, so the line is too small, and the picture gives up space too: it becomes a narrow oval.
 
 ## `flex-shrink`
 
-`flex-shrink` says if an item gives up room when the line is too small. Without it, you get `1`: the item shrinks with the others. With `0`, it never gets smaller than its size:
+`flex-shrink` says if an item gives up space when the line is too small. Without it, you get `1`: the item gets narrower with the others. With `0`, it never gets smaller than its size:
 
 ```css preview
 <style>
@@ -88,9 +88,9 @@ The picture should be a circle 48 pixels wide. But the message is long, so the l
 </div>
 ```
 
-The picture keeps its 48 pixels and stays round. The message gives up the room instead: its text goes on to more lines.
+The picture keeps its 48 pixels and stays round. The message gives up the space instead: its text goes on to more lines.
 
-An item can't shrink below its longest word: a word never breaks in the middle. So when everything is already as narrow as it can be, the line sticks out.
+An item can't get narrower than its longest word, because a word never breaks in the middle. So when everything is already as narrow as it can be, the line comes out of its box.
 
 ## Break it on purpose
 
@@ -138,17 +138,17 @@ Give `flex-shrink: 0` to the message too:
 </div>
 ```
 
-Now nothing gives up room. The message stays on one long line and sticks out of the cell, so you scroll sideways to read it. Something in the line has to give up room: keep `flex-shrink: 0` for the item that must keep its size.
+Now nothing gives up space. The message stays on one long line, and comes out of its box, so you scroll sideways to read it. Something in the line has to give up space. Keep `flex-shrink: 0` for the item that must keep its size.
 
 ---
 
 ## Mission: The name in one piece
 
-Make the panel of your preview as narrow as a phone, and look at the header. There isn't room for the station's name and the whole menu, so both shrink, and the name breaks onto two lines.
+**What you will see**: on a phone, `Orbital Station 7` stays on one line on the left of the header. The menu next to it takes the space that is left, and its links go on to more lines.
 
-**Example**: on a phone, `Orbital Station 7` stays on one line at the left of the header. The menu beside it takes the room left, and its links go on to more lines.
+Make the panel of your preview as narrow as a phone, and look at the header. There isn't space for the station's name and the whole menu, so both get narrower, and the name breaks onto two lines.
 
-- On a phone, the station's name stays on one line, beside the menu, and the menu gives up room instead.
-- Nothing sticks out sideways, and on a computer the header looks as before.
-
-Psst, `flex-shrink` goes on the item that must keep its size :)
+- On a phone, the station's name stays on one line, next to the menu.
+- The menu gives up space instead.
+- Nothing comes out sideways.
+- On a computer, the header looks as before.

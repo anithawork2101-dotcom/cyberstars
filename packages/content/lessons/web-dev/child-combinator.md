@@ -1,8 +1,8 @@
-"Children of the Smith family" and "everyone descended from the Smiths" aren't the same: the second includes grandchildren and great-grandchildren. CSS can make that difference too.
+"The children of the Smith family" and "everyone in the Smith family after them" aren't the same. The second one has grandchildren and great-grandchildren too. CSS can see that difference.
 
 ## `>`: children only
 
-A `>` between two selectors picks elements that are **direct children** of the first, one level down, no deeper:
+A `>` between two selectors chooses elements that are **direct children** of the first one: one level down, not deeper.
 
 ```css preview
 <style>
@@ -37,18 +37,18 @@ A `>` between two selectors picks elements that are **direct children** of the f
 </ul>
 ```
 
-Drinks and Snacks are children of `.menu`: they get the margin. Tea and Juice are inside Drinks's list, so they're **grandchildren**: they don't.
+Drinks and Snacks are children of `.menu`, so they get the margin. Tea and Juice are inside the list of Drinks, so they are **grandchildren**. They don't get it.
 
-With a space instead, `.menu li` would pick all four, and the drinks would be spread out too.
+With a space instead, `.menu li` would choose all four, and the drinks would be far apart too.
 
 ## Space or `>`?
 
-- A space: anywhere inside. Usually what you want.
-- `>`: only one level down. For nested things, like lists in lists, when the outer and inner levels should look different.
+- A space: anywhere inside. Usually this is what you want.
+- `>`: only one level down. For things inside things, like lists in lists, when the outer and inner levels should look different.
 
 ## Break it on purpose
 
-Use a space on the nested menu:
+Use a space on the menu with the list inside:
 
 ```css preview
 <style>
@@ -70,17 +70,15 @@ Use a space on the nested menu:
 </ul>
 ```
 
-Tea and Juice get the big margin too, and the inner list falls apart. When styles leak into a nested list, try `>`.
+Tea and Juice get the big margin too, and the inner list doesn't look like a group any more. When styles go into a list inside a list, try `>`.
 
 ---
 
 ## Mission: Spread out the decks
 
-On `crew.html`, the deck plan is hard to read: the decks and their rooms are all squeezed together.
+**What you will see**: on `crew.html`, the three decks stand apart, with space under each one. The rooms inside each deck stay close together.
 
-**Example**: the three decks stand apart from each other, with room under each one, while the rooms inside each deck stay close together.
+The deck plan is hard to read: the decks and their rooms are all very close together.
 
 - Every deck in `.decks` has at least 8 pixels of margin under it.
 - The rooms inside the decks have no margin under them.
-
-Psst, `>` picks the decks without their rooms :)

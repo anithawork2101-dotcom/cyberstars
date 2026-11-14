@@ -1,4 +1,4 @@
-A time on a clock always looks the same: two digits, a colon, two digits, like `09:45`. You can tell at once that `9:4` or `09:450` isn't a time, even if you have never seen those numbers before. You know its **shape**. A regex can describe a shape too.
+A time on a clock always looks the same: two digits, a colon, two digits, like `09:45`. You can see at once that `9:4` or `09:450` isn't a time, even if you have never seen those numbers before. You know its **shape**. A regex can describe a shape too.
 
 ## `\d`: any digit
 
@@ -16,7 +16,7 @@ false
 
 ## `[ ]`: one of these
 
-Square brackets match **one** letter from a list. `[abc]` matches an `a`, a `b` or a `c`. A dash gives a range: `[A-Z]` is any capital letter, `[a-z]` any small letter, `[0-9]` any digit, like `\d`:
+Square brackets match **one** letter from a list. `[abc]` matches an `a`, a `b` or a `c`. A dash gives a range: `[A-Z]` is any capital letter, `[a-z]` is any small letter, and `[0-9]` is any digit, like `\d`:
 
 ```js
 console.log(/[A-Z]/.test("hello"));
@@ -44,7 +44,7 @@ false
 
 ## `^` and `$`: the whole text
 
-So far, a pattern looks for a match **anywhere** in the text. That's often too kind:
+Until now, a pattern looks for a match **anywhere** in the text. That often lets too much in:
 
 ```js
 console.log(/\d{2}:\d{2}/.test("09:45"));
@@ -56,7 +56,7 @@ true
 true
 ```
 
-`109:450` holds `09:45` inside it, so it matches. `^` means "the start of the text" and `$` "the end of the text". Between them, the pattern must be the **whole** text:
+`109:450` holds `09:45` inside it, so it matches. `^` means "the start of the text", and `$` means "the end of the text". Between them, the pattern must be the **whole** text:
 
 ```js
 console.log(/^\d{2}:\d{2}$/.test("09:45"));
@@ -106,12 +106,11 @@ Type `690012345`: the page says `Looks like a postal code`. There are five digit
 
 ## Mission: Your badge
 
+**What you will see**: under the email box, a new box asks for the badge number. When the page opens, the pass says `Badge: No valid badge yet`. Type `OS4821`, and it says `Badge: OS4821`. Type `OS482`: `No valid badge yet` again.
+
 Everybody on the station wears a badge, and every badge has a number: two capital letters and four digits, like `OS4821`. The station wants it on the booking.
 
-**Example**: under the email box, a new box asks for the badge number. When the page opens, the pass says `Badge: No valid badge yet`. Type `OS4821`: it says `Badge: OS4821`. Type `OS482`: `No valid badge yet` again.
-
-- In the form, right after the email box, a box with the id `badge-number` and the name `badge`, with its label.
-- On the pass, an element with the id `pass-badge` shows the number as it's typed, while it is exactly two capital letters and four digits. Otherwise, and while the box is empty, it says `No valid badge yet`.
+- In the form, right after the email box, add a box with the id `badge-number` and the name `badge`, with its label.
+- On the pass, an element with the id `pass-badge` shows the number while it's typed, when it is exactly two capital letters and four digits.
+- If not, and while the box is empty, it says `No valid badge yet`.
 - `os4821`, `OS48215` and `XOS4821` aren't badge numbers.
-
-Psst, the whole number must fit the pattern, from its start to its end :)

@@ -1,10 +1,10 @@
-Gluing a sentence together with `+` gets messy fast: `"Hi " + name + ", you have " + count + " messages"`. All those quotes and pluses, and it's easy to forget a space. There's a neater way: write the sentence once, and leave holes for the values.
+Joining a sentence with `+` gets messy fast: `"Hi " + name + ", you have " + count + " messages"`. So many quotes and pluses, and it's easy to forget a space. There is a cleaner way: write the sentence once, and leave holes for the values.
 
 ## Template literals
 
-A **template literal** is a string written between **backticks**, `` ` ``, instead of quotes. The backtick is usually under the Esc key, left of 1.
+A **template literal** is a string written between **backticks**, `` ` ``, not quotes. The backtick key is usually under the Esc key, on the left of 1.
 
-Inside it, `${...}` is a hole: whatever is in the curly brackets is put into the text right there:
+Inside it, `${...}` is a hole. Whatever is in the curly brackets goes into the text right there:
 
 ```js
 const name = "Sam";
@@ -16,11 +16,11 @@ console.log(`Hi ${name}, you have ${count} new messages`);
 Hi Sam, you have 3 new messages
 ```
 
-You write the sentence as you'd say it, spaces and all, and the values drop into their places.
+You write the sentence the way you would say it, with all its spaces, and the values go into their places.
 
 ## Anything in the hole
 
-The hole can hold any value, not just a name: a number, or even a little sum:
+The hole can hold any value, not only a name: a number, or even a small sum:
 
 ```js
 console.log(`Next year you'll be ${12 + 1}`);
@@ -30,11 +30,11 @@ console.log(`Next year you'll be ${12 + 1}`);
 Next year you'll be 13
 ```
 
-Notice the `'` in "you'll": inside backticks, quotes are just characters, no problem at all.
+Look at the `'` in "you'll". Inside backticks, quotes are only characters, so there is no problem.
 
 ## Break it on purpose
 
-Use normal quotes instead of backticks:
+Use normal quotes, not backticks:
 
 ```js
 console.log("Hi ${name}, you have ${count} new messages");
@@ -44,21 +44,21 @@ console.log("Hi ${name}, you have ${count} new messages");
 Hi ${name}, you have ${count} new messages
 ```
 
-The holes stay holes: only backticks fill them in. If you see `${` in your output, check your quote marks.
+The holes stay holes: only backticks fill them. If you see `${` in what your script writes, check your quotes.
 
 ---
 
 ## Mission: A welcome message
 
-Welcome Lena Park properly, with one sentence written as a template.
-
-**Example**: when `crew.html` opens, the console shows, among its other lines:
+**What you will see**: when `crew.html` opens, the console shows this line, with its other lines:
 
 ```text
 Welcome aboard, Lena Park! You are crew member 7.
 ```
 
-- The console shows `Welcome aboard, Lena Park! You are crew member 7.`
-- The sentence is one template literal: her first name, her last name and the number 7 each go in through a `${...}`, the number from a name of its own.
+Welcome Lena Park in a nicer way, with one sentence written as a template.
 
-Psst, backticks, not quotes :)
+- The console shows `Welcome aboard, Lena Park! You are crew member 7.`
+- The sentence is one template literal.
+- Her first name, her last name and the number 7 each go in through a `${...}`.
+- The number 7 comes from its own name.

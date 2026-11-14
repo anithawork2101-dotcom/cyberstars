@@ -1,4 +1,4 @@
-On a timetable, a double lesson takes two boxes in a row, merged into one. And a note at the bottom, like "school closes at 15:00 on Friday", runs across all the columns. Table cells can stretch like that.
+On a timetable, a double lesson takes two boxes in a row, joined into one. And a note at the bottom, like "school closes at 15:00 on Friday", goes across all the columns. Table cells can grow like that.
 
 ## `colspan`: across columns
 
@@ -21,7 +21,7 @@ On a timetable, a double lesson takes two boxes in a row, merged into one. And a
 </table>
 ```
 
-`colspan="3"` makes the cell three columns wide. A row in a 3-column table now needs only this one cell.
+`colspan="3"` makes the cell three columns wide. Now a row in a table with 3 columns needs only this one cell.
 
 ## `rowspan`: down rows
 
@@ -44,11 +44,11 @@ On a timetable, a double lesson takes two boxes in a row, merged into one. And a
 </table>
 ```
 
-`rowspan="2"` makes "Monday" two rows tall. The second row has one cell fewer: the place on its left is already taken by Monday.
+`rowspan="2"` makes "Monday" two rows tall. The second row has one cell less: Monday already takes the place on its left.
 
 ## Count the cells
 
-The trick with spans is counting: every row must still add up to the same number of columns. A cell with `colspan="3"` counts as three. A cell with `rowspan="2"` also takes a place in the row under it, so that row has one `td` less.
+When you join cells, you must count. Every row must still add up to the same number of columns. A cell with `colspan="3"` counts as three. A cell with `rowspan="2"` also takes a place in the row under it, so that row has one `td` less.
 
 ## Break it on purpose
 
@@ -74,15 +74,13 @@ Keep the extra cell in the second row:
 </table>
 ```
 
-"Music" sticks out into a new column on the right, past the edge of the table. The second row has one cell too many: Monday was already in its first place.
+"Music" comes out into a new column on the right, past the edge of the table. The second row has one cell too many, because Monday was already in its first place.
 
 ---
 
 ## Mission: The footer and the bays
 
-The flight table's note should run across the whole table. And the schedule page gets a second table, for the docking bays, where one bay has two ships today.
-
-**Example**: the note in the table's footer spans all four columns. Under the flights, a part called Docking Bays shows:
+**What you will see**: the note in the table's footer goes across all four columns. Under the flights, a Docking Bays part shows:
 
 ```text
 Bay     Time    Ship
@@ -91,8 +89,12 @@ Bay 1   08:00   Kestrel
 Bay 2   10:30   Albatross
 ```
 
-- The footer's note is one cell, as wide as the four columns.
-- A part with a heading one level under the page's heading, Docking Bays, and a table with the id `bays`: a header row with Bay, Time and Ship, then a row per ship.
-- Bay 1's cell spans its two ships' rows.
+The flight table's note should go across the whole table. And the schedule page gets a second table, for the docking bays. One bay has two ships today.
 
-Psst, a cell spanning two rows takes a place in the row under it :)
+- The footer's note is one cell, as wide as the four columns.
+- Add a part called Docking Bays, with a heading one level under the page's heading.
+- Under it, add a table with the id `bays`.
+- The table has a header row with Bay, Time and Ship, then a row for each ship.
+- Bay 1's cell goes down across the rows of its two ships.
+
+A cell that goes down across two rows also takes a place in the row under it.

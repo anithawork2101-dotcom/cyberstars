@@ -1,8 +1,8 @@
-A school report has a line for each subject: maths, a mark; English, a mark; art, a mark. To read it out to your family, you go down the report one line at a time: the subject, then its mark. An object is like that report, and `for...in` reads it line by line.
+A school report has a line for each subject: math, a mark; English, a mark; art, a mark. To read it out to your family, you go down the report one line at a time: the subject, then its mark. An object is like that report, and `for...in` reads it line by line.
 
 ## An object, one property at a time
 
-You know objects from the Flight Schedule: names, called **keys**, each with its value. `for...in` goes through every key of an object:
+You know objects from the Flight Schedule: names, called **keys**, each one with its value. `for...in` goes through every key of an object:
 
 ```js
 const report = { maths: 9, English: 8, art: 10 };
@@ -61,17 +61,15 @@ English: undefined
 art: undefined
 ```
 
-`report.subject` looks for a key called exactly "subject", and the report has none. Only square brackets read what's inside the variable.
+`report.subject` looks for a key called exactly "subject", and the report has none. Only square brackets read what is inside the variable.
 
-Then use `for...of` on the object: the console says `TypeError: report is not iterable`. An object isn't a list of items, so `for...of` doesn't know how to go through it.
+Then use `for...of` on the object. The console says `TypeError: report is not iterable`. An object isn't a list of items, so `for...of` doesn't know how to go through it.
 
 ---
 
 ## Mission: The cards as an object
 
-Later lessons will work on the dashboard's numbers, so the script should first gather them in one object.
-
-**Example**: the console shows a line for each card, in the cards' order:
+**What you will see**: the console shows a line for each card, in the cards' order:
 
 ```text
 Crew on board: 6
@@ -82,7 +80,11 @@ Power: 87%
 Days in orbit: 412
 ```
 
-- The script makes an object of the cards: for each card of `.stats`, a key that is the card's heading, with the card's number (`.stat-value`) as its value.
-- It goes through the object's keys and logs, for each one, the key, `: `, and its value.
+Later lessons will work on the dashboard's numbers, so first the script should put them together in one object.
 
-Psst, a key in a variable needs square brackets, not a dot :)
+- The script makes an object of the cards.
+- For each card of `.stats`, the object has a key: the card's heading, with the card's number (`.stat-value`) as its value.
+- The script goes through the object's keys.
+- For each key, it writes in the console the key, `: `, and its value.
+
+A key in a variable needs square brackets, not a dot.

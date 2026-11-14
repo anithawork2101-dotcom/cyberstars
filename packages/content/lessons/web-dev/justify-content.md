@@ -1,4 +1,4 @@
-On a shelf with room to spare, you decide where the books go. You push them all to the left, put them in the middle, or spread them out with the same room between each one. The books stay the same: only the empty room around them moves.
+On a shelf with extra space, you decide where the books go. You push them all to the left, put them in the middle, or spread them out with the same space between each one. The books stay the same. Only the empty space around them moves.
 
 ## `justify-content`
 
@@ -26,16 +26,16 @@ In a flex container, `justify-content` says where the items sit along the line: 
 </div>
 ```
 
-The buttons stand together in the middle of the line, with the same room on their left and on their right. Try the other values in place of `center`:
+The buttons stand together in the middle of the line, with the same space on their left and on their right. Try the other values instead of `center`:
 
-- `flex-start`: at the start of the line, on the left. This is what you get when you don't write it.
+- `flex-start`: at the start of the line, on the left. You get this when you don't write it.
 - `flex-end`: at the end of the line, on the right.
-- `space-between`: the first at the start, the last at the end, and the same room between each one.
-- `space-evenly`: the same room everywhere, at the ends too.
+- `space-between`: the first item at the start, the last one at the end, and the same space between each one.
+- `space-evenly`: the same space everywhere, at the ends too.
 
-## No room left, no move
+## No space left, no move
 
-`justify-content` moves the items in the room left over. When the items fill the whole line, there is nothing to move:
+`justify-content` moves the items in the space that is left. When the items fill the whole line, there is nothing to move:
 
 ```css preview
 <style>
@@ -97,11 +97,11 @@ The two tips are long, so together they take the whole line, and `center` change
 </div>
 ```
 
-Now there is room left, and the two tips stand in the middle of the line.
+Now there is space left, and the two tips stand in the middle of the line.
 
 ## Break it on purpose
 
-Give `justify-content` to the buttons instead of their parent:
+Give `justify-content` to the buttons, not to their parent:
 
 ```css preview
 <style>
@@ -134,11 +134,9 @@ The buttons stay on the left. `justify-content` places the items of a flex conta
 
 ## Mission: Cards in the middle
 
-Your wiki cards fill the whole row of the list, so there is no room left to place them.
+**What you will see**: on a computer, the three cards are narrower than now. They stand together in the middle of the list, with the same space on their left and on their right.
 
-**Example**: on a computer, the three cards are narrower than now, and stand together in the middle of the list, with the same room on their left and on their right.
+Your wiki cards fill the whole row of the list, so there is no space left to move them.
 
 - Each card on `wiki.html` is between 200 and 300 pixels wide.
-- The cards stand in the middle of the list, with as much room on their left as on their right.
-
-Psst, `justify-content` goes on the cards' parent, not on the cards :)
+- The cards stand in the middle of the list, with as much space on their left as on their right.

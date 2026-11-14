@@ -1,4 +1,4 @@
-So far your oxygen numbers live in `crew.js`. But when the crew gets new tanks, they'd rather change the page than dig into a script. The numbers can live on the page, and the script can read them from there. There's one catch.
+Your oxygen numbers are in `crew.js` for now. But when the crew gets new tanks, they would rather change the page than look inside a script. The numbers can be on the page, and the script can read them from there. But there is one problem.
 
 ## Everything on the page is text
 
@@ -17,7 +17,7 @@ console.log(members + 1);
 121
 ```
 
-`members` is the string `"12"`, so `+ 1` joins: `"121"`. To do maths with it, it must become a real number first.
+`members` is the string `"12"`, so `+ 1` joins: `"121"`. To do math with it, it must become a real number first.
 
 ## `Number()`
 
@@ -44,33 +44,32 @@ console.log(Number("twelve"));
 NaN
 ```
 
-`NaN` means **Not a Number**: JavaScript tried, and couldn't. Any sum with `NaN` in it gives `NaN` too. When `NaN` shows up on your page, look at the text you turned into a number: a stray word, or the wrong element.
+`NaN` means **Not a Number**: JavaScript tried, and it couldn't. Any sum with `NaN` in it gives `NaN` too. When you see `NaN` on your page, look at the text you turned into a number. Maybe it has a word in it, or it's the wrong element.
 
 ## Break it on purpose
 
-Read the whole paragraph instead of the span:
+Read the whole paragraph, not the span:
 
 ```js
 const members = Number(document.querySelector("p").textContent);
 ```
 
-`NaN`: the text is "Members: 12", and "Members:" isn't a number. That's why numbers on a page sit in a `span` of their own: so a script can read just the number.
+You get `NaN`. The text is "Members: 12", and "Members:" isn't a number. That's why numbers on a page sit in their own `span`: so a script can read only the number.
 
 ---
 
 ## Mission: Oxygen on the page
 
-The oxygen numbers move from `crew.js` to `crew.html`, where the crew can change them.
-
-**Example**: `crew.html` shows, under the status line:
+**What you will see**: `crew.html` shows these lines under the status line:
 
 ```text
 Oxygen tanks: 7, each lasting 20 hours.
 Oxygen lasts 140 hours
 ```
 
-- `crew.html` has a paragraph with the number of tanks in a `span` with the id `tanks`, and the hours per tank in a `span` with the id `tank-hours`.
-- Under it, the script writes in a paragraph with the id `oxygen` how many hours the oxygen lasts, worked out from those two numbers: `Oxygen lasts 140 hours`.
-- When the numbers on the page change, so does the sentence.
+The oxygen numbers move from `crew.js` to `crew.html`, where the crew can change them.
 
-Psst, `textContent` is text: turn it into a number first :)
+- `crew.html` has a paragraph with the number of tanks in a `span` with the id `tanks`.
+- The same paragraph has the hours for each tank in a `span` with the id `tank-hours`.
+- Under it, the script writes in a paragraph with the id `oxygen` how long the oxygen lasts: `Oxygen lasts 140 hours`.
+- The script works it out from the two numbers on the page. When they change, the sentence changes too.

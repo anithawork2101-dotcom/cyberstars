@@ -1,4 +1,4 @@
-At a school vote for the class trip, the teacher writes each place on the board the first time someone says it, and adds a tick each time it comes up again: "zoo: 3, museum: 1, beach: 5". A list of names, each with its count, in the order they came. JavaScript has a collection made for pairs like that: a `Map`.
+At a school vote for the class trip, the teacher writes each place on the board the first time someone says it, and adds a tick each time it comes up again: "zoo: 3, museum: 1, beach: 5". A list of names, each one with its count, in the order they came. JavaScript has a collection made for pairs like that: a `Map`.
 
 ## `new Map()`
 
@@ -18,7 +18,7 @@ console.log(votes.get("museum"));
 undefined
 ```
 
-`get` gives `undefined` for a key the map doesn't have. `set` on a key that's already there replaces its value.
+`get` gives `undefined` for a key the map doesn't have. `set` on a key that is already there replaces its value.
 
 ## What a Map knows
 
@@ -61,26 +61,28 @@ beach: 1
 
 ## Map or object?
 
-An object works for pairs too, but a Map is made for them: it knows its `size`, keeps the order you added the keys in, and its keys can be anything, a number or even an element of the page, not only texts. Use a Map for a collection that grows while the page runs, and an object for a thing with fixed properties, like a player with a name and a score.
+An object works for pairs too, but a Map is made for them. It knows its `size`, keeps the order you added the keys in, and its keys can be anything, a number or even an element of the page, not only texts. Use a Map for a collection that grows while the page runs, and an object for a thing with fixed properties, like a player with a name and a score.
 
 ## Break it on purpose
 
-Use square brackets on a map: `votes["zoo"] = 1`. No error, but it's not a pair of the map: it's a property stuck on the map object. `votes.get("zoo")` gives `undefined`, and `for...of` doesn't see it. With a Map, use `set` and `get`.
+Use square brackets on a map: `votes["zoo"] = 1`. No error, but it's not a pair of the map: it's a property added to the map object. `votes.get("zoo")` gives `undefined`, and `for...of` doesn't see it. With a Map, use `set` and `get`.
 
 ---
 
 ## Mission: What visitors pick
 
-The crew wonders which themes people try before they decide. During one visit, the settings page should count each theme that is chosen.
-
-**Example**: open the page, click Light, Dark, then Light again. Under the reset button, the page says:
+**What you will see**: open the page, and click Light, Dark, then Light again. Under the reset button, the page says:
 
 ```text
 Picked: light 2, dark 1
 ```
 
-- Under `#reset-settings`, a paragraph with the id `picks`, which says `Picked: nothing yet` when the page opens.
-- The `settings` object counts, in a Map, how many times each theme is chosen during the visit, by its button or by bringing settings.
-- After each choice, `#picks` says `Picked: `, then each theme chosen so far with its count, in the order they were first chosen, with a comma and a space between two.
+The crew wants to know which themes people try before they decide. During one visit, the settings page should count each theme that is chosen.
 
-Psst, a theme chosen for the first time has no count yet: `??` gives it 0 :)
+- Under `#reset-settings`, add a paragraph with the id `picks`.
+- It says `Picked: nothing yet` when the page opens.
+- The `settings` object counts, in a Map, how many times each theme is chosen during the visit, by its button or by bringing settings.
+- After each choice, `#picks` says `Picked: `, then each theme chosen so far with its count.
+- The themes are in the order they were first chosen, with a comma and a space between two.
+
+A theme chosen for the first time has no count yet: `??` gives it 0.

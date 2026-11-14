@@ -1,4 +1,4 @@
-Look at the top of almost any website: the site's name is on the left, and the menu sits on the same line, next to it. Your pages put the menu under the name instead. That's because `<p>` and `<nav>` are blocks, and a block takes a whole row of its own. One line of CSS can put them side by side.
+Look at the top of almost any website. The site's name is on the left, and the menu is on the same line, next to it. Your pages put the menu under the name instead. That's because `<p>` and `<nav>` are blocks, and a block takes a whole line of its own. One line of CSS can put them side by side.
 
 ## `display: flex`
 
@@ -31,7 +31,7 @@ Give a parent element `display: flex`, and its children stand side by side, in a
 </div>
 ```
 
-The three days of a school club stand in a row, and each one is only as wide as its words. Remove `display: flex` and look: each day takes a whole row again, one under the other.
+The three days of a school club stand in a row, and each one is only as wide as its words. Remove `display: flex` and look: each day takes a whole line again, one under the other.
 
 ## Only the children
 
@@ -69,11 +69,11 @@ The three days of a school club stand in a row, and each one is only as wide as 
 </div>
 ```
 
-The two days stand side by side, because they are the children of `.week`. Inside each day, the heading is still above its line of text: those are the children of `.day`, and `.day` is not a flex container.
+The two days stand side by side, because they are the children of `.week`. Inside each day, the heading is still above its line of text. Those are the children of `.day`, and `.day` isn't a flex container.
 
 ## Break it on purpose
 
-Give `display: flex` to the days instead of their parent:
+Give `display: flex` to the days, not to their parent:
 
 ```css preview
 <style>
@@ -113,16 +113,17 @@ The days are one under the other again. But inside each day, the heading and its
 
 ## Mission: The header on one line
 
-Every page of your site starts with its header: the station's name, and the menu under it.
-
-**Example**: at the top of every page, the name and the menu share one line:
+**What you will see**: at the top of every page, the name and the menu share one line:
 
 ```text
 Orbital Station 7  Home  Crew  Schedule  Boarding  Wiki
 ```
 
-- On every page, the station's name and the main menu stand side by side in the header.
-- The rest of each page stays as it was. On the home page, the "On this page" menu still has its links in the middle.
-- On a phone too, nothing sticks out sideways.
+Every page of your site starts with its header: the station's name, and the menu under it.
 
-Psst, the name and the menu are the children of the header :)
+- On every page, the station's name and the main menu stand side by side in the header.
+- The rest of each page stays as it was.
+- On the home page, the "On this page" menu still has its links in the middle.
+- On a phone too, nothing comes out sideways.
+
+The name and the menu are the children of the header.

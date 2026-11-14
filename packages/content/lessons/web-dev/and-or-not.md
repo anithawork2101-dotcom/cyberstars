@@ -1,4 +1,4 @@
-"You can go out if you've done your homework **and** tidied your room." "We'll take the bus **or** a taxi." "Do **not** touch." Everyday rules join questions together with and, or and not. JavaScript has the same three words, written as signs.
+"You can go out if you've done your homework **and** cleaned your room." "We'll take the bus **or** a taxi." "Do **not** touch." Everyday rules join questions with and, or and not. JavaScript has the same three words, written as signs.
 
 ## `&&`: and
 
@@ -14,7 +14,7 @@ console.log(homeworkDone && roomTidy);
 false
 ```
 
-The room isn't tidy, so the whole answer is `false`. `&&` is `true` only when **both** are.
+The room isn't clean, so the whole answer is `false`. `&&` is `true` only when **both** sides are true.
 
 ## `||`: or
 
@@ -30,11 +30,11 @@ console.log(busComing || taxiFree);
 true
 ```
 
-The bus isn't coming, but a taxi is free, so you can go: `true`. `||` is `false` only when **both** are false. The `|` key is usually above Enter, typed with Shift.
+The bus isn't coming, but a taxi is free, so you can go: `true`. `||` is `false` only when **both** sides are false. The `|` key is usually above Enter, and you type it with Shift.
 
 ## `!`: not
 
-`!` turns `true` into `false` and back:
+`!` turns `true` into `false`, and `false` into `true`:
 
 ```js
 const raining = false;
@@ -49,7 +49,7 @@ true
 
 ## Joining questions
 
-They're often used with comparisons:
+You often use them with comparisons:
 
 ```js
 const age = 13;
@@ -74,21 +74,20 @@ console.log(homeworkDone & roomTidy);
 0
 ```
 
-A number, not a boolean! A single `&` is something else entirely, for working with the bits of numbers. For "and" and "or", always two signs.
+A number, not a boolean! One `&` is something very different, for working with numbers in a special way. For "and" and "or", always use two signs.
 
 ---
 
 ## Mission: Ready to fly
 
-A flight is ready for its passengers when it's on time **and** leaves before 10:00.
-
-**Example**: when `schedule.html` opens, the console shows:
+**What you will see**: when `schedule.html` opens, the console shows:
 
 ```text
 Second flight ready: true
 ```
 
-- The console shows `Second flight ready: ` followed by `true` or `false`.
-- It's `true` only when the second row's status is `On time` and its departure time is before `10:00`, both read from the table.
+A flight is ready for its passengers when it's on time **and** it leaves before 10:00.
 
-Psst, "and" is two `&` :)
+- The console shows `Second flight ready: `, then `true` or `false`.
+- It's `true` only when the second row's status is `On time`, and its departure time is before `10:00`.
+- Both are read from the table.

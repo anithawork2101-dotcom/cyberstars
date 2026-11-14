@@ -1,4 +1,4 @@
-A T-shirt comes in small, medium or large. You pick one size, never two. On a paper form, people sometimes tick two boxes by mistake. On a web page, there's a kind of button that makes that impossible.
+A T-shirt comes in small, medium or large. You choose one size, never two. On a paper form, people sometimes tick two boxes by mistake. On a web page, there is a kind of button that makes that impossible.
 
 ## `type="radio"`
 
@@ -11,13 +11,13 @@ A T-shirt comes in small, medium or large. You pick one size, never two. On a pa
 <label for="large">Large</label>
 ```
 
-Round buttons, each with its label. Click **Small**, then **Large**: Small is no longer on. Only one can be on.
+You see round buttons, each with its label. Click **Small**, then **Large**: Small isn't on any more. Only one can be on.
 
-They're called **radio buttons**, after the buttons of old car radios: you push in the button for one station, and the button pushed before jumps out.
+They are called **radio buttons**, after the buttons of old car radios. You pushed the button for one station, and the button pushed before jumped out.
 
 ## One name, one choice
 
-What ties the buttons together is their `name`. All the round buttons with the same name are one question, and only one of them can be on. Each one has its own `value`, and the form sends the one that is on:
+The `name` ties the buttons together. All the round buttons with the same name are one question, and only one of them can be on. Each one has its own `value`, and the form sends the one that is on:
 
 ```html preview
 <form>
@@ -29,17 +29,17 @@ What ties the buttons together is their `name`. All the round buttons with the s
 </form>
 ```
 
-Pick **Large** and click **Order**:
+Choose **Large** and click **Order**:
 
 ```text
 The form was sent: size=L
 ```
 
-Once one is on, a second click on it doesn't turn it off. To change your answer, you pick another one.
+Once one is on, a second click on it doesn't turn it off. To change your answer, you choose another one.
 
 ## Break it on purpose
 
-Give each button a name of its own:
+Give each button its own name:
 
 ```html preview
 <input type="radio" id="small" name="small" value="S" />
@@ -56,12 +56,11 @@ Click all three: all three are on, and you can't turn any of them off. Three nam
 
 ## Mission: Window or aisle?
 
-Your booking form asks about the extras, but not about the seat. A passenger sits either by the window or on the aisle, never both.
+**What you will see**: two round buttons, like "By the window" and "On the aisle". Choose the aisle and send: the console's line has `seat=aisle` in it.
 
-**Example**: two round buttons, such as "By the window" and "On the aisle". Pick the aisle and send: the console's line has `seat=aisle` in it.
+Your booking form asks about the extras, but not about the seat. A passenger sits by the window or by the aisle, the path between the seats. Never both.
 
-- Two round buttons named `seat`, with the values `window` and `aisle`.
-- Only one can be on at a time, and the form sends the one picked.
-- Each has a label, and a click on the label picks its button.
-
-Psst, both buttons get the same name :)
+- Add two round buttons named `seat`.
+- Their values are `window` and `aisle`.
+- Only one can be on at a time, and the form sends the one chosen.
+- Each has a label, and a click on the label chooses its button.

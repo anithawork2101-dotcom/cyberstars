@@ -25,10 +25,10 @@ Open with a problem or a moment from real life, then show how the new idea solve
 
 ## 3. Talk like a person
 
-- Say "we", ask the reader things ("What do you see?"), and a `:)` now and then is fine.
+- Talk to the student as "you", and ask them things ("What do you see?"). Be warm, but use no `:)` or other smileys: they read as childish.
 - Explanations use everyday life: school, games, phones, the street, the kitchen. The space station belongs to the **mission**, not to the explanation. "Cargo Bay" and "hatch sign" mean nothing to a 14-year-old.
-- Write short sentences with words a 14-year-old knows. Explain every technical word the first time it appears, in the same sentence.
-- Many readers learn English as a second language. Use common words, not idioms or slang ("a piece of cake", "under the hood"), and a plain verb rather than a phrasal one where one exists ("remove", not "get rid of"). One idea per sentence, and the same word for the same thing all through the lesson.
+- Write short sentences, one idea in each, with words a 14-year-old knows. Explain every technical word in one short sentence the first time it comes up. A lesson with two or more new words opens with a small table, Word | What it means, after its first paragraph. A lesson that leans on a word from an earlier lesson can remind the student of it in one sentence ("Remember: a **parameter** is ...").
+- Many readers learn English as a second language, so keep to B1 English. Use common words, not idioms or slang ("a piece of cake", "under the hood"), and a plain verb rather than a phrasal one where one exists ("remove", not "get rid of"). One idea per sentence, and the same word for the same thing all through the lesson.
 - Examples are in English. No French or other languages to show a point.
 
 ## 4. Small steps you can see
@@ -60,11 +60,11 @@ If something is worth knowing but not taught yet, leave it for its own lesson.
 The mission asks for a result, not for code. It never repeats the example's values for the student to copy. The student must still always know where they start and when they're done.
 
 - **Where you start.** Say which file to open and what's already in it ("Your `index.html` from the last lesson already has the heading.").
-- **What done looks like.** Show the result: a picture of the finished page, or an **Example** block with what the page or the console shows, saying the student's own text may differ ("your page would show something like").
+- **What done looks like.** The mission starts with **What you will see**: what the page or the console shows once it is done, in words or in a ` ```text ` block, saying where the student's own text may differ ("something like").
 - **Only what's been taught.** The mission uses this lesson's idea and earlier ones, nothing else.
-- **Few points, each visible.** One to four bullet points. Each one is something you can check by looking at the page or the console.
+- **One requirement per bullet.** Each bullet is one plain sentence, something you can check by looking at the page or the console. Name ids and classes as such: "the list with the id `ships`".
 - **No hidden requirement.** Everything the tests check is said in the mission. A test never checks something the mission leaves to the student.
-- **One "Psst".** End with a hint about the most common slip, as Python's `print` does: "Psst, don't forget the quotes :)".
+- **No hint that gives the answer.** A closing hint stays only where it helps without solving, written plainly ("If the page shows `[object PointerEvent]`, read Break it on purpose again."). No "Psst".
 
 Bad (`web-dev/box-model.md`): "a background of its own, so the card shows against the page, with its text still readable on it". You can't see the finish line, and "readable" is a hidden rule.
 
@@ -85,12 +85,12 @@ Before a lesson goes for review, every answer is yes:
 
 1. Does it introduce exactly one new idea?
 2. Does it open with something from real life, or a problem the student already has?
-3. Would a 14-year-old understand every sentence on the first read?
-4. Would someone whose first language isn't English understand it too, with no idiom or rare word?
+3. Would a 14-year-old understand every sentence on the first read? Is every new technical word explained where it first comes up?
+4. Would someone whose first language isn't English understand it too, with no idiom or rare word, at B1? Is there no `:)`?
 5. Does every idea have its own small example, with what you see right after it? Is every HTML and CSS example a preview cell?
 6. Is there at least one wrong version, with what happens?
 7. Is every tag, property, word and function in it taught in this lesson or an earlier one?
-8. Does the mission say where you start and show what done looks like?
-9. Is every point of the mission visible on the page or in the console, and said out loud?
+8. Does the mission open with What you will see, and say where you start?
+9. Is every point of the mission one bullet, visible on the page or in the console, and said out loud? Does no hint give the answer?
 10. Does the mission ask for a result without giving the example's values to copy?
 11. Is the space station only in the mission?

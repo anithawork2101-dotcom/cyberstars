@@ -2,7 +2,7 @@ Have you ever watched a video on a bus with the sound off, reading the words at 
 
 ## A file of words, with their times
 
-Captions live in a text file of their own, next to the video. Its kind is **WebVTT**, and its name ends in `.vtt`. Your site has one now, `video/launch.vtt`. Open it:
+Captions are in their own text file, next to the video. Its kind is **WebVTT**, and its name ends in `.vtt`. Your site has one now, `video/launch.vtt`. Open it:
 
 ```text
 WEBVTT
@@ -14,11 +14,11 @@ WEBVTT
 [The rumble grows as the rocket rises]
 ```
 
-The first line is always `WEBVTT`. Then come the pieces of text, with an empty line between them. Each piece has its times first: from 0 seconds to 1 second, the first words show; from 1 to 5 seconds, the second ones. `00:01.000` is minutes, seconds and thousandths of a second.
+The first line is always `WEBVTT`. Then come the pieces of text, with an empty line between them. Each piece has its times first. From 0 seconds to 1 second, the first words show. From 1 to 5 seconds, the second ones show. `00:01.000` is minutes, seconds, and thousandths of a second.
 
 ## `<track>`
 
-`<track>` gives a video its words. It goes **inside** the `<video>`, between `<video>` and `</video>`, and like `<img>` it has no closing tag:
+`<track>` gives a video its words. It goes **inside** the `<video>`, between `<video>` and `</video>`. Like `<img>`, it has no closing tag:
 
 ```html
 <video src="video/launch.webm" controls>
@@ -31,7 +31,7 @@ The first line is always `WEBVTT`. Then come the pieces of text, with an empty l
 - `srclang="en"` says their language, like `lang="en"` on a page.
 - `label="English"` is the name the visitor sees in the video's menu.
 
-The captions don't show yet. The video's bar has a new choice for them: a button marked **CC**, or a line in its **⋮** menu, depending on the browser. Pick English there: the words appear at the bottom of the video.
+The captions don't show yet. The video's bar has a new choice for them: a button marked **CC**, or a line in its **⋮** menu, depending on the browser. Choose English there: the words show at the bottom of the video.
 
 This example needs the file of words, so try it in your editor, on the dashboard: the site there has `video/launch.vtt`.
 
@@ -49,18 +49,17 @@ Press play: "[The engines start: a low rumble]" shows at the bottom of the video
 
 Delete the first line of `video/launch.vtt`, `WEBVTT`. The captions choice is still there, but no words show: without that line, the browser doesn't read the file at all.
 
-Then put `WEBVTT` back, and move the `<track>` out of the video, after `</video>`. The captions choice disappears from the video's bar. A `<track>` belongs to the `<video>` it's inside, and outside one it belongs to nothing.
+Then put `WEBVTT` back, and move the `<track>` out of the video, after `</video>`. The captions choice is gone from the video's bar. A `<track>` belongs to the `<video>` it's inside. Outside a video, it belongs to nothing.
 
 ---
 
 ## Mission: Words for the launch
 
+**What you will see**: open the dashboard and press play on the launch video. At the bottom of the video, you read "[The engines start: a low rumble]", then "[The rumble grows as the rocket rises]". The video's menu offers "English".
+
 Not everyone on the station can hear, and the launch video only has sound. The course gives you the words of the launch: `video/launch.vtt` is in your site now.
 
-**Example**: open the dashboard and press play on the launch video. At the bottom of the video you read "[The engines start: a low rumble]", then "[The rumble grows as the rocket rises]". The video's menu offers "English".
-
-- The launch video (`#launch-video`) has its captions from `video/launch.vtt`, in English (`en`), with the name "English" in its menu.
+- The launch video (`#launch-video`) gets its captions from `video/launch.vtt`.
+- The captions are in English (`en`), with the name "English" in the video's menu.
 - They show from the start, without the visitor turning them on.
 - You may change the words in the file, as long as they still fit the video.
-
-Psst, the `<track>` goes inside the video, before `</video>` :)

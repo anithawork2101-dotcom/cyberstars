@@ -1,4 +1,4 @@
-"If it's colder than 15 degrees, I take a jumper. Otherwise, a t-shirt is enough." You make choices like that every day, without thinking. A program can make them too: do one thing **if** something is true, and another thing **else**.
+"If it's colder than 15 degrees, I take a sweater. If not, a t-shirt is enough." You make choices like that every day, without thinking. A program can make them too: do one thing **if** something is true, and another thing **else**.
 
 ## `if`
 
@@ -13,7 +13,7 @@ if (temperature < 15) {
 Take a jumper
 ```
 
-The question goes in the brackets after `if`. When its answer is `true`, the lines between `{` and `}` run. When it's `false`, they're skipped.
+The question goes in the brackets after `if`. When its answer is `true`, the lines between `{` and `}` run. When it's `false`, they are skipped.
 
 ## `else`
 
@@ -32,11 +32,11 @@ if (temperature < 15) {
 A t-shirt is enough
 ```
 
-Exactly one of the two blocks runs, never both, never neither.
+Exactly one of the two blocks runs: never both, and never none.
 
 ## On the page
 
-The question can come from the page, and the answer go back to it:
+The question can come from the page, and the answer can go back to it:
 
 ```js
 const open = document.querySelector("#open").textContent === "Yes";
@@ -57,24 +57,22 @@ if (temperature < 15); {
 }
 ```
 
-"Take a jumper" shows even at 30 degrees. The `;` ends the `if` right there, with nothing to do, and the block after it is just a block that always runs. No `;` between an `if`'s brackets and its `{`.
+"Take a jumper" shows even at 30 degrees. The `;` ends the `if` right there, with nothing to do. The block after it is now only a block that always runs. Never put a `;` between an `if`'s brackets and its `{`.
 
 ---
 
 ## Mission: Now boarding
 
-The schedule page says which flight is boarding now.
-
-**Example**: under the flight table, a paragraph says:
+**What you will see**: under the flight table, a paragraph says:
 
 ```text
 Now boarding: SL-101
 ```
 
-And when the first flight isn't boarding, it says `Nobody is boarding yet`.
+When the first flight isn't boarding, it says `Nobody is boarding yet`.
 
-- Under the flight table, a paragraph with the id `boarding-now`.
-- If the first row's status is `Boarding`, it says `Now boarding: ` and that row's flight code.
-- Else, it says `Nobody is boarding yet`.
+The schedule page says which flight is boarding now.
 
-Psst, exactly one of the two blocks runs :)
+- Under the flight table, add a paragraph with the id `boarding-now`.
+- If the first row's status is `Boarding`, the paragraph says `Now boarding: `, then that row's flight code.
+- If not, it says `Nobody is boarding yet`.

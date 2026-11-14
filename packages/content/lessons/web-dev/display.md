@@ -1,6 +1,6 @@
-You've seen two kinds of elements: blocks, which take a whole row, and inline ones, which sit inside a line. That's not fixed forever. With one property, you can change what kind of box an element is.
+You have seen two kinds of elements: blocks, which take a whole line, and inline elements, which sit inside a line. That isn't fixed. With one property, you can change what kind of box an element is.
 
-Think of tiles on a bathroom wall. Each tile is a little box with its own size, but they sit side by side in rows, and wrap to the next row when the wall ends. That's the third kind of box.
+Think of tiles on a bathroom wall. Each tile is a small box with its own size. But they sit side by side in rows, and go on to the next row when the wall ends. That's the third kind of box.
 
 ## `display`
 
@@ -38,18 +38,18 @@ Think of tiles on a bathroom wall. Each tile is a little box with its own size, 
 </div>
 ```
 
-The values you'll use:
+The values you will use:
 
-- `block`: a row of its own, full width, like `<p>` or `<div>`;
+- `block`: a line of its own, full width, like `<p>` or `<div>`;
 - `inline`: inside the line, as wide as its words, like `<span>`. Width and height don't work on it;
 - `inline-block`: sits in the line like a word, side by side with the others, **but** keeps its width, height, padding and margins, like a tile;
-- `none`: not shown at all, and takes no room. The element is still in your HTML.
+- `none`: not shown at all, and takes no space. The element is still in your HTML.
 
 ## Side by side
 
-With `display: inline-block`, the member boxes line up in a row like tiles. When the row is full, the next one wraps onto a new row.
+With `display: inline-block`, the member boxes stand in a row, like tiles. When the row is full, the next box goes to a new row.
 
-They line up along the bottom of their text by default, so boxes of different heights look uneven. `vertical-align: top` lines up their tops instead:
+By default, they line up along the bottom of their text, so boxes of different heights look uneven. `vertical-align: top` lines up their tops instead:
 
 ```css preview
 <style>
@@ -88,19 +88,17 @@ They line up along the bottom of their text by default, so boxes of different he
 
 ## Break it on purpose
 
-Make the member boxes `display: inline`. Their width is ignored, their padding spills over the lines around them, and they look like a mess of words. A box that should keep its size, but sit in a row, is `inline-block`.
+Make the member boxes `display: inline`. Now their width doesn't work, their padding covers the lines around them, and they look like a mess of words. A box that should keep its size but sit in a row is `inline-block`.
 
-Then try `display: none` on one: it disappears completely, and the others close up the gap.
+Then try `display: none` on one box. It's gone completely, and the other boxes close the gap.
 
 ---
 
 ## Mission: Cards in a row
 
-On `crew.html`, your cards are stacked one under the other, each with lots of empty space on its right.
+**What you will see**: on a wide screen, the cards on `crew.html` stand side by side, in rows, with their tops lined up.
 
-**Example**: on a wide screen, the cards sit side by side, in rows, their tops lined up.
+Your cards are one under the other, each with a lot of empty space on its right.
 
 - The first two cards stand side by side.
 - Their tops are lined up.
-
-Psst, a box that sits in a row but keeps its size is `inline-block` :)

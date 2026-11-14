@@ -1,4 +1,4 @@
-A friend moves house: you change their address in your contacts. Later you add their new phone number, which wasn't there before. An object can change like that: properties get new values, and new properties appear.
+A friend moves house, so you change their address in your contacts. Later, you add their new phone number, which wasn't there before. An object can change like that: properties get new values, and new properties are added.
 
 ## Changing a property
 
@@ -12,9 +12,9 @@ console.log(friend.city);
 Leeds
 ```
 
-A dot, the property, `=`, the new value. Like a `let` variable, but inside the object.
+A dot, the property, `=`, and the new value. It's like a `let` variable, but inside the object.
 
-The object is a `const`, and it still changed? Yes: as with arrays, `const` means the name always points at the **same** object. What's inside it can change.
+The object is a `const`, and it still changed? Yes. Like with arrays, `const` means the name always points at the **same** object. What is inside it can change.
 
 ## Adding a property
 
@@ -31,7 +31,7 @@ console.log(friend);
 
 ## Using the old value
 
-As with variables, the new value can come from the old one:
+Like with variables, the new value can come from the old one:
 
 ```js
 const player = { name: "Lea", points: 10 };
@@ -45,28 +45,28 @@ console.log(player.points);
 
 ## Break it on purpose
 
-Spell the property differently when you change it:
+Write the property's name differently when you change it:
 
 ```js
 friend.Ciy = "Leeds";
 ```
 
-No error. `friend.city` is still "Bristol", and the object now has a new property, `Ciy`. JavaScript can't know you meant `city`. Log the whole object to see what's really in it.
+No error. `friend.city` is still "Bristol", and the object now has a new property, `Ciy`. JavaScript can't know you meant `city`. Write the whole object to the console to see what is really in it.
 
 ---
 
 ## Mission: A change of plan
 
-The next flight is pushed back, and gets a gate.
-
-**Example**: when `schedule.html` opens, the console shows, after the next flight's line:
+**What you will see**: when `schedule.html` opens, the console shows these lines after the next flight's line:
 
 ```text
 New time: 10:05
 Gate: 3
 ```
 
-- The next flight's `departs` changes to `10:05`, and the console shows `New time: 10:05`, read from the object.
-- The object gets a new property, `gate`, with the number `3`, and the console shows `Gate: 3`, read from the object.
+The next flight leaves later, and it gets a gate.
 
-Psst, a property that isn't there yet is added when you give it a value :)
+- The next flight's `departs` changes to `10:05`.
+- The console shows `New time: 10:05`, read from the object.
+- The object gets a new property, `gate`, with the number `3`.
+- The console shows `Gate: 3`, read from the object.

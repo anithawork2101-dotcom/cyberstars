@@ -1,4 +1,4 @@
-On many phones you can pick a color in the settings, and the switches and ticks of every app take it. On a web page, boxes to tick and round buttons come in the browser's own blue, whatever colors your page has. One property changes that.
+On many phones, you can choose a color in the settings, and the switches and ticks of every app take it. On a web page, boxes to tick and round buttons come in the browser's own blue, whatever colors your page has. One property changes that.
 
 ## `accent-color`
 
@@ -21,9 +21,9 @@ On many phones you can pick a color in the settings, and the switches and ticks 
 <label for="card">Yellow card</label>
 ```
 
-The ticked box is now orange instead of blue. Tick the other one: orange too. The browser still draws the box, and it picks the color of the tick itself, so the tick shows on your orange.
+The ticked box is now orange, not blue. Tick the other one: orange too. The browser still draws the box, and it chooses the color of the tick itself, so the tick shows on your orange.
 
-It works the same on round buttons:
+It works the same way on round buttons:
 
 ```css preview
 <style>
@@ -96,12 +96,10 @@ Still blue. `color` is for text, and a box to tick has no text. `background-colo
 
 ## Mission: Station colors
 
-The seats and the extras of your form are still ticked in the browser's blue, which belongs to no part of your site.
+**What you will see**: Wi-Fi's tick and the dot of the chosen seat show in a color of your site, like the gold of your headings.
 
-**Example**: Wi-Fi's tick and the dot of the seat picked show in a color of your site, like the gold of your headings.
+The seats and the extras of your form are still ticked in the browser's blue, which doesn't belong to any part of your site.
 
-- Every box to tick has a color of your choice, not the browser's.
+- Every box to tick has a color you choose, not the browser's.
 - Every round button too.
-- A box or a round button added to the form later gets the color as well.
-
-Psst, `color` is for text :)
+- A box or a round button added to the form later gets the color too.

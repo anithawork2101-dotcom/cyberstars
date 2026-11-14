@@ -2,7 +2,7 @@ At school, the whiteboard is cleaned after each lesson. What the teacher wrote i
 
 ## A variable lives in its block
 
-A pair of braces, `{` and `}`, makes a **block**: the steps of an `if`, of a loop, of a function. A variable made with `let` or `const` inside a block lives only in that block. That place is the variable's **scope**.
+A pair of curly brackets, `{` and `}`, makes a **block**: the steps of an `if`, of a loop, of a function. A variable made with `let` or `const` inside a block only lives in that block. That place is the variable's **scope**.
 
 ```js
 const points = 7;
@@ -20,7 +20,7 @@ Well played!
 ReferenceError: message is not defined
 ```
 
-Inside the block, `message` works. After the `}`, it doesn't exist anymore, so the last line stops with an error.
+Inside the block, `message` works. After the `}`, it doesn't exist any more, so the last line stops with an error.
 
 ## Inside sees outside
 
@@ -43,7 +43,7 @@ Inside sees outside. Outside doesn't see inside.
 
 ## A listener's block starts again on each click
 
-The steps of a listener are a block too. On each click, they run again from the first line. So a variable made inside starts again each time, like the whiteboard. A value that must last from one click to the next goes outside, like the notice board:
+The steps of a listener are a block too. On each click, they run again from the first line. So a variable made inside starts again each time, like the whiteboard. A value that must stay from one click to the next goes outside, like the notice board:
 
 ```html preview
 <button type="button" id="goal">Goal!</button>
@@ -79,16 +79,14 @@ Click three times: the page says `Goals: 1`, and again `Goals: 1`. No error. Eac
 
 ## Mission: Count the thanks
 
-The thank button says thank you, but nobody knows how many thanks the writers got.
-
-**Example**: under the message, the page says `Thanks: 0`. Click **Thank the writers** three times, and it says:
+**What you will see**: under the message, the page says `Thanks: 0`. Click **Thank the writers** three times, and it says:
 
 ```text
 Thanks: 3
 ```
 
-- An element with the id `thanks-count` says `Thanks: 0` when the page opens.
-- Each click on `#thank` adds one: `Thanks: 1`, `Thanks: 2`, and so on, for as many clicks as come.
-- The message still says thank you after each click.
+The thank button says thank you, but nobody knows how many thanks the writers got.
 
-Psst, a variable made inside the listener starts again on every click :)
+- An element with the id `thanks-count` says `Thanks: 0` when the page opens.
+- Each click on `#thank` adds one: `Thanks: 1`, `Thanks: 2`, and so on, for every click.
+- The message still says thank you after each click.

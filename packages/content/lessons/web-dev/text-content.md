@@ -1,4 +1,4 @@
-At a train station, the departures board changes on its own: a train's time, then "Delayed", then "Boarding". Nobody repaints the board. A program changes the words. Now that your script can find an element, it can read its words and change them too.
+At a train station, the board with the trains changes by itself: a train's time, then "Delayed", then "Boarding". Nobody paints the board again. A program changes the words. Now your script can find an element, so it can read its words and change them too.
 
 ## Reading: `textContent`
 
@@ -13,7 +13,7 @@ console.log(heading.textContent);
 My Favourite Games
 ```
 
-Now the console shows the heading's words, not just `<h1>`.
+Now the console shows the heading's words, not only `<h1>`.
 
 ## Writing: give it a new value
 
@@ -50,26 +50,25 @@ document.querySelector("#notes").textContent = "Open today";
 TypeError: Cannot set properties of null (setting 'textContent')
 ```
 
-`querySelector` found nothing, so it gave `null`, and `null` has no text to set. When you see "of null", check the selector before it.
+`querySelector` found nothing, so it gave `null`, and `null` has no text to change. When you see "of null", check the selector before it.
 
-Remember why scripts are deferred: this only works once the page has been read.
+Remember why scripts have `defer`: this only works after the page is read.
 
 ---
 
 ## Mission: Status line
 
-The crew directory gets a status line, written by its script.
-
-**Example**: `crew.html` shows, under its first paragraph:
+**What you will see**: `crew.html` shows this line under its first paragraph:
 
 ```text
 Directory checked
 ```
 
-And the console shows, among its other lines, the page's biggest heading, word for word.
+And the console shows the page's biggest heading, word for word, with its other lines.
+
+The crew directory gets a status line, written by its script.
 
 - `crew.html` has an empty paragraph with the id `status`, under its first paragraph. Later lessons use it.
 - When the page opens, the script writes `Directory checked` in it.
-- The console shows the text of the page's biggest heading, read from the page.
-
-Psst, `textContent` is a property: no brackets :)
+- The console shows the text of the page's biggest heading.
+- The script reads that text from the page. It doesn't type it.

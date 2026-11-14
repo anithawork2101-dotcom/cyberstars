@@ -1,8 +1,8 @@
-Look at the sky at sunset: orange near the horizon, fading into purple, then dark blue. No sharp line anywhere, just one color melting into the next. That's a **gradient**, and CSS can draw one, with no picture file at all.
+Look at the sky at sunset: orange near the horizon, then purple, then dark blue. There is no sharp line anywhere. One color slowly turns into the next. That's a **gradient**, and CSS can draw one, with no picture file at all.
 
 ## `linear-gradient`
 
-A gradient is used like a background picture:
+You use a gradient like a background picture:
 
 ```css preview
 <style>
@@ -22,7 +22,7 @@ A gradient is used like a background picture:
 </div>
 ```
 
-From orange at the top to purple at the bottom, melting in between.
+It goes from orange at the top to purple at the bottom, and mixes them in between.
 
 Add a direction first, and more colors:
 
@@ -44,11 +44,11 @@ Add a direction first, and more colors:
 </div>
 ```
 
-`90deg` turns it to go left to right instead of top to bottom: `0deg` is upwards, `90deg` to the right, `180deg` downwards. With three colors, it goes orange, then purple, then dark blue.
+`90deg` turns it, so it goes from left to right, not from top to bottom. `0deg` is up, `90deg` is to the right, and `180deg` is down. With three colors, it goes orange, then purple, then dark blue.
 
 ## `radial-gradient`
 
-A radial gradient spreads from the middle outwards, in a circle:
+A radial gradient goes from the middle outwards, in a circle:
 
 ```css preview
 <style>
@@ -69,11 +69,11 @@ A radial gradient spreads from the middle outwards, in a circle:
 </div>
 ```
 
-White in the middle, fading out to dark blue at the edges, like a spotlight.
+White in the middle, slowly turning dark blue at the edges, like a spotlight on a stage.
 
-## Readable on top
+## Easy to read on top
 
-A gradient changes color across the box, so text on it has a different background at each end. Check the contrast at the lightest and the darkest point, not just one.
+A gradient changes color across the box. So text on it has a different background at each end. Check the contrast at the lightest point and at the darkest point, not only one.
 
 ## Break it on purpose
 
@@ -103,13 +103,11 @@ Nothing shows. A gradient is a kind of **image**, so it goes in `background-imag
 
 ## Mission: The board's header
 
-The flight table's header row should look like the top of a departures board, with a glow.
+**What you will see**: the header cells of the flight table (Flight, Destination, Departs, Status) sit on a gradient in your own colors, and their words are easy to read on it.
 
-**Example**: the header cells of the flight table (Flight, Destination, Departs, Status) stand on a gradient of your own colors, and their words are easy to read on it.
+The flight table's header row should look like the top of a board with departures, with a soft light.
 
 - The flight table's header cells have a gradient as their background.
 - The flights' cells keep their own background, without the gradient.
 
-Pick colors dark enough for the light words to read on them from one end to the other.
-
-Psst, a gradient goes in `background-image` :)
+Choose colors dark enough for the light words to be easy to read, from one end to the other.

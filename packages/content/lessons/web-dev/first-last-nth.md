@@ -1,4 +1,4 @@
-Look at a printed bank statement or a big timetable: the rows are often shaded every other line, white, grey, white, grey. It's called **zebra stripes**, and it stops your eye slipping to the wrong line. CSS can pick every other row by its place.
+Look at a printed bank statement, or a big timetable. Every second row is often shaded: white, grey, white, grey. It's called **zebra stripes**, and it helps your eye stay on the right line. CSS can choose every second row by its place.
 
 ## First and last
 
@@ -22,11 +22,11 @@ Look at a printed bank statement or a big timetable: the rows are often shaded e
 </ul>
 ```
 
-`:first-child` picks an element when it's the **first** child of its parent, `:last-child` when it's the last. In a list, that's the first and last items.
+`:first-child` chooses an element when it's the **first** child of its parent. `:last-child` chooses it when it's the last child. In a list, that's the first and the last items.
 
 ## `:nth-child`
 
-`:nth-child(...)` picks children by their number, counting from 1:
+`:nth-child(...)` chooses children by their number, counting from 1:
 
 ```css preview
 <style>
@@ -97,7 +97,7 @@ Every even row of the table's body is shaded: zebra stripes. Add a row, and the 
 
 ## Break it on purpose
 
-Put the `:nth-child` on the cells instead of the rows:
+Put the `:nth-child` on the cells, not on the rows:
 
 ```css preview
 <style>
@@ -129,16 +129,14 @@ Put the `:nth-child` on the cells instead of the rows:
 </table>
 ```
 
-Now it's every second **cell** of each row: stripes go down the columns instead of across. `:nth-child` counts the element it's on, among its own siblings.
+Now it's every second **cell** of each row, so the stripes go down the columns, not across. `:nth-child` counts the element it's on, among its own siblings.
 
 ---
 
 ## Mission: Zebra stripes
 
-The flight table's rows all look the same, and it's easy to slip from one to another.
+**What you will see**: in the flight table's body, every second row has its own background, starting with the second flight. The other rows stay as they were.
 
-**Example**: in the flight table's body, every second row has a background of its own, starting with the second flight, while the other rows stay as they were.
+The flight table's rows all look the same, and it's easy to move to the wrong row.
 
 - The even rows of the flight table's body have a background the odd rows don't have.
-
-Psst, `:nth-child` goes on the row :)

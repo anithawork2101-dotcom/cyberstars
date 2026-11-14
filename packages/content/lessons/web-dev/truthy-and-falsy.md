@@ -2,7 +2,7 @@ A friend asks: "Did you bring anything?" Your bag is empty, so the answer is no.
 
 ## An `if` with no comparison
 
-So far, every `if` had a question that gives `true` or `false`, like `name === ""`. But you can give `if` any value. JavaScript then decides if it counts as true or as false:
+Until now, every `if` had a question that gives `true` or `false`, like `name === ""`. But you can give `if` any value. Then JavaScript decides if it counts as true or as false:
 
 ```js
 const nickname = "";
@@ -34,11 +34,11 @@ A value that counts as false is **falsy**. There are only a few:
 - `""`, an empty text
 - `null`, `undefined` and `NaN`
 
-Every other value is **truthy**: it counts as true. That includes `"0"` and `" "`, a text with only a space: they aren't empty.
+Every other value is **truthy**: it counts as true. That includes `"0"` and `" "`, a text with only a space, because they aren't empty.
 
 ## In a page
 
-A box's `.value` is `""` while the box is empty, so `if (box.value)` asks "did the visitor type something?":
+A box's `.value` is `""` while the box is empty. So `if (box.value)` asks "did the visitor type something?":
 
 ```html preview
 <label for="nickname">Nickname</label>
@@ -58,9 +58,9 @@ A box's `.value` is `""` while the box is empty, so `if (box.value)` asks "did t
 </script>
 ```
 
-Type `Rocket`: the badge says `Rocket`. Delete it all: `No nickname yet` comes back.
+Type `Rocket`: the badge says `Rocket`. Delete everything: `No nickname yet` comes back.
 
-Careful: write `if (nickname)`, without `.value`, and you ask about the box itself. An element is an object, and every object is truthy, empty box or not.
+Be careful: write `if (nickname)`, without `.value`, and you ask about the box itself. An element is an object, and every object is truthy, empty box or not.
 
 ## Break it on purpose
 
@@ -83,17 +83,18 @@ Type a letter, and the console says:
 TypeError: Assignment to constant variable.
 ```
 
-One `=` doesn't compare: it tries to put `""` in `typed`, and a `const` can't change. Compare with `===`, or use the value alone, with the two branches swapped: `if (typed)`.
+One `=` doesn't compare. It tries to put `""` in `typed`, and a `const` can't change. Compare with `===`, or use the value alone, with the two parts of the `if` the other way round: `if (typed)`.
 
 ---
 
 ## Mission: No name yet
 
+**What you will see**: when the page opens, the pass says `Passenger: No name yet`. Type `Ida Moreau`, and it says `Passenger: Ida Moreau`. Delete the name, and `No name yet` comes back.
+
 When the page opens, your pass says `Passenger:` and nothing after it. It looks broken.
 
-**Example**: when the page opens, the pass says `Passenger: No name yet`. Type `Ida Moreau`, and it says `Passenger: Ida Moreau`. Delete the name, and `No name yet` comes back.
+- While the name box is empty, `#pass-name` says `No name yet`.
+- That's true when the page opens, and after the name is deleted.
+- While there is a name in the box, `#pass-name` shows it, while it's typed.
 
-- While the name box is empty, `#pass-name` says `No name yet`: when the page opens, and after the name is deleted.
-- While there is a name in the box, `#pass-name` shows it, as it's typed.
-
-Psst, the box itself is always truthy: its `.value` is what can be empty :)
+The box itself is always truthy. Its `.value` is what can be empty.

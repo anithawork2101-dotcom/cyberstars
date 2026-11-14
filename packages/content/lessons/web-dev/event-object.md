@@ -20,7 +20,7 @@ click
 
 ## `event.target`: the element it happened on
 
-`event.target` is the element the event happened on: the button clicked. Here, one function listens to two buttons:
+`event.target` is the element the event happened on: the button that was clicked. Here, one function listens to two buttons:
 
 ```html preview
 <p>Who scored?</p>
@@ -45,13 +45,13 @@ Click **Tigers**, and the page says:
 Goal for the Tigers!
 ```
 
-Click **Lions**, and it says `Goal for the Lions!`. The function is written once. On each click, `event.target` is the button clicked.
+Click **Lions**, and it says `Goal for the Lions!`. You write the function once. On each click, `event.target` is the button that was clicked.
 
-Look at `addEventListener("click", goal)`: we give it the function's name, with no brackets, as you gave `isHigh` to `filter`. The browser calls `goal` on each click, and gives it the event object.
+Look at `addEventListener("click", goal)`. You give it the function's name, with no brackets, like you gave `isHigh` to `filter`. The browser calls `goal` on each click, and gives it the event object.
 
 ## A box as the target
 
-With round buttons and boxes to tick, the target is the box clicked, so `event.target.value` is its `value`:
+With round buttons and boxes to tick, the target is the box that was clicked. So `event.target.value` is its `value`:
 
 ```html preview
 <p>Your size?</p>
@@ -85,7 +85,7 @@ Add brackets after the function's name:
 document.querySelector("#lions").addEventListener("click", goal());
 ```
 
-The console shows, as soon as the page opens:
+As soon as the page opens, the console shows:
 
 ```text
 TypeError: Cannot read properties of undefined (reading 'target')
@@ -97,18 +97,18 @@ With brackets, `goal()` runs at once, when the page opens. Nobody has clicked, s
 
 ## Mission: Which seat?
 
-Your pass shows the passenger's name. Now it should show the seat too. Write one function for both seats, which finds the seat clicked with the event object.
-
-**Example**: pick **On the aisle**, and the pass says:
+**What you will see**: choose **On the aisle**, and the pass says:
 
 ```text
 Seat: aisle
 ```
 
-Pick **By the window**, and it says `Seat: window`.
+Choose **By the window**, and it says `Seat: window`.
 
-- On the pass, an element with the id `pass-seat` shows the `value` of the seat picked: `window` or `aisle`, and only that.
-- It changes each time another seat is picked.
+Your pass shows the passenger's name. Now it should show the seat too. Write one function for both seats, which finds the clicked seat with the event object.
+
+- On the pass, an element with the id `pass-seat` shows the `value` of the chosen seat: `window` or `aisle`, and only that.
+- It changes each time another seat is chosen.
 - The button **Show my pass** still shows the name.
 
-Psst, give `addEventListener` the function's name, without brackets :)
+Give `addEventListener` the function's name, without brackets.

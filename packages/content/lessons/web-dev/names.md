@@ -1,4 +1,4 @@
-Look at a messy drawer of jars labelled "x", "thing" and "stuff2". You'd have to open every one to find the salt. Names in a program are labels too, and good names save you from opening jars.
+Look at a messy drawer with jars called "x", "thing" and "stuff2". You would have to open every jar to find the salt. Names in a program are labels too, and good names save you from opening jars.
 
 ## A name that says what's inside
 
@@ -7,28 +7,28 @@ const m = 12;
 const x = 4;
 ```
 
-What are those? Nobody knows, not even you next week. Compare:
+What are those? Nobody knows, not even you next week. Now look at this:
 
 ```js
 const members = 12;
 const tablesInTheRoom = 4;
 ```
 
-Now each line explains itself. A good name says **what the value is**, not just that it's a number.
+Now each line explains itself. A good name says **what the value is**, not only that it's a number.
 
 ## How to write a name
 
 JavaScript has some rules:
 
-- letters, digits, `_` and `$` only: no spaces, no `-`;
-- it can't start with a digit: `2players` isn't allowed, `players2` is;
-- capital letters count: `score` and `Score` are two different names.
+- letters, digits, `_` and `$` only: no spaces, and no `-`;
+- it can't start with a digit: `2players` isn't allowed, but `players2` is;
+- capital letters matter: `score` and `Score` are two different names.
 
-When a name has several words, join them and start each new word with a capital letter: `tablesInTheRoom`, `minutesPerOrbit`. That's called **camelCase**, because the capitals stick up like a camel's humps. It's how almost all JavaScript is written.
+When a name has several words, put them together, and start each new word with a capital letter: `tablesInTheRoom`, `minutesPerOrbit`. That's called **camelCase**, because the capitals stand up like a camel's back. Almost all JavaScript is written this way.
 
 ## Not too long, not too short
 
-`n` is too short to say anything. `theNumberOfPeopleWhoAreMembersOfTheClubRightNow` is too long to read. `members` says it all. Aim for one to three words.
+`n` is too short to say anything. `theNumberOfPeopleWhoAreMembersOfTheClubRightNow` is too long to read. `members` says it all. Try to use one to three words.
 
 A few words can't be names at all, because JavaScript uses them itself: `let`, `const`, `if`, `for`, and some others.
 
@@ -40,22 +40,22 @@ Use a `-` in a name:
 const tables-in-the-room = 4;
 ```
 
-A `SyntaxError`. JavaScript reads the `-` as a minus sign: `tables` minus `in` minus... and gets lost. That's why names use camelCase.
+You get a `SyntaxError`. JavaScript reads the `-` as a minus: `tables` minus `in` minus... and it gets lost. That's why names use camelCase.
 
 ---
 
 ## Mission: Oxygen supplies
 
-The station keeps spare oxygen tanks: 7 of them, each lasting 20 hours. Keep both numbers in `crew.js`, with names that say what they are.
-
-**Example**: when `crew.html` opens, the console shows, among its other lines:
+**What you will see**: when `crew.html` opens, the console shows these lines, with its other lines:
 
 ```text
 Oxygen tanks: 7
 Hours per tank: 20
 ```
 
-- The console shows `Oxygen tanks: 7` and `Hours per tank: 20`.
-- Each number is kept under a name in camelCase that says what it is, and the line that logs it uses the name.
+The station keeps extra oxygen tanks: 7 of them, and each one lasts 20 hours. Keep both numbers in `crew.js`, with names that say what they are.
 
-Psst, no spaces and no `-` in a name :)
+- The console shows `Oxygen tanks: 7`.
+- The console shows `Hours per tank: 20`.
+- Each number is kept under a name in camelCase that says what it is.
+- The line that writes each number uses its name.

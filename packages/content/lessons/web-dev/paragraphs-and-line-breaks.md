@@ -1,6 +1,6 @@
-Write a text message and press Enter three times between two words. The message shows three empty lines, just as you typed them. You'd expect a web page to do the same. It doesn't.
+Write a text message and press Enter three times between two words. The message shows three empty lines, just as you typed them. You would expect a web page to do the same. It doesn't.
 
-## The browser squeezes spaces
+## The browser joins spaces
 
 Try this in your editor:
 
@@ -16,13 +16,13 @@ chess
 and cards.</p>
 ```
 
-Still one line. To the browser, an Enter is just another space, and any number of spaces in a row count as one.
+It's still one line. For the browser, an Enter is just another space. And many spaces in a row count as one.
 
-That's on purpose. It means you can lay out your HTML file however you like, with spaces at the start of lines and empty lines between parts, and the page doesn't change. Your file stays easy to read.
+The browser does this on purpose. You can place your HTML in the file as you like, with spaces at the start of lines and empty lines between parts, and the page doesn't change. So your file stays easy to read.
 
 ## So how do you get new lines?
 
-With tags. Every `<p>` starts on a new line, so if you want things on separate lines, make them separate paragraphs:
+With tags. Every `<p>` starts on a new line. So if you want things on different lines, put them in different paragraphs:
 
 ```html preview
 <p>Clean your room.</p>
@@ -42,15 +42,13 @@ Write the same three lines in **one** paragraph, each on its own line in the fil
 </p>
 ```
 
-They run together into one line. The Enters you typed are gone.
+You see them on one line, one after the other. The Enters you typed are gone.
 
 ---
 
 ## Mission: Station rules
 
-Your `index.html` has its parts. Add one more part at the very end of the page: the rules everyone on board must follow.
-
-**Example**: the end of your page would show something like this, each rule on its own line:
+**What you will see**: at the end of your page, a heading and three rules, each rule on its own line. For example:
 
 ```text
 Station Rules
@@ -62,7 +60,8 @@ Close every hatch behind you.
 No running in the greenhouse.
 ```
 
-- The page ends with a new part: an `<h2>` heading, then its rules.
-- There are three rules, and each one shows on its own line on the page.
+Your `index.html` has its parts. Add one more part at the very end of the page: the rules everyone on board must follow.
 
-Psst, pressing Enter in the file doesn't start a new line on the page :)
+- The page ends with a new part, with an `<h2>` heading.
+- Under the heading, there are three rules.
+- Each rule shows on its own line on the page.

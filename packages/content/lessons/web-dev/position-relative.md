@@ -1,4 +1,4 @@
-In a class photo, everyone stands in a row. Noah wants to be seen, so he takes a small step forward. Nobody else moves. His place in the row stays empty, and it's still his. Only Noah changed where he stands.
+In a class photo, everyone stands in a row. Noah wants people to see him, so he takes a small step forward. Nobody else moves. His place in the row stays empty, and it's still his. Only Noah changed where he stands.
 
 CSS can do the same: move one element a little from its place, and leave everything else where it was.
 
@@ -59,11 +59,11 @@ The Sale mark sits 6 pixels higher than the words next to it. The price and the 
 <p>Next game: Saturday at 10:00.</p>
 ```
 
-Noah's box moves 20 pixels down and 20 pixels to the right. Now it covers a part of Sofia's box and of the line under it. Look at the gap between Ida and Noah: that's still Noah's place. Nobody made room for him, and nobody took his place.
+Noah's box moves 20 pixels down and 20 pixels to the right. Now it covers a part of Sofia's box, and of the line under it. Look at the gap between Ida and Noah: that's still Noah's place. Nobody made space for him, and nobody took his place.
 
 ## A margin moves the others
 
-Compare it with a margin, which you already know:
+Look at the same thing with a margin, which you already know:
 
 ```css preview
 <style>
@@ -90,11 +90,11 @@ Compare it with a margin, which you already know:
 <p>Next game: Saturday at 10:00.</p>
 ```
 
-A margin adds room around Noah's box, so everything around it moves: the whole row goes down, Sofia goes to the right, and the line under them goes down too. With `position: relative`, only Noah moves. That's the point of it: a small move that changes nothing else.
+A margin adds space around Noah's box, so everything around it moves. The whole row goes down, Sofia goes to the right, and the line under them goes down too. With `position: relative`, only Noah moves. That's why you use it: a small move that changes nothing else.
 
 ## Break it on purpose
 
-Remove `top` and keep only `position: relative`:
+Remove `top`, and keep only `position: relative`:
 
 ```css preview
 <style>
@@ -120,12 +120,14 @@ The Sale mark doesn't move. `position: relative` only allows the move; `top`, `l
 
 ## Mission: Something new
 
+**What you will see**: the heading of the Tools & Spare Parts entry ends with a small badge that says `New`, in your own colors. It sits a little higher than the words of the heading, like a sticker.
+
 Your wiki's front page, `wiki.html`, lists three entries. The newest one is Tools & Spare Parts, and readers should see at once that it's new.
 
-**Example**: the heading of the Tools & Spare Parts entry ends with a small badge that says `New`, in colors of your own. It sits a little higher than the words of the heading, like a sticker.
+- The heading of the Tools & Spare Parts entry ends with a `span` with the class `badge` that says `New`.
+- Its words are easy to read on its background: a contrast of at least 4.5:1.
+- The badge moves up a little from its own place, so it sits higher than the words next to it.
+- Nothing else on the page moves.
+- The tests also put the badge in another heading. It moves up the same way there, so style it by its class.
 
-- The heading of the Tools & Spare Parts entry ends with a `span` with the class `badge` that says `New`. Its words read well on its background: a contrast of at least 4.5:1.
-- The badge is lifted a little from its own place, so it sits higher than the words next to it. Nothing else on the page moves.
-- The tests also put the badge in another heading: it lifts the same way there, so style it by its class.
-
-Psst, `top` pushes away from the top, so it goes down. To lift, the number needs a minus :)
+`top` pushes away from the top, so it goes down. To move up, the number needs a minus.

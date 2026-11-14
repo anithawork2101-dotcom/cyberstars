@@ -1,4 +1,4 @@
-When you write a message on some phones, a small counter shows how many letters you have left: 160, 159, 158... It changes with every letter, and you never press a button for it. A page can react while the visitor types, too.
+When you write a message on some phones, a small counter shows how many letters you have left: 160, 159, 158... It changes with every letter, and you never press a button for it. A page can react while the visitor types too.
 
 ## The `input` event
 
@@ -56,15 +56,13 @@ message.addEventListener("change", () => {
 });
 ```
 
-Type in the box: the counter doesn't change. Click outside the box: now it changes, all at once. For a box you type in, `change` only happens when you leave it. You'll use `change` in the next lesson, where it fits better.
+Type in the box: the counter doesn't change. Click outside the box: now it changes, all at once. For a box you type in, `change` only happens when you leave the box. You will use `change` in the next lesson, where it fits better.
 
 ---
 
 ## Mission: A live pass
 
-Your pass shows the name only after a click on **Show my pass**. The notes box takes up to 200 characters, but the passenger can't see how many are left.
-
-**Example**: type `Ida` in the name box, and the pass already says `Passenger: Ida`. Keep typing, and it follows you up to `Ida Moreau`. Under the notes box, a line says:
+**What you will see**: type `Ida` in the name box, and the pass already says `Passenger: Ida`. Keep typing, and it follows you up to `Ida Moreau`. Under the notes box, a line says:
 
 ```text
 200 characters left
@@ -72,8 +70,11 @@ Your pass shows the name only after a click on **Show my pass**. The notes box t
 
 Type `Vegan meal` in the notes, and it says `190 characters left`.
 
-- `#pass-name` follows the name box as the passenger types, with no click. You can remove the button **Show my pass**: it has no job any more.
+Your pass shows the name only after a click on **Show my pass**. The notes box takes up to 200 characters, but the passenger can't see how many are left.
+
+- `#pass-name` follows the name box while the passenger types, with no click.
+- You can remove the button **Show my pass**: it has no job any more.
 - Under the notes box, an element with the id `notes-left` says `200 characters left` when the page opens.
 - Each change in the notes box changes it, like `190 characters left` after `Vegan meal`.
 
-Psst, spaces are characters too :)
+Spaces are characters too.

@@ -15,7 +15,7 @@ The page shows the tags as text: "A paragraph starts with <p> and ends with </p>
 
 ## `&amp;`
 
-Now `&` itself is special: it starts an entity. To show an `&`, write its entity, `&amp;`:
+Now `&` itself is special, because it starts an entity. To show an `&`, write its entity, `&amp;`:
 
 ```html preview
 <h2>Rock &amp; Roll Club</h2>
@@ -24,7 +24,7 @@ Now `&` itself is special: it starts an entity. To show an `&`, write its entity
 
 The page shows "Rock & Roll Club" and "Room 4 & Room 5".
 
-A lone `&` often shows fine, when the browser sees that no entity starts there. But not always: if the letters after it are an entity's name, you get a sign instead. Try this one:
+An `&` alone often shows fine, when the browser sees that no entity starts there. But not always. If the letters after it are an entity's name, you get a sign instead. Try this one:
 
 ```html preview
 <p>Our café &copy shop is open.</p>
@@ -41,15 +41,13 @@ Write the tags as they are:
 <p>A paragraph starts with <p> and ends with </p>.</p>
 ```
 
-The sentence falls into pieces on three lines, and the tags you wanted to show are gone. The browser made them real paragraphs.
+The sentence breaks into pieces on three lines, and the tags you wanted to show are gone. The browser made them real paragraphs.
 
 ---
 
 ## Mission: HTML on a wiki page
 
-The crew wants to add their own pages to the wiki. And Tomas Okafor, the engineer, is writing a new page.
-
-**Example**: the wiki's page shows, after the two entries:
+**What you will see**: the wiki's page shows this after the two entries:
 
 ```text
 Tools & Spare Parts
@@ -58,7 +56,11 @@ Coming soon: everything we need to fix the station, and where to find it.
 To add a page to the wiki, copy an entry from <article> to </article> and change its words.
 ```
 
-- The wiki's list has a third entry, `Tools & Spare Parts`, with a sentence that says it is coming soon. It has no link yet.
-- Under the list, a line tells the crew how to add a page to the wiki, showing the tags `<article>` and `</article>` on the page, signs and all.
+The crew wants to add their own pages to the wiki. And Tomas Okafor, the engineer, is writing a new page.
 
-Psst, each entity ends with a `;` :)
+- The wiki's list has a third entry, `Tools & Spare Parts`.
+- It has a sentence that says it is coming soon, and no link yet.
+- Under the list, a line tells the crew how to add a page to the wiki.
+- That line shows the tags `<article>` and `</article>` on the page, with their signs.
+
+Each entity ends with a `;`.

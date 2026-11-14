@@ -1,4 +1,4 @@
-Before a school trip, the teacher asks two different questions. "Has anyone forgotten their lunch?": one child is enough for a yes. "Has everyone brought their permission slip?": one missing slip is enough for a no. Arrays have a method for each question.
+Before a school trip, the teacher asks two different questions. "Has anyone forgotten their lunch?": one child is enough for a yes. "Has everyone brought their signed paper from home?": one missing paper is enough for a no. Arrays have a method for each question.
 
 ## `some`: is there one?
 
@@ -16,11 +16,11 @@ true
 false
 ```
 
-One child has no lunch, so the first answer is yes. Nobody has pizza, so the second is no. `some` stops at the first item that matches: it doesn't need to look further.
+One child has no lunch, so the first answer is yes. Nobody has pizza, so the second answer is no. `some` stops at the first item that matches: it doesn't need to look further.
 
 ## `every`: are they all?
 
-`every` answers `true` only when **all** the items match:
+`every` only answers `true` when **all** the items match:
 
 ```js
 const slips = [true, true, false, true];
@@ -32,7 +32,7 @@ console.log(slips.every((slip) => slip === true));
 false
 ```
 
-One slip is missing, so not everyone has one. `every` stops at the first item that doesn't match.
+One paper is missing, so not everyone has one. `every` stops at the first item that doesn't match.
 
 ## With objects
 
@@ -62,15 +62,13 @@ Someone is older than 13
 
 ## Break it on purpose
 
-Use `some` where you mean `every`: `players.some((player) => player.age >= 14)` answers `true`, because Leo is 14. But it doesn't mean the whole team is 14. Read your line out loud: "is there **one**?" is `some`, "are they **all**?" is `every`.
+Use `some` where you mean `every`. `players.some((player) => player.age >= 14)` answers `true`, because Leo is 14. But that doesn't mean the whole team is 14. Read your line out loud: "is there **one**?" is `some`, and "are they **all**?" is `every`.
 
 ---
 
 ## Mission: How are the supplies?
 
-The commander wants one short line about all the supplies, before reading the details.
-
-**Example**: under the first supply to refill, the dashboard says one of these:
+**What you will see**: under the first supply to refill, the dashboard says one of these:
 
 ```text
 All supplies are fine
@@ -78,8 +76,9 @@ Refill soon
 Refill now!
 ```
 
-- Under `#first-refill`, a paragraph with the id `supply-status`.
-- When every supply is at 25 or more, it says `All supplies are fine`.
-- Otherwise, when at least one supply is under 10, it says `Refill now!`. Otherwise, `Refill soon`.
+The commander wants one short line about all the supplies, before reading the details.
 
-Psst, `every` answers "are they all?", `some` answers "is there one?" :)
+- Under `#first-refill`, add a paragraph with the id `supply-status`.
+- When every supply is at 25 or more, it says `All supplies are fine`.
+- If not, when at least one supply is under 10, it says `Refill now!`.
+- In every other case, it says `Refill soon`.

@@ -1,4 +1,4 @@
-In a video game, you press Escape and the menu opens. In a chat app, you press Enter and your message is sent. Some keys do more than type a letter. A page can listen for them, too.
+In a video game, you press Escape, and the menu opens. In a chat app, you press Enter, and your message is sent. Some keys do more than type a letter. A page can listen for them too.
 
 ## `keydown` and `event.key`
 
@@ -26,7 +26,7 @@ A letter gives the letter. Other keys give their name, which starts with a capit
 
 ## One key, one job
 
-An `if` picks the key you want. Here, Escape empties the search box:
+An `if` chooses the key you want. Here, Escape empties the search box:
 
 ```html preview
 <label for="search">Search the games</label>
@@ -81,18 +81,19 @@ Write the key's name a little differently:
 if (event.key === "Esc") {
 ```
 
-Press Escape: nothing happens, and the console shows no error. The key is called `"Escape"`, and `"Esc"` is just another text that never comes. Key names are exact, capital letter too.
+Press Escape: nothing happens, and the console shows no error. The key is called `"Escape"`, and `"Esc"` is only another text that never comes. Key names are exact, capital letter too.
 
 ---
 
 ## Mission: Escape the notes
 
+**What you will see**: type `Vegan meal` in the notes box, then press Escape. The box is empty, and the line under it says `200 characters left` again.
+
 A passenger who wrote a long note and doesn't want it any more has to delete it letter by letter.
 
-**Example**: type `Vegan meal` in the notes box, then press Escape. The box is empty, and the line under it says `200 characters left` again.
-
 - Escape in the notes box empties it.
-- The counter under it then says `200 characters left`.
-- Escape in any other box leaves the notes as they are, and other keys in the notes box type as usual.
+- Then the counter under it says `200 characters left`.
+- Escape in any other box leaves the notes as they are.
+- Other keys in the notes box type as usual.
 
-Psst, a box emptied by your script sends no `input` event :)
+A box emptied by your script sends no `input` event.

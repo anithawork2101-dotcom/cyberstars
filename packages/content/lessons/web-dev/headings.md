@@ -1,4 +1,4 @@
-Open a school textbook. There's the book's title on the cover, then chapters, and inside each chapter smaller sections. You can tell them apart at a glance: the bigger the heading, the bigger the part it starts.
+Open a school textbook. There's the book's title on the cover, then chapters, and smaller sections inside each chapter. You can see quickly which is which: the bigger the heading, the bigger the part it starts.
 
 A web page has the same kind of levels. You already know the biggest one, `<h1>`. There are five more.
 
@@ -13,9 +13,9 @@ A web page has the same kind of levels. You already know the biggest one, `<h1>`
 <h6>Its first move</h6>
 ```
 
-The page shows six headings, each one a bit smaller than the one above.
+The page shows six headings. Each one is a little smaller than the one above it.
 
-The number is the **level**: `h1` is level 1, the whole page; `h2` starts a big part of it; `h3` a smaller part inside an `h2`, and so on down to `h6`. Most pages only need the first three.
+The number is the **level**. `h1` is level 1: the name of the whole page. `h2` starts a big part of the page. `h3` starts a smaller part inside an `h2`, and so on, down to `h6`. Most pages only need the first three.
 
 ## Headings with text under them
 
@@ -37,7 +37,7 @@ A heading starts a part, and the text of that part comes after it:
 <p>Only at weekends.</p>
 ```
 
-Read it like a table of contents:
+Read it like the list of chapters at the start of a book:
 
 ```text
 My Favourite Games
@@ -47,9 +47,9 @@ My Favourite Games
   Video Games
 ```
 
-Chess and Monopoly are both `h3`, because both are parts of Board Games. Video Games is an `h2` again, because it's a new big part, next to Board Games, not inside it.
+Chess and Monopoly are both `h3`, because both are parts of Board Games. Video Games is an `h2` again. It is a new big part, next to Board Games, not inside it.
 
-The empty lines between the parts don't show on the page. They just make the file easier to read.
+The empty lines between the parts don't show on the page. They only make the file easier to read.
 
 ## Break it on purpose
 
@@ -70,15 +70,13 @@ Make Video Games an `h3`:
 <p>Only at weekends.</p>
 ```
 
-On the page it just looks a bit smaller. But now the page says Video Games is part of Board Games, which isn't true. Someone who listens to the page with a screen reader, and jumps from heading to heading, gets the wrong idea of how the page is built.
+On the page, it only looks a little smaller. But now the page says Video Games is a part of Board Games, and that isn't true. Some people listen to the page with a screen reader, an app that reads the page out loud. They jump from heading to heading, so they get the wrong idea of how the page is built.
 
 ---
 
 ## Mission: Parts of the station
 
-Your `index.html` has the heading and a couple of paragraphs. Give the page some parts.
-
-**Example**: read as a table of contents, your page would look something like this:
+**What you will see**: read as a list of chapters, your page looks something like this:
 
 ```text
 Welcome aboard
@@ -88,8 +86,10 @@ Welcome aboard
     Night Shift
 ```
 
-- Under your paragraphs, at least two parts, each starting with an `<h2>` heading.
-- The second part has at least two smaller parts inside it, each starting with an `<h3>` heading.
-- Each `<h3>` has a paragraph right under it.
+Your `index.html` has the heading and a few paragraphs. Give the page some parts.
 
-Psst, a part inside another one gets the next level down :)
+- Under your paragraphs, add at least two parts.
+- Each part starts with an `<h2>` heading.
+- The second part has at least two smaller parts inside it.
+- Each smaller part starts with an `<h3>` heading.
+- Each `<h3>` has a paragraph right under it.

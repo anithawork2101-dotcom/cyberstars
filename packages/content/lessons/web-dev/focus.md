@@ -1,4 +1,4 @@
-Not everyone uses a mouse. Some people move around a page with the **Tab** key: each press jumps to the next link or button. Try it now on any website. How do you know where you are? A ring or a frame shows around the link that's ready to be pressed. That link has the **focus**.
+Not everyone uses a mouse. Some people move around a page with the **Tab** key: each press jumps to the next link or button. Try it now, on any website. How do you know where you are? A ring or a frame shows around the link that is ready. That link has the **focus**.
 
 ## `:focus`
 
@@ -13,13 +13,13 @@ Not everyone uses a mouse. Some people move around a page with the **Tab** key: 
 <p><a href="games.html">Our games</a> · <a href="members.html">Members</a> · <a href="rules.html">Rules</a></p>
 ```
 
-"A link, while it has the focus". Press Tab until you reach a link: a thick gold line appears around it. Press Enter, and the link opens. This example is only one page, so here a line under it says which page would open.
+This means "a link, while it has the focus". Press Tab until you get to a link: a thick gold line shows around it. Press Enter, and the link opens. This example is only one page, so here a line under it says which page would open.
 
-`outline` is like a border, written the same way, but it doesn't take any room: it's drawn around the element without moving anything. That's why it's used for focus: nothing on the page jumps when you press Tab.
+`outline` is like a border, and you write it the same way. But it doesn't take any space: it's drawn around the element without moving anything. That's why people use it for focus: nothing on the page jumps when you press Tab.
 
 ## Never take it away
 
-Browsers draw a focus ring by themselves, a thin one. Some people think it looks ugly and remove it with `outline: none`. Don't! For someone using a keyboard, it's the only way to see where they are. Change it to something that suits your page, and make it clear, but always keep one.
+Browsers draw a thin focus ring by themselves. Some people think it looks ugly, and they remove it with `outline: none`. Don't! For someone who uses a keyboard, it's the only way to see where they are. Change it to something that goes with your page, and make it clear, but always keep one.
 
 ## Break it on purpose
 
@@ -36,16 +36,15 @@ Remove the outline:
 <p><a href="games.html">Our games</a> · <a href="members.html">Members</a> · <a href="rules.html">Rules</a></p>
 ```
 
-Now press Tab a few times. Where are you? You can't tell. Imagine moving around a whole site that way.
+Now press Tab a few times. Where are you? You can't tell. Imagine moving around a whole site like that.
 
 ---
 
 ## Mission: Where am I?
 
-Someone moving around your site with the Tab key should always see clearly which link they're on.
+**What you will see**: press Tab on any page. The first link of the menu gets a thick outline in a color of your own, and every press moves it to the next link.
 
-**Example**: press Tab on any page: the first link of the menu gets a thick outline in a color of your own, and every press moves it to the next link.
+Someone who moves around your site with the Tab key should always see clearly which link they are on.
 
-- A link with the focus has an outline at least 2 pixels thick, in a style you chose (not the browser's own).
-
-Psst, `outline` takes the same three parts as `border` :)
+- A link with the focus has an outline at least 2 pixels thick.
+- The outline's style is one you chose, not the browser's own.

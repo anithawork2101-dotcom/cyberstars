@@ -1,8 +1,8 @@
-Two people stand in a queue. One says "I need a metre of space around me", the other "I need a metre and a half". How far apart do they stand? Not two and a half metres: a metre and a half is enough for both. Margins between boxes work the same way.
+Two people stand in a line. One says "I need a metre of space around me". The other says "I need a metre and a half". How far apart do they stand? Not two and a half metres: a metre and a half is enough for both. Margins between boxes work the same way.
 
 ## Margins don't add up
 
-Two boxes, one under the other:
+Here are two boxes, one under the other:
 
 ```css preview
 <style>
@@ -33,9 +33,9 @@ Two boxes, one under the other:
 </div>
 ```
 
-You might expect 30 + 20 = 50 pixels between two members: the first one's bottom margin plus the second one's top margin. But there are only **30**. When the margin under one box meets the margin over the next, they **collapse** into one, as big as the bigger of the two.
+You might expect 30 + 20 = 50 pixels between two members: the first one's bottom margin plus the second one's top margin. But there are only **30**. When the margin under one box meets the margin over the next box, they become one margin, as big as the bigger of the two. This is called **margin collapse**.
 
-That's on purpose. Paragraphs have a margin above and below them. Without collapsing, the space between two paragraphs would be twice the space at the top of the page.
+The browser does this on purpose. Paragraphs have a margin above and below them. Without margin collapse, the space between two paragraphs would be twice the space at the top of the page.
 
 ## When it happens
 
@@ -46,11 +46,11 @@ Margins collapse only:
 
 ## Inspect shows it
 
-Inspect the first box and the second one. Both show their margins in orange, and the two orange areas **overlap** in the gap. That's the collapse.
+Inspect the first box, then the second one. Both show their margins in orange, and the two orange parts **cover each other** in the gap. That's the margin collapse.
 
 ## Break it on purpose
 
-Want 50 pixels between the members? Raising both margins doesn't help as you'd think:
+You want 50 pixels between the members. Making both margins bigger doesn't work the way you think:
 
 ```css preview
 <style>
@@ -87,10 +87,8 @@ You get 25, not 50. To get 50, give one side all of it: `margin-bottom: 50px`, a
 
 ## Mission: The right gap
 
-The cards on `crew.html` should stand farther apart, at least 24 pixels from each other.
+**What you will see**: the gap between each card on `crew.html` and the next grows to 24 pixels or more.
 
-**Example**: the gap between each card and the next grows to 24 pixels or more. Use Inspect to see the cards' margins, and check whether two of them overlap.
+The cards should stand further apart. Use Inspect to see the cards' margins, and check if two of them cover each other.
 
 - There are at least 24 pixels between each card and the next one.
-
-Psst, a top and a bottom margin that meet don't add up: the bigger one wins :)

@@ -1,4 +1,4 @@
-A paragraph takes the whole width of the page, whatever its text. That's fine for long text. But a card for one person, stretched across a huge screen, looks like a banner. Sometimes a box needs a size of its own.
+A paragraph takes the whole width of the page, whatever its text. That's fine for long text. But a card for one person, as wide as a huge screen, looks like a long sign. Sometimes a box needs its own size.
 
 ## `width` and `height`
 
@@ -31,7 +31,7 @@ A paragraph takes the whole width of the page, whatever its text. That's fine fo
 </div>
 ```
 
-Each member box is now 250 pixels wide, however wide the page is. Its text wraps to fit.
+Each member box is now 250 pixels wide, however wide the page is. Its text goes onto new lines to fit.
 
 `height` sets how tall a box is:
 
@@ -58,11 +58,11 @@ Each member box is now 250 pixels wide, however wide the page is. Its text wraps
 <p>The station goes round the Earth every 92 minutes.</p>
 ```
 
-Use `height` with care. Most boxes should be as tall as what they hold, which is what they do by themselves. A fixed height on a box of text is a trap: write more text, and it no longer fits.
+Be careful with `height`. Most boxes should be as tall as what they hold, and they do that by themselves. A fixed height on a box of text often goes wrong: write more text, and it doesn't fit any more.
 
 ## Pixels or percent
 
-`width` takes `%` too: a share of the space the box sits in.
+`width` takes `%` too: a part of the space the box sits in.
 
 ```css preview
 <style>
@@ -93,7 +93,7 @@ Use `height` with care. Most boxes should be as tall as what they hold, which is
 </div>
 ```
 
-Half of the space around it, whatever the screen. On a wide screen the box is wide, on a phone it's narrow.
+That's half of the space around it, on any screen. On a wide screen the box is wide, and on a phone it's narrow.
 
 ## Break it on purpose
 
@@ -128,16 +128,14 @@ Give a box of text a small height:
 </div>
 ```
 
-The text doesn't shrink: it spills out under the box, over whatever comes next. The box is 30 pixels tall as you asked, and the text doesn't care. Take the height away, and the box grows to hold it again.
+The text doesn't get smaller. It comes out under the box, over what comes next. The box is 30 pixels tall, as you asked, but the text doesn't fit in it. Take the height away, and the box grows to hold the text again.
 
 ---
 
 ## Mission: Card size
 
-Your cards stretch across the whole page. A card for one person doesn't need to be that wide.
+**What you will see**: each card on `crew.html` is narrower, about as wide as a postcard, and its text goes onto new lines inside it.
 
-**Example**: each card is narrower, about the width of a postcard, and its text wraps inside it.
+Your cards are as wide as the whole page. A card for one person doesn't need to be that wide.
 
 - Every card is between 200 and 300 pixels wide.
-
-Psst, leave the height alone: the card grows with its text :)

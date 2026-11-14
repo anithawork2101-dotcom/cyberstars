@@ -33,11 +33,11 @@ On a cinema's website, the "Buy tickets" button is big and bright. "Cancel" is s
 <button class="quiet">Maybe later</button>
 ```
 
-Which one do you see first? "Join the team" wins in every way: bigger letters, a bright background, bold, more room inside. "Maybe later" is still easy to read, but it doesn't ask for your attention. Its background is `transparent`, a color you can see through, so the page shows behind its words.
+Which one do you see first? "Join the team" wins in every way: bigger letters, a bright background, bold, more space inside. "Maybe later" is still easy to read, but it doesn't ask for your attention. Its background is `transparent`, a color you can see through, so the page shows behind its words.
 
 ## The more harm a button can do, the quieter it is
 
-A button that throws away all your work should never be the one you press by mistake. Make it smaller and calmer than the main one, but keep it readable: a contrast of at least 4.5:1, like any text.
+A button that throws away all your work should never be the one you press by mistake. Make it smaller and calmer than the main one, but keep it easy to read: a contrast of at least 4.5:1, like any text.
 
 ## Break it on purpose
 
@@ -73,12 +73,14 @@ Now where does your eye go? Nowhere in particular. When everything stands out, n
 
 ## Mission: Book my seat first
 
-Your form ends with two buttons that look the same: Book my seat and Clear the form. One sends the booking, the other throws it all away.
+**What you will see**: Book my seat is the brightest and biggest thing in the form: large letters, its own colors, easy to press. Clear the form is smaller and calm, but you can still read it.
 
-**Example**: Book my seat is the brightest, biggest thing in the form: large letters, colors of its own, easy to press. Clear the form is smaller and calm, but you can still read it.
+Your form ends with two buttons that look the same: Book my seat and Clear the form. One sends the booking, and the other throws it all away.
 
-- Book my seat has text of at least 18 pixels, is at least 44 pixels tall, and has colors unlike Clear the form's.
+- Book my seat has text of at least 18 pixels.
+- Book my seat is at least 44 pixels tall.
+- Book my seat has colors that Clear the form doesn't have.
 - Clear the form keeps its text at 16 pixels or less, the size of the labels.
 - The text of both buttons has a contrast of at least 4.5:1 with its background.
 
-Psst, CSS can pick a button by its `type` :)
+CSS can choose a button by its `type`.

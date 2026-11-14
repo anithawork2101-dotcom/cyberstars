@@ -1,8 +1,8 @@
-At the cinema, there is a little room between the seats of a row, but the first seat stands right at the wall. A flex container can leave room like that between its items.
+At the cinema, there is a little space between the seats of a row, but the first seat is right next to the wall. A flex container can leave space like that between its items.
 
 ## `gap`
 
-`gap` puts room between the items of a flex container. Only between them: never before the first one, never after the last one.
+`gap` puts space between the items of a flex container. Only between them: never before the first one, and never after the last one.
 
 ```css preview
 <style>
@@ -36,7 +36,7 @@ The three badges have 16 pixels between them, and the first one still starts at 
 
 ## Why not a margin?
 
-A margin goes round each item, so it adds room at the ends of the row too:
+A margin goes around each item, so it adds space at the ends of the row too:
 
 ```css preview
 <style>
@@ -69,11 +69,11 @@ A margin goes round each item, so it adds room at the ends of the row too:
 </div>
 ```
 
-The badges have 16 pixels between them here too: 8 from each side. But now the first badge doesn't start at the left edge, and the last one leaves 8 pixels at the end. With `gap`, the edges stay as they were.
+Here, the badges have 16 pixels between them too: 8 from each side. But now the first badge doesn't start at the left edge, and the last one leaves 8 pixels at the end. With `gap`, the edges stay as they were.
 
 ## Break it on purpose
 
-Give `gap` to the badges instead of their container:
+Give `gap` to the badges, not to their container:
 
 ```css preview
 <style>
@@ -106,17 +106,15 @@ Give `gap` to the badges instead of their container:
 </div>
 ```
 
-The badges touch again. `gap` is the room between the items of a container, so it goes on the container. A badge is not a flex container, so its `gap` does nothing.
+The badges touch again. `gap` is the space between the items of a container, so it goes on the container. A badge isn't a flex container, so its `gap` does nothing.
 
 ---
 
 ## Mission: Room between them
 
-Your wiki cards stand in the middle of the list, but they touch each other. And in the header, the station's name sits right next to the menu.
+**What you will see**: the cards have clear space between them, so each one reads as its own card. In the header, there is space between the station's name and the menu's first link.
 
-**Example**: the cards have clear room between them, so each one reads as a card of its own. In the header, there is room between the station's name and the menu's first link.
+Your wiki cards stand in the middle of the list, but they touch each other. And in the header, the station's name is right next to the menu.
 
 - On `wiki.html`, there are at least 16 pixels between the cards.
 - On every page, there are at least 24 pixels between the station's name and the menu.
-
-Psst, the room goes on the container, between its items :)

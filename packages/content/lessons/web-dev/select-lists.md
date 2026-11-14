@@ -11,9 +11,9 @@ When a website asks which city you live in, it doesn't show you a hundred round 
 </select>
 ```
 
-The `select` is the list, and each `option` is a choice in it. Click the box: the list opens. Pick a city: it shows in the box. With the keyboard, go to the box with Tab and press the up and down arrow keys.
+The `select` is the list, and each `option` is a choice in it. Click the box, and the list opens. Choose a city, and it shows in the box. With the keyboard, go to the box with Tab, and press the up and down arrow keys.
 
-The label works as for a text box: a click on "City" takes you to the list.
+The label works like for a text box: a click on "City" takes you to the list.
 
 ## `value`: what the form sends
 
@@ -31,17 +31,17 @@ The words of a choice are for people. The form can send something else, shorter 
 </form>
 ```
 
-Pick Oslo and click the button:
+Choose Oslo and click the button:
 
 ```text
 The form was sent: city=oslo
 ```
 
-The page shows "Oslo, Norway", the form sends `oslo`. You can change the words on the screen whenever you like, and the server still gets the same values.
+The page shows "Oslo, Norway", and the form sends `oslo`. You can change the words on the screen when you like, and the server still gets the same values.
 
 ## An empty first choice
 
-A list always shows a choice, the first one at the start. So Lyon is already picked, and someone who doesn't look sends Lyon by mistake. An empty first choice asks the visitor to pick:
+A list always shows a choice, the first one at the start. So Lyon is already chosen, and someone who doesn't look sends Lyon by mistake. An empty first choice asks the visitor to choose:
 
 ```html preview
 <form>
@@ -56,13 +56,13 @@ A list always shows a choice, the first one at the start. So Lyon is already pic
 </form>
 ```
 
-Send without picking:
+Send without choosing:
 
 ```text
 The form was sent: city=
 ```
 
-Its value is empty, so the server knows nothing was picked.
+Its value is empty, so the server knows nothing was chosen.
 
 ## Break it on purpose
 
@@ -80,7 +80,7 @@ Leave out the `value` of the first choice:
 </form>
 ```
 
-Send without picking:
+Send without choosing:
 
 ```text
 The form was sent: city=Pick a city
@@ -92,12 +92,14 @@ An option without a `value` sends its words. Now the server thinks someone lives
 
 ## Mission: Which flight?
 
+**What you will see**: a list like "Pick a flight". Open it: there is one choice for each flight, like "SL-103 to Europa Outpost, 07:15". Choose it and send: the console's line has `flight=SL-103` in it.
+
 Your booking form doesn't ask which flight the passenger takes. The five flights are in your `schedule.html`, from SL-101 to SL-105.
 
-**Example**: a list such as "Pick a flight". Open it: one choice for each flight, like "SL-103 to Europa Outpost, 07:15". Pick it and send: the console's line has `flight=SL-103` in it.
+- Add a list with the id `flight`, sent as `flight`.
+- It has a label that takes you to it.
+- It starts on an empty choice, so no flight is chosen until the passenger chooses one.
+- After it, there is one choice for each of the five flights.
+- Each choice's value is the flight's code, like `SL-103`, and its words say where the flight goes.
 
-- A list with the id `flight`, sent as `flight`, with a label that takes you to it.
-- It starts on an empty choice, so no flight is picked until the passenger picks one.
-- Then one choice for each of the five flights: its value is the flight's code, such as `SL-103`, and its words say where the flight goes.
-
-Psst, the empty choice needs an empty `value` too, or it sends its words :)
+The empty choice needs an empty `value` too.

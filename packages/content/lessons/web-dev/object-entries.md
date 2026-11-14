@@ -1,4 +1,4 @@
-At a cloakroom, each coat hangs with its ticket. When the evening ends, the attendant goes along the rail, and for each hook reads two things together: the ticket number and the coat on it. Not all the numbers first, then all the coats: a pair at a time. `Object.entries` gives you an object's keys and values in pairs.
+At a cloakroom, each coat hangs with its ticket. When the evening ends, the person who works there goes along the rail. For each hook, they read two things together: the ticket number and the coat on it. Not all the numbers first, then all the coats: a pair at a time. `Object.entries` gives you an object's keys and values in pairs.
 
 ## `Object.entries`: pairs
 
@@ -18,7 +18,7 @@ An item like `["cat", "Tom"]` is called an **entry**: a key and its value, side 
 
 ## Reading an entry
 
-An entry is an array, so you read its two parts by index: `[0]` is the key, `[1]` is the value. In a `for...of`, each time round you get the next entry:
+An entry is an array, so you read its two parts by index: `[0]` is the key, and `[1]` is the value. In a `for...of`, each time round, you get the next entry:
 
 ```js
 for (const entry of Object.entries(pets)) {
@@ -50,19 +50,17 @@ With the pairs, a loop can build a line of the page for each key:
 </script>
 ```
 
-The page shows a list: cat: Tom, dog: Rex, fish: Bubbles. Add `bird: "Kiwi"` to the object, and a fourth line appears.
+The page shows a list: cat: Tom, dog: Rex, fish: Bubbles. Add `bird: "Kiwi"` to the object, and a fourth line shows.
 
 ## Break it on purpose
 
-Put the whole entry into the text: `` item.textContent = `${entry}` ``. The list says `cat,Tom`: the entry is an array, and an array in a text becomes its items with a comma between them. Then count from 1, with `entry[1]` and `entry[2]`: you get `Tom: undefined`, since an entry has only the indexes 0 and 1.
+Put the whole entry into the text: `` item.textContent = `${entry}` ``. The list says `cat,Tom`: the entry is an array, and an array in a text becomes its items with a comma between them. Then count from 1, with `entry[1]` and `entry[2]`. You get `Tom: undefined`, because an entry only has the indexes 0 and 1.
 
 ---
 
 ## Mission: A summary for the radio
 
-The crew reads the dashboard's numbers over the radio every morning, a line for each card.
-
-**Example**: under the line of values, a list:
+**What you will see**: under the line of values, a list:
 
 ```text
 - Crew on board: 6
@@ -73,7 +71,8 @@ The crew reads the dashboard's numbers over the radio every morning, a line for 
 - Days in orbit: 412
 ```
 
-- After `#stat-values` and before the week, a list with the id `stat-summary`, empty in the HTML.
-- The script adds one list item for each key of the object of the cards, in the object's order, with the key, `: `, and its value.
+The crew reads the dashboard's numbers on the radio every morning, a line for each card.
 
-Psst, `entry[0]` is the key and `entry[1]` its value :)
+- After `#stat-values` and before the week, add a list with the id `stat-summary`, empty in the HTML.
+- The script adds one list item for each key of the object of the cards, in the object's order.
+- Each item has the key, `: `, and its value.

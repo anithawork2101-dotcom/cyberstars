@@ -1,4 +1,4 @@
-Your phone's photo app knows that `beach.png` is a picture and `notes.txt` isn't. It only looks at the end of the file's name. Many questions about a text are like that: does it start with this, does it end with that, is this word somewhere in it?
+Your phone's photo app knows that `beach.png` is a picture and `notes.txt` isn't. It only looks at the end of the file's name. Many questions about a text are like that. Does it start with this? Does it end with that? Is this word somewhere in it?
 
 ## `includes`
 
@@ -17,7 +17,7 @@ false
 
 ## `startsWith` and `endsWith`
 
-`startsWith` looks only at the start of the text, and `endsWith` only at its end:
+`startsWith` only looks at the start of the text, and `endsWith` only at its end:
 
 ```js
 const file = "beach.png";
@@ -36,7 +36,7 @@ false
 
 ## Each one asks its own question
 
-Our school's club accepts only school emails, the ones that end with `@school.example`:
+A school club only accepts school emails, the ones that end with `@school.example`:
 
 ```html preview
 <label for="mail">Email</label>
@@ -56,7 +56,7 @@ Our school's club accepts only school emails, the ones that end with `@school.ex
 </script>
 ```
 
-Type `sofia@school.example`: the page says `Member: yes`. Type `sofia@school.example.net`: `no`. The text holds `@school.example`, but it doesn't end with it. With `includes`, that email would get in too. Pick the method that asks exactly your question.
+Type `sofia@school.example`: the page says `Member: yes`. Type `sofia@school.example.net`: `no`. The text holds `@school.example`, but it doesn't end with it. With `includes`, that email would get in too. Choose the method that asks exactly your question.
 
 ## Capitals count
 
@@ -86,12 +86,11 @@ Type `sofia@myschool.example`: the page says `Member: yes`. That email ends with
 
 ## Mission: Crew or guest
 
+**What you will see**: when the page opens, the pass says `Traveling as: guest`. Type `mara@station.example` in the email box, and it says `Traveling as: crew`.
+
 Members of the station's crew fly home too. They book with their station email, which ends with `@station.example`, like `mara@station.example`. The crew at the gate wants to see who is crew.
 
-**Example**: when the page opens, the pass says `Traveling as: guest`. Type `mara@station.example` in the email box: it says `Traveling as: crew`.
-
-- On the pass, an element with the id `pass-role` says `crew` while the email ends with `@station.example`, and `guest` for any other email, as it's typed.
+- On the pass, an element with the id `pass-role` says `crew` while the email ends with `@station.example`.
+- For any other email, it says `guest`, while the email is typed.
 - When the page opens, it says `guest`.
 - An email like `ines@station.example.com` or `ines@mystation.example` isn't a station email.
-
-Psst, the email must end with the station's address, `@` and all :)

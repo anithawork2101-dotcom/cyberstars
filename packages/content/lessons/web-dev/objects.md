@@ -1,8 +1,8 @@
-A contact on your phone isn't one value: it's a name, a number, a birthday, all about the same person. You could keep each in its own variable, but they belong together. JavaScript keeps things that belong together in an **object**.
+A contact on your phone isn't one value. It's a name, a number and a birthday, all about the same person. You could keep each one in its own variable, but they belong together. JavaScript keeps things that belong together in an **object**.
 
 ## Making an object
 
-An object is written in curly brackets, with a **name** and a **value** for each piece, separated by commas:
+You write an object in curly brackets, with a **name** and a **value** for each piece, and commas between them:
 
 ```js
 const friend = {
@@ -12,11 +12,11 @@ const friend = {
 };
 ```
 
-Each `name: value` pair is a **property**. The names have no quotes, the values are any values you like: strings, numbers, booleans.
+Each `name: value` pair is a **property**. The names have no quotes. The values can be any values you like: strings, numbers, booleans.
 
 ## Reading a property
 
-A dot, then the property's name:
+Write a dot, then the property's name:
 
 ```js
 console.log(friend.name);
@@ -28,9 +28,9 @@ Sam
 Sam is 13
 ```
 
-You've used dots like this before: `name.length`, `element.textContent`. A string and an element are objects too, with properties of their own.
+You used dots like this before: `name.length`, `element.textContent`. A string and an element are objects too, with their own properties.
 
-## Logging it all
+## Writing it all to the console
 
 ```js
 console.log(friend);
@@ -52,21 +52,21 @@ console.log(friend.phone);
 undefined
 ```
 
-No error, just `undefined`, "nothing there". A typo in a property's name gives the same `undefined`, which can be hard to spot: check the spelling.
+No error, only `undefined`: "nothing there". A typo in a property's name gives the same `undefined`, and that can be hard to see. Check how you wrote it.
 
 ---
 
 ## Mission: The next flight
 
-The schedule's script keeps the next flight's details together, in one object.
-
-**Example**: when `schedule.html` opens, the console shows:
+**What you will see**: when `schedule.html` opens, the console shows:
 
 ```text
 Next flight: SL-102 to Mars Relay at 09:45
 ```
 
-- In `schedule.js`, one object holds the flight's `code`, `destination` and `departs`: `SL-102`, `Mars Relay` and `09:45`.
-- The console shows `Next flight: SL-102 to Mars Relay at 09:45`, read from the object's properties.
+The schedule's script keeps the details of the next flight together, in one object.
 
-Psst, a dot reads a property :)
+- In `schedule.js`, one object holds the flight's `code`, `destination` and `departs`.
+- Their values are `SL-102`, `Mars Relay` and `09:45`.
+- The console shows `Next flight: SL-102 to Mars Relay at 09:45`.
+- The script reads that line from the object's properties.

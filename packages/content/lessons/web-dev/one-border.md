@@ -1,4 +1,4 @@
-Look at a book's page with a quote on it: often there's just one line, down the left side of the quote, to set it apart. Not a box all round, just one side. A border can be like that too.
+Look at a page of a book with a quote on it. Often there is only one line, down the left side of the quote, to make it stand out. Not a box all around, only one side. A border can be like that too.
 
 ## One side's border
 
@@ -20,9 +20,9 @@ Every side has its own border property, written like `border`:
 <p class="quote">Think twice, move once.</p>
 ```
 
-A 4-pixel gold line down the left side only. The other sides have no border.
+You see a gold line, 4 pixels thick, only down the left side. The other sides have no border.
 
-There's one for each side: `border-top`, `border-right`, `border-bottom`, `border-left`. A line under a heading is often a `border-bottom`:
+There is one for each side: `border-top`, `border-right`, `border-bottom`, `border-left`. A line under a heading is often a `border-bottom`:
 
 ```css preview
 <style>
@@ -41,11 +41,11 @@ There's one for each side: `border-top`, `border-right`, `border-bottom`, `borde
 <p>We keep them in the cupboard by the window.</p>
 ```
 
-Unlike `text-decoration: underline`, a bottom border runs the whole width of the box, not just under the words, and can have any thickness and color.
+It's not like `text-decoration: underline`. A bottom border goes across the whole width of the box, not only under the words. And it can have any thickness and color.
 
 ## One side and the others
 
-You can also give a box a border all round, then change one side after it:
+You can also give a box a border all around, then change one side after it:
 
 ```css preview
 <style>
@@ -64,11 +64,11 @@ You can also give a box a border all round, then change one side after it:
 <p class="quote">Think twice, move once.</p>
 ```
 
-Thin and grey all round, thick and gold on the left. The later declaration wins for the side they share.
+Thin and grey all around, thick and gold on the left. For the side they share, the later declaration wins.
 
 ## Break it on purpose
 
-Swap the two lines:
+Change the order of the two lines:
 
 ```css preview
 <style>
@@ -87,18 +87,17 @@ Swap the two lines:
 <p class="quote">Think twice, move once.</p>
 ```
 
-The gold line is gone. `border` sets all four sides, so coming second, it undoes the left one too. The general one first, the special one after.
+The gold line is gone. `border` sets all four sides. It comes second, so it changes the left side back too. Write the general one first, and the special one after.
 
 ---
 
 ## Mission: The duty board's edge
 
-The duty board should look like a page with a quote, marked down one side.
+**What you will see**: the duty list on `crew.html` has a thick gold line down its left side, and no border on the other sides. Its left corners are square, where the line is, and its right corners are round.
 
-**Example**: the duty list has a thick gold line down its left side, and no border on the other sides. Its left corners are square, where the line runs, and its right corners rounded.
+The duty board should look like a page with a quote, with a line down one side.
 
 - The duty list has a border on its left, at least 3 pixels thick.
 - It has no border at its top, right and bottom.
-- Its two right corners are rounded, and its two left ones aren't.
-
-Psst, four values for the corners go round the clock from the top left :)
+- Its two right corners are round.
+- Its two left corners are square.

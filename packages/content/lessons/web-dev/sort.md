@@ -1,4 +1,4 @@
-Line up a class by height: you compare two pupils at a time, and swap them if the taller one is in front. Do that enough, and the whole line is in order. `sort` does exactly that, and you tell it how to compare two items.
+To put a class in a line by height, you compare two pupils at a time, and change their places if the taller one is in front. Do that enough times, and the whole line is in order. `sort` does exactly that, and you tell it how to compare two items.
 
 ## `sort` with a comparator
 
@@ -16,17 +16,17 @@ console.log(ages);
 [9, 11, 13, 15]
 ```
 
-The function you give `sort` is the **comparator**. `sort` calls it again and again, each time with two items, `a` and `b`, and it answers with a number:
+The function you give to `sort` is the **comparator**. `sort` calls it again and again, each time with two items, `a` and `b`. The comparator answers with a number:
 
 - **negative**: `a` goes first;
 - **positive**: `b` goes first;
-- **0**: they're equal, leave them.
+- **0**: they are equal, so leave them.
 
 `a - b` is negative when `a` is smaller, so smaller ages come first. `b - a` would sort the other way, biggest first.
 
 ## Sorting strings
 
-Strings can't be taken away from each other, so compare them, and answer with a ternary:
+You can't take a string away from another string. So compare them, and answer with a ternary:
 
 ```js
 function alphabetical(a, b) {
@@ -42,11 +42,11 @@ console.log(names);
 ["Lea", "Ola", "Sam"]
 ```
 
-Times like `"08:30"` sort the same way, since they compare like the clock.
+Times like `"08:30"` sort the same way, because they compare like the clock.
 
 ## On objects
 
-Compare a property of each:
+Compare a property of each object:
 
 ```js
 function mostPointsFirst(a, b) {
@@ -77,16 +77,14 @@ Without a comparator, `sort` compares the items as **text**, character by charac
 
 ## Mission: The last departure
 
-The schedule says which flight leaves last today.
-
-**Example**: under `#on-time`, a paragraph says:
+**What you will see**: under `#on-time`, a paragraph says:
 
 ```text
 Last departure: SL-104 at 11:00
 ```
 
-- A paragraph with the id `last-departure`.
-- The script sorts `flights` by departure time, earliest first, with a comparator.
-- The paragraph says `Last departure: `, the code of the last flight after sorting, `at` and its time.
+The schedule says which flight leaves last today.
 
-Psst, compare the `departs` of `a` and `b` :)
+- Add a paragraph with the id `last-departure`.
+- The script sorts `flights` by departure time, earliest first, with a comparator.
+- The paragraph says `Last departure: `, the code of the last flight after sorting, `at`, and its time.

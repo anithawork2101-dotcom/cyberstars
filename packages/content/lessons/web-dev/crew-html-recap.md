@@ -1,16 +1,14 @@
-No new theory, just a challenge that uses what you've learned in this part's HTML: lists, numbered lists, lists inside lists, `div`, `span`, and jump links from the first part.
+No new theory, just a challenge that uses the HTML of this part: lists, numbered lists, lists inside lists, `div`, `span`, and jump links from the first part.
 
-Read what the crew needs, then pick the elements yourself.
+Read what the crew needs, then choose the elements yourself.
 
-If something looks wrong, check that every inner list sits inside its `<li>`, and that every `div` closes where it should.
+If something looks wrong, check that every inner list is inside its `<li>`, and that every `div` closes where it should.
 
 ---
 
 ## Mission: Duty board
 
-Every morning the crew checks who does what. `crew.html` gets a duty board.
-
-**Example**: after the cards, the page would show something like this:
+**What you will see**: on `crew.html`, after the cards, a Duty Board part. It has the day's jobs in order, and who works on one of them. For example:
 
 ```text
 Duty Board
@@ -22,9 +20,11 @@ Duty Board
 3. Log the day's dockings
 ```
 
-- A part with a heading at the same level as Crew, with the id `duty`.
-- Right under its heading, the day's duties, at least three, in the order they're done.
-- At least one duty lists, inside it, the crew members who work on it, at least two.
-- Under the page's heading, a link jumps straight to the duty board.
+Every morning, the crew checks who does what. `crew.html` gets a duty board.
 
-Psst, a duty's crew list goes inside that duty's `<li>` :)
+- Add a part with a heading at the same level as Crew.
+- The heading has the id `duty`.
+- Right under its heading, the day's duties are listed in the order they are done.
+- There are at least three duties.
+- At least one duty has a list inside it of the crew members who work on it, at least two.
+- Under the page's heading, a link jumps straight to the duty board.

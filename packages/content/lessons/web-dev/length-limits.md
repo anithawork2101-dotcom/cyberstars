@@ -1,4 +1,4 @@
-A game asks for your nickname. One letter? Too short: nobody knows which player is which. A whole sentence? It won't fit on the scoreboard. A box can say how short and how long an answer may be.
+A game asks for your nickname. One letter? Too short: nobody knows which player is which. A whole sentence? It won't fit on the list of scores. A box can say how short and how long an answer may be.
 
 ## `maxlength`: the most
 
@@ -32,11 +32,11 @@ It works on a textarea too:
 
 Type `Al` and click **Join**. Nothing is sent, and the browser says to use at least 3 characters. Type `Ali`, and it is sent.
 
-There's one surprise: an empty box is still sent. `minlength` checks only what was typed. For a box that can't stay empty, add `required` too.
+There is one surprise: an empty box is still sent. `minlength` only checks what was typed. For a box that can't stay empty, add `required` too.
 
 ## Break it on purpose
 
-Swap the two numbers:
+Change the places of the two numbers:
 
 ```html preview
 <form>
@@ -46,17 +46,18 @@ Swap the two numbers:
 </form>
 ```
 
-Type a nickname and send. The box stops at 3 characters, but the form wants 12: no nickname can ever be sent. The browser doesn't warn you about limits that make no sense. Read your numbers twice.
+Type a nickname and send. The box stops at 3 characters, but the form wants 12, so no nickname can ever be sent. The browser doesn't warn you about limits that make no sense. Read your numbers twice.
 
 ---
 
 ## Mission: Not too short, not too long
 
-Your name box takes one letter, or a whole book, and so does the notes box. The station's tickets have room for 40 characters of a name, and its crew read short notes only.
+**What you will see**: type a name of more than 40 characters: the box stops at the 40th. Fill in the rest of the form with a name of one letter, and send: nothing is sent.
 
-**Example**: type a name of more than 40 characters: the box stops at the 40th. Fill in the rest of the form with a name of one letter and send: nothing is sent.
+Your name box takes one letter, or a whole book, and so does the notes box. The station's tickets have space for 40 characters of a name, and its crew only read short notes.
 
-- A name has at least 2 characters and at most 40: the box takes no more than 40, and the form isn't sent with only 1.
+- A name has at least 2 characters: the form isn't sent with only 1.
+- A name has at most 40 characters: the box takes no more than 40.
 - The notes take at most 200 characters.
 
-Psst, the limits count characters, spaces too, not words :)
+The limits count characters, spaces too, not words.

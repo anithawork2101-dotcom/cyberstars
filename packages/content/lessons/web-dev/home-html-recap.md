@@ -1,16 +1,14 @@
-No new theory, just a challenge that uses what you've learned so far: headings at the right level, paragraphs and line breaks, `<strong>`, comments, jump links and `id`.
+No new theory, just a challenge that uses what you have learned so far: headings at the right level, paragraphs and line breaks, `<strong>`, comments, jump links and `id`.
 
-You know every piece already. This time nobody tells you which tag to use for what: read what the visitors need, and pick the tags yourself.
+You know every piece already. This time, nobody tells you which tag to use for what. Read what the visitors need, and choose the tags yourself.
 
-If something looks wrong in the preview, check two things first: does every tag close, in the order it opened? Does every comment end with `-->`?
+If something looks wrong in the preview, check two things first. Does every tag close, in the order it opened? Does every comment end with `-->`?
 
 ---
 
 ## Mission: Visiting Hours
 
-The station is opening to visitors. They need a part of their own on your home page: Visiting Hours. It goes after Today on Board and before the Station Rules.
-
-**Example**: that part of your page would show something like this:
+**What you will see**: a new part of your home page, with the opening hours and a rule for visitors. For example:
 
 ```text
 Visiting Hours
@@ -22,9 +20,12 @@ Sunday: closed
 Visitors must wear a badge at all times.      ("Visitors must wear a badge" in bold)
 ```
 
-- A new part with the heading Visiting Hours, at the same level as Today on Board, with the id `visiting`.
-- Under the heading, the opening hours in one paragraph, each day on its own line: at least three lines.
-- Right after the hours, a paragraph with a rule visitors must not miss, its important words in `<strong>`.
-- In the same paragraph as your Jump to today link, a second link that jumps to Visiting Hours.
+The station is opening to visitors. They need their own part on your home page: Visiting Hours. It goes after Today on Board and before the Station Rules.
 
-Psst, two ids on one page must never be the same :)
+- Add a new part with the heading Visiting Hours, at the same level as Today on Board.
+- The heading has the id `visiting`.
+- Under the heading, the opening hours are in one paragraph.
+- Each day shows on its own line, with at least three lines.
+- Right after the hours, a paragraph has a rule that visitors must not miss.
+- The rule's important words are in `<strong>`.
+- In the same paragraph as your Jump to today link, a second link jumps to Visiting Hours.

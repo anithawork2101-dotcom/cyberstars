@@ -2,7 +2,7 @@
 
 ## A date from a text
 
-`new Date()` with nothing in its brackets is now. With a text like `"2031-05-17"`, the way a date field writes a date, it's that day, at midnight:
+`new Date()` with nothing in its brackets is now. With a text like `"2031-05-17"`, the way a date box writes a date, it's that day, at midnight:
 
 ```js
 const birthday = new Date("2031-05-17");
@@ -39,11 +39,11 @@ console.log((end - start) / dayLength);
 3
 ```
 
-Three days between the 14th and the 17th.
+There are three days between the 14th and the 17th.
 
 ## Counting from now
 
-From **now**, the answer is rarely a whole number. At 9:30 on the 14th, the 17th is 2 days and 14 and a half hours away:
+From **now**, the answer is almost never a whole number. At 9:30 on the 14th, the 17th is 2 days and 14 and a half hours away:
 
 ```js
 const daysLeft = (new Date("2031-05-17") - new Date()) / dayLength;
@@ -54,19 +54,17 @@ console.log(daysLeft);
 2.6041666666666665
 ```
 
-To count the day that has already started as a whole one, round **up**, with `Math.ceil`: 2.6 becomes 3. "In 3 days" is what people say.
+To count the day that has already started as a whole day, round **up**, with `Math.ceil`: 2.6 becomes 3. "In 3 days" is what people say.
 
 ## Break it on purpose
 
-Take away the days of the month: `end.getDate() - start.getDate()`. From the 14th to the 17th, that's 3, and it seems right. But from 30 May to 2 June, it's 2 - 30 = -28. The days of the month start again at 1 every month. Subtract the whole dates, then divide: the milliseconds don't care about months.
+Take away the days of the month: `end.getDate() - start.getDate()`. From the 14th to the 17th, that's 3, and it seems right. But from 30 May to 2 June, it's 2 - 30 = -28. The days of the month start again at 1 every month. Take away the whole dates, then divide: the milliseconds don't care about months.
 
 ---
 
 ## Mission: Days to the launch
 
-The Next launch card says "Friday". The crew would rather know how many days are left.
-
-**Example**: on 14 May 2031, with the launch on 17 May, the Next launch card says:
+**What you will see**: on 14 May 2031, with the launch on 17 May, the Next launch card says:
 
 ```text
 Next launch
@@ -74,9 +72,12 @@ in 3 days
 2031-05-17
 ```
 
-- The Next launch card gets a paragraph with the class `launch-date`, which holds the launch's date written like `2031-05-17`.
-- The script writes into the card's `.stat-value` how many days are left until that date, counted up: 2 days and a few hours make `in 3 days`.
-- With 1 day left, it says `tomorrow`, and on the day itself, `today`.
-- The console's line for the Next launch card shows the new text too, like `Next launch: in 3 days`, so the days are written before the cards are gathered into their object.
+The Next launch card says "Friday". The crew would rather know how many days are left.
 
-Psst, a day is `1000 * 60 * 60 * 24` milliseconds :)
+- The Next launch card gets a paragraph with the class `launch-date`, which holds the launch's date: `2031-05-17`.
+- The script writes in the card's `.stat-value` how many days are left until that date, rounded up: 2 days and a few hours make `in 3 days`.
+- With 1 day left, it says `tomorrow`.
+- On the day itself, it says `today`.
+- The console's line for the Next launch card shows the new text too, like `Next launch: in 3 days`. So the days are written before the cards go into their object.
+
+A day is `1000 * 60 * 60 * 24` milliseconds.

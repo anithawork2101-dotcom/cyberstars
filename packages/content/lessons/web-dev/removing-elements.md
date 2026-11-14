@@ -1,4 +1,4 @@
-Adding is half the job. Your phone's notifications disappear when you swipe them away, a to-do app crosses off done tasks, a game removes the coins you pick up. Elements can leave the page too.
+Adding is only half the job. Your phone's notifications go away when you swipe them. A to-do app crosses out the tasks you finished. A game removes the coins you pick up. Elements can leave the page too.
 
 ## `remove()`
 
@@ -12,17 +12,17 @@ The element with the id `ad` is gone, as if it had never been in the HTML. Every
 
 ## Removing the last item
 
-A selector can pick the last item of a list, as in CSS:
+A selector can choose the last item of a list, like in CSS:
 
 ```js
 document.querySelector("#games li:last-child").remove();
 ```
 
-`li:last-child` is the `li` that's the last one in its list. Click it on a button, and each click removes whichever item is last **at that moment**: first darts, then cards, then chess.
+`li:last-child` is the `li` that is the last one in its list. Put this on a button, and each click removes the item that is last **at that moment**: first darts, then cards, then chess.
 
 ## Gone from the page, not from the file
 
-As always, the script changes the page in the browser. Your HTML file still has every item. Reload, and they're all back.
+As always, the script changes the page in the browser. Your HTML file still has every item. Reload, and they are all back.
 
 ## Break it on purpose
 
@@ -38,17 +38,18 @@ When no `li` is left, `querySelector` gives `null`, and the console says:
 TypeError: Cannot read properties of null (reading 'remove')
 ```
 
-`null` has no `remove`. You'll learn to check for that in part 3. For now, it's enough to know what the error means.
+`null` has no `remove`. You will learn to check for that in part 3. For now, it's enough to know what the error means.
 
 ---
 
 ## Mission: Remove the last
 
-Sometimes a rookie added by mistake has to go.
+**What you will see**: next to `Add a rookie`, a button says `Remove the last`. Add two rookies, then click it: `Rookie 2` is gone, and `Rookie 1` is the last name again.
 
-**Example**: next to `Add a rookie`, a button says `Remove the last`. Add two rookies, then click it: `Rookie 2` is gone, and `Rookie 1` is the last name again.
+Sometimes a rookie was added by mistake and has to go.
 
-- A button with the id `remove-last`, saying `Remove the last`.
+- Add a button with the id `remove-last`.
+- The button says `Remove the last`.
 - Each click removes the last item of the crew list, whatever it is at that moment.
 
-Psst, the last item is picked again on every click :)
+The last item can be different at every click, so find it again each time.

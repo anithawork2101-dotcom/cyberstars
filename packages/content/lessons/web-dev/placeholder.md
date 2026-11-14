@@ -2,16 +2,16 @@
 
 ## `placeholder`
 
-The `placeholder` attribute writes a hint inside an empty box, in light gray:
+The `placeholder` attribute writes a hint inside an empty box, in light grey:
 
 ```html preview
 <label for="phone">Phone number</label><br />
 <input id="phone" placeholder="e.g. 555 0123" />
 ```
 
-Click in the box and type a letter: the hint disappears. Delete what you typed: it comes back. The hint is never part of the answer. If the visitor types nothing, the box is still empty.
+Click in the box and type a letter: the hint goes away. Delete what you typed: it comes back. The hint is never part of the answer. If the visitor types nothing, the box is still empty.
 
-A good hint is an example of the answer, not the question again: `e.g. 555 0123`, not `Type your phone number`.
+A good hint is an example of the answer, not the question again: `e.g. 555 0123`, not `Type your phone number`. (`e.g.` means "for example".)
 
 ## Not instead of a label
 
@@ -23,8 +23,8 @@ A placeholder is not a label, even if it looks like one:
 
 It looks clean, but:
 
-- the hint disappears as soon as you type, so halfway through you can't check what the box was for;
-- the light gray is hard to read for many people;
+- the hint goes away as soon as you type, so in the middle of typing you can't check what the box was for;
+- the light grey is hard to read for many people;
 - some screen readers don't read it at all.
 
 So keep the label, and use the placeholder only for the example.
@@ -38,17 +38,16 @@ Put the hint in the box as its `value` instead:
 <input id="town" value="e.g. Lyon" />
 ```
 
-Now it's dark, not gray, and it doesn't disappear when you type: you have to delete it first. `value` is a real answer, already typed in. A hint belongs in `placeholder`.
+Now it's dark, not grey, and it doesn't go away when you type: you have to delete it first. `value` is a real answer, already typed in. A hint belongs in `placeholder`.
 
 ---
 
 ## Mission: An example name
 
-Passengers wonder how to write their name: first name first? Capital letters?
+**What you will see**: the box under "Full name" shows a made-up name in grey, like `e.g. Ida Moreau`. It goes away as soon as you type.
 
-**Example**: the box under "Full name" shows a made-up name in gray, such as `e.g. Ida Moreau`, which disappears as soon as you type.
+Passengers aren't sure how to write their name. First name first? Capital letters?
 
-- The box with the id `passenger` shows a hint with an example name, and keeps its label.
+- The box with the id `passenger` shows a hint with an example name.
+- The box keeps its label.
 - The box starts empty: the hint is not a value.
-
-Psst, a placeholder is an attribute of the `input`, like `id` :)

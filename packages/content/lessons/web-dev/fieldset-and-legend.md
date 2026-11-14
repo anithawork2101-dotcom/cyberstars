@@ -18,9 +18,9 @@ The browser draws a frame around the group, and writes the question in the frame
 
 ## What a screen reader hears
 
-A screen reader reads each choice together with its question: "Pick a size, group. Small, radio button, 1 of 2." The listener knows what the choice is about, even after jumping straight to it.
+A screen reader reads each choice with its question: "Pick a size, group. Small, radio button, 1 of 2." The listener knows what the choice is about, even after jumping straight to it.
 
-A form can have many groups. Each one gets its own fieldset and its own question:
+A form can have many groups. Each group gets its own fieldset and its own question:
 
 ```html preview
 <fieldset>
@@ -39,7 +39,7 @@ A form can have many groups. Each one gets its own fieldset and its own question
 </fieldset>
 ```
 
-Two frames, two questions. Nothing changes in what the form sends: a fieldset only groups.
+Two frames, two questions. What the form sends doesn't change: a fieldset only makes a group.
 
 ## Break it on purpose
 
@@ -55,18 +55,17 @@ Write the question as a paragraph inside the frame:
 </fieldset>
 ```
 
-The words sit inside the frame, on a line of their own, and the frame's top line is empty. Worse, a screen reader now reads "Small, radio button" with no question. Only a `legend` is the group's question.
+The words are inside the frame, on their own line, and the frame's top line is empty. Worse, a screen reader now reads "Small, radio button" with no question. Only a `legend` is the group's question.
 
 ---
 
 ## Mission: Questions over choices
 
-Your booking form has a line such as "Seat:" over the round buttons, and "Extras:" over the boxes. A screen reader reads them as plain text, not as part of the choices.
+**What you will see**: the two seats are in a frame, with a question like "Where would you like to sit?" in its top line. The three extras are in a second frame, with their own question.
 
-**Example**: the two seats in a frame, with a question such as "Where would you like to sit?" in its top line, and the three extras in a second frame with a question of their own.
+Your booking form has a line like "Seat:" over the round buttons, and "Extras:" over the boxes. A screen reader reads them as plain text, not as part of the choices.
 
-- The two seat buttons are in a group with a question over it, and nothing else is in that group.
+- The two seat buttons are in a group with a question over it.
+- Nothing else is in that group.
 - The three extras are in another group, with its own question.
 - The seat and the extras are still sent as before.
-
-Psst, the legend goes first, right after `<fieldset>` :)
