@@ -2,7 +2,7 @@ You collect football stickers. You get a pile every week, with many you already 
 
 ## `new Set()`
 
-A **Set** holds values, each one only once. You make an empty one with `new Set()` and put values in with `add`:
+A **Set** holds values, each one only once. You make an empty one with `new Set()`, and put values in with `add`:
 
 ```js
 const album = new Set();
@@ -39,7 +39,7 @@ Leo
 
 ## From a set to a line
 
-A Set has no `join`, so to make a line of it, go through it and push each value into an array:
+A Set has no `join`. To make a line of it, go through it, and push each value into an array:
 
 ```js
 const names = [];
@@ -53,9 +53,9 @@ console.log(names.join(" & "));
 Mia & Leo
 ```
 
-## Removing the twins of an array
+## Removing the copies in an array
 
-Give `new Set()` an array, and you get its values, each once:
+Give `new Set()` an array, and you get its values, each one once:
 
 ```js
 const visits = ["home", "crew", "home", "wiki", "crew"];
@@ -71,22 +71,22 @@ Five visits, but only three different pages.
 
 ## Break it on purpose
 
-Ask a set for its `length`, as with an array: `album.length` is `undefined`. A Set has `size`, like a Map. Then put the set in a text: `` `${album}` `` gives `[object Set]`. Go through it first, then join.
+Ask a set for its `length`, like with an array: `album.length` is `undefined`. A Set has `size`, like a Map. Then put the set in a text: `` `${album}` `` gives `[object Set]`. Go through it first, then join.
 
 ---
 
 ## Mission: Themes tried
 
-Besides the counts, the crew wants a shorter answer: how many **different** themes each visitor tries.
-
-**Example**: open the page, click Dark, Dark, Light, Dark. Under the picks, the page says:
+**What you will see**: open the page, and click Dark, Dark, Light, Dark. Under the picks, the page says:
 
 ```text
 Themes tried: 2 (dark, light)
 ```
 
-- Under `#picks`, a paragraph with the id `tried`, which says `Themes tried: 0` when the page opens.
-- The `settings` object keeps, in a Set, each theme chosen during the visit, each only once.
-- After each choice, `#tried` says `Themes tried: `, how many different themes were chosen, then in brackets each of them once, in the order they were first chosen, with a comma and a space between two.
+Besides the counts, the crew wants a shorter answer: how many **different** themes each visitor tries.
 
-Psst, a Set has `size`, not `length` :)
+- Under `#picks`, add a paragraph with the id `tried`.
+- It says `Themes tried: 0` when the page opens.
+- The `settings` object keeps each theme chosen during the visit in a Set, each one only once.
+- After each choice, `#tried` says `Themes tried: `, then how many different themes were chosen.
+- Then, in brackets, it lists each of them once, in the order they were first chosen, with a comma and a space between two.
