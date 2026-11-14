@@ -1,4 +1,4 @@
-"Is your name Sam?" You don't answer "kind of". Either it is or it isn't. Checking whether two things are **the same** is one of the most common questions a program asks.
+"Is your name Sam?" You don't answer "a little". Either it is, or it isn't. Checking if two things are **the same** is one of the most common questions a program asks.
 
 ## `===`: the same
 
@@ -14,7 +14,7 @@ true
 false
 ```
 
-Three equals signs ask "are these exactly the same?". Strings must match letter for letter, capitals included.
+Three equals signs ask "are these exactly the same?". Strings must match letter by letter, with the same capitals.
 
 The opposite is `!==`: "are these different?".
 
@@ -28,11 +28,11 @@ true
 
 ## `=` is not `===`
 
-One `=` doesn't ask anything: it **puts** a value in a name. `score = 3` changes `score`. `score === 3` asks whether it's 3. Mixing them up is a classic mistake.
+One `=` doesn't ask anything. It **puts** a value in a name. `score = 3` changes `score`. `score === 3` asks if it's 3. People often mix them up.
 
 ## `==`: almost the same
 
-There's also `==`, with two signs. It tries to make the two sides the same kind first:
+There is also `==`, with two signs. It tries to make both sides the same kind first:
 
 ```js
 console.log(5 == "5");
@@ -44,31 +44,30 @@ true
 false
 ```
 
-`==` turns the string `"5"` into a number before comparing, so it says "yes". `===` sees a number and a string, and says "no". That sounds helpful, but `==` has odd rules: `0 == ""` is `true`, for example. Always use `===`. If the two sides should be the same kind, make them so yourself, with `Number()`.
+`==` turns the string `"5"` into a number before it compares, so it says "yes". `===` sees a number and a string, and says "no". That sounds helpful, but `==` has strange rules: for example, `0 == ""` is `true`. Always use `===`. If both sides should be the same kind, make them the same kind yourself, with `Number()`.
 
 ## Break it on purpose
 
-Compare text from the page with a different capital letter:
+Compare text from the page, with a different capital letter:
 
 ```js
 console.log(status === "on time");
 ```
 
-The page says `On time`, so it's `false`. `===` is exact: check what the page really says.
+The page says `On time`, so it's `false`. `===` is exact, so check what the page really says.
 
 ---
 
 ## Mission: Boarding?
 
-The schedule's script checks whether the first flight on the board is boarding.
-
-**Example**: when `schedule.html` opens, the console shows:
+**What you will see**: when `schedule.html` opens, the console shows:
 
 ```text
 First flight boarding: true
 ```
 
-- The console shows `First flight boarding: ` followed by `true` or `false`.
-- The answer comes from the status in the first row of the flight table, compared with `===` to `Boarding`.
+The schedule's script checks if the first flight on the board is boarding.
 
-Psst, `===` is exact, capitals included :)
+- The console shows `First flight boarding: `, then `true` or `false`.
+- The answer comes from the status in the first row of the flight table.
+- The script compares that status with `Boarding`, using `===`.
