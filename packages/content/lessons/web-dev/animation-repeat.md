@@ -1,8 +1,8 @@
-The light on a charging phone breathes: it glows, fades, glows again, for as long as the phone charges. A swing goes forward and back, forward and back. Some movements don't happen once: they go on. An animation can go on too.
+The light on a charging phone breathes: it glows, gets weak, glows again, as long as the phone charges. A swing goes forward and back, forward and back. Some movements don't happen once: they go on. An animation can go on too.
 
 ## How many times
 
-By default, an animation plays once. `animation-iteration-count` says how many times it plays: a number, or `infinite`, for ever:
+By default, an animation plays once. `animation-iteration-count` says how many times it plays: a number, or `infinite`, forever:
 
 ```css preview
 <style>
@@ -36,9 +36,9 @@ By default, an animation plays once. `animation-iteration-count` says how many t
 <p class="heart">❤</p>
 ```
 
-The heart grows over one second, then jumps back to its size and grows again, for ever. In the short way, `infinite` goes after the time: `animation: beat 1s infinite`.
+The heart grows over one second, then jumps back to its size and grows again, forever. In the short way, `infinite` goes after the time: `animation: beat 1s infinite`.
 
-The jump back looks hard: every second, the heart snaps from big to small at once.
+The jump back looks hard: every second, the heart goes from big to small at once.
 
 ## Back and forth
 
@@ -76,11 +76,11 @@ The jump back looks hard: every second, the heart snaps from big to small at onc
 <p class="heart">❤</p>
 ```
 
-Now the heart grows for a second, then shrinks for a second, and so on: a soft beat, with no jump. Each way takes the animation's time, so a whole beat, there and back, takes two seconds.
+Now the heart grows for a second, then gets smaller for a second, and so on: a soft beat, with no jump. Each way takes the animation's time, so a whole beat, there and back, takes two seconds.
 
 ## Use it gently
 
-Something that moves all the time pulls the eye, again and again. That's good for one small thing that matters, like a "live" sign. For a whole page full of moving things, it's tiring. Some people even feel sick from movement on a screen: later in this part, we'll stop it for them.
+Something that moves all the time pulls the eye, again and again. That's good for one small thing that matters, like a "live" sign. For a whole page full of moving things, it's tiring. Some people even feel sick from movement on a screen. Later in this part, you will stop it for them.
 
 ## Break it on purpose
 
@@ -90,12 +90,10 @@ Write `animation: beat infinite 1s alternate;`, with the words in another order.
 
 ## Mission: A live sign that breathes
 
-The LIVE label fades in once, then stands still. A real live sign keeps moving softly, so the crew sees at a glance that the camera is on.
+**What you will see**: the LIVE label goes from fully there to weak in one second, then back to fully there in one second, again and again, as long as the dashboard is open.
 
-**Example**: the LIVE label goes from fully there to faint in one second, then back to fully there in one second, and on and on, as long as the dashboard is open.
+The LIVE label shows once, then stands still. A real live sign keeps moving softly, so the crew sees quickly that the camera is on.
 
-- The LIVE label plays an animation for as long as the page is open.
-- Each second, it goes from fully there to faint, then back, without jumping: one second each way.
-- It never disappears completely.
-
-Psst, `infinite` makes it go on, `alternate` brings it back :)
+- The LIVE label plays an animation as long as the page is open.
+- Each second, it goes from fully there to weak, or back, without jumping: one second each way.
+- It never goes away completely.
