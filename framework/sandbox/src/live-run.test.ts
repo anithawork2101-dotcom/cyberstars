@@ -209,6 +209,30 @@ describe('liveRun', () => {
     expect(sent(ws)).toContainEqual({ type: 'exit', code: 124 });
   });
 
+  it('ignores input that comes after the program ended, while its leftovers are stopped', async () => {
+    const proc = new FakeProc();
+    spawnMock.mockReturnValue(proc);
+    const ws = new FakeWs();
+    await runLive(ws, 'print(1)', 'python', 'user:late');
+
+    let finishKill: (() => void) | undefined;
+    execFileMock.mockImplementationOnce((_cmd: string, _args: string[], _opts, cb) => {
+      finishKill = () => (cb as (e: Error | null, o: string, s: string) => void)(null, '', '');
+      return { stdin: fakeStdin() };
+    });
+    proc.emit('close', 0);
+    await vi.waitFor(() => expect(finishKill).toBeDefined());
+    const frame = 'x'.repeat(128 * 1024);
+    for (let i = 0; i < 9; i++) ws.emit('message', JSON.stringify({ type: 'stdin', data: frame }));
+    expect(proc.stdin.write).not.toHaveBeenCalled();
+
+    finishKill!();
+    await vi.waitFor(() => expect(releaseMock).toHaveBeenCalledWith('user:late'));
+    expect(destroyMock).not.toHaveBeenCalled();
+    expect(sent(ws)).toContainEqual({ type: 'exit', code: 0 });
+    expect(sent(ws).some((m) => m.code === 124)).toBe(false);
+  });
+
   it('counts the input in bytes, as the program reads it', async () => {
     const proc = new FakeProc();
     spawnMock.mockReturnValue(proc);

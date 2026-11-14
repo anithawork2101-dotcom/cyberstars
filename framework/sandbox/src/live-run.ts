@@ -320,8 +320,13 @@ async function run(
   proc.stdout.on('data', (chunk: Buffer) => appendOutput('stdout', chunk));
   proc.stderr.on('data', (chunk: Buffer) => appendOutput('stderr', chunk));
 
+  // Set when the program has ended on its own. Its exit is told a moment later,
+  // once its leftovers are stopped, and input that comes meanwhile goes nowhere.
+  let programEnded = false;
+
   proc.on('close', (exitCode) => {
     if (exited) return;
+    programEnded = true;
     // Finished: its slot frees up in a moment anyway
     stopForRoom = null;
     clearTimeout(timer);
@@ -354,7 +359,7 @@ async function run(
   const onMessage = (msg: string) => {
     try {
       const parsed = JSON.parse(msg) as { type: string; data?: unknown };
-      if (stdinEnded || proc.killed) return;
+      if (exited || programEnded || stdinEnded || proc.killed) return;
       if (parsed.type === 'stdin' && typeof parsed.data === 'string') {
         inputTotal += Buffer.byteLength(parsed.data);
         if (inputTotal > INPUT_TOTAL_MAX) {
