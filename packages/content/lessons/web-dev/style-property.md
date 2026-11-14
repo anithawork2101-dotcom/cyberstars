@@ -1,4 +1,4 @@
-In a game, your health bar gets shorter each time you are hit. Nobody drew a picture for every length: the game works out a number, and sets the bar's width from it. A script can set one style of an element in the same way.
+In a game, your health bar gets shorter each time you are hit. Nobody drew a picture for every length. The game works out a number, and sets the bar's width from it. A script can set one style of an element in the same way.
 
 ## `element.style`
 
@@ -14,7 +14,7 @@ Every element has a `style` property. Give one of its styles a value, and the el
 </script>
 ```
 
-Click **Mark it**, and the note turns orange. The value is a text, written as in CSS: `"orange"`, `"bold"`, `"16px"`.
+Click **Mark it**, and the note turns orange. The value is a text, written like in CSS: `"orange"`, `"bold"`, `"16px"`.
 
 ## Two words become one
 
@@ -56,7 +56,7 @@ The health bar: a number goes down on each hit, and the bar's width follows it.
 </script>
 ```
 
-Click **Ouch!**: the bar is 90% wide. Click again: 80%. A size needs its unit, as in CSS. Here the template literal joins the number and `%` into one text: `"90%"`.
+Click **Ouch!**: the bar is 90% wide. Click again: 80%. A size needs its unit, like in CSS. Here, the template literal joins the number and `%` into one text: `"90%"`.
 
 ## Break it on purpose
 
@@ -66,7 +66,7 @@ Keep the dash:
 bar.style.background-color = "red";
 ```
 
-The console shows, as soon as the page opens:
+As soon as the page opens, the console shows:
 
 ```text
 SyntaxError: Invalid left-hand side in assignment
@@ -80,20 +80,20 @@ Now forget the unit:
 bar.style.width = health;
 ```
 
-No error, but the bar never moves. A size without its unit means nothing to the browser, so it leaves the old size. Write `` `${health}%` ``.
+No error, but the bar never moves. A size without its unit means nothing to the browser, so it keeps the old size. Write `` `${health}%` ``.
 
 ---
 
 ## Mission: Bigger text
 
+**What you will see**: under the article count, the page says `Text size:` with two buttons. Click **Bigger** once, and all the text on the page is a little bigger.
+
 Some of the crew read the wiki from far away, on the big screen in the dining room. The front page gets two buttons that change the size of all its text.
 
 Every text size in `style.css` is in `rem`, and `1rem` is the font size of the page's `html` element: 16px at first. Change the font size of the `html` element, and all the text grows with it.
 
-**Example**: under the article count, the page says `Text size:` with two buttons. Click **Bigger** once, and all the text on the page is a bit bigger.
-
-- Two buttons, with the ids `text-bigger` and `text-smaller`.
-- The size starts at 16px. Each click on `#text-bigger` makes the font size of the `html` element 2px bigger: 18px, then 20px, and so on. Each click on `#text-smaller` makes it 2px smaller.
+- Add two buttons, with the ids `text-bigger` and `text-smaller`.
+- The size starts at 16px.
+- Each click on `#text-bigger` makes the font size of the `html` element 2px bigger: 18px, then 20px, and so on.
+- Each click on `#text-smaller` makes it 2px smaller.
 - The clicks add up, in any order: bigger, bigger, smaller gives 18px.
-
-Psst, in JavaScript it's `fontSize`, and its value needs its unit :)

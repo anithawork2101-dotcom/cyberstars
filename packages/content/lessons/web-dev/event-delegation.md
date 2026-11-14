@@ -21,11 +21,11 @@ A click on an item goes up to its list, so a listener on the list hears clicks o
 </script>
 ```
 
-Click **Book the room**: it is crossed out. Click it again: it isn't. One listener does the work for both jobs. This is called **event delegation**: the list does the job for its items.
+Click **Book the room**: it gets a line through it. Click it again: the line is gone. One listener does the work for both jobs. This is called **event delegation**: the list does the job for its items.
 
 ## Items added later
 
-Remember: a list from `querySelectorAll` is a snapshot. A listener added to each item when the page opens never reaches an item added afterwards. A listener on the parent has no such problem: the new item's clicks go up to the parent too.
+Remember: a list from `querySelectorAll` is a snapshot. A listener added to each item when the page opens never gets to an item added later. A listener on the parent has no such problem: the new item's clicks go up to the parent too.
 
 ```html preview
 <style>
@@ -53,11 +53,11 @@ Remember: a list from `querySelectorAll` is a snapshot. A listener added to each
 </script>
 ```
 
-Click **Add a job**, then click **Bring the dice**: it is crossed out too, and no line of the script was added for it.
+Click **Add a job**, then click **Bring the dice**. It gets a line through it too, and no line of the script was added for it.
 
 ## `closest`: from what was clicked to the item
 
-When an item has elements inside it, `event.target` may be one of them, not the item. `closest` finds the item. It looks at the element first, then at its parent, then at the parent's parent, and so on up, and gives back the first one that matches the selector. When none matches, it gives back `null`.
+When an item has elements inside it, `event.target` may be one of them, not the item. `closest` finds the item. It looks at the element first, then at its parent, then at the parent's parent, and so on up. It gives back the first one that matches the selector. When none matches, it gives back `null`.
 
 ```html preview
 <style>
@@ -84,7 +84,7 @@ When an item has elements inside it, `event.target` may be one of them, not the 
 </script>
 ```
 
-Click **Book the room**, the bold words: the whole line is crossed out. The click started on the `<strong>`, and `closest("li")` went up to its line. The `if` is there for a click on the list's own space, the yellow space under the lines: there, no `li` is found, and `job` is `null`.
+Click **Book the room**, the bold words: the whole line gets a line through it. The click started on the `<strong>`, and `closest("li")` went up to its line. The `if` is there for a click on the list's own space, the yellow space under the lines. There, no `li` is found, and `job` is `null`.
 
 ## Break it on purpose
 
@@ -94,7 +94,7 @@ Leave out `closest`, and use the target as it is:
 const job = event.target;
 ```
 
-Click the bold words: only they are crossed out, not their line, since the target is the `<strong>`. Now put `closest` back, but leave out the `if`, and click the yellow space under the lines. The console shows:
+Click the bold words: only they get a line through them, not their whole line, because the target is the `<strong>`. Now put `closest` back, but leave out the `if`, and click the yellow space under the lines. The console shows:
 
 ```text
 TypeError: Cannot read properties of null (reading 'classList')
@@ -106,13 +106,12 @@ TypeError: Cannot read properties of null (reading 'classList')
 
 ## Mission: Pick a card
 
-Each card of the wiki has a listener of its own. A card that a script adds to the list later has none, and a click on it does nothing. One listener on the list can do the work for every card, the new ones too.
+**What you will see**: click the heading of the airlock's card. The card gets a gold outline, and over the list, the page says `Next to read: The Airlock`. Click another card, and the outline moves to it.
 
-**Example**: click the heading of the airlock's card. The card gets a gold outline, and over the list the page says `Next to read: The Airlock`. Click another card, and the outline moves to it.
+Each card of the wiki has its own listener. A card that a script adds to the list later has none, so a click on it does nothing. One listener on the list can do the work for every card, the new ones too.
 
-- One listener, on `.wiki-list`, picks the card clicked, wherever the click lands in it. A card that a script adds to the list later can be picked too.
-- The card picked gets the class `picked`, and only that card: picking another takes the class away from the old one.
-- In `style.css`, `.picked` makes a picked card stand out from the others, in a way of your choice.
-- `#picked` still holds the title of the card picked.
-
-Psst, `closest` finds the card from whatever was clicked inside it :)
+- One listener, on `.wiki-list`, chooses the clicked card, wherever the click lands in it.
+- A card that a script adds to the list later can be chosen too.
+- The chosen card gets the class `picked`, and only that card: choosing another takes the class away from the old one.
+- In `style.css`, `.picked` makes a chosen card stand out from the others, in a way you choose.
+- `#picked` still holds the title of the chosen card.
