@@ -2,7 +2,7 @@ Some people can't see the screen, and a **screen reader** reads the page out lou
 
 ## `aria-describedby`
 
-Attributes whose names start with `aria-` are written for screen readers: the page looks the same, but the screen reader says more. `aria-describedby` goes on the box. Its value is the id of the element that describes it:
+Attributes whose names start with `aria-` are for screen readers. The page looks the same, but the screen reader says more. `aria-describedby` goes on the box. Its value is the id of the element that describes the box:
 
 ```html
 <label for="nickname">Nickname</label>
@@ -46,7 +46,7 @@ Like `for` on a label, the value is an id with no `#`. The element must be there
 </script>
 ```
 
-The page looks the same as before. The change is for the ear: type `Space Rocket`, click **Join**, and a screen reader in the box says "Nickname, invalid entry, A nickname has no spaces". Fix it and click again: no "invalid", no message.
+The page looks the same as before. The change is for the ear. Type `Space Rocket` and click **Join**. A screen reader in the box says "Nickname, invalid entry, A nickname has no spaces". Fix it and click again: no "invalid", and no message.
 
 `aria-describedby` stays in the HTML all the time: it only points at the paragraph. `aria-invalid` changes with the answer, so the script sets it.
 
@@ -59,18 +59,17 @@ Point at an id that isn't there:
 <p id="nickname-error"></p>
 ```
 
-The page looks exactly the same, and no error shows anywhere. But the screen reader looks for `#nickname-message`, finds nothing, and reads no message. A mistake you can't see is still a mistake: check that the id matches, letter by letter.
+The page looks exactly the same, and no error shows anywhere. But the screen reader looks for `#nickname-message`, finds nothing, and reads no message. A mistake you can't see is still a mistake. Check that the id matches, letter by letter.
 
 ---
 
 ## Mission: An error you can hear
 
-Your name box gets a message next to it, `#passenger-error`. But a passenger with a screen reader never hears it.
+**What you will see**: book with a name of only spaces. On the screen, nothing new: the message shows under the name box, as before. A screen reader in the name box now says something like "Full name, invalid entry, Please write your name".
 
-**Example**: book with a name of only spaces. On the screen, nothing new: the message shows under the name box, as before. A screen reader in the name box now says something like "Full name, invalid entry, Please write your name".
+Your name box gets a message next to it, `#passenger-error`. But a passenger with a screen reader never hears it.
 
 - The name box is described by `#passenger-error`, all the time.
 - When the message shows, the name box is marked as wrong for a screen reader.
-- Once a passenger books with a real name, the box isn't marked as wrong any more. When the page opens, it isn't either.
-
-Psst, the id in `aria-describedby` has no `#` :)
+- When a passenger books with a real name, the box isn't marked as wrong any more.
+- When the page opens, it isn't marked as wrong either.
