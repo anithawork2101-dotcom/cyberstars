@@ -1,4 +1,4 @@
-Look at a photo in a newspaper or a school book. Under it there's a short line in small letters: who is in the photo, or where it was taken. The photo and its line belong together. If the page moves the photo, the line goes with it. HTML has a pair of tags for exactly that.
+Look at a photo in a newspaper or a school book. Under it, there is a short line in small letters: who is in the photo, or where it was taken. The photo and its line belong together. If the page moves the photo, the line goes with it. HTML has a pair of tags for exactly that.
 
 ## `<figure>`
 
@@ -11,7 +11,7 @@ A **figure** is a picture, a video or a drawing that comes with its own line of 
 <p>The station goes round the Earth every 92 minutes.</p>
 ```
 
-The picture moved to the right, and there's room above and below it. Those are the browser's own styles for a figure: a margin on every side. Your CSS can change them, like for any box.
+The picture moved to the right, and there is space above and below it. Those are the browser's own styles for a figure: a margin on every side. Your CSS can change them, like for any box.
 
 ## `<figcaption>`
 
@@ -41,7 +41,7 @@ The same works for a video:
 
 ## Break it on purpose
 
-Write the caption as a `<p>` instead of `<figcaption>`. The page looks the same. But for the browser it's now just one more paragraph in the figure, not the figure's caption, and a screen reader no longer reads it with the picture. As with `<header>` and `<nav>`, the right tag tells what a part **is**, even when you can't see it.
+Write the caption as a `<p>`, not as a `<figcaption>`. The page looks the same. But for the browser, it's now only one more paragraph in the figure, not the figure's caption, and a screen reader doesn't read it with the picture any more. Like with `<header>` and `<nav>`, the right tag says what a part **is**, even when you can't see it.
 
 Then move the `<figcaption>` out, after `</figure>`. A caption outside a figure belongs to nothing: it's a line of text on its own, far from its picture.
 
@@ -49,12 +49,10 @@ Then move the `<figcaption>` out, after `</figure>`. A caption outside a figure 
 
 ## Mission: A caption for the launch
 
-The launch video on the dashboard has a heading over it, but nothing says which flight it shows or where it was filmed from.
+**What you will see**: on the dashboard, the launch video, a little away from the side of the page, with a line under it like "Flight SL-101 leaves the pad for Moon Base, filmed from the launch tower."
 
-**Example**: on the dashboard, the launch video, a bit away from the side of the page, with a line under it such as "Flight SL-101 leaves the pad for Moon Base, filmed from the launch tower."
+The launch video on the dashboard has a heading over it. But nothing says which flight it shows, or where it was filmed from.
 
 - The launch video (`#launch-video`) and a caption of your own about it are one figure, in the main part of the dashboard.
 - The launch video still has its buttons and its words, and waits for a click on play.
 - The pad camera and the countdown work as before.
-
-Psst, the caption goes inside the `<figure>`, before `</figure>` :)
