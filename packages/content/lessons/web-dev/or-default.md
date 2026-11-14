@@ -24,7 +24,7 @@ Rocket
 
 ## One line instead of five
 
-Last lesson, the badge needed an `if` and an `else`. With `||`, one line does it:
+In the last lesson, the badge needed an `if` and an `else`. With `||`, one line does it:
 
 ```html preview
 <label for="nickname">Nickname</label>
@@ -40,13 +40,13 @@ Last lesson, the badge needed an `if` and an `else`. With `||`, one line does it
 </script>
 ```
 
-Type `Rocket`: the badge says `Rocket`. Delete it all: `Player 1`.
+Type `Rocket`: the badge says `Rocket`. Delete everything: `Player 1`.
 
-Careful with numbers: `0` is falsy too. `score || 10` gives `10` when the score is `0`, even if `0` was the real score.
+Be careful with numbers: `0` is falsy too. `score || 10` gives `10` when the score is `0`, even if `0` was the real score.
 
 ## Break it on purpose
 
-Swap the two sides:
+Change the places of the two sides:
 
 ```js
 badge.textContent = "Player 1" || nickname.value;
@@ -58,12 +58,12 @@ Type `Rocket`: the badge still says `Player 1`. `"Player 1"` is truthy, so `||` 
 
 ## Mission: Any notes?
 
+**What you will see**: when the page opens, the pass says `Notes: No notes`. Type `Vegan meal` in the notes box, and it says `Notes: Vegan meal`. Press Escape in the notes box, and `No notes` comes back.
+
 The pass shows the name, the flight, the seat and the meal, but not the notes for the crew.
 
-**Example**: when the page opens, the pass says `Notes: No notes`. Type `Vegan meal` in the notes box, and it says `Notes: Vegan meal`. Press Escape in the notes box, and `No notes` comes back.
-
-- On the pass, an element with the id `pass-notes` shows the notes as they are typed.
+- On the pass, an element with the id `pass-notes` shows the notes while they are typed.
 - With no notes, it says `No notes`: when the page opens, after the notes are deleted, and after Escape.
 - The counter under the notes box still works.
 
-Psst, the value you want first goes first :)
+The value you want first goes first.

@@ -1,4 +1,4 @@
-You sign up for a game and type your nickname, but your thumb also hits the space bar a few times. Now the scoreboard shows `   Rocket   `, with gaps before and after it, or worse, a nickname of only spaces. The spaces at the ends of a text are almost never wanted.
+You sign up for a game and type your nickname, but your thumb also hits the space bar a few times. Now the list of scores shows `   Rocket   `, with gaps before and after it. Or worse, a nickname of only spaces. Almost nobody wants the spaces at the ends of a text.
 
 ## `trim()`
 
@@ -25,7 +25,7 @@ const nickname = typed.trim();
 
 ## A text of only spaces
 
-Remember: a text of only spaces is truthy, because it isn't empty. Trimmed, it becomes `""`, which is falsy:
+Remember: a text of only spaces is truthy, because it isn't empty. After `trim()`, it becomes `""`, which is falsy:
 
 ```html preview
 <label for="nickname">Nickname</label>
@@ -46,7 +46,7 @@ Remember: a text of only spaces is truthy, because it isn't empty. Trimmed, it b
 </script>
 ```
 
-Type three spaces in the box: the badge still says `No nickname yet`. Type `Rocket` after them: the badge says `Rocket`, with no gap in front.
+Type three spaces in the box: the badge still says `No nickname yet`. Type `Rocket` after them: the badge says `Rocket`, with no gap before it.
 
 The browser doesn't trim for you. A `required` box with only spaces in it counts as filled in, so the browser sends it. The script has to check it.
 
@@ -70,18 +70,16 @@ Without `()`, `trim` is only the name of the function, and nothing calls it. A f
 
 ## Mission: Only spaces
 
-Your pass shows the name as it's typed. But a passenger who types only spaces gets an empty `Passenger:` line, and the browser books a seat for nobody: `required` and `minlength` count the spaces too.
-
-**Example**: type three spaces in the name box. The pass says `Passenger: No name yet`. Fill in the rest of the form and click **Book my seat**: the page says
+**What you will see**: type three spaces in the name box. The pass says `Passenger: No name yet`. Fill in the rest of the form and click **Book my seat**. The page says:
 
 ```text
 Please write your name
 ```
 
-Type `  Ida Moreau  `, with spaces around it, and send again: the pass says `Ida Moreau`, and the page says `Seat booked for Ida Moreau on SL-102`.
+Type `  Ida Moreau  `, with spaces around it, and send again. The pass says `Ida Moreau`, and the page says `Seat booked for Ida Moreau on SL-102`.
+
+Your pass shows the name while it's typed. But a passenger who types only spaces gets an empty `Passenger:` line, and the browser books a seat for nobody: `required` and `minlength` count the spaces too.
 
 - Spaces at the start and the end of the name don't count, on the pass and in `#confirmation`.
-- While the name is only spaces, `#pass-name` says `No name yet`, as for an empty box.
+- While the name is only spaces, `#pass-name` says `No name yet`, like for an empty box.
 - A booking with a name of only spaces books no seat: `#confirmation` says `Please write your name`.
-
-Psst, `trim()` needs its brackets :)

@@ -1,8 +1,8 @@
-In a chat app, you write a message and press Send. The page doesn't go blank and load again: your message simply shows in the chat. Many forms on the web work like that. The script answers at once, and the page stays where it is.
+In a chat app, you write a message and press Send. The page doesn't go blank and load again: your message just shows in the chat. Many forms on the web work like that. The script answers at once, and the page stays where it is.
 
-## What the browser does on its own
+## What the browser does by itself
 
-Many events come with something the browser does by itself afterwards: its **default action**. A click on a link opens the link. A form's `submit` sends the form and leaves the page. Your listener runs first, and then the default action happens.
+Many events come with something the browser does by itself after them: its **default action**. A click on a link opens the link. A form's `submit` sends the form, and leaves the page. Your listener runs first, and then the default action happens.
 
 ## `event.preventDefault()`
 
@@ -30,7 +30,7 @@ Type `Rocket` and click **Join**. The page says `Welcome to the club, Rocket!`, 
 
 ## The browser still checks
 
-`preventDefault` stops the sending, not the browser's own checks. Clear the box and click **Join**: the browser shows its message, the box is required. It refused the form before any `submit` event, so the page doesn't welcome anybody.
+`preventDefault` stops the sending, not the browser's own checks. Empty the box and click **Join**. The browser shows its message: the box is required. It refused the form before any `submit` event, so the page doesn't welcome anybody.
 
 ## Break it on purpose
 
@@ -40,24 +40,22 @@ Forget the brackets:
 event.preventDefault;
 ```
 
-Click **Join**: the page shows the welcome, and then the line under it says `The form was sent: nickname=Rocket`. No error either. Without brackets, the line only names the function, and nothing calls it. `preventDefault()` needs its `()` to run.
+Click **Join**. The page shows the welcome, and then the line under it says `The form was sent: nickname=Rocket`. There is no error either. Without brackets, the line only names the function, and nothing calls it. `preventDefault()` needs its `()` to run.
 
 ---
 
 ## Mission: Booked!
 
-Your form still leaves for the station's server when it's sent. The station wants the page to answer the passenger at once, and the form not to be sent.
-
-**Example**: type `Ida Moreau`, an email, pick the flight `SL-102` and a date, then click **Book my seat**. Under the buttons, the page says:
+**What you will see**: type `Ida Moreau` and an email, choose the flight `SL-102` and a date, then click **Book my seat**. Under the buttons, the page says:
 
 ```text
 Seat booked for Ida Moreau on SL-102
 ```
 
-and no `The form was sent` line shows in the console.
+And no `The form was sent` line shows in the console.
+
+Your form still goes to the station's server when it's sent. The station wants the page to answer the passenger at once, and the form not to be sent.
 
 - The form is no longer sent.
-- Instead, an element with the id `confirmation`, under the buttons of the form, says `Seat booked for`, the name typed, `on`, and the code of the flight picked.
+- Instead, an element with the id `confirmation`, under the form's buttons, says `Seat booked for`, the name typed, `on`, and the code of the chosen flight.
 - When the browser refuses the form, `#confirmation` stays empty.
-
-Psst, `preventDefault` needs its brackets :)

@@ -1,4 +1,4 @@
-A snack machine has a code for each slot: A1 gives water, A2 gives juice, B1 gives chips. You type a code, and the machine finds the slot that matches. One value, many possible answers, each written next to its code.
+A snack machine has a code for each place: A1 gives water, A2 gives juice, B1 gives chips. You type a code, and the machine finds the place that matches. One value, many possible answers, each written next to its code.
 
 ## `switch`
 
@@ -25,7 +25,7 @@ switch (code) {
 Juice
 ```
 
-Here is how it reads:
+Here is how to read it:
 
 1. `switch (code)` takes the value to compare: `"A2"`.
 2. Each `case` holds a value. JavaScript compares the `switch` value with each one, using `===`, from the top, until one matches: `case "A2"`.
@@ -67,7 +67,7 @@ It does the same job as an `else if` chain that asks `code === "A1"`, `code === 
 </script>
 ```
 
-Pick **Wednesday**: the page says `Activity: Robots`. Pick **Pick a day** again: no case matches, so `default` writes `Pick a day first`.
+Choose **Wednesday**: the page says `Activity: Robots`. Choose **Pick a day** again: no case matches, so `default` writes `Pick a day first`.
 
 ## Break it on purpose
 
@@ -99,12 +99,11 @@ Without `break`, JavaScript doesn't stop at the end of the case. It also runs th
 
 ## Mission: Where to?
 
+**What you will see**: when the page opens, the pass says `Going to: No flight yet`. Choose the flight `SL-102`, and it says `Going to: Mars Relay`.
+
 Your pass shows the code of the flight, like `SL-102`. A passenger wants to read where it goes.
 
-**Example**: when the page opens, the pass says `Going to: No flight yet`. Pick the flight `SL-102`, and it says `Going to: Mars Relay`.
-
-- On the pass, an element with the id `pass-destination` shows where the flight picked goes, as the list says it: `Moon Base` for SL-101, `Mars Relay` for SL-102, `Europa Outpost` for SL-103, `Lunar Gateway` for SL-104 and `Orbital Yard` for SL-105.
-- With no flight picked, it says `No flight yet`: when the page opens, and when the passenger picks **Pick a flight** again.
+- On the pass, an element with the id `pass-destination` shows where the chosen flight goes, like the list says it.
+- `SL-101` is `Moon Base`, `SL-102` is `Mars Relay`, `SL-103` is `Europa Outpost`, `SL-104` is `Lunar Gateway` and `SL-105` is `Orbital Yard`.
+- With no flight chosen, it says `No flight yet`: when the page opens, and when the passenger chooses **Pick a flight** again.
 - `#pass-flight` still shows the code.
-
-Psst, every case needs its `break` :)
