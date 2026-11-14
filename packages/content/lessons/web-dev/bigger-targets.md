@@ -1,8 +1,8 @@
-Have you ever tried to tap a tiny link on a phone and hit the one next to it instead? Fingers are much bigger than mouse pointers. A link that's only as big as its words is a small target. Good sites make them bigger.
+Have you ever tried to tap a tiny link on a phone, and hit the link next to it? Fingers are much bigger than a mouse pointer. A link that is only as big as its words is a small target. Good sites make links bigger.
 
 ## Padding on a link
 
-Padding makes a box bigger without changing its text, and a click anywhere on the padding counts as a click on the link:
+Padding makes a box bigger without changing its text. A click anywhere on the padding counts as a click on the link:
 
 ```css preview
 <style>
@@ -28,7 +28,7 @@ Padding makes a box bigger without changing its text, and a click anywhere on th
 </p>
 ```
 
-But a link is **inline**, and inline boxes don't really take their padding up and down: the padding shows, but overlaps the lines above and below, and doesn't push anything away. The fix is the box you just met:
+But a link is **inline**, and inline boxes don't really use their padding at the top and bottom. The padding shows, but it covers the lines above and below, and it doesn't push anything away. The fix is the box you just met:
 
 ```css preview
 <style>
@@ -55,26 +55,26 @@ But a link is **inline**, and inline boxes don't really take their padding up an
 </p>
 ```
 
-Now each link is a proper tile, 8 pixels of room above and below its words and 12 on the sides, and all of it can be clicked or tapped.
+Now each link is a real tile, with 8 pixels of space above and below its words and 12 on the sides. You can click or tap all of it.
 
 ## How big?
 
-A good rule: anything people tap should be at least about **44 pixels** tall on a phone, the size of a fingertip. For a menu on a computer, a bit smaller is fine, but more room is always easier.
+A good rule: anything people tap on a phone should be at least about **44 pixels** tall, the size of a fingertip. For a menu on a computer, a little smaller is fine, but more space is always easier.
 
 ## Break it on purpose
 
-Give the links padding but leave them inline. Hover over a link's padding with Inspect: the box is there, but on a page with several lines of links, the padding of one line covers the links of the next. A link that should be a real target is `inline-block`.
+Give the links padding, but leave them inline. Look at a link's padding with Inspect: the box is there. But on a page with several lines of links, the padding of one line covers the links of the next line. A link that should be a real target is `inline-block`.
 
 ---
 
 ## Mission: Easy to tap
 
+**What you will see**: every menu link is a bigger target, with space around its words, and that space is part of the link.
+
 The links in your menu are only as big as their words.
 
-**Example**: every menu link is a bigger target, with room around its words, and the room is part of the link.
+- On every page, every link in the menu is at least 32 pixels tall.
+- Every link in the menu has at least 8 pixels of space on its left and on its right.
+- The menu grows to hold the links: it's at least 32 pixels tall too.
 
-- Every link in the menu is at least 32 pixels tall.
-- Every link in the menu has at least 8 pixels of room on its left and right.
-- The menu itself grows to hold them: it's at least 32 pixels tall too.
-
-Psst, inline boxes don't really take their padding up and down :)
+If the links' padding covers the menu's edges, read Break it on purpose again.
