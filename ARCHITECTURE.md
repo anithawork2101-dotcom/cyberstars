@@ -153,6 +153,19 @@ The judge runs the student's code in the owner's container and the reference sol
 | POST   | `/api/terminal/check`       | Owner | Check the sandbox's state; a pass completes the lesson |
 | DELETE | `/api/terminal/session/:id` | Owner | Close the terminal                                     |
 
+A Linux project opens the same terminal, with `{ project: <slug> }` in the session request, and is checked with `POST /api/terminal/project-check` (`{ sessionId, project }`), whose pass finishes it for a student.
+
+### Projects
+
+A preview feature: on production only admins and the founder open it.
+
+| Method | Endpoint                                  | Auth  | Description                                                       |
+| ------ | ----------------------------------------- | ----- | ----------------------------------------------------------------- |
+| POST   | `/api/projects/:language/:slug/run`       | Owner | Run the project's tests; a pass finishes it for a student. 10/min |
+| GET    | `/api/projects/checks`                    | Yes   | The steps the student ticked                                      |
+| PUT    | `/api/projects/:language/:slug/steps/:id` | Yes   | Tick or untick a step (only the student's note, never graded)     |
+| GET    | `/api/projects/completions`               | Yes   | The projects the student finished                                 |
+
 ### Forum
 
 | Method | Endpoint                              | Auth  | Description             |
