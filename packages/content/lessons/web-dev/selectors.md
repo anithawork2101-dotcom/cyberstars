@@ -1,10 +1,10 @@
-At school, some lessons are in the gym, some in the lab, some in the classroom. You can't tell from the timetable's grid alone which is which, so the teacher puts a coloured sticker on each kind: red for gym, green for lab. Everything with a red sticker belongs together, wherever it is in the week.
+At school, some lessons are in the gym, some in the lab, and some in the classroom. On the timetable, you can't see which is which. So the teacher puts a colored sticker on each kind: red for the gym, green for the lab. Everything with a red sticker belongs together, wherever it is in the week.
 
 In HTML, that sticker is a **class**.
 
 ## Give elements a class
 
-`class` is an attribute you can put on any element. Its value is a name you make up:
+`class` is an attribute you can put on any element. Its value is a name you choose:
 
 ```html preview
 <p class="tip">Bring water to every game.</p>
@@ -12,11 +12,11 @@ In HTML, that sticker is a **class**.
 <p class="tip">Arrive ten minutes early.</p>
 ```
 
-The two tips now share the class `tip`. The page looks the same: a class is only a label, until CSS uses it.
+The two tips now share the class `tip`. The page looks the same. A class is only a label, until CSS uses it.
 
 ## Style a class
 
-In CSS, a class is picked with a **dot** in front of its name:
+In CSS, you choose a class with a **dot** before its name:
 
 ```css preview
 <style>
@@ -31,11 +31,11 @@ In CSS, a class is picked with a **dot** in front of its name:
 <p class="tip">Arrive ten minutes early.</p>
 ```
 
-`p` would pick every paragraph. `.tip` picks only the elements that wear the `tip` class, whatever their tag. A heading with `class="tip"` would turn green too.
+`p` would choose every paragraph. `.tip` chooses only the elements with the `tip` class, whatever their tag is. A heading with `class="tip"` would be green too.
 
-Many elements can share one class, and that's the point: one rule styles them all, and a new tip only needs `class="tip"` to look the part.
+Many elements can share one class, and that's the point. One rule styles them all. And a new tip only needs `class="tip"` to look like the others.
 
-A class name has no spaces, and is usually written in small letters with `-` between words: `class="club-tip"`.
+A class name has no spaces. You usually write it in small letters, with `-` between words: `class="club-tip"`.
 
 ## Break it on purpose
 
@@ -54,17 +54,15 @@ Forget the dot:
 <p class="tip">Arrive ten minutes early.</p>
 ```
 
-Without the dot, the browser looks for a **tag** called `<tip>`. There isn't one, so nothing turns green. And the other way round: in the HTML, the class is written **without** the dot, `class="tip"`, never `class=".tip"`.
+Without the dot, the browser looks for a **tag** called `<tip>`. There isn't one, so nothing is green. And it's the other way round in the HTML: you write the class **without** the dot, `class="tip"`, never `class=".tip"`.
 
 ---
 
 ## Mission: Warnings stand out
 
-Your page has two warnings: the one about the hatch in Today on Board, and the one about badges in Visiting Hours. Make them look like warnings.
+**What you will see**: both warnings show in a color the other paragraphs don't have, like dark red.
 
-**Example**: both warning paragraphs show in a color the other paragraphs don't have, like dark red.
+Your page has two warnings: the one about the hatch in Today on Board, and the one about badges in Visiting Hours. Make them look like warnings.
 
 - Both warning paragraphs have the class `warning`. Later lessons use this name.
 - Paragraphs with the class `warning` have a color the other paragraphs don't have.
-
-Psst, a dot in CSS, no dot in the HTML :)
