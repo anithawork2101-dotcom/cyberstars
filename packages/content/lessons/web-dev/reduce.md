@@ -1,8 +1,8 @@
-You empty your pockets into a piggy bank, one coin at a time. Before the first coin, the bank holds 0. Each coin adds to what's already inside. At the end, many coins have become one number: how much you saved. `reduce` turns an array into one value the same way.
+You empty your pockets into a money box, one coin at a time. Before the first coin, the box holds 0. Each coin adds to what is already inside. At the end, many coins have become one number: how much you saved. `reduce` turns an array into one value in the same way.
 
 ## Adding up with a loop
 
-You know how to add up an array in a loop: a variable starts at 0, and each item is added to it:
+You know how to add up an array in a loop. A variable starts at 0, and each item is added to it:
 
 ```js
 const coins = [2, 5, 1, 10];
@@ -32,7 +32,7 @@ console.log(saved);
 18
 ```
 
-The function gets two parameters: what has piled up so far, `total`, and the next item, `coin`. What it returns becomes the new `total` for the next item. Step by step:
+The function gets two parameters: what has been added up so far, `total`, and the next item, `coin`. What it returns becomes the new `total` for the next item. Step by step:
 
 ```text
 total 0,  coin 2   →  2
@@ -45,7 +45,7 @@ After the last item, `reduce` gives back the last total: 18. The `0` at the end 
 
 ## Adding up objects
 
-With an array of objects, the function picks the number out of each one:
+With an array of objects, the function takes the number out of each one:
 
 ```js
 const lunch = [
@@ -79,22 +79,22 @@ console.log(bill);
 [object Object]21
 ```
 
-Without a start, `reduce` starts with the **first item**: the whole sandwich object. JavaScript can't add a number to an object, so it turns both into texts, and the result is nonsense. Always give `reduce` its start: `0` for a sum.
+Without a start, `reduce` starts with the **first item**: the whole sandwich object. JavaScript can't add a number to an object, so it turns both into texts, and the result makes no sense. Always give `reduce` its start: `0` for a sum.
 
 ---
 
 ## Mission: The average level
 
-Under the low supplies, the crew wants one number for all of them: how full the supplies are, on average.
-
-**Example**: under `#low-supplies`, the dashboard says:
+**What you will see**: under `#low-supplies`, the dashboard says:
 
 ```text
 Supplies at 50% on average
 ```
 
-- Under `#low-supplies`, a paragraph with the id `supplies-average`.
+Under the low supplies, the crew wants one number for all of them: how full the supplies are, on average.
+
+- Under `#low-supplies`, add a paragraph with the id `supplies-average`.
 - It says `Supplies at `, then the average level of all the supplies of the table, rounded to a whole number, then `% on average`.
 - The average is the total of the levels, divided by how many supplies there are.
 
-Psst, `reduce` needs its start, after the function :)
+`reduce` needs its start, after the function.
