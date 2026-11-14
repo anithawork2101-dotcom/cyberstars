@@ -1,4 +1,4 @@
-Look at a framed photo on a wall. There's the photo itself, then a white strip of card around it, then the frame, and then some empty wall before the next picture. Every element on a web page is built the same way: a **box**, with layers around what it holds.
+Look at a photo in a frame on a wall. There is the photo itself, then a white band of card around it, then the frame, and then some empty wall before the next picture. Every element on a web page is built the same way: a **box**, with layers around what it holds.
 
 ## Every element is a box
 
@@ -23,11 +23,11 @@ Even when you can't see it, every element sits in a rectangle: a heading, a para
 </div>
 ```
 
-The whole `div` turns blue, from edge to edge, and its text sits right against the edges, squashed.
+The whole `div` is blue, from side to side. Its text sits right against the edges, with no space.
 
-## `padding`: room inside the box
+## `padding`: space inside the box
 
-`padding` is the white strip of card around the photo: space **inside** the box, between its edges and what it holds:
+`padding` is like the white card around the photo. It is space **inside** the box, between its edges and what it holds:
 
 ```css preview
 <style>
@@ -49,11 +49,11 @@ The whole `div` turns blue, from edge to edge, and its text sits right against t
 </div>
 ```
 
-Now there are 16 pixels of blue all around the text, on every side. The box grows to make room, and the text can breathe.
+Now there are 16 pixels of blue all around the text, on every side. The box grows to make space, and the text isn't against the edges any more.
 
-The padding takes the box's background color. It's part of the box, just empty.
+The padding has the box's background color. It's part of the box, only empty.
 
-Over the next lessons you'll meet the other layers: the **border** (the frame) and the **margin** (the empty wall around it).
+In the next lessons, you will meet the other layers: the **border** (the frame) and the **margin** (the empty wall around it).
 
 ## Break it on purpose
 
@@ -78,17 +78,15 @@ Give the padding, but no background:
 </div>
 ```
 
-The text moves away from where it was, but you can't see any box: the room is there, only invisible. Padding shows best on a box with a background or a border.
+The text moves away from where it was, but you can't see a box. The space is there, but you can't see it. Padding shows best on a box with a background or a border.
 
 ---
 
 ## Mission: Real cards
 
-Your crew cards on `crew.html` are only text so far. Make them look like cards.
+**What you will see**: each card on `crew.html` is a panel with its own color. The name and job are a little away from the panel's edges.
 
-**Example**: each card is a panel of its own color, with its name and job set a little away from the panel's edges.
+Your crew cards are only text for now. Make them look like cards.
 
 - Every card has a background the page doesn't have.
-- Every card has at least 12 pixels of room inside it, on every side.
-
-Psst, padding is the room **inside** the box :)
+- Every card has at least 12 pixels of space inside it, on every side.
