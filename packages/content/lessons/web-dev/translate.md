@@ -31,13 +31,13 @@ Lift one book a little off a shelf to read its title. The book moves, but the ga
 </p>
 ```
 
-Art moved 10 pixels to the right and 20 pixels up: a minus number up means up, a plus number down. And look at Maths and Music: they didn't move at all. The page still keeps Art's old place.
+Art moved 10 pixels to the right and 20 pixels up. A minus number means up, and a plus number means down. And look at Maths and Music: they didn't move at all. The page still keeps Art's old place.
 
-To move along one direction only, there are `translateX()`, across, and `translateY()`, up and down: `translateY(-20px)` is 20 pixels up.
+To move in only one direction, there are `translateX()`, across, and `translateY()`, up and down: `translateY(-20px)` is 20 pixels up.
 
 ## Moving on hover, slowly
 
-`transform` can change slowly with a transition, like a color. A card that lifts a little under the mouse feels like something you can pick up:
+`transform` can change slowly with a transition, like a color. A card that goes up a little under the mouse feels like something you can pick up:
 
 ```css preview
 <style>
@@ -70,26 +70,27 @@ To move along one direction only, there are `translateX()`, across, and `transla
 </p>
 ```
 
-Point at a book: it rises, and the others stay where they are.
+Point at a book: it goes up, and the others stay where they are.
 
 ## Why not a margin?
 
-A margin moves a box too, but it changes the layout: the boxes around it make room or come closer. Moving a box with a margin on hover makes the whole line jump. `transform` only moves the drawing, so nothing else moves, and the browser can do it very smoothly.
+A margin moves a box too, but it changes the layout: the boxes around it make space or come closer. Moving a box with a margin on hover makes the whole line jump. `transform` only moves the drawing, so nothing else moves, and the browser can do it very smoothly.
 
 ## Break it on purpose
 
-Write two transforms in two rules: `transform: translateY(-8px)` on hover, and somewhere later `transform: none` on the same box. Only the later one counts: the box never moves. A box has one `transform` property, like one `color`. Then write `translateY(8px)`, without the minus: the book sinks instead of rising.
+Write two transforms in two rules: `transform: translateY(-8px)` on hover, and somewhere later `transform: none` on the same box. Only the later one counts, so the box never moves. A box has one `transform` property, like one `color`. Then write `translateY(8px)`, without the minus: the book goes down, not up.
 
 ---
 
 ## Mission: Cards you can pick up
 
-The cards light up under the mouse. The crew would like them to lift a little too, like a card picked up from a table.
+**What you will see**: move the mouse over a card. It goes up 4 pixels and gets its yellow border. The cards around it stay where they are.
 
-**Example**: move the mouse over a card: it rises 4 pixels and gets its yellow border. The cards around it stay where they are.
+The cards light up under the mouse. The crew would like them to go up a little too, like a card picked up from a table.
 
-- Under the mouse, every card of the dashboard moves up 4 pixels, and comes back down when the mouse leaves.
+- With the mouse over it, every card of the dashboard moves up 4 pixels.
+- It comes back down when the mouse leaves.
 - It moves slowly, with the same timing and wait as its border.
 - The cards around it don't move.
 
-Psst, a transition can name two properties, with a comma between them :)
+A transition can name two properties, with a comma between them.
