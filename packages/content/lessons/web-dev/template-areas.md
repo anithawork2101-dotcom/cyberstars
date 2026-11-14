@@ -2,7 +2,7 @@ Before you move into a new room, you might draw it on paper: the bed here, the d
 
 ## `grid-template-areas`
 
-`grid-template-areas` is a drawing of the grid. Each text in quotes is one row, and each word in it is one cell, the name of what goes there. A name written in two cells side by side takes both:
+`grid-template-areas` is a drawing of the grid. Each text in quotes is one row, and each word in it is one cell: the name of what goes there. A name written in two cells side by side takes both. A named part of the grid is called an **area**:
 
 ```css preview
 <style>
@@ -54,7 +54,7 @@ The drawing has two rows. The first is `top top`: one area over both columns. Th
 
 ## `grid-area`: who goes where
 
-`grid-area` puts an item in the area with that name. The names are yours: `top`, `side`, `story` mean nothing to CSS, they only have to be the same in the drawing and in `grid-area`.
+`grid-area` puts an item in the area with that name. You choose the names: `top`, `side` and `story` mean nothing to CSS. They only have to be the same in the drawing and in `grid-area`.
 
 Look at the HTML: the title comes **last**, but it shows at the top. Like grid lines, areas don't care about the order in the HTML.
 
@@ -108,7 +108,7 @@ A `.` in the drawing is a cell with nothing in it:
 </div>
 ```
 
-The title now takes only the right column, over the story, and the top left cell stays empty.
+The title now only takes the right column, over the story, and the top left cell stays empty.
 
 ## Break it on purpose
 
@@ -120,15 +120,13 @@ grid-template-areas:
   "side story";
 ```
 
-`side` is now in two cells that only touch at a corner. The browser can't use a drawing like that, so it ignores the whole `grid-template-areas`. Now the names lead nowhere: the items pile up in odd places, and some of them even disappear. An area must always be a rectangle. If your layout falls apart, look at your drawing first.
+`side` is now in two cells that only touch at a corner. The browser can't use a drawing like that, so it ignores the whole `grid-template-areas`. Now the names lead nowhere: the items end up in strange places, and some of them even disappear. An area must always be a rectangle. If your layout breaks, look at your drawing first.
 
 ---
 
 ## Mission: The panels of the dashboard
 
-Under the cards, the pad camera, the last launch and the countdown come one under the other, and the videos take a lot of room.
-
-**Example**: under the cards, the pad camera and the last launch side by side, and the countdown under both of them, across the whole width:
+**What you will see**: under the cards, the pad camera and the last launch side by side, and the countdown under both of them, across the whole width:
 
 ```text
 The launch pad, live    The last launch
@@ -137,8 +135,14 @@ The countdown
 [countdown]
 ```
 
-- The pad camera, the last launch and the countdown are each in a part of their own, each with its heading, with the ids `pad-panel`, `launch-panel` and `countdown-panel`. A box with the class `panels` holds the three.
-- The pad camera's panel is on the left and the last launch's on the right, side by side. The countdown's panel is under both, as wide as the two together. It stays like that even when the panels come in another order in the HTML.
-- On a computer and in a window 800 pixels wide, no video sticks out of its panel.
+Under the cards, the pad camera, the last launch and the countdown come one under the other, and the videos take a lot of space.
 
-Psst, a video is a box like a picture: `max-width` keeps it inside its panel :)
+- The pad camera, the last launch and the countdown are each in their own part, each with its heading.
+- Those parts, called **panels**, have the ids `pad-panel`, `launch-panel` and `countdown-panel`.
+- A box with the class `panels` holds the three.
+- The pad camera's panel is on the left and the last launch's on the right, side by side.
+- The countdown's panel is under both, as wide as the two together.
+- It stays like that even when the panels come in another order in the HTML.
+- On a computer and in a window 800 pixels wide, no video comes out of its panel.
+
+A video is a box like a picture: `max-width` keeps it inside its panel.

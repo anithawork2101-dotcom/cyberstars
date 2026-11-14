@@ -75,7 +75,7 @@ Each app is now a small box in the middle of its cell, across. It still takes th
 
 ## `align-items`: up and down
 
-`align-items` does the same from top to bottom. You know it from flex, and in a grid it moves each item inside its own cell:
+`align-items` does the same from top to bottom. You know it from flex. In a grid, it moves each item inside its own cell:
 
 ```css preview
 <style>
@@ -113,7 +113,7 @@ Now each app sits in the very middle of its cell. Try `end` for both: every app 
 
 ## A card can be a grid too
 
-A grid item can be a grid of its own. Then `justify-items` on the item places **its** children, inside it. That's how we'll put the heading and the number in the middle of each card.
+A grid item can be its own grid. Then `justify-items` on the item places **its** children, inside it. That's how you can put the heading and the number in the middle of each card.
 
 ## Break it on purpose
 
@@ -123,11 +123,10 @@ Use `text-align: center` on an app instead. The word moves to the middle, but th
 
 ## Mission: Numbers in the middle
 
-The cards' headings and numbers sit at the left. On a tall card, like the crew's, there's a lot of empty room under them.
+**What you will see**: in every card, the heading and the number stand in the middle across, each one only as wide as its text.
 
-**Example**: in every card, the heading and the number stand in the middle across, each one only as wide as its text.
+The cards' headings and numbers sit on the left. On a tall card, like the crew's card, there is a lot of empty space under them.
 
-- In every card, the heading and the number stand in the middle across, on a computer and in a window 800 pixels wide.
+- In every card, the heading and the number stand in the middle across.
+- That's true on a computer and in a window 800 pixels wide.
 - The grid of cards stays as it is: the crew's card over two rows, the Next launch card over two columns.
-
-Psst, the cards place their own heading and number, so the cards become grids :)

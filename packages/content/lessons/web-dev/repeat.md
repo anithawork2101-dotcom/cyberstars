@@ -36,11 +36,11 @@ A grid with five equal columns, written out:
 </div>
 ```
 
-Five seats of a cinema row, each one fifth of the width. It works, but count the `1fr`s: are there five? With twelve columns, you would have to count twelve.
+You see the five seats of a cinema row, each one a fifth of the width. It works, but count the `1fr`s: are there five? With twelve columns, you would have to count twelve.
 
 ## `repeat()`
 
-`repeat()` takes a number and what to repeat:
+`repeat()` takes a number, and what to repeat:
 
 ```css preview
 <style>
@@ -74,7 +74,7 @@ Five seats of a cinema row, each one fifth of the width. It works, but count the
 </div>
 ```
 
-`repeat(5, 1fr)` means `1fr` five times. The page looks exactly the same: it's only a shorter way to write it. Change the 5 to a 3: three seats a row now, and the other two go to a new row.
+`repeat(5, 1fr)` means `1fr` five times. The page looks exactly the same: it's only a shorter way to write it. Change the 5 to a 3: now there are three seats in a row, and the other two go to a new row.
 
 ## Repeating more than one size
 
@@ -115,22 +115,24 @@ That's `2fr 1fr 2fr 1fr`: a wide seat, a narrow one, a wide one, a narrow one.
 
 ## Break it on purpose
 
-Forget the comma: `repeat(5 1fr)`. The browser doesn't understand it, so it throws away the whole line, and the grid has no columns: every seat takes a row of its own. The same happens with a space between `repeat` and its `(`. When a grid falls back to one column, check your `repeat()`.
+Forget the comma: `repeat(5 1fr)`. The browser doesn't understand it, so it throws away the whole line. The grid has no columns, and every seat takes its own row. The same happens with a space between `repeat` and its `(`. When a grid goes back to one column, check your `repeat()`.
 
 ---
 
 ## Mission: This week
 
-The crew plans the week on the dashboard. They want the days of the week in one strip under the cards.
-
-**Example**: under the cards, a heading such as "This week", then seven boxes in one row across the whole width:
+**What you will see**: under the cards, a heading like "This week", then seven boxes in one row, across the whole width:
 
 ```text
 Mon   Tue   Wed   Thu   Fri   Sat   Sun
 ```
 
-- Under the cards and before the panels, a heading and an ordered list with the class `week`, with the seven days of the week, Monday first. Each day has a background of its own.
-- On a computer and in a window 800 pixels wide, the seven days stand in one row, all the same width, across the whole width of the list, with room between them.
+The crew plans the week on the dashboard. They want the days of the week in one band under the cards.
+
+- Under the cards and before the panels, add a heading and an ordered list with the class `week`.
+- The list has the seven days of the week, Monday first.
+- Each day has its own background.
+- On a computer and in a window 800 pixels wide, the seven days stand in one row, all the same width, across the whole width of the list, with space between them.
 - More days make more rows of seven.
 
-Psst, a list has room on its left for its numbers: `padding: 0` takes it away :)
+A list has space on its left for its numbers: `padding: 0` takes it away.
