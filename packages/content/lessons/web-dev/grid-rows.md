@@ -1,8 +1,8 @@
-Think of a bookshelf. The top shelf is tall, for the big picture books. The shelves under it are lower, for the small ones. You decide how tall each shelf is. In a grid, the rows are the shelves.
+Think of a bookshelf. The top shelf is tall, for the big picture books. The shelves under it are lower, for the small books. You decide how tall each shelf is. In a grid, the rows are the shelves.
 
 ## Rows as tall as their content
 
-So far we only wrote columns. Each row was as tall as the tallest item in it:
+Until now, you only wrote columns. Each row was as tall as the tallest item in it:
 
 ```css preview
 <style>
@@ -38,7 +38,7 @@ So far we only wrote columns. Each row was as tall as the tallest item in it:
 </div>
 ```
 
-Every row is just tall enough for one line of text.
+Every row is only tall enough for one line of text.
 
 ## `grid-template-rows`
 
@@ -79,9 +79,9 @@ Every row is just tall enough for one line of text.
 </div>
 ```
 
-The first row is 80 pixels tall, the second 40. The items grow to fill their row: the apps of the first row are taller boxes now.
+The first row is 80 pixels tall, and the second one is 40. The items grow to fill their row: the apps of the first row are taller boxes now.
 
-But look at Weather. We wrote two heights, and the seventh app needs a third row. The grid makes that row by itself, and a row the grid makes by itself is as tall as its content again.
+But look at Weather. You wrote two heights, and the seventh app needs a third row. The grid makes that row by itself. A row the grid makes by itself is as tall as its content again.
 
 ## `grid-auto-rows`
 
@@ -123,22 +123,22 @@ But look at Weather. We wrote two heights, and the seventh app needs a third row
 </div>
 ```
 
-Now we wrote only the first row. Every row after it is one the grid makes, and each one is 40 pixels tall. Add more apps: every new row is 40 pixels too.
+Now you only wrote the first row. Every row after it is one the grid makes, and each one is 40 pixels tall. Add more apps: every new row is 40 pixels too.
 
 ## Break it on purpose
 
-Write a height that's too small, `grid-auto-rows: 10px`. The rows get only 10 pixels, but the words still need their room. The text comes out of its box and falls over the next row. A row in pixels doesn't grow for its content, so give it enough.
+Write a height that is too small: `grid-auto-rows: 10px`. The rows only get 10 pixels, but the words still need their space. The text comes out of its box, and falls over the next row. A row in pixels doesn't grow for its content, so give it enough.
 
 ---
 
 ## Mission: A taller first row
 
-The first row of the dashboard holds the most important numbers. The crew wants it to stand out.
+**What you will see**: the three cards of the first row are taller than the others. Every row after it has the same, smaller height, also when more cards come.
 
-**Example**: the three cards of the first row are taller than the others. Every row after it has the same, smaller height, also when more cards come.
+The first row of the dashboard holds the most important numbers. The crew wants it to stand out.
 
 - The cards of the first row are 200 pixels tall.
 - Every other row is 150 pixels tall, also a row the grid makes for more cards.
 - It stays like that on a computer and in a window 800 pixels wide.
 
-Psst, one property is for the rows you write, the other for the rows the grid makes :)
+One property is for the rows you write, and the other is for the rows the grid makes.

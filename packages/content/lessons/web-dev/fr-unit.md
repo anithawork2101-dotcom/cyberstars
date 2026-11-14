@@ -1,8 +1,8 @@
-Three friends share a pizza. Nobody measures the slices in centimetres: each one gets a third, whatever the size of the pizza. A big pizza gives big slices, a small one small slices. A grid can share its width the same way.
+Three friends share a pizza. Nobody measures the pieces in centimetres: each one gets a third, whatever the size of the pizza. A big pizza gives big pieces, and a small one gives small pieces. A grid can share its width in the same way.
 
 ## Columns in pixels don't share
 
-Our columns from the last lesson have a fixed width:
+The columns from the last lesson have a fixed width:
 
 ```css preview
 <style>
@@ -37,11 +37,11 @@ Our columns from the last lesson have a fixed width:
 </div>
 ```
 
-On a wide screen, the apps stay small at the left, and the rest of the row is empty. On a narrow one, they stick out. 100 pixels is 100 pixels, whatever room there is.
+On a wide screen, the apps stay small on the left, and the rest of the row is empty. On a narrow one, they come out of the box. 100 pixels is 100 pixels, whatever space there is.
 
-## `fr`: a share of the room
+## `fr`: a share of the space
 
-`fr` means a **fraction**, a share. `1fr` is one share of the room left in the grid:
+`fr` means a **fraction**: a share. `1fr` is one share of the space left in the grid:
 
 ```css preview
 <style>
@@ -76,7 +76,7 @@ On a wide screen, the apps stay small at the left, and the rest of the row is em
 </div>
 ```
 
-Three shares, so each column gets a third of the width. The grid takes away the gaps first, then cuts what's left into three equal parts. Make your preview's panel wider and narrower: the apps grow and shrink, and the row always ends at the right edge.
+Three shares, so each column gets a third of the width. The grid takes away the gaps first, then cuts what is left into three equal parts. Make your preview's panel wider and narrower: the apps grow and get smaller, and the row always ends at the right edge.
 
 ## Shares of different sizes
 
@@ -115,21 +115,20 @@ A column can get more shares than another. `2fr` is twice as much as `1fr`:
 </div>
 ```
 
-Now there are four shares: the first column takes two of them, half of the width, and the other two columns take one each.
+Now there are four shares. The first column takes two of them, half of the width, and the other two columns take one each.
 
 ## Break it on purpose
 
-Write the shares as percentages instead: `33% 33% 33%`. It looks almost right, but look at the right edge: the row sticks out a little. The three columns take 99% of the width, and the two gaps come on top of that. `fr` shares only the room the gaps leave, so it never sticks out.
+Write the shares as percents instead: `33% 33% 33%`. It looks almost right, but look at the right edge: the row comes out a little. The three columns take 99% of the width, and the two gaps come on top of that. `fr` only shares the space the gaps leave, so it never comes out.
 
 ---
 
 ## Mission: Cards that fill the row
 
-Your cards have fixed widths. On a computer, there's an empty strip at the right of the cards. On a smaller window, the third column sticks out.
+**What you will see**: the same six cards in three columns. But the first card now starts at the left edge of `.stats`, and the third one ends at its right edge, whatever the width of the window.
 
-**Example**: the same six cards in three columns, but the first card now starts at the left edge of `.stats` and the third ends at its right edge, whatever the width of the window.
+Your cards have fixed widths. On a computer, there is an empty band on the right of the cards. On a smaller window, the third column comes out of the box.
 
-- The three columns share the whole width of `.stats`, the same for each one, on a computer and on a window 800 pixels wide.
+- The three columns share the whole width of `.stats`, the same for each one.
+- That's true on a computer and on a window 800 pixels wide.
 - The cards keep at least 16 pixels between them, across and down.
-
-Psst, a share is written `1fr`, one for each column :)
