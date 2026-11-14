@@ -2,7 +2,7 @@ Think of a newspaper page again: the paper's name at the top, the page number at
 
 ## `<main>`
 
-`<main>` holds the page's own part: everything between the header and the footer that belongs to this page only.
+`<main>` holds the page's own part: everything between the header and the footer that belongs only to this page.
 
 ```html preview
 <header>
@@ -26,9 +26,9 @@ The page looks the same as without `<main>`. But now the browser knows where the
 
 The page's biggest heading belongs to the page, so it goes inside `<main>` too.
 
-## One per page
+## One on each page
 
-A page has one `<main>`, and only one. It sits beside the header and the footer, never inside them, and they never go inside it:
+A page has one `<main>`, and only one. It sits next to the header and the footer, never inside them, and they never go inside it:
 
 ```html
 <body>
@@ -64,11 +64,10 @@ It still looks the same, so nothing warns you. But now the club's name and the m
 
 ## Mission: The page's own part
 
+**What you will see**: open the crew directory, right-click its heading, and choose **Inspect**. You find the header, then one `<main>` with the heading, the buttons, the lists and the cards in it, then the footer.
+
 Every page of your site now has a header and a footer. Between them is what that page is about: the crew cards, the flights, the booking form.
 
-**Example**: open the crew directory and right-click its heading, then **Inspect**. You find the header, then one `<main>` with the heading, the buttons, the lists and the cards in it, then the footer.
-
-- On every page, everything between the header and the footer is in one `<main>`, the biggest heading too.
-- The header and the footer stay outside it: the header before it, the footer after it.
-
-Psst, one `<main>` for the whole page, not one for each part :)
+- On every page, everything between the header and the footer is in one `<main>`.
+- The biggest heading is inside it too.
+- The header and the footer stay outside it: the header before it, and the footer after it.

@@ -16,13 +16,13 @@ A recipe in a cookbook has parts: what you need, how to make it, how to serve it
 </section>
 ```
 
-The page looks as it would with only the headings and the paragraphs. A section has no look of its own. But each one now holds its heading and its text together, as one part with a name.
+The page looks like it would with only the headings and the paragraphs. A section has no look of its own. But each one now holds its heading and its text together, as one part with a name.
 
 ## A section has a heading
 
-A part with no heading of its own is not a section. If you only need a box to style with CSS, that's a `<div>`, as in the crew cards.
+A part with no heading of its own isn't a section. If you only need a box to style with CSS, that's a `<div>`, like the crew cards.
 
-The heading in a section is one level below the heading over it: on a page with an `<h1>`, each section starts with an `<h2>`.
+The heading in a section is one level below the heading over it. On a page with an `<h1>`, each section starts with an `<h2>`.
 
 ## Break it on purpose
 
@@ -42,7 +42,9 @@ It looks exactly the same. But now the section is a part with no name, and the h
 
 ## Mission: The first wiki pages
 
-The crew wants a wiki: pages that explain how things work on the station. The first two are about the greenhouse and the airlock. Here is what each page tells:
+**What you will see**: the greenhouse page shows the site's header, the heading **The Greenhouse** and a sentence. Then it shows parts like **What grows here**, **Light** and **Water**, each under its own heading, then the footer.
+
+The crew wants a **wiki**: pages that explain how things work on the station. The first two are about the greenhouse and the airlock. Here is what each page tells:
 
 ```text
 The Greenhouse
@@ -58,10 +60,9 @@ The Airlock
 - nobody goes out alone; Commander Vega checks every suit and both doors
 ```
 
-**Example**: the greenhouse page shows the site's header, the heading **The Greenhouse** and a sentence, then parts such as **What grows here**, **Light** and **Water**, each under its own heading, then the footer.
-
-- Two new pages, `wiki-greenhouse.html` and `wiki-airlock.html`, are built like the others: a whole page, in English, that can show any letter, with a name for its tab, using the site's `style.css`. Each has the header with its named menu, one `<main>` with the biggest heading, and the footer.
-- Each page tells about its topic in at least two parts, each with its own heading inside it. The headings go in order: no level skipped.
+- Add two new pages, `wiki-greenhouse.html` and `wiki-airlock.html`.
+- They are built like the others: whole pages, in English, that can show any letter, with a name for their tab, using the site's `style.css`.
+- Each page has the header with its named menu, one `<main>` with the biggest heading, and the footer.
+- Each page tells about its topic in at least two parts, each with its own heading inside it.
+- The headings go in order: no level is skipped.
 - The home page has a link to each of the two pages.
-
-Psst, the heading goes inside its section, at the top :)
