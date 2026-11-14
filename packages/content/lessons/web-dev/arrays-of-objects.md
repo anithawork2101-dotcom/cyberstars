@@ -1,4 +1,4 @@
-Your phone doesn't have one contact, it has hundreds: a list of contacts, each with its own name and number. A list where every item is an object is one of the most common shapes of data there is.
+Your phone doesn't have one contact. It has hundreds: a list of contacts, each with its own name and number. A list where every item is an object is one of the most common shapes of data.
 
 ## An array of objects
 
@@ -10,11 +10,11 @@ const friends = [
 ];
 ```
 
-Square brackets for the list, curly brackets for each item. Every item has the same properties.
+Square brackets for the list, and curly brackets for each item. Every item has the same properties.
 
 ## Reading one
 
-The item first, by its index, then its property:
+First the item, by its index, then its property:
 
 ```js
 console.log(friends[1].name);
@@ -40,7 +40,7 @@ Lea is 12
 Ola is 14
 ```
 
-In each lap, `friend` is one whole object, and you read whichever properties you need.
+In each lap, `friend` is one whole object, and you read the properties you need.
 
 ## Break it on purpose
 
@@ -54,15 +54,13 @@ console.log(friends.name);
 undefined
 ```
 
-The **array** has no `name`: only each item does. First pick an item, then its property.
+The **array** has no `name`: only each item has one. First choose an item, then its property.
 
 ---
 
 ## Mission: Tomorrow's flights
 
-Tomorrow's three flights are already planned, and the script keeps them as a list of objects.
-
-**Example**: when `schedule.html` opens, the console shows:
+**What you will see**: when `schedule.html` opens, the console shows:
 
 ```text
 Tomorrow: SL-201 to Moon Base
@@ -70,7 +68,8 @@ Tomorrow: SL-202 to Titan Dock
 Tomorrow: SL-203 to Mars Relay
 ```
 
-- In `schedule.js`, one array holds three objects, each with a `code` and a `destination`: `SL-201` to `Moon Base`, `SL-202` to `Titan Dock`, `SL-203` to `Mars Relay`.
-- A loop logs `Tomorrow: `, each flight's code, `to` and its destination.
+Tomorrow's three flights are already planned, and the script keeps them as a list of objects.
 
-Psst, curly brackets for each flight, square brackets around them all :)
+- In `schedule.js`, one array holds three objects.
+- Each object has a `code` and a `destination`: `SL-201` to `Moon Base`, `SL-202` to `Titan Dock`, `SL-203` to `Mars Relay`.
+- A loop writes `Tomorrow: `, each flight's code, `to`, and its destination.

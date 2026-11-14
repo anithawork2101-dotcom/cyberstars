@@ -1,8 +1,8 @@
-Sorting the washing, you skip the socks with holes: you don't stop sorting, you just move on to the next sock. A loop can skip one lap like that, and carry on with the rest.
+When you sort the washing, you skip the socks with holes. You don't stop sorting. You just go on to the next sock. A loop can skip one lap like that, and go on with the rest.
 
 ## `continue`
 
-`continue` jumps to the next lap at once, skipping the rest of the current one:
+`continue` jumps to the next lap at once, and skips the rest of the current lap:
 
 ```js
 const scores = [12, -1, 8, -1, 5];
@@ -20,16 +20,16 @@ console.log(total);
 25
 ```
 
-A score of `-1` means "didn't play". For those, `continue` skips the adding and goes straight to the next score. The others are added up: 12 + 8 + 5.
+A score of `-1` means "didn't play". For those scores, `continue` skips the adding, and goes straight to the next score. The others are added up: 12 + 8 + 5.
 
 ## `break` or `continue`?
 
-- `break`: stop the whole loop. "I've found it."
-- `continue`: skip this one, keep going. "Not this one, next!"
+- `break`: stop the whole loop. "I found it."
+- `continue`: skip this one, and keep going. "Not this one, next!"
 
 ## It's like an `else`
 
-You could write the same with an `if` around the adding:
+You could write the same thing with an `if` around the adding:
 
 ```js
 for (const score of scores) {
@@ -39,7 +39,7 @@ for (const score of scores) {
 }
 ```
 
-Both work. `continue` is handy when there are several lines to skip, or several reasons to skip: each reason gets its own short `if` at the top of the loop, and the main work stays unindented below.
+Both work. `continue` is useful when there are several lines to skip, or several reasons to skip. Each reason gets its own short `if` at the top of the loop, and the main work stays below, without moving to the right.
 
 ## Break it on purpose
 
@@ -64,16 +64,16 @@ The `-1`s were added before the skip: too late. `continue` only skips what comes
 
 ## Mission: Still flying
 
-The schedule counts the flights that are still flying today: every flight except the cancelled ones.
-
-**Example**: under `#first-delay`, a paragraph says:
+**What you will see**: under `#first-delay`, a paragraph says:
 
 ```text
 4 flights still flying
 ```
 
-- A paragraph with the id `active-count`.
-- A loop goes through every row of the flight table. A row whose status is `Cancelled` is skipped with `continue`, and every other one is counted.
-- The paragraph says the count, then ` flights still flying`.
+The schedule counts the flights that are still flying today: every flight except the cancelled ones.
 
-Psst, `continue` skips what comes after it :)
+- Add a paragraph with the id `active-count`.
+- A loop goes through every row of the flight table.
+- A row whose status is `Cancelled` is skipped with `continue`.
+- Every other row is counted.
+- The paragraph says the count, then ` flights still flying`.
