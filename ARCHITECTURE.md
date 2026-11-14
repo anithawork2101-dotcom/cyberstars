@@ -98,6 +98,21 @@ Not API routes: static files generated from `packages/content/` at build time in
 | `/lessons/:courseKey/:language/...` | The same per language on a multi-language course |
 | `/almanac/...`                      | Almanac cards and articles, with `ro/` copies    |
 
+### Web lessons and the practice API
+
+The Web Development course is a preview feature: on production only admins and the founder open it.
+
+| Method | Endpoint                                    | Auth     | Description                                                                            |
+| ------ | ------------------------------------------- | -------- | -------------------------------------------------------------------------------------- |
+| GET    | `/api/lessons/:courseKey/:lessonSlug/start` | Optional | The site a web lesson starts from: the course's, or the student's last passing one     |
+| GET    | `/api/practice/starships`                   | No       | The practice data a student's page loads with `fetch` (`?wait=2` holds it two seconds) |
+| GET    | `/api/practice/starships/:id`               | No       | One starship, or a 404 that says why                                                   |
+| POST   | `/api/practice/starships`                   | No       | Report a starship: checked and answered with an id, never stored                       |
+| GET    | `/api/practice/crew`                        | No       | More practice data                                                                     |
+| GET    | `/api/practice/broken`                      | No       | Always a 500, for the lessons about errors                                             |
+
+The practice API answers any origin, with no cookies: it is mounted before the site's CORS and guest cookie, and reaches no other route.
+
 ### Code execution
 
 | Method | Endpoint                   | Auth  | Description                                                       |
