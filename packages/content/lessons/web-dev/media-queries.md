@@ -1,8 +1,8 @@
-You have one rule for the weather: if it rains, you take an umbrella. On a sunny day, the rule is still there, it just doesn't do anything. CSS can have rules like that too: rules for a narrow window, which do nothing on a wide one.
+You have one rule for the weather: if it rains, you take an umbrella. On a sunny day, the rule is still there. It just doesn't do anything. CSS can have rules like that too: rules for a narrow window, which do nothing on a wide one.
 
 ## `@media`
 
-`@media` holds CSS rules that count only when its question is true. `(max-width: 500px)` asks: is the window at most 500 pixels wide?
+`@media` holds CSS rules that only count when its question is true. `(max-width: 500px)` asks: is the window at most 500 pixels wide? A block like this is called a **media query**.
 
 ```css preview
 <style>
@@ -33,13 +33,13 @@ You have one rule for the weather: if it rains, you take an umbrella. On a sunny
 <p class="box">What color am I?</p>
 ```
 
-Make your preview's panel wide: the text is green. Make it narrow, under 500 pixels: the text turns yellow. Inside the `@media`, the rule for `.box` comes later than the first one, so when the question is true, it wins.
+Make your preview's panel wide: the text is green. Make it narrow, under 500 pixels: the text turns yellow. Inside the `@media`, the rule for `.box` comes later than the first one. So when the question is true, it wins.
 
-Look at the braces: the `@media` has its own `{ }`, and the rules go inside them, each one with its own `{ }` as always.
+Look at the curly brackets. The `@media` has its own `{ }`, and the rules go inside them, each one with its own `{ }` as always.
 
 ## A layout for a narrow window
 
-The most useful rules to change are the layout's. Two columns on a wide window, one on a narrow window:
+The most useful rules to change are the layout's rules. Two columns on a wide window, and one on a narrow window:
 
 ```css preview
 <style>
@@ -76,9 +76,9 @@ The most useful rules to change are the layout's. Two columns on a wide window, 
 </div>
 ```
 
-On a narrow window, the grid gets one column, so the weather goes under the news. Inside the `@media` we only wrote what changes: the grid itself, its gap and the rest stay.
+On a narrow window, the grid gets one column, so the weather goes under the news. Inside the `@media`, you only write what changes. The grid itself, its gap and the rest stay.
 
-A phone shows your page at its own width only if the page has the viewport tag you know from the Station Wiki. Without it, the phone pretends to be a wide screen, and your `@media` never counts.
+A phone only shows your page at its own width if the page has the viewport tag you know from the Station Wiki. Without it, the phone acts like a wide screen, and your `@media` never counts.
 
 ## Break it on purpose
 
@@ -88,9 +88,7 @@ Write `@media (max-width: 500)`, without `px`. The question has no meaning witho
 
 ## Mission: Panels on a narrow window
 
-In a window 600 pixels wide, the pad camera and the last launch share a narrow row, and everything gets squeezed.
-
-**Example**: in a window 600 pixels wide or narrower, the four panels stand one under the other, each one as wide as the page:
+**What you will see**: in a window 600 pixels wide or narrower, the four panels stand one under the other, each one as wide as the page:
 
 ```text
 The launch pad, live
@@ -99,8 +97,10 @@ The countdown
 On duty today
 ```
 
-- In a window 600 pixels wide or narrower, the panels stand one under the other, in this order: the pad camera, the last launch, the countdown, who is on duty. Each one is as wide as the box of panels.
-- In a window 600 and 560 pixels wide, nothing sticks out sideways.
-- In wider windows, the panels stay side by side as before.
+In a window 600 pixels wide, the pad camera and the last launch share a narrow row, and everything is too small.
 
-Psst, 600 pixels or narrower is `max-width` :)
+- In a window 600 pixels wide or narrower, the panels stand one under the other.
+- The order is: the pad camera, the last launch, the countdown, who is on duty.
+- Each panel is as wide as the box of panels.
+- In a window 600 and 560 pixels wide, nothing comes out sideways.
+- In wider windows, the panels stay side by side as before.
