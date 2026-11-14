@@ -1,8 +1,8 @@
-Have you ever written a note in the margin of a book, or a reminder on a sticky note on your homework? It's for you, not for whoever reads the book. HTML has notes like that too. They're called **comments**.
+Have you ever written a note on the side of a book page, or a reminder on a sticky note on your homework? It's for you, not for the people who read the book. HTML has notes like that too. They are called **comments**.
 
 ## A comment
 
-A comment starts with `<!--` and ends with `-->`. Everything between them is ignored by the browser:
+A comment starts with `<!--` and ends with `-->`. The browser doesn't show anything between them:
 
 ```html preview
 <h1>My Favourite Games</h1>
@@ -21,9 +21,9 @@ A comment can also hide a piece of the page for a while, without deleting it:
 <!-- <p>Tournament this Saturday!</p> -->
 ```
 
-The second paragraph is still in the file. To bring it back, you just take away the `<!--` and `-->`. That's handy for something that comes and goes, like a notice for one week.
+The second paragraph is still in the file. To bring it back, you only take away the `<!--` and the `-->`. That's useful for something that comes and goes, like a notice for one week.
 
-A comment can be as long as you like, over several lines, until its `-->`.
+A comment can be as long as you like, on many lines, until its `-->`.
 
 ## Break it on purpose
 
@@ -35,23 +35,21 @@ Forget the end of the comment:
 <p>On rainy days we play cards instead.</p>
 ```
 
-Now the page is empty from that line on. Without `-->`, the browser thinks the whole rest of the file is one long comment. If part of your page suddenly disappears, look for a comment that never ends.
+Now the page is empty from that line on. Without `-->`, the browser thinks the whole rest of the file is one long comment. If part of your page is suddenly gone, look for a comment with no end.
 
-Comments are visible to anyone who looks at the page's code, so never write a password or a secret in one.
+Anyone who looks at the page's code can read your comments. So never write a password or a secret in one.
 
 ---
 
 ## Mission: Off for now
 
-Your `index.html` has a side note in `<small>` about the docking fee. The fee is being changed, so it shouldn't show for now. But you'll need it again later, so don't delete it.
-
-**Example**: the paragraph with the small print shows only its other words:
+**What you will see**: the paragraph with the side note shows only its other words. For example:
 
 ```text
 Next supply ship: Friday.
 ```
 
+Your `index.html` has a side note in `<small>` about the docking fee. The fee is going to change, so the note shouldn't show for now. But you will need it again later, so don't delete it.
+
 - The side note in `<small>` no longer shows on the page.
 - Everything else on the page still shows.
-
-Psst, a comment needs both its `<!--` and its `-->` :)
