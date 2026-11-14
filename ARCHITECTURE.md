@@ -285,13 +285,15 @@ Visits keep no IP and no guest id: a visitor is a hash of the day's salt, the IP
 
 Defined in [`apps/api/prisma/schema.prisma`](apps/api/prisma/schema.prisma), camelCase in TypeScript mapped to snake_case columns.
 
-- **User**, **Curriculum**, **Lesson**: accounts, courses and lesson metadata (the content stays in files)
+- **User**, **Session**, **Curriculum**, **Lesson**: accounts, signed-in browsers (the SHA-256 of each token's secret, never the secret), courses and lesson metadata (the content stays in files)
 - **UserLessonProgress**, **UserSavedCode**, **LessonSubmission**, **DailyPick**: completion, saved code, judge attempts (the newest 20 per lesson) and the daily picks
 - **ForumCategory**, **ForumThread**, **ForumPost**, **ForumReaction**, **ForumThreadView**: the forum
-- **SupportTicket**, **SupportMessage**, **Notification**, **Announcement**, **Poll**, **PollOption**, **PollVoter**, **PollAnswer**: support, the bell, and the announcements and polls sent
+- **ProjectStepCheck**, **ProjectCompletion**: the project steps a student ticked, and the projects their tests passed
+- **SupportTicket**, **SupportMessage**, **Notification**, **Announcement**, **Poll**, **PollOption**, **PollVoter**, **PollViewer**, **PollAnswer**: support, the bell, and the announcements and polls sent (a voter and a viewer are kept only so each account counts once)
 - **Conversation**, **DirectMessage**, **DmReaction**, **Connection**: messages and connections
 - **TutorConversation**, **TutorMessage**, **UsageWindow**: the tutor's conversations and the usage limits
 - **LaniakeaPlanet**: a student's planet: level, last pass, questions seen and the test going on
+- **LaniakeaPass**: each test that moved a planet, its conquest or a recap, for the activity heatmap and the streak
 - **LaniakeaPlayer**: when a student last opened the game and was last told of open recaps
 - **LaniakeaQuestionStat**: how often each Laniakea question was answered, missed and each option picked, without who answered
 - **PageVisit**, **VisitSalt**, **VisitTotal**, **GuestVisit**, **VisitStep**: visitor counts
