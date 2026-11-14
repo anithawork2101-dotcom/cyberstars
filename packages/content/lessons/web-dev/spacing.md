@@ -1,8 +1,8 @@
-Look at a shelf in a supermarket. The cereals stand close together, then there's a gap, then the cookies. Nobody needs a sign that says "these belong together": the space says it. A form works the same way. A label close to its box, and more room before the next question.
+Look at a shelf in a supermarket. The cereals stand close together, then there is a gap, then the cookies. Nobody needs a sign that says "these belong together": the space says it. A form works the same way. A label stays close to its box, with more space before the next question.
 
-## Room above, not below
+## Space above, not below
 
-Labels and boxes with no room between them all look like one long list:
+Labels and boxes with no space between them all look like one long list:
 
 ```css preview
 <style>
@@ -20,7 +20,7 @@ Labels and boxes with no room between them all look like one long list:
 <input id="city" />
 ```
 
-Now give each label some room above it, and only a little below:
+Now give each label some space above it, and only a little below it:
 
 ```css preview
 <style>
@@ -40,11 +40,11 @@ Now give each label some room above it, and only a little below:
 <input id="city" />
 ```
 
-Each label moves away from the box above it and stays close to its own box. Your eye now reads pairs: "First name" and its box, "Last name" and its box.
+Each label moves away from the box above it, and stays close to its own box. Your eye now reads pairs: "First name" and its box, "Last name" and its box.
 
-## Groups need more room
+## Groups need more space
 
-A group (`fieldset`) holds several choices, so it needs room around it, more than a single label:
+A group (`fieldset`) holds several choices, so it needs space around it, more than a single label:
 
 ```css preview
 <style>
@@ -71,11 +71,11 @@ A group (`fieldset`) holds several choices, so it needs room around it, more tha
 </fieldset>
 ```
 
-Remove the rule: the two frames touch, and look like one block. With it, each group stands on its own. Inside a group, the choices stay close.
+Remove the rule: the two frames touch, and they look like one block. With it, each group stands on its own. Inside a group, the choices stay close.
 
 ## Break it on purpose
 
-Put the room under the label instead of above it:
+Put the space under the label, not above it:
 
 ```css preview
 <style>
@@ -94,18 +94,17 @@ Put the room under the label instead of above it:
 <input id="city" />
 ```
 
-Now each label sits far from its box, and right under the box before it. "Last name" seems to belong to the first box. Room in the wrong place is worse than no room at all.
+Now each label is far from its box, and right under the box before it. "Last name" seems to belong to the first box. Space in the wrong place is worse than no space at all.
 
 ---
 
 ## Mission: Room between the groups
 
-In your form, there's no room between a box and the next label, and the groups of choices touch each other.
+**What you will see**: each label is close to its box, with a clear gap before the next question. The groups of seats, extras and the contact have space above and below them, and the buttons have space above them.
 
-**Example**: each label sits close to its box, with a clear gap before the next question. The groups of seats, of extras and of the contact have room above and below them, and the buttons have room above them.
+In your form, there is no space between a box and the next label, and the groups of choices touch each other.
 
 - A label stays close to its box: at most 8 pixels between them.
 - There are at least 16 pixels between a box and the next label, in the groups too.
-- There are at least 16 pixels above and below each group, and above the send button.
-
-Psst, the room goes above a label, not under it :)
+- There are at least 16 pixels above and below each group.
+- There are at least 16 pixels above the send button.

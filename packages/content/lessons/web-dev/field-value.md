@@ -25,13 +25,13 @@ Type `Rocket` in the box and click **Say hello**. The paragraph says:
 Hello, Rocket!
 ```
 
-Now type `Comet` instead and click again. The paragraph says `Hello, Comet!`. Each click reads the box again, so it always gets what is in it at that moment.
+Now type `Comet` instead, and click again. The paragraph says `Hello, Comet!`. Each click reads the box again, so it always gets what is in it at that moment.
 
-A box doesn't have text between two tags, as a paragraph does. So `textContent` doesn't help here: what the visitor types is kept in the box's `value`.
+A box doesn't have text between two tags, like a paragraph does. So `textContent` doesn't help here. What the visitor types is kept in the box's `value`.
 
 ## When you read it matters
 
-Here the script reads the box when the page opens, and keeps the text in a variable:
+Here, the script reads the box when the page opens, and keeps the text in a variable:
 
 ```html preview
 <label for="nickname">Nickname</label>
@@ -54,7 +54,7 @@ Type `Rocket` and click:
 Hello, !
 ```
 
-When the page opened, the box was empty, so `typed` holds an empty text. Typing later doesn't change the variable. Read `.value` inside the click's function, when the visitor has typed.
+When the page opened, the box was empty, so `typed` holds an empty text. Typing later doesn't change the variable. Read `.value` inside the click's function, after the visitor has typed.
 
 ## Break it on purpose
 
@@ -64,23 +64,24 @@ Use `textContent` on the box:
 answer.textContent = `Hello, ${nickname.textContent}!`;
 ```
 
-Type `Rocket` and click: the paragraph says `Hello, !` again. No error: the box has no text between tags, so its `textContent` is always empty. For a box, use `.value`.
+Type `Rocket` and click: the paragraph says `Hello, !` again. There is no error. The box has no text between tags, so its `textContent` is always empty. For a box, use `.value`.
 
 ---
 
 ## Mission: The boarding pass
 
-Your booking form is ready, but `boarding.html` has no script yet. The editor has a new, empty file for it, `boarding.js`. Load it from the head of `boarding.html`, with `defer`, as your other pages load theirs.
-
-**Example**: under the form, a small boarding pass with a heading, a line for the passenger and a button. Type `Ida Moreau` in the name box and click **Show my pass**. The pass now says something like:
+**What you will see**: under the form, a small boarding pass with a heading, a line for the passenger and a button. Type `Ida Moreau` in the name box and click **Show my pass**. The pass now says something like:
 
 ```text
 Your boarding pass
 Passenger: Ida Moreau
 ```
 
-- Under the form, a button with the id `show-pass`, saying `Show my pass`. A click on it never sends the form.
-- A click on it writes what is in the name box in an element with the id `pass-name`. It holds only the name: words like `Passenger:` go outside it.
-- Type another name and click again: the pass shows the new name.
+Your booking form is ready, but `boarding.html` has no script yet. The editor has a new, empty file for it: `boarding.js`.
 
-Psst, read `.value` inside the click's function, not before :)
+- `boarding.html` loads `boarding.js` from its head, with `defer`, like your other pages load theirs.
+- Under the form, add a button with the id `show-pass`, which says `Show my pass`.
+- A click on that button never sends the form.
+- A click on it writes what is in the name box in an element with the id `pass-name`.
+- That element holds only the name: words like `Passenger:` go outside it.
+- Type another name and click again: the pass shows the new name.
