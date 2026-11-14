@@ -1,4 +1,4 @@
-A TV remote is one thing in your hand, and it has buttons that **do** things: turn on, turn up the volume, change the channel. The remote holds both: what it is, and what it can do. A JavaScript object can hold things it can do too.
+A TV remote is one thing in your hand, and it has buttons that **do** things: turn on, make the sound louder, change the channel. The remote holds both: what it is, and what it can do. A JavaScript object can hold things it can do too.
 
 ## A function as a property
 
@@ -19,13 +19,13 @@ dog.bark();
 Woof!
 ```
 
-`bark() { ... }` is the short way to write a method: its name, the brackets for its parameters, and its code in braces. Mind the comma after the closing brace, as after any property.
+`bark() { ... }` is the short way to write a method: its name, the brackets for its parameters, and its code in curly brackets. Don't forget the comma after the closing curly bracket, like after any property.
 
-You call it with the object, a dot and the method's name, then the brackets: `dog.bark()`. You've used methods like this all along: `console.log()` is the method `log` of the object `console`, and `"hi".toUpperCase()` a method of texts.
+You call it with the object, a dot, and the method's name, then the brackets: `dog.bark()`. You have used methods like this all along. `console.log()` is the method `log` of the object `console`, and `"hi".toUpperCase()` is a method of texts.
 
 ## Methods with parameters
 
-A method takes parameters like any function:
+A method takes parameters, like any function:
 
 ```js
 const calculator = {
@@ -46,7 +46,7 @@ calculator.greet("Sara");
 Hello, Sara!
 ```
 
-One object now holds a few things that belong together, each with a clear name. Instead of loose functions all over a script, you know where to look: everything about the calculator is in `calculator`.
+One object now holds a few things that belong together, each one with a clear name. Instead of loose functions all over a script, you know where to look: everything about the calculator is in `calculator`.
 
 ## Break it on purpose
 
@@ -56,18 +56,18 @@ Forget the brackets when you call it: `dog.bark;`. Nothing happens, and nothing 
 
 ## Mission: The theme on the page
 
-The settings page should say which theme is chosen. The code that writes it will grow, so it lives in an object from the start.
-
-**Example**: under the theme buttons, the page says:
+**What you will see**: under the theme buttons, the page says:
 
 ```text
 Theme: system
 ```
 
-Click the Dark button, and it says `Theme: dark`. Click Light, `Theme: light`.
+Click the Dark button, and it says `Theme: dark`. Click Light, and it says `Theme: light`.
 
-- The settings page gets a script of its own, `settings.js`, that runs once the page is read. Under the theme buttons, a paragraph with the id `current-theme`.
+The settings page should say which theme is chosen. The code that writes it will grow, so it goes in an object from the start.
+
+- The settings page gets its own script, `settings.js`, which runs after the page is read.
+- Under the theme buttons, add a paragraph with the id `current-theme`.
 - In `settings.js`, an object called `settings` has a method that writes `Theme: ` and a theme's name, in small letters, in `#current-theme`.
-- When the page opens, the method writes `system`. A click on a theme button calls it with that button's theme: `light`, `dark` or `system`.
-
-Psst, a method is called like `console.log`: the object, a dot, the method, and the brackets :)
+- When the page opens, the method writes `system`.
+- A click on a theme button calls it with that button's theme: `light`, `dark` or `system`.
