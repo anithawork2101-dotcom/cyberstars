@@ -1,6 +1,6 @@
-A page with only a heading is like a book cover with no book inside. Now we need some text.
+A page with only a heading is like a book cover with no book inside. Now you need some text.
 
-In a school essay you split your text into **paragraphs**: one idea, then a new block for the next idea. HTML has a tag for that, `<p>`, short for **paragraph**.
+When you write an essay for school, you split it into **paragraphs**. A paragraph is a block of text about one idea. The next idea starts a new block. HTML has a tag for that: `<p>`, short for paragraph.
 
 ## The `<p>` tag
 
@@ -9,9 +9,9 @@ In a school essay you split your text into **paragraphs**: one idea, then a new 
 <p>I play chess with my grandpa every Sunday.</p>
 ```
 
-The paragraph is normal-size text. The browser puts a bit of empty space above and below it, so it stands apart from the heading.
+The paragraph shows in normal-size text. The browser adds a little empty space above it and below it, so the paragraph and the heading don't touch.
 
-Add a second one:
+Now add a second paragraph:
 
 ```html preview
 <h1>My Favourite Games</h1>
@@ -19,29 +19,27 @@ Add a second one:
 <p>On rainy days we play cards instead.</p>
 ```
 
-Each `<p>` starts on a new line, with space between them. You don't have to do anything for that. The tag does it.
+Each `<p>` starts on a new line, with some space between the two. You don't have to do anything for that. The tag does it for you.
 
-Type it in `index.html`, under your heading, and look at the preview.
+Type this in `index.html`, under your heading, and look at the preview.
 
 ## Break it on purpose
 
-What if you write both sentences in one paragraph?
+What happens if you put both sentences in one paragraph?
 
 ```html preview
 <p>I play chess with my grandpa every Sunday. On rainy days we play cards instead.</p>
 ```
 
-They run together on one line. The browser only starts a new block where you start a new `<p>`.
+You see both sentences on the same line, one after the other. The browser starts a new block only where you start a new `<p>`.
 
-And if you forget the closing `</p>`? Try it. Often the page looks the same, because the browser guesses where the paragraph ends. Don't count on it: always close what you open.
+Now delete the closing `</p>` and look. Often the page looks the same, because the browser guesses where the paragraph ends. But the browser doesn't always guess right. Always close every tag you open.
 
 ---
 
 ## Mission: About the station
 
-Your `index.html` from the last lesson already has the heading. Under it, tell visitors about your station.
-
-**Example**: your page would show something like this (your own words, of course):
+**What you will see**: under the heading, two or more short paragraphs about your station. Your page would show something like this, in your own words:
 
 ```text
 Welcome to Orion Station        (big and bold)
@@ -51,7 +49,8 @@ The station goes round the Earth every 92 minutes.
 Six people live here, with a garden full of tomatoes.
 ```
 
-- Under the heading there are at least two paragraphs, each made with `<p>`.
-- Each paragraph has a sentence of your own.
+Open `index.html` from the last lesson. It already has the heading.
 
-Psst, each paragraph needs its own `<p>` and `</p>` :)
+- Under the heading, add at least two paragraphs.
+- Make each paragraph with its own `<p>`.
+- Write a sentence of your own in each paragraph.

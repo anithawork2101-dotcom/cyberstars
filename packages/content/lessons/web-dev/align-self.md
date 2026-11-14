@@ -1,8 +1,8 @@
-In a class photo, everyone stands in a row. One kid sits on a chair in front, lower than the others. One person in the row does it their own way, and everyone else stays as they are.
+In a class photo, everyone stands in a row. One kid sits on a chair in front, lower than the others. That one kid does it their own way. Everyone else stays as they are.
 
 ## One item, its own way
 
-A school blog shows each post with a picture, a sentence and a small **New** label. Without `align-items`, every item stretches to the height of the row, and the label does too:
+A school blog shows each post in a row: a picture, a sentence and a small **New** label. The post has `display: flex`, but no `align-items`. So every item gets as tall as the row, and the label does too:
 
 ```css preview
 <style>
@@ -43,11 +43,13 @@ A school blog shows each post with a picture, a sentence and a small **New** lab
 </div>
 ```
 
-The label turns into a tall yellow bar, as tall as the picture. The sentence stretches too, but you can't see it, since it has no background.
+The label is now a tall yellow bar, as tall as the picture. The sentence gets as tall as the row too, but you can't see it, because it has no background.
 
 ## `align-self`
 
-`align-items` on the container places all its items across the line. `align-self` on one item places that item only, and wins over `align-items` for it. It takes the same values: `stretch`, `flex-start`, `center` and `flex-end`.
+Remember: the box with `display: flex` is the **flex container**, and the boxes inside it are its **flex items**.
+
+`align-items` goes on the container. It places all the items in the row: at the top, in the middle, at the bottom, or as tall as the row (`stretch`). `align-self` goes on one item, and places only that item. For that item, `align-self` is stronger than `align-items`. It takes the same values: `stretch`, `flex-start`, `center` and `flex-end`.
 
 ```css preview
 <style>
@@ -92,11 +94,11 @@ The label turns into a tall yellow bar, as tall as the picture. The sentence str
 </div>
 ```
 
-The label sits at the top, only as tall as its word. The picture and the sentence stay as they were. Try `center` and `flex-end` for the label too.
+The label now sits at the top, and it is only as tall as its word. The picture and the sentence don't change. Now try `center` and `flex-end` on the label, and watch where it goes.
 
 ## Break it on purpose
 
-Give `align-self` to the post instead of the label:
+Put `align-self` on the post instead of on the label:
 
 ```css preview
 <style>
@@ -138,17 +140,19 @@ Give `align-self` to the post instead of the label:
 </div>
 ```
 
-The label is a tall bar again. `align-self` places an item in its container's line, so it goes on the item. The post is the container: nothing around it is a flex container, so its `align-self` does nothing.
+The label is a tall bar again. Why? `align-self` places an item inside its flex container, so it goes on the item. The post is the container itself. Nothing around the post has `display: flex`, so `align-self` on the post does nothing.
 
 ---
 
 ## Mission: Only as tall as its facts
 
-Your fact box stands beside the article. Give it a background, and you see a problem: it stretches down as far as the article goes, with empty room under its facts.
+**What you will see**: on a computer, the fact box stands beside the article, as before. Now it has a background of its own. It starts at the top of the row and ends right after its last fact, with no empty space under it. Each wiki article with a fact box shows it like that.
 
-**Example**: on a computer, the fact box is a box with a background of its own, at the top of the row, and it ends right after its last fact. The article beside it stays as it is.
+Right now the fact box has the same problem as the label. It goes down as far as the article goes. Give it a background, and you will see the empty space under its facts.
 
-- The fact box has a background of its own.
-- On a computer, the fact box sits at the top of the row, and it is only as tall as its facts.
+On a computer screen:
 
-Psst, `align-self` goes on the one item that sits its own way :)
+- The fact box has a background color of its own.
+- The article and the fact box still stand side by side.
+- The fact box starts at the top of the row.
+- The fact box ends right after its last fact.
