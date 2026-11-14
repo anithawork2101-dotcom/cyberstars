@@ -1,4 +1,4 @@
-Open an old storybook: the first letter of a chapter is often huge, decorated, taking up several lines. And in a fancy list, the bullets may be a different color from the words. CSS can style those little pieces too, with more pseudo-elements.
+Open an old storybook. The first letter of a chapter is often huge and decorated, and it takes several lines. And in a nice list, the bullets may have a different color from the words. CSS can style those small pieces too, with more pseudo-elements.
 
 ## `::first-letter`
 
@@ -15,7 +15,7 @@ Open an old storybook: the first letter of a chapter is often huge, decorated, t
 <p>The end.</p>
 ```
 
-The first letter of every `.story` paragraph shows twice as big, in gold. The rest of the paragraph is untouched. `2em` means "twice the size of this element's text".
+The first letter of every `.story` paragraph is twice as big, in gold. The rest of the paragraph doesn't change. `2em` means "twice the size of this element's text".
 
 ## `::marker`
 
@@ -36,11 +36,11 @@ The bullet or number of a list item is its **marker**:
 </ul>
 ```
 
-The bullets turn gold, while the words of the items keep their own color.
+The bullets turn gold, and the words of the items keep their own color.
 
 ## `::placeholder`
 
-One more you'll use soon: in a form, a box to type in can show a grey hint, like "Your name", until you type. That hint is its placeholder, and `::placeholder` styles it. You'll meet forms in a later part.
+You will use one more soon. In a form, a box you type in can show a grey hint, like "Your name", until you type. That hint is its **placeholder**, and `::placeholder` styles it. You will meet forms in a later part.
 
 ## Break it on purpose
 
@@ -58,17 +58,16 @@ Use one colon:
 <p>The end.</p>
 ```
 
-It still works: old CSS used one colon, and browsers still accept it for a few of these. But the rule is two colons for pseudo-elements, the pieces, and one for pseudo-classes, the states like `:hover`. Writing two keeps them apart in your head.
+It still works. Old CSS used one colon, and browsers still accept it for a few of these. But the rule is: two colons for pseudo-elements, the pieces, and one colon for pseudo-classes, the states like `:hover`. Writing two helps you keep them apart in your head.
 
 ---
 
 ## Mission: Little touches
 
-Two little touches for the site.
+**What you will see**: on `crew.html`, the bullets of the crew list are gold. On `schedule.html`, the first letter of the introduction is at least twice as big as the rest.
 
-**Example**: on `crew.html`, the bullets of the crew list are gold. On `schedule.html`, the first letter of the introduction is twice as big as the rest, or more.
+Two small touches for the site.
 
 - The markers of the crew list (`#crew`) are `#ffd166`.
+- The names in the crew list keep their own color.
 - The first letter of the paragraph right after the schedule's biggest heading is at least twice as big as the paragraph's text.
-
-Psst, two colons for a piece of an element :)
