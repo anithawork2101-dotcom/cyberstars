@@ -1,8 +1,8 @@
-"Everyone in Class 7B, stand up." Not everyone in the school, only the pupils inside one class. CSS can say that too: style an element only when it's **inside** another one.
+"Everyone in Class 7B, stand up." Not everyone in the school, only the pupils in one class. CSS can say that too: style an element only when it's **inside** another one.
 
 ## The descendant selector: a space
 
-Two selectors with a space between them pick elements that sit **inside** the first:
+Two selectors with a space between them choose elements that are **inside** the first one:
 
 ```css preview
 <style>
@@ -27,15 +27,15 @@ Two selectors with a space between them pick elements that sit **inside** the fi
 </table>
 ```
 
-This means "every `td` inside the element with the id `scores`". The cells of the `#scores` table get room inside them. Cells of any other table on the page stay as they were.
+This means "every `td` inside the element with the id `scores`". The cells of the `#scores` table get space inside them. The cells of any other table on the page stay as they were.
 
-"Inside" means anywhere inside: a child, a grandchild, deeper still. The `td` is in a `tr`, in a `tbody`, in the table, and the space still finds it.
+"Inside" means anywhere inside: a child, a grandchild, or deeper. The `td` is in a `tr`, in a `tbody`, in the table, and the space still finds it. Elements inside another element, at any depth, are its **descendants**.
 
-## Reading it right to left
+## Read it from right to left
 
-The browser reads a selector from the end: "a `td`... that sits inside `#scores`". So the **last** part is what gets styled. `#scores td` styles cells, `td #scores` would style something called `#scores` inside a cell.
+The browser reads a selector from the end: "a `td`... that is inside `#scores`". So the **last** part is what gets the style. `#scores td` styles cells. `td #scores` would style something called `#scores` inside a cell.
 
-A few more:
+Some more:
 
 - `nav a`: links inside a menu, not the other links of the page;
 - `.card h3`: headings inside cards;
@@ -68,17 +68,15 @@ Forget the space:
 </table>
 ```
 
-Now it means "the element with the id `scores` **and** the class `td`", one element with both. Nothing has that, so nothing changes. A space means "inside", no space means "the same element".
+Now it means "the element with the id `scores` **and** the class `td`": one element with both. Nothing has that, so nothing changes. A space means "inside". No space means "the same element".
 
 ---
 
 ## Mission: Room in the flights
 
-The flight table's cells are squashed together. The docking bays table is fine as it is.
+**What you will see**: the flight table's cells have space inside them, and the docking bays table looks exactly as before.
 
-**Example**: the flight table's cells have room inside them, and the docking bays table looks exactly as before.
+The flight table's cells are too close together. The docking bays table is fine as it is.
 
-- Every cell of the flight table (`#flights`), headers and data, has at least 8 pixels of room inside on its left and right.
+- Every cell of the flight table (`#flights`), headers and data, has at least 8 pixels of space inside on its left and right.
 - The docking bays table's cells don't change.
-
-Psst, a space between two selectors means "inside" :)
