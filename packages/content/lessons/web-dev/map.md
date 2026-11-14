@@ -1,8 +1,8 @@
-At a bakery, a tray of plain biscuits goes into a machine that puts chocolate on each one. Out comes a new tray: the same number of biscuits, in the same order, each one changed the same way. `map` is that machine for arrays.
+At a bakery, a tray of plain biscuits goes into a machine that puts chocolate on each one. A new tray comes out: the same number of biscuits, in the same order, each one changed in the same way. `map` is that machine for arrays.
 
 ## Changing every item with a loop
 
-To get the prices of a menu with a 10% discount, we'd write a loop that builds a new array:
+To get the prices of a menu with 10% off, you would write a loop that builds a new array:
 
 ```js
 const prices = [20, 50, 10];
@@ -34,7 +34,7 @@ console.log(prices);
 [20, 50, 10]
 ```
 
-The function is the short arrow function you know: it takes one item, `price`, and returns `price * 0.9`. The new array always has as many items as the old one. And the old array stays as it was.
+The function is the short arrow function you know. It takes one item, `price`, and returns `price * 0.9`. The new array always has as many items as the old one. And the old array stays as it was.
 
 ## Any change you like
 
@@ -58,7 +58,7 @@ A `map` often comes right before a `join`: first change every item, then make on
 
 ## Break it on purpose
 
-Write the function with braces, and forget `return`:
+Write the function with curly brackets, and forget `return`:
 
 ```js
 const loud = pets.map((pet) => {
@@ -71,22 +71,21 @@ console.log(loud);
 [undefined, undefined, undefined]
 ```
 
-The function works out each word in capitals, then throws it away: with braces, a function returns nothing unless it says `return`. `map` still makes an array of three items, but each one is `undefined`. Write `return pet.toUpperCase();`, or leave out the braces, as in the short arrow function.
+The function works out each word in capitals, then throws it away: with curly brackets, a function returns nothing unless it says `return`. `map` still makes an array of three items, but each one is `undefined`. Write `return pet.toUpperCase();`, or leave out the curly brackets, like in the short arrow function.
 
 ---
 
 ## Mission: Call signs
 
-On the radio, the crew uses call signs: each name in capital letters, so nobody mixes them up.
-
-**Example**: under the count of who is on duty, the dashboard says:
+**What you will see**: under the count of who is on duty, the dashboard says:
 
 ```text
 Call signs: VEGA / ORION / LYRA / ALTAIR / NOVA / RIGEL
 ```
 
-- Under `#duty-count`, a paragraph with the id `call-signs`.
-- It says `Call signs: `, then each name of the duty list in capital letters, in the same order, with a `/` between two names, a space on each side.
-- The other lines of the duty panel keep the names as they are written.
+On the radio, the crew uses **call signs**: each name in capital letters, so nobody mixes them up.
 
-Psst, `map` gives you a new array, and leaves the old one as it was :)
+- Under `#duty-count`, add a paragraph with the id `call-signs`.
+- It says `Call signs: `, then each name of the duty list in capital letters, in the same order.
+- Between two names, there is a `/`, with a space on each side.
+- The other lines of the duty panel keep the names as they are written.
