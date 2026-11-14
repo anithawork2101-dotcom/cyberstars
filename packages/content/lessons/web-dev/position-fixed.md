@@ -2,7 +2,7 @@ On many shop websites, a small Help button waits in the bottom right corner of t
 
 ## `position: fixed`
 
-`position: fixed` takes an element out of its place, like `position: absolute`. But it measures from the **window**, the part of the page you can see, and not from a box. When the page scrolls, it stays where it is in the window.
+`position: fixed` takes an element out of its place, like `position: absolute`. But it measures from the **window**, the part of the page you can see, not from a box. When the page scrolls, it stays where it is in the window.
 
 ```css preview scroll
 <style>
@@ -98,18 +98,17 @@ Remove `bottom` and `right`:
 <a class="help" href="help.html">Help</a>
 ```
 
-Scroll all the way down: Help isn't there anymore. Without `bottom` and `right`, a fixed element stays where its own place was when the page opened. Here, that place was under the bottom of the window, so the link never shows.
+Scroll all the way down: Help isn't there any more. Without `bottom` and `right`, a fixed element stays where its own place was when the page opened. Here, that place was under the bottom of the window, so the link never shows.
 
 ---
 
 ## Mission: Back to top
 
+**What you will see**: in the bottom right corner of the window, a link says **Back to top**. Scroll down: it's still there, in the same corner. Press it: the page is back at its top.
+
 Your wiki has four pages, `wiki.html` and the three topic pages, and they get longer every week. On a phone, a reader at the end of a page has a long way back up to the menu.
 
-**Example**: in the bottom right corner of the window, a link says **Back to top**. Scroll down: it's still there, in the same corner. Press it: the page is back at its top.
-
 - Every page of the wiki (`wiki.html` and the three topic pages) has a link with the class `to-top` that says `Back to top`.
-- It waits in the bottom right corner of the window, at most 40 pixels from the bottom and from the right, and stays there while the page scrolls. On a phone too.
+- It waits in the bottom right corner of the window, at most 40 pixels from the bottom and from the right.
+- It stays there while the page scrolls, on a phone too.
 - A press on it takes the reader back to the top of the page.
-
-Psst, a fixed element needs `bottom` and `right` too, or it stays where its place was :)
