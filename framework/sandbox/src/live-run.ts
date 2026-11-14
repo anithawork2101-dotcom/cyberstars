@@ -26,6 +26,9 @@ const TIMEOUT_MS = 20_000;
 const OUTPUT_FLUSH_MS = 50;
 const OUTPUT_BUFFER_MAX = 16 * 1024;
 const OUTPUT_TOTAL_MAX = 1024 * 1024;
+// All the input one run may take. Whatever its program hasn't read yet waits
+// in the server's memory, so the total is what bounds it
+const INPUT_TOTAL_MAX = 1024 * 1024;
 // Input the page sends before the program starts (a season pasted while the
 // container starts) waits for it, up to this much
 const EARLY_INPUT_MAX = 64 * 1024;
@@ -347,11 +350,20 @@ async function run(
   // program reading until the input runs out gets its EOFError / -1 / null.
   // Nothing more can be written after that.
   let stdinEnded = false;
+  let inputTotal = 0;
   const onMessage = (msg: string) => {
     try {
-      const parsed = JSON.parse(msg) as { type: string; data?: string };
+      const parsed = JSON.parse(msg) as { type: string; data?: unknown };
       if (stdinEnded || proc.killed) return;
-      if (parsed.type === 'stdin' && parsed.data != null) {
+      if (parsed.type === 'stdin' && typeof parsed.data === 'string') {
+        inputTotal += Buffer.byteLength(parsed.data);
+        if (inputTotal > INPUT_TOTAL_MAX) {
+          killAll();
+          stderrBuf += '\nInput limit exceeded, program stopped.\n';
+          flushOutput();
+          sendExit(124);
+          return;
+        }
         proc.stdin.write(parsed.data);
         resetTimer();
       } else if (parsed.type === 'eof') {

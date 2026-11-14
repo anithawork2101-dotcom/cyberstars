@@ -187,6 +187,53 @@ describe('liveRun', () => {
     expect(destroyMock).not.toHaveBeenCalled();
   });
 
+  it('takes 1 MB of input, then stops the program past it', async () => {
+    const proc = new FakeProc();
+    spawnMock.mockReturnValue(proc);
+    const ws = new FakeWs();
+
+    await runLive(ws, 'import time; time.sleep(60)', 'python', 'user:flood');
+    const frame = 'x'.repeat(128 * 1024);
+    for (let i = 0; i < 8; i++) ws.emit('message', JSON.stringify({ type: 'stdin', data: frame }));
+    expect(proc.stdin.write).toHaveBeenCalledTimes(8);
+    expect(proc.kill).not.toHaveBeenCalled();
+
+    ws.emit('message', JSON.stringify({ type: 'stdin', data: 'y' }));
+    expect(proc.stdin.write).toHaveBeenCalledTimes(8);
+    expect(proc.kill).toHaveBeenCalledWith('SIGKILL');
+    expect(destroyMock).toHaveBeenCalledWith('user:flood');
+    expect(sent(ws)).toContainEqual({
+      type: 'stderr',
+      data: '\nInput limit exceeded, program stopped.\n',
+    });
+    expect(sent(ws)).toContainEqual({ type: 'exit', code: 124 });
+  });
+
+  it('counts the input in bytes, as the program reads it', async () => {
+    const proc = new FakeProc();
+    spawnMock.mockReturnValue(proc);
+    const ws = new FakeWs();
+
+    await runLive(ws, 'input()', 'python', 'user:bytes');
+    // 'ă' is one character but two bytes: 512 Ki of them fill the 1 MB
+    ws.emit('message', JSON.stringify({ type: 'stdin', data: 'ă'.repeat(512 * 1024) }));
+    expect(proc.kill).not.toHaveBeenCalled();
+    ws.emit('message', JSON.stringify({ type: 'stdin', data: 'ă' }));
+    expect(proc.kill).toHaveBeenCalledWith('SIGKILL');
+  });
+
+  it('writes no input that is not text', async () => {
+    const proc = new FakeProc();
+    spawnMock.mockReturnValue(proc);
+    const ws = new FakeWs();
+
+    await runLive(ws, 'input()', 'python', 'user:shape');
+    ws.emit('message', JSON.stringify({ type: 'stdin', data: 5 }));
+    ws.emit('message', JSON.stringify({ type: 'stdin', data: { a: 1 } }));
+
+    expect(proc.stdin.write).not.toHaveBeenCalled();
+  });
+
   it('releases the container for reuse on a normal exit', async () => {
     const proc = new FakeProc();
     spawnMock.mockReturnValue(proc);
