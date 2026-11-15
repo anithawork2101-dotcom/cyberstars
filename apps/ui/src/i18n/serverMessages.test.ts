@@ -51,6 +51,9 @@ const INTERNAL = new Set([
   'C injection does not support $list/$dict values',
   // a broken Laniakea quiz file, caught by its content test before it ships
   'no questions list',
+  // a tutor tool's answer, read by the model only
+  'Projects are not open yet',
+  'No such project',
 ]);
 
 describe('localizeServerMessage', () => {
