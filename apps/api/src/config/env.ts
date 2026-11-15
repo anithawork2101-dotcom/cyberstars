@@ -30,8 +30,9 @@ export const env = {
       : optional('CORS_DEV_ORIGIN', 'http://localhost:5173'),
   ),
   // The signed-in session: how long it lasts unused and at most from the login,
-  // shorter for the admins and the founder, whose session opens the admin
-  // page; and the cookie over HTTPS only (and __Host-) in production
+  // shorter for the founder (services/auth.ts names the role), the account
+  // the most valuable to steal; and the cookie over HTTPS only (and __Host-) in
+  // production
   session: {
     lifetimes: {
       user: { idleMs: 30 * DAY_MS, absoluteMs: 90 * DAY_MS },

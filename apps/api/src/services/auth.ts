@@ -99,7 +99,8 @@ export const auth = createAuth({
   store,
   sessions,
   isAdmin,
-  shortSession: isAdmin,
+  // The founder's session alone is short; an admin's lasts a student's
+  shortSession: (role) => role === 'FOUNDER',
   ...config.session,
   onSessionsEnded: closeUserSockets,
   signupSchema,

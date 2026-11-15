@@ -133,7 +133,7 @@ describe('login', () => {
     expect(await auth.sessionUserId(token)).toBe(7);
   });
 
-  it('gives a student a 30-day cookie and an admin or the founder a 12-hour one', async () => {
+  it('gives a student, a moderator or an admin a 30-day cookie and the founder a 12-hour one', async () => {
     const bcrypt = await import('bcryptjs');
     const password = bcrypt.hashSync('correct', 4);
     mockUserRepo.findByEmail.mockResolvedValue({ id: 7, password });
@@ -141,10 +141,12 @@ describe('login', () => {
     const login = () =>
       request(app).post('/auth/login').send({ email: 'bob@test.com', password: 'correct' });
     expect((await login()).headers['set-cookie']![0]).toContain(`Max-Age=${(30 * DAY) / 1000};`);
-    for (const role of ['ADMIN', 'FOUNDER']) {
+    for (const role of ['MODERATOR', 'ADMIN']) {
       mockUserRepo.findRole.mockResolvedValue(role);
-      expect((await login()).headers['set-cookie']![0]).toContain(`Max-Age=${(12 * HOUR) / 1000};`);
+      expect((await login()).headers['set-cookie']![0]).toContain(`Max-Age=${(30 * DAY) / 1000};`);
     }
+    mockUserRepo.findRole.mockResolvedValue('FOUNDER');
+    expect((await login()).headers['set-cookie']![0]).toContain(`Max-Age=${(12 * HOUR) / 1000};`);
   });
 
   it('throws a generic 401 for unknown email (no enumeration)', async () => {
