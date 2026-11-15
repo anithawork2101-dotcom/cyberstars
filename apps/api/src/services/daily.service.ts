@@ -3,15 +3,19 @@ import * as curriculumRepo from '../repositories/curriculum.repository.js';
 import { hasTestsFile } from './paths.js';
 import {
   LISTED_COURSE_KEYS,
+  WEB_COURSE_KEYS,
   ALGO_COURSE_KEYS,
   DAILY_BONUS_RATIO,
   dateKey,
 } from '@cyberstars/shared/constants';
 import type { DailyKind, DailyPickDto, DailyResponse } from '@cyberstars/shared/daily';
 
-// Courses each kind draws from; mirrors the client's home-page grouping.
+// Courses each kind draws from; mirrors the client's home-page grouping. Web
+// courses stay out of the lesson pool: their lessons build one site, each on
+// the one before, so one from the middle can't stand alone as today's lesson,
+// and Web Development's 375 would crowd out every other course.
 const POOLS: Record<DailyKind, readonly string[]> = {
-  lesson: LISTED_COURSE_KEYS,
+  lesson: LISTED_COURSE_KEYS.filter((key) => !WEB_COURSE_KEYS.includes(key)),
   algo: [...ALGO_COURSE_KEYS],
 };
 
