@@ -124,6 +124,21 @@ describe('NotificationDropdown announcement', () => {
     expect(screen.queryByText('View')).toBeNull();
   });
 
+  it("keeps the dot's place on a read row, so View and Vote line up down the list", () => {
+    renderWith([
+      n({ id: 2, type: 'POLL', entityId: 3, data: { text: 'Next?' } }),
+      n({ id: 1, readAt: new Date().toISOString() }),
+    ]);
+    const [unread, read] = screen.getAllByRole('menuitem');
+    // The button and the dot are the row's last two children either way
+    for (const row of [unread, read]) {
+      expect(row.children).toHaveLength(3);
+      expect(row.children[1]).toHaveClass('w-[4.5rem]');
+    }
+    expect(unread.children[2]).toHaveClass('bg-[var(--accent)]');
+    expect(read.children[2]).not.toHaveClass('bg-[var(--accent)]');
+  });
+
   it('cuts a written answer to two lines too, with no button', () => {
     renderWith([
       n({

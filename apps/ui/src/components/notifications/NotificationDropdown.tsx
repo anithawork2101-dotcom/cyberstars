@@ -58,14 +58,17 @@ export function NotificationItem({ n, onClick }: { n: NotificationDTO; onClick: 
         <span className="block text-[11px] text-[var(--text3)] mt-0.5">{timeAgo(n.createdAt)}</span>
       </span>
       {windowed && (
-        // The whole row opens it, this just says there's more than two lines to read
-        <span className="flex-shrink-0 self-center px-2.5 py-1 rounded-[var(--radius-sm)] bg-[var(--accent)] text-white text-[11px] font-semibold">
+        // The whole row opens it, this just says there's more than two lines to read.
+        // One width for View and Vote, so the buttons line up down the list
+        <span className="flex-shrink-0 self-center w-[4.5rem] py-1 text-center rounded-[var(--radius-sm)] bg-[var(--accent)] text-white text-[11px] font-semibold">
           {poll ? t('notif.vote') : t('notif.view')}
         </span>
       )}
-      {!n.readAt && (
-        <span className="w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0 mt-1.5" />
-      )}
+      {/* A read row keeps the dot's place, so its button stands where an unread one's does */}
+      <span
+        aria-hidden="true"
+        className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${n.readAt ? '' : 'bg-[var(--accent)]'}`}
+      />
     </button>
   );
 }
