@@ -6,6 +6,8 @@ const h = vi.hoisted(() => ({
   navigate: vi.fn(),
   logout: vi.fn(),
   canAccess: vi.fn((..._a: unknown[]) => true),
+  // Launched (false) or still in preview (true)
+  preview: { webDevelopment: false, projects: false } as Record<string, boolean>,
   auth: {
     user: null as null | { name: string; email: string; role: string; avatarUrl: string | null },
   },
@@ -40,6 +42,7 @@ vi.mock('../../hooks/useGamification', () => ({
 }));
 vi.mock('@cyberstars/shared/features', () => ({
   canAccessFeature: (...a: unknown[]) => h.canAccess(...a),
+  PREVIEW_FEATURES: h.preview,
 }));
 
 import { Sidebar } from './Sidebar';
@@ -58,6 +61,8 @@ function renderSidebar(path = '/', onNavigate = vi.fn()) {
 beforeEach(() => {
   vi.clearAllMocks();
   h.canAccess.mockReturnValue(true);
+  h.preview.webDevelopment = false;
+  h.preview.projects = false;
   h.auth = { user: null };
   h.messages = { enabled: true, totalUnread: 0 };
   h.sections = { forum: [], support: [], connections: 0, laniakea: 0 };
@@ -72,9 +77,9 @@ describe('Sidebar', () => {
     const links = screen.getAllByRole('link').map((link) => link.textContent);
     expect(links).toEqual([
       'CyberStars',
-      'Courses',
+      'CoursesNew',
       'Algorithms',
-      'ProjectsComing soon',
+      'ProjectsNew',
       'Almanac',
       'Sign in',
     ]);
@@ -89,7 +94,7 @@ describe('Sidebar', () => {
       Array.from(group.children).map((row) => row.textContent),
     );
     expect(groups).toEqual([
-      ['Dashboard', 'Courses', 'Algorithms', 'ProjectsComing soon', 'Progress'],
+      ['Dashboard', 'CoursesNew', 'Algorithms', 'ProjectsNew', 'Progress'],
       ['Almanac', 'LaniakeaBeta', 'Leaderboard'],
       ['Forum', 'Messages', 'Connections'],
       ['Tutor'],
@@ -150,7 +155,7 @@ describe('Sidebar', () => {
   it('marks the current section', () => {
     h.auth = { user: USER };
     renderSidebar('/courses');
-    expect(screen.getByRole('link', { name: 'Courses' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: /^Courses/ })).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('link', { name: 'Dashboard' })).not.toHaveAttribute('aria-current');
   });
 
@@ -160,17 +165,17 @@ describe('Sidebar', () => {
       'aria-current',
       'page',
     );
-    expect(screen.getByRole('link', { name: 'Courses' })).not.toHaveAttribute('aria-current');
+    expect(screen.getByRole('link', { name: /^Courses/ })).not.toHaveAttribute('aria-current');
   });
 
   it('counts a main course lesson as Courses', () => {
     renderSidebar('/lesson/python/booleans');
-    expect(screen.getByRole('link', { name: 'Courses' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: /^Courses/ })).toHaveAttribute('aria-current', 'page');
   });
 
   it('reports navigation so the drawer can close', () => {
     const onNavigate = renderSidebar();
-    fireEvent.click(screen.getByRole('link', { name: 'Courses' }));
+    fireEvent.click(screen.getByRole('link', { name: /^Courses/ }));
     expect(onNavigate).toHaveBeenCalled();
   });
 
@@ -233,12 +238,29 @@ describe('Sidebar', () => {
     expect(screen.getByText('Projects').parentElement).toHaveAttribute('aria-disabled', 'true');
   });
 
-  it('opens Projects, still coming soon, to whoever the feature rule lets in', () => {
+  it('opens Projects, still coming soon in preview, to whoever the feature rule lets in', () => {
+    h.preview.projects = true;
     h.auth = { user: { ...USER, role: 'ADMIN' } };
     renderSidebar();
     const link = screen.getByRole('link', { name: /Projects/ });
     expect(link).toHaveAttribute('href', '/projects');
     expect(link).toHaveTextContent(/^ProjectsComing soon$/);
+  });
+
+  it('marks Courses and Projects New in yellow once Web Development and Projects launch', () => {
+    h.auth = { user: USER };
+    renderSidebar();
+    for (const name of ['Courses', 'Projects']) {
+      const link = screen.getByRole('link', { name: new RegExp(name) });
+      expect(link).toHaveTextContent(new RegExp(`^${name}New$`));
+      expect(within(link).getByText('New')).toHaveClass('bg-[#facc15]');
+    }
+  });
+
+  it('leaves Courses without New while Web Development is in preview', () => {
+    h.preview.webDevelopment = true;
+    renderSidebar();
+    expect(screen.getByRole('link', { name: /Courses/ })).toHaveTextContent(/^Courses$/);
   });
 
   it("toggles the tutor's panel", () => {
