@@ -42,7 +42,6 @@ export interface AdminSupportStats {
 
 interface AdminCodeExecStats {
   activeContainers: number;
-  runningNow: number;
   maxContainers: number;
   openSessions: number;
   perLanguage: Record<string, number>;

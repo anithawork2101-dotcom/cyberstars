@@ -46,7 +46,7 @@ describe('Admin stats', () => {
     expect(body.support).toMatchObject({ total: expect.any(Number), byStatus: expect.any(Object) });
     expect(body.codeExec).toMatchObject({
       activeContainers: expect.any(Number),
-      runningNow: expect.any(Number),
+      busySlots: expect.any(Number),
     });
     expect(typeof body.generatedAt).toBe('string');
   });
