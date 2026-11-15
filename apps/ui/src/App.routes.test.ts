@@ -13,6 +13,9 @@ const PUBLIC_PATHS = [
   '/lesson/:category/:lesson',
   '/almanac',
   '/almanac/:slug',
+  '/projects',
+  '/projects/:language',
+  '/projects/:language/:slug',
   '*',
 ];
 
