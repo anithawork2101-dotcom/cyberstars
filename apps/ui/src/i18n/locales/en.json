@@ -38,6 +38,8 @@
     "refresh": "Refresh",
     "refreshing": "Refreshing…",
     "generatedAt": "Data as of {{time}}",
+    "tutor": "Tutor",
+    "tutorPrompts7": "Messages to the tutor (7 days)",
     "users": "Users",
     "totalUsers": "Total users",
     "active": "Active (with progress)",

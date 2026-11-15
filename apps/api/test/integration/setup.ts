@@ -16,6 +16,7 @@ beforeEach(async () => {
       "guest_visits",
       "lesson_submissions",
       "tutor_messages",
+      "tutor_prompts",
       "tutor_conversations",
       "usage_windows",
       "laniakea_planets",

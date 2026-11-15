@@ -8,6 +8,10 @@ export interface AdminUserStats {
   active: number; // users with at least one progress row
 }
 
+export interface AdminTutorStats {
+  promptsLast7Days: number; // messages students sent the tutor, admins and the founder left out
+}
+
 interface AdminCourseProgress {
   courseKey: string;
   completions: number;
@@ -54,6 +58,7 @@ interface AdminOnline {
 }
 
 export interface AdminStatsDTO {
+  tutor: AdminTutorStats;
   users: AdminUserStats;
   progress: AdminProgressStats;
   forum: AdminForumStats;

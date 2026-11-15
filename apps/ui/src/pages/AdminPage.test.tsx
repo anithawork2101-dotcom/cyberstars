@@ -26,6 +26,7 @@ vi.mock('../services/adminService', () => ({ getStats }));
 const { AdminPage } = await import('./AdminPage');
 
 const stats: AdminStatsDTO = {
+  tutor: { promptsLast7Days: 37 },
   users: {
     total: 12,
     byRole: { USER: 10, MODERATOR: 0, ADMIN: 1, FOUNDER: 1 },
@@ -65,6 +66,17 @@ describe('AdminPage', () => {
     renderPage();
     expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(screen.getByText('Announcement')).toBeInTheDocument();
+  });
+
+  it('shows the messages sent to the tutor first, above the users', async () => {
+    getStats.mockResolvedValue(stats);
+    renderPage();
+    const tutor = await screen.findByText('Messages to the tutor (7 days)');
+    expect(tutor.previousElementSibling).toHaveTextContent('37');
+    expect(
+      tutor.compareDocumentPosition(screen.getByText('Total users')) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it('keeps the announcement card at the foot, after the stats', async () => {

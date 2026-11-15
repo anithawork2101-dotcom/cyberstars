@@ -5,6 +5,7 @@ import type {
   AdminProgressStats,
   AdminForumStats,
   AdminSupportStats,
+  AdminTutorStats,
 } from '@cyberstars/shared/admin';
 import type { TicketStatus } from '@cyberstars/shared/support';
 
@@ -97,6 +98,14 @@ export async function supportStats(): Promise<AdminSupportStats> {
   };
   for (const g of statusGroups) byStatus[g.status] = g._count._all;
   return { total, byStatus };
+}
+
+// How many messages students sent the tutor in the last 7 days; admins' and the
+// founder's were never counted.
+export async function tutorStats(): Promise<AdminTutorStats> {
+  return {
+    promptsLast7Days: await prisma.tutorPrompt.count({ where: { createdAt: { gte: daysAgo(7) } } }),
+  };
 }
 
 // How many of these users aren't the founder

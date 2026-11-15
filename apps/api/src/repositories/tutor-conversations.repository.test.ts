@@ -24,6 +24,9 @@ const mockPrisma = {
   tutorMessage: {
     findMany: vi.fn(),
   },
+  tutorPrompt: {
+    create: vi.fn(),
+  },
 };
 
 vi.mock('../config/db.js', () => ({ prisma: mockPrisma }));
@@ -191,5 +194,15 @@ describe('deleteConversation', () => {
     mockPrisma.tutorConversation.deleteMany.mockResolvedValue({ count: 0 });
 
     await expect(repo.deleteConversation(7, 99)).resolves.toBe(false);
+  });
+});
+
+describe('addPrompt', () => {
+  it('keeps only when the message was sent', async () => {
+    const sentAt = new Date('2026-11-15T10:00:00Z');
+
+    await repo.addPrompt(sentAt);
+
+    expect(mockPrisma.tutorPrompt.create).toHaveBeenCalledWith({ data: { createdAt: sentAt } });
   });
 });

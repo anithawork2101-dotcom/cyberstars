@@ -18,6 +18,7 @@ const mockConversations = {
   findConversation: vi.fn(),
   recentHistory: vi.fn(),
   saveExchange: vi.fn(),
+  notePrompt: vi.fn(),
   getPage: vi.fn(),
   deleteConversation: vi.fn(),
 };
@@ -496,6 +497,64 @@ describe('chat', () => {
 
     expect(mockConversations.saveExchange).not.toHaveBeenCalled();
     expect(next).not.toHaveBeenCalled();
+  });
+});
+
+describe('chat: counting messages for the admin page', () => {
+  it("counts a student's message once, with when it was sent", async () => {
+    mockTutor.askTutor.mockReturnValue(
+      answer({ type: 'text', text: 'Hi.' }, { type: 'done', finish: 'complete' }),
+    );
+
+    await chat(mockReq(), mockRes() as unknown as Response, vi.fn());
+
+    expect(mockConversations.notePrompt).toHaveBeenCalledOnce();
+    const [sentAt] = mockConversations.notePrompt.mock.calls[0];
+    expect(sentAt).toEqual(mockConversations.saveExchange.mock.calls[0][2].sentAt);
+  });
+
+  it('counts a message whose answer broke off after some words', async () => {
+    mockTutor.askTutor.mockReturnValue(
+      failing(new AppError(502, 'The tutor could not answer right now, please try again'), {
+        type: 'text',
+        text: 'Recursion is',
+      }),
+    );
+
+    await chat(mockReq(), mockRes() as unknown as Response, vi.fn());
+
+    expect(mockConversations.notePrompt).toHaveBeenCalledOnce();
+  });
+
+  it('does not count a message that failed before any words, since it is sent again', async () => {
+    mockTutor.askTutor.mockReturnValue(failing(new AppError(502, 'busy')));
+
+    await chat(mockReq(), mockRes() as unknown as Response, vi.fn());
+
+    expect(mockConversations.notePrompt).not.toHaveBeenCalled();
+  });
+
+  it.each(['ADMIN', 'FOUNDER'])("does not count a message of the %s's", async (role) => {
+    mockUserRepo.getRole.mockResolvedValue(role);
+    mockTutor.askTutor.mockReturnValue(
+      answer({ type: 'text', text: 'Hi.' }, { type: 'done', finish: 'complete' }),
+    );
+
+    await chat(mockReq(), mockRes() as unknown as Response, vi.fn());
+
+    expect(mockConversations.notePrompt).not.toHaveBeenCalled();
+    expect(mockConversations.saveExchange).toHaveBeenCalledOnce();
+  });
+
+  it("counts a moderator's message", async () => {
+    mockUserRepo.getRole.mockResolvedValue('MODERATOR');
+    mockTutor.askTutor.mockReturnValue(
+      answer({ type: 'text', text: 'Hi.' }, { type: 'done', finish: 'complete' }),
+    );
+
+    await chat(mockReq(), mockRes() as unknown as Response, vi.fn());
+
+    expect(mockConversations.notePrompt).toHaveBeenCalledOnce();
   });
 });
 
