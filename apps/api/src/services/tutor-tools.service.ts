@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 import { courses, lessons } from '@cyberstars/content/curriculum';
 import { lessonTitlesRo } from '@cyberstars/content/curriculum-ro';
@@ -6,7 +5,14 @@ import { PROJECTS_DIR } from '@cyberstars/content/paths';
 import { isAdmin, type UserRole } from '@cyberstars/shared/auth';
 import { canAccessFeature, type FeatureKey } from '@cyberstars/shared/features';
 import { isClosedCourse } from '@cyberstars/shared/constants';
-import { PROJECTS, findProject, type ProjectDifficulty } from '@cyberstars/shared/projects';
+import {
+  PROJECTS,
+  PROJECT_LANGUAGES,
+  PROJECT_XP,
+  findProject,
+  type ProjectDifficulty,
+  type ProjectLanguage,
+} from '@cyberstars/shared/projects';
 import { contentDir, readLocalized } from './paths.js';
 
 // What the tutor can look up while it answers: the lessons and algorithm
@@ -182,6 +188,26 @@ interface PageInfo {
   about: string;
 }
 
+// The project languages by name, for what the tutor reads about Projects
+const PROJECT_LANGUAGE_NAMES: Record<ProjectLanguage, string> = {
+  python: 'Python',
+  c: 'C',
+  java: 'Java',
+  linux: 'Linux',
+};
+
+// "a, b or c"
+function orList(items: readonly (string | number)[]): string {
+  return items.length < 2
+    ? items.join('')
+    : `${items.slice(0, -1).join(', ')} or ${items[items.length - 1]}`;
+}
+
+// The projects' languages, "Python, C, Java or Linux"
+export const PROJECT_LANGUAGES_TEXT = orList(
+  PROJECT_LANGUAGES.map((l) => PROJECT_LANGUAGE_NAMES[l]),
+);
+
 const PAGES: (PageInfo & { feature?: FeatureKey; adminOnly?: boolean })[] = [
   { link: '/', name: 'Dashboard', about: "the student's home: progress and today's picks" },
   { link: '/courses', name: 'Courses', about: 'every course and its lessons' },
@@ -189,8 +215,7 @@ const PAGES: (PageInfo & { feature?: FeatureKey; adminOnly?: boolean })[] = [
   {
     link: '/projects',
     name: 'Projects',
-    about:
-      "real programs in Python, C, Java or Linux, each built step by step from an empty file; the student ticks the steps as notes for themselves, and passing the project's Run Tests finishes it, worth 100, 150 or 200 XP by difficulty; listed with list_projects",
+    about: `real programs in ${PROJECT_LANGUAGES_TEXT}, each built step by step, from an empty file or, for Linux, in a terminal with the files the story starts from; the student ticks the steps as notes for themselves, and passing the project's Run Tests finishes it, worth ${orList(Object.values(PROJECT_XP))} XP by difficulty; listed with list_projects`,
     feature: 'projects',
   },
   { link: '/almanac', name: 'Almanac', about: 'short reads on the history of computing' },
@@ -280,7 +305,6 @@ interface ProjectInfo {
   difficulty: ProjectDifficulty;
   link: string;
   about: string;
-  steps: string[];
 }
 
 // Longer than a lesson's: a project's story, input and output come whole
@@ -293,14 +317,23 @@ function projectInfo(p: (typeof PROJECTS)[number]): ProjectInfo {
     difficulty: p.difficulty,
     link: `/projects/${p.language}/${p.slug}`,
     about: p.summary,
-    steps: p.steps.map((step) => step.title),
   };
 }
 
+// The model may write "Python" or " c"
+function projectLanguage(language: string): ProjectLanguage | null {
+  const key = language.trim().toLowerCase();
+  return (PROJECT_LANGUAGES as readonly string[]).includes(key) ? (key as ProjectLanguage) : null;
+}
+
 // The projects, a language's only when one is given, in the order the page
-// lists them, so the tutor suggests one that fits what the student knows
-export function listProjects(language?: string): ProjectInfo[] {
-  return PROJECTS.filter((p) => !language || p.language === language).map(projectInfo);
+// lists them, so the tutor suggests one that fits what the student knows. No
+// steps here: read_project gives them for the one picked. Null for a language
+// with no projects, so the tutor hears so instead of an empty list.
+export function listProjects(language?: string): ProjectInfo[] | null {
+  if (!language?.trim()) return PROJECTS.map(projectInfo);
+  const key = projectLanguage(language);
+  return key ? PROJECTS.filter((p) => p.language === key).map(projectInfo) : null;
 }
 
 // Only a project the catalog lists can be read, so a made-up slug never
@@ -308,10 +341,18 @@ export function listProjects(language?: string): ProjectInfo[] {
 export function readProject(
   language: string,
   slug: string,
-): (ProjectInfo & { statement: string }) | null {
-  const project = findProject(language, slug);
+): (ProjectInfo & { steps: string[]; statement: string }) | null {
+  const key = projectLanguage(language);
+  const project = key && findProject(key, slug);
   if (!project) return null;
-  const file = path.join(PROJECTS_DIR, project.language, `${project.slug}.md`);
-  const statement = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
-  return { ...projectInfo(project), statement: statement.slice(0, PROJECT_MAX_CHARS) };
+  const statement = readLocalized(
+    path.join(PROJECTS_DIR, project.language),
+    `${project.slug}.md`,
+    'en',
+  );
+  return {
+    ...projectInfo(project),
+    steps: project.steps.map((step) => step.title),
+    statement: statement.slice(0, PROJECT_MAX_CHARS),
+  };
 }

@@ -6,6 +6,7 @@ import {
   listCourses,
   listPages,
   listProjects,
+  PROJECT_LANGUAGES_TEXT,
   readLesson,
   readProject,
   searchLessons,
@@ -174,8 +175,8 @@ describe('listCourses, once Web Development is launched', () => {
 });
 
 describe('listProjects', () => {
-  it('lists every project with its language, difficulty, steps and page', () => {
-    const list = listProjects();
+  it('lists every project with its language, difficulty and page, without its steps', () => {
+    const list = listProjects()!;
     expect(list).toHaveLength(PROJECTS.length);
     expect(list).toContainEqual({
       title: 'League Table',
@@ -183,21 +184,34 @@ describe('listProjects', () => {
       difficulty: 'easy',
       link: '/projects/python/league-table',
       about: expect.stringContaining('league table'),
-      steps: expect.arrayContaining(['Read all the lines']),
     });
   });
 
-  it("lists one language's projects when given one", () => {
-    const linux = listProjects('linux');
+  it("lists one language's projects when given one, however it is written", () => {
+    const linux = listProjects('linux')!;
     expect(linux.length).toBeGreaterThan(0);
     expect(linux.every((p) => p.language === 'linux')).toBe(true);
+    expect(listProjects(' Linux ')).toEqual(linux);
+  });
+
+  it('says so for a language with no projects, rather than listing none', () => {
+    expect(listProjects('rust')).toBeNull();
+  });
+});
+
+describe('listPages, on Projects', () => {
+  it('names every project language and XP value from the catalog', () => {
+    const projects = listPages('ADMIN', true).pages.find((p) => p.link === '/projects')!;
+    expect(projects.about).toContain(PROJECT_LANGUAGES_TEXT);
+    expect(projects.about).toContain('100, 150 or 200 XP');
   });
 });
 
 describe('readProject', () => {
-  it("reads a project's statement, never its solution", () => {
-    const project = readProject('python', 'league-table')!;
+  it("reads a project's statement and steps, never its solution", () => {
+    const project = readProject('Python', 'league-table')!;
     expect(project.title).toBe('League Table');
+    expect(project.steps).toContain('Read all the lines');
     expect(project.statement).toContain('Lions 2-1 Tigers');
     expect(project.statement).not.toMatch(/^def |^import /m);
   });

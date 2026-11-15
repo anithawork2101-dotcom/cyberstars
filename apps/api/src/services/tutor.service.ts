@@ -24,10 +24,12 @@ import {
   listCourses,
   listPages,
   listProjects,
+  PROJECT_LANGUAGES_TEXT,
   readLesson,
   readProject,
   searchLessons,
 } from './tutor-tools.service.js';
+import { PROJECT_LANGUAGES } from '@cyberstars/shared/projects';
 import type { PastMessage } from './tutor-conversations.service.js';
 import type { StudentPicture } from './tutor-student.service.js';
 
@@ -590,12 +592,15 @@ const TOOLS: FunctionDeclaration[] = [
   },
   {
     name: 'list_projects',
-    description:
-      'List the projects: real programs built step by step in Python, C, Java or Linux, each with its title, language, difficulty (easy, medium or hard), what it builds, its steps and its link. Give a language to list only its projects.',
+    description: `List the projects: real programs built step by step in ${PROJECT_LANGUAGES_TEXT}, each with its title, language, difficulty (easy, medium or hard), what it builds and its link. Give a language to list only its projects; read_project gives a project's steps.`,
     parameters: {
       type: 'object',
       properties: {
-        language: { type: 'string', description: 'python, c, java or linux; leave out for all' },
+        language: {
+          type: 'string',
+          enum: [...PROJECT_LANGUAGES],
+          description: 'The language; leave out for all',
+        },
       },
     },
   },
@@ -606,7 +611,7 @@ const TOOLS: FunctionDeclaration[] = [
     parameters: {
       type: 'object',
       properties: {
-        language: { type: 'string', description: 'The language, like "python" or "linux"' },
+        language: { type: 'string', enum: [...PROJECT_LANGUAGES], description: 'The language' },
         slug: { type: 'string', description: 'The project slug, like "league-table"' },
       },
       required: ['language', 'slug'],
@@ -641,7 +646,10 @@ function runTool(
         return { error: 'Projects are not open yet' };
       }
       if (call.name === 'list_projects') {
-        return { projects: listProjects(args.language ? String(args.language) : undefined) };
+        const projects = listProjects(args.language ? String(args.language) : undefined);
+        return projects
+          ? { projects }
+          : { error: `No such language: projects are in ${PROJECT_LANGUAGES.join(', ')}` };
       }
       const project = readProject(String(args.language ?? ''), String(args.slug ?? ''));
       return project ? { ...project } : { error: 'No such project' };

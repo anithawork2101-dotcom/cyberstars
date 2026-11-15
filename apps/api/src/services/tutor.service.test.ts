@@ -11,6 +11,7 @@ const tools = {
   lessonStatement: vi.fn(),
   listProjects: vi.fn(),
   readProject: vi.fn(),
+  PROJECT_LANGUAGES_TEXT: 'Python, C, Java or Linux',
 };
 vi.mock('./tutor-tools.service.js', () => tools);
 
@@ -446,6 +447,18 @@ describe('askTutor', () => {
     ]);
     expect(tools.listProjects).toHaveBeenCalledWith('python');
     expect(tools.readProject).toHaveBeenCalledWith('python', 'league-table');
+  });
+
+  it('tells the model when it asks for the projects of a language that has none', async () => {
+    tools.listProjects.mockReturnValue(null);
+    stream
+      .mockReturnValueOnce(call('list_projects', { language: 'rust' }))
+      .mockReturnValueOnce(text('ok'));
+    await collect(askTutor(base));
+    const result = stream.mock.calls[1][0].contents[2].parts[0].functionResponse;
+    expect(result.response).toEqual({
+      error: 'No such language: projects are in python, c, java, linux',
+    });
   });
 
   it('keeps the projects from a student while Projects is in preview', async () => {
