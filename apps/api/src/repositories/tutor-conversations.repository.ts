@@ -100,3 +100,8 @@ export async function deleteConversation(userId: number, id: number): Promise<bo
   const { count } = await prisma.tutorConversation.deleteMany({ where: { id, userId } });
   return count > 0;
 }
+
+// Counts a student's message to the tutor for the admin page, with its time only.
+export async function addPrompt(sentAt: Date): Promise<void> {
+  await prisma.tutorPrompt.create({ data: { createdAt: sentAt } });
+}

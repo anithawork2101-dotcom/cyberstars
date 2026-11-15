@@ -112,6 +112,16 @@ export async function saveExchange(
   }
 }
 
+// Counts a student's message for the admin page, with when it was sent and
+// nothing else. A failure is only logged: the student has their answer.
+export async function notePrompt(sentAt: Date): Promise<void> {
+  try {
+    await repo.addPrompt(sentAt);
+  } catch (err) {
+    console.error('[tutor] could not count the message:', err);
+  }
+}
+
 // A page of the student's conversation, or null when it isn't theirs.
 export async function getPage(
   userId: number,

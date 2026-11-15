@@ -92,6 +92,8 @@ export async function chat(req: Request, res: Response, next: NextFunction) {
   // The units taken for this message before the model is called: what the
   // longest answer costs, or the last one left.
   let held: usage.UsageHold | null = null;
+  // Whether the message counts on the admin page: admins' and the founder's don't.
+  let counts = false;
 
   // Gives back what the message didn't cost. A storage failure only costs the
   // student the units held.
@@ -104,9 +106,11 @@ export async function chat(req: Request, res: Response, next: NextFunction) {
     }
   }
 
-  // Saved into the conversation, or a new one about the lesson; the new one's
-  // id is what the client keeps sending.
+  // Counted for the admin page (a message that broke off before any words is
+  // sent again, so it isn't), then saved into the conversation, or a new one
+  // about the lesson; the new one's id is what the client keeps sending.
   async function save(answer: { text: string; finish: TutorAnswerEnd }) {
+    if (counts) await conversations.notePrompt(sentAt);
     const saved = await conversations.saveExchange(
       userId,
       conversationId ?? { lesson: lesson ?? null },
@@ -128,6 +132,7 @@ export async function chat(req: Request, res: Response, next: NextFunction) {
     // The role decides which pages the tutor may point to, read fresh like
     // every other role check.
     const role = await userRepo.getRole(userId);
+    counts = !isAdmin(role);
     const about = await readStudent(userId);
     held = await usage.hold(userId, 'tutorMessage', isAdmin(role), 2);
     const answer = askTutor({

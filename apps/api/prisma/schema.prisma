@@ -300,6 +300,18 @@ model TutorMessage {
   @@map("tutor_messages")
 }
 
+// One row per message a student sent the tutor, with when and nothing else:
+// no account, no text, so the admin page can count how much the tutor is used
+// without saying who. Admins and the founder aren't counted. Kept apart from
+// the conversations, which their students delete and the caps prune.
+model TutorPrompt {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@map("tutor_prompts")
+}
+
 // What a student has used of a capped feature (Show Solution, the tutor) in its
 // current window. The window opens with the first use after the last one ended
 // and lasts as long as the feature's own window; an ended window counts as

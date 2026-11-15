@@ -6,6 +6,7 @@ const repo = {
   listNewest: vi.fn(),
   saveAndPrune: vi.fn(),
   deleteConversation: vi.fn(),
+  addPrompt: vi.fn(),
 };
 vi.mock('../repositories/tutor-conversations.repository.js', () => repo);
 
@@ -166,6 +167,26 @@ describe('saveExchange', () => {
       service.saveExchange(7, 12, { text: 'hi', sentAt }, { text: 'Hello.', finish: 'complete' }),
     ).resolves.toBeNull();
     expect(log).toHaveBeenCalledWith('[tutor] could not save the conversation:', expect.any(Error));
+    log.mockRestore();
+  });
+});
+
+describe('notePrompt', () => {
+  it('counts the message with when it was sent', async () => {
+    const sentAt = new Date('2026-11-15T10:00:00Z');
+    repo.addPrompt.mockResolvedValue(undefined);
+
+    await service.notePrompt(sentAt);
+
+    expect(repo.addPrompt).toHaveBeenCalledWith(sentAt);
+  });
+
+  it('logs a storage failure instead of throwing it', async () => {
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+    repo.addPrompt.mockRejectedValue(new Error('db down'));
+
+    await expect(service.notePrompt(new Date())).resolves.toBeUndefined();
+    expect(log).toHaveBeenCalledWith('[tutor] could not count the message:', expect.any(Error));
     log.mockRestore();
   });
 });
