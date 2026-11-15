@@ -372,7 +372,7 @@
       "title": "Ce găsești înăuntru",
       "courses": {
         "title": "Cursuri",
-        "text": "Python, Java, C și Linux, de la primul print la procese și fire de execuție, apoi Arbori și grafuri în toate cele trei limbaje.",
+        "text": "Python, Java, C, Linux și dezvoltare web, de la primul print la procese și fire de execuție, apoi Arbori și grafuri în Python, Java și C.",
         "picture": "Fiecare curs cu numărul lui de lecții: Python, Java, C, Arbori și grafuri, Linux și Dezvoltare web."
       },
       "algorithms": {
@@ -394,6 +394,11 @@
         "title": "Dezvoltare web",
         "text": "Îți construiești propriul site, pagină cu pagină, în HTML, CSS și JavaScript, și îl vezi cum se schimbă pe măsură ce scrii.",
         "picture": "O lecție web așa cum o are studentul: în stânga script.js, care deschide ușile docului la un clic, iar în dreapta pagina principală a stației pe care rulează, cu imaginea stației, unde scrie Doors open."
+      },
+      "projects": {
+        "title": "Proiecte",
+        "text": "Construiești programe adevărate, pas cu pas: un clasament de fotbal, un joc de aventură în text și altele, în Python, C, Java și Linux. Testele îți spun când merge totul.",
+        "picture": "Proiectul League Table în Python, ușor: cei șapte pași ai lui, primii trei bifați."
       }
     },
     "free": {

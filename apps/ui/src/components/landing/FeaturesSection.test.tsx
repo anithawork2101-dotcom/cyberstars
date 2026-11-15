@@ -37,10 +37,11 @@ describe('FeaturesSection', () => {
     const items = Array.from(document.querySelector('ol')!.children) as HTMLElement[];
     expect(items.map((r) => within(r).getByRole('heading', { level: 3 }).textContent)).toEqual([
       'Courses',
+      'Web Development',
+      'Projects',
       'Algorithm challenges',
       'Linux terminal',
       'An AI tutor',
-      'Web Development',
     ]);
     for (const r of items) {
       expect(within(r).getAllByRole('img')).toHaveLength(1);
@@ -54,6 +55,7 @@ describe('FeaturesSection', () => {
     const pinned = Array.from(document.querySelectorAll('[data-picture]'));
     expect(pinned.map((p) => p.getAttribute('aria-hidden'))).toEqual([
       'false',
+      'true',
       'true',
       'true',
       'true',
@@ -77,7 +79,7 @@ describe('FeaturesSection', () => {
 
   it('lists Trees and Graphs among the courses, no longer Beta', () => {
     renderSection();
-    expect(parts().getByText(/then Trees and Graphs in all three languages/)).toBeDefined();
+    expect(parts().getByText(/then Trees and Graphs in Python, Java and C/)).toBeDefined();
     const picture = parts().getByRole('img', { name: /Each course with its number of lessons/ });
     expect(picture).toHaveTextContent('Trees and Graphs12 lessons');
   });
@@ -119,6 +121,19 @@ describe('FeaturesSection', () => {
     expect(picture).toHaveTextContent('openDoors.addEventListener("click"');
     expect(picture).toHaveTextContent('Welcome aboard');
     expect(picture).toHaveTextContent('Doors openOpen the doors');
+  });
+
+  it('marks Projects New, its picture a real project with its steps, the first three ticked', () => {
+    renderSection();
+    const row = parts().getByRole('heading', { name: 'Projects' }).closest('li')!;
+    expect(within(row).getByText('New')).toHaveClass('bg-[#facc15]');
+    expect(within(row).queryByText('Coming soon')).toBeNull();
+    const picture = within(row).getByRole('img', { name: /The League Table project/ });
+    expect(picture).toHaveTextContent('League Tableeasy');
+    expect(picture).toHaveTextContent('3 / 7');
+    expect(picture).toHaveTextContent('1. Read all the lines');
+    expect(picture).toHaveTextContent('7. Season facts');
+    expect(picture.querySelectorAll('svg')).toHaveLength(3);
   });
 
   it('presents none of the preview features', () => {

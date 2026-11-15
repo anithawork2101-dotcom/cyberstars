@@ -1,11 +1,13 @@
 import { useMemo, useRef, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
+import { findProject } from '@cyberstars/shared/projects';
 import { useCurriculum } from '../../context/CurriculumContext';
 import { TutorHero } from '../tutor/TutorHero';
 import { useTimesShown } from './useTimesShown';
 import { curriculumCounts } from './curriculumCounts';
 import { DIFF_COLORS } from '../../constants/difficulty';
+import { courseMeta } from '../../constants/courses';
 
 // The pictures for "what's inside", one per place a visitor can go. They are
 // drawn with the app's own pieces and real data, so there are no screenshots
@@ -116,6 +118,66 @@ export function AlgorithmsPicture() {
             </li>
           );
         })}
+      </ul>
+    </Box>
+  );
+}
+
+// A real project's steps as its page lists them, the first three ticked off
+// and the bar filled as far: what a project is, a program built a step at a
+// time, without any of its code. The steps stay in English, like the projects
+const PROJECT = findProject('python', 'league-table')!;
+const PROJECT_DONE = 3;
+
+export function ProjectsPicture() {
+  const { t } = useTranslation();
+  const d = DIFFICULTY[PROJECT.difficulty];
+  const total = PROJECT.steps.length;
+  return (
+    <Box label={t('landing.features.projects.picture')} height="min-h-[220px]">
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <span className="text-[14px] font-bold">{PROJECT.title}</span>
+        <span
+          className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+          style={{ background: d.bg, color: d.text }}
+        >
+          {t(`algoList.diff.${PROJECT.difficulty}`)}
+        </span>
+      </div>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="flex-1 h-1.5 rounded-full bg-[var(--surface2)] overflow-hidden">
+          <div
+            className="h-full rounded-full"
+            style={{
+              width: `${(PROJECT_DONE / total) * 100}%`,
+              background: courseMeta(PROJECT.language).color,
+            }}
+          />
+        </div>
+        <span className="text-[11px] text-[var(--text3)]">
+          {t('projects.stepsDone', { done: PROJECT_DONE, total })}
+        </span>
+      </div>
+      <ul className="m-0 p-0 list-none">
+        {PROJECT.steps.map((step, i) => (
+          <li
+            key={step.id}
+            className="flex items-center gap-2.5 py-[5px] border-b border-[var(--border)] last:border-b-0 text-[13px] leading-4"
+          >
+            <span
+              className={`shrink-0 w-4 h-4 rounded-[4px] border flex items-center justify-center ${
+                i < PROJECT_DONE
+                  ? 'bg-[var(--success)] border-[var(--success)] text-white'
+                  : 'border-[var(--text3)]'
+              }`}
+            >
+              {i < PROJECT_DONE && <Check size={11} strokeWidth={3} />}
+            </span>
+            <span className="min-w-0 truncate font-medium">
+              {i + 1}. {step.title}
+            </span>
+          </li>
+        ))}
       </ul>
     </Box>
   );
