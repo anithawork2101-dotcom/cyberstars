@@ -16,7 +16,7 @@ import { emailField, passwordField } from './schemas.js';
 
 // The sessions and the checks; the routes are in routes.test.ts
 
-type Role = 'USER' | 'MODERATOR' | 'ADMIN';
+type Role = 'USER' | 'MODERATOR' | 'ADMIN' | 'FOUNDER';
 
 const HOUR = 60 * 60 * 1000;
 const DAY = 24 * HOUR;
@@ -73,13 +73,14 @@ const signupSchema = z.object({ name: z.string(), email: emailField, password: p
 
 const LIFETIMES = {
   user: { idleMs: 30 * DAY, absoluteMs: 90 * DAY },
-  admin: { idleMs: 12 * HOUR, absoluteMs: 7 * DAY },
+  short: { idleMs: 12 * HOUR, absoluteMs: 7 * DAY },
 };
 
 const OPTIONS: AuthOptions<Role, AuthUser<Role>, z.infer<typeof signupSchema>, 'en'> = {
   store,
   sessions,
-  isAdmin: (role) => role === 'ADMIN',
+  isAdmin: (role) => role === 'ADMIN' || role === 'FOUNDER',
+  shortSession: (role) => role === 'FOUNDER',
   lifetimes: LIFETIMES,
   secureCookie: false,
   onSessionsEnded,
@@ -165,14 +166,25 @@ describe('startSession', () => {
     });
   });
 
-  it("gives an admin's cookie the admin idle time", async () => {
-    roles.set(42, 'ADMIN');
+  it('gives the cookie of a role shortSession names the short idle time', async () => {
+    roles.set(42, 'FOUNDER');
     const res = fakeRes();
     await auth.startSession(res, 42);
     expect(res.cookie).toHaveBeenCalledWith(
       'session',
       expect.any(String),
       expect.objectContaining({ maxAge: 12 * HOUR }),
+    );
+  });
+
+  it("gives an admin shortSession doesn't name the user idle time", async () => {
+    roles.set(42, 'ADMIN');
+    const res = fakeRes();
+    await auth.startSession(res, 42);
+    expect(res.cookie).toHaveBeenCalledWith(
+      'session',
+      expect.any(String),
+      expect.objectContaining({ maxAge: 30 * DAY }),
     );
   });
 
@@ -257,11 +269,18 @@ describe('sessionUserId', () => {
     expect(await auth.sessionUserId(token)).toBeNull();
   });
 
-  it("goes by the account's role now: an admin's session lasts the admin's times", async () => {
+  it("goes by the account's role now: a session whose role turns short lasts the short times", async () => {
     const token = await signIn();
-    roles.set(42, 'ADMIN');
+    roles.set(42, 'FOUNDER');
     vi.setSystemTime(START + 12 * HOUR);
     expect(await auth.sessionUserId(token)).toBeNull();
+  });
+
+  it("keeps an admin shortSession doesn't name for the user's times", async () => {
+    const token = await signIn();
+    roles.set(42, 'ADMIN');
+    vi.setSystemTime(START + 29 * DAY);
+    expect(await auth.sessionUserId(token)).toBe(42);
   });
 
   it("doesn't count as use", async () => {

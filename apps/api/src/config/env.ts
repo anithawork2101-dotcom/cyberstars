@@ -35,7 +35,7 @@ export const env = {
   session: {
     lifetimes: {
       user: { idleMs: 30 * DAY_MS, absoluteMs: 90 * DAY_MS },
-      admin: { idleMs: 12 * HOUR_MS, absoluteMs: 7 * DAY_MS },
+      short: { idleMs: 12 * HOUR_MS, absoluteMs: 7 * DAY_MS },
     },
     secureCookie: isProduction,
   },

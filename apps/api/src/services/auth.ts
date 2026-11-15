@@ -99,6 +99,7 @@ export const auth = createAuth({
   store,
   sessions,
   isAdmin,
+  shortSession: isAdmin,
   ...config.session,
   onSessionsEnded: closeUserSockets,
   signupSchema,
