@@ -23,8 +23,15 @@ beforeEach(() => {
 });
 
 const sentBefore: AnnouncementDTO[] = [
-  { id: 2, text: 'New course', authorName: 'Ada', createdAt: '2026-10-28T10:00:00.000Z' },
-  { id: 1, text: 'Welcome', authorName: null, createdAt: '2026-10-20T10:00:00.000Z' },
+  {
+    id: 2,
+    text: 'New course',
+    authorName: 'Ada',
+    createdAt: '2026-10-28T10:00:00.000Z',
+    opens: { openers: 3, recipients: 40 },
+  },
+  // Sent before a click was counted
+  { id: 1, text: 'Welcome', authorName: null, createdAt: '2026-10-20T10:00:00.000Z', opens: null },
 ];
 
 describe('AnnouncementSection', () => {
@@ -105,13 +112,13 @@ describe('AnnouncementSection', () => {
 });
 
 describe('AnnouncementSection history', () => {
-  it('lists the ones sent before, cut to two lines, with when and who', async () => {
+  it('lists the ones sent before, cut to two lines, with when, who and how many opened it', async () => {
     getAnnouncements.mockResolvedValue(sentBefore);
     render(<AnnouncementSection className="" />);
     const text = await screen.findByText('New course');
     expect(text).toHaveClass('line-clamp-2');
     expect(text).not.toHaveClass('block');
-    expect(screen.getByText('October 28, 2026 · Ada')).toBeInTheDocument();
+    expect(screen.getByText('October 28, 2026 · Ada · Opened by 3 of 40')).toBeInTheDocument();
     expect(screen.getByText('October 20, 2026 · Someone')).toBeInTheDocument();
   });
 
@@ -145,7 +152,9 @@ describe('AnnouncementSection history', () => {
     write('New course');
     fireEvent.click(screen.getByRole('button', { name: 'Send' }));
     fireEvent.click(within(confirm()).getByRole('button', { name: 'Send' }));
-    expect(await screen.findByText('October 28, 2026 · Ada')).toBeInTheDocument();
+    expect(
+      await screen.findByText('October 28, 2026 · Ada · Opened by 3 of 40'),
+    ).toBeInTheDocument();
     expect(getAnnouncements).toHaveBeenCalledTimes(2);
   });
 });

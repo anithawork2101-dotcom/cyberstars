@@ -16,6 +16,7 @@ const mockRepo = {
   clearExcerpt: vi.fn(),
   createAnnouncement: vi.fn(),
   listAnnouncements: vi.fn(),
+  noteOpen: vi.fn(),
   listNotices: vi.fn(),
   markShown: vi.fn(),
   listUnreadSections: vi.fn(),
@@ -30,6 +31,7 @@ const {
   notify,
   announce,
   listAnnouncements,
+  noteOpen,
   getPage,
   markRead,
   markOneRead,
@@ -409,14 +411,36 @@ describe('notifications.service announce', () => {
 describe('notifications.service listAnnouncements', () => {
   it('lists the last 50, naming the author while their account is there', async () => {
     const at = new Date('2026-10-28T10:00:00.000Z');
+    const counted = { countsOpens: true, openers: 3, recipients: 9 };
+    const uncounted = { countsOpens: false, openers: 0, recipients: 0 };
     mockRepo.listAnnouncements.mockResolvedValue([
-      { id: 2, text: 'New course', createdAt: at, author: { name: 'Ada' } },
-      { id: 1, text: 'Hello', createdAt: at, author: null },
+      { id: 2, text: 'New course', createdAt: at, author: { name: 'Ada' }, ...counted },
+      { id: 1, text: 'Hello', createdAt: at, author: null, ...uncounted },
     ]);
     expect(await listAnnouncements()).toEqual([
-      { id: 2, text: 'New course', authorName: 'Ada', createdAt: '2026-10-28T10:00:00.000Z' },
-      { id: 1, text: 'Hello', authorName: null, createdAt: '2026-10-28T10:00:00.000Z' },
+      {
+        id: 2,
+        text: 'New course',
+        authorName: 'Ada',
+        createdAt: '2026-10-28T10:00:00.000Z',
+        opens: { openers: 3, recipients: 9 },
+      },
+      {
+        id: 1,
+        text: 'Hello',
+        authorName: null,
+        createdAt: '2026-10-28T10:00:00.000Z',
+        opens: null,
+      },
     ]);
     expect(mockRepo.listAnnouncements).toHaveBeenCalledWith(50);
+  });
+});
+
+describe('notifications.service noteOpen', () => {
+  it("counts the click on the user's announcement row", async () => {
+    mockRepo.noteOpen.mockResolvedValue(undefined);
+    await noteOpen(10, 7);
+    expect(mockRepo.noteOpen).toHaveBeenCalledWith(10, 7);
   });
 });

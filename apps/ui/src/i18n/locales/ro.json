@@ -157,7 +157,8 @@
       "failed": "Anunțul nu a putut fi trimis. Încearcă din nou.",
       "history": "Trimise până acum",
       "none": "Încă nu s-a trimis niciun anunț.",
-      "historyError": "Anunțurile trimise până acum nu s-au putut încărca."
+      "historyError": "Anunțurile trimise până acum nu s-au putut încărca.",
+      "opened": "Deschis de {{openers}} din {{recipients}}"
     },
     "poll": {
       "title": "Sondaj",

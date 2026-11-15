@@ -24,6 +24,11 @@ export function markOneRead(id: number) {
   return api.post<{ ok: boolean }>(`/api/notifications/${id}/read`);
 }
 
+// A click on an announcement in the bell, counted once per account for the admins
+export function noteOpen(id: number) {
+  return api.post<void>(`/api/notifications/${id}/opened`);
+}
+
 // The announcements and polls the dashboard's window still has to show, oldest first
 export function getNotices() {
   return api.get<NotificationDTO[]>('/api/notifications/notices');

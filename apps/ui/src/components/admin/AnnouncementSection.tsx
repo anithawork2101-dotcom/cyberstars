@@ -125,6 +125,12 @@ export function AnnouncementSection({ className }: { className: string }) {
                 <span className="text-[13px] text-[var(--text)] line-clamp-2">{a.text}</span>
                 <span className="block mt-0.5 text-[11px] text-[var(--text3)]">
                   {announcementDay(a.createdAt)} · {a.authorName ?? t('notif.someone')}
+                  {/* Counts only, never who. The ones sent before a click was counted have none */}
+                  {a.opens &&
+                    ` · ${t('admin.announcement.opened', {
+                      openers: a.opens.openers,
+                      recipients: a.opens.recipients,
+                    })}`}
                 </span>
               </button>
             </li>

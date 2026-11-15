@@ -137,12 +137,13 @@ model User {
   sessions           Session[]
   laniakeaPlayer     LaniakeaPlayer?
 
-  notificationsReceived Notification[] @relation("NotificationsReceived")
-  notificationsSent     Notification[] @relation("NotificationsSent")
+  notificationsReceived Notification[]       @relation("NotificationsReceived")
+  notificationsSent     Notification[]       @relation("NotificationsSent")
   announcements         Announcement[]
   polls                 Poll[]
   pollVotes             PollVoter[]
   pollViews             PollViewer[]
+  announcementOpens     AnnouncementOpener[]
 
   conversationsA Conversation[]  @relation("ConvA")
   conversationsB Conversation[]  @relation("ConvB")
@@ -449,14 +450,32 @@ model Notification {
 // An official announcement an admin sent to every bell. Its notifications
 // carry the text too; this keeps the history once they're pruned
 model Announcement {
-  id        Int      @id @default(autoincrement())
-  authorId  Int?     @map("author_id")
-  text      String
-  createdAt DateTime @default(now()) @map("created_at")
+  id          Int      @id @default(autoincrement())
+  authorId    Int?     @map("author_id")
+  text        String
+  recipients  Int      @default(0) // accounts that got it in their bell
+  openers     Int      @default(0) // accounts that clicked it in the bell
+  // False on the announcements sent before a click was counted, so their openers mean nothing
+  countsOpens Boolean  @default(true) @map("counts_opens")
+  createdAt   DateTime @default(now()) @map("created_at")
 
-  author User? @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  author   User?                @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  openedBy AnnouncementOpener[]
 
   @@map("announcements")
+}
+
+// Who clicked an announcement in the bell, only so each account counts once in
+// announcements.openers
+model AnnouncementOpener {
+  announcementId Int @map("announcement_id")
+  userId         Int @map("user_id")
+
+  announcement Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([announcementId, userId])
+  @@map("announcement_openers")
 }
 
 // A poll an admin sent to every bell. Votes are anonymous: poll_voters keeps

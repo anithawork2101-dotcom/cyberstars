@@ -203,6 +203,7 @@ Open to everyone since 2026-11-15, in English only.
 | GET    | `/api/notifications`                   | Yes  | Notifications and the unread count      |
 | POST   | `/api/notifications/read`              | Yes  | Mark read up to an id                   |
 | POST   | `/api/notifications/:id/read`          | Yes  | Mark one read                           |
+| POST   | `/api/notifications/:id/opened`        | Yes  | An announcement clicked in the bell     |
 | GET    | `/api/notifications/notices`           | Yes  | Announcements and polls still to show   |
 | POST   | `/api/notifications/notices/shown`     | Yes  | The dashboard showed these              |
 | WS     | `/ws/user`                             | Yes  | Pushes new notifications and messages   |
@@ -222,7 +223,7 @@ Open to everyone since 2026-11-15, in English only.
 | POST   | `/api/connections/:id/decline`         | Yes  | Decline (addressee only)                |
 | DELETE | `/api/connections/:id`                 | Yes  | Cancel a request or remove a connection |
 
-The actor never gets their own notification, and repeat replies, reactions or Laniakea recap counts collapse into one unread row. An official announcement from the admin page lands in every bell but the sender's, and opens in a window over the page. So does a poll, where each student ticks one or more options and votes once; who voted is kept only so no one votes twice, never what they picked, and only the admin page shows the counts. A poll can end on an Other where the student writes their own answer, kept without their name; it reaches the admins' bells and lists under the poll on the admin page. The dashboard also opens the announcements and polls a student hasn't read in a window, one at a time and oldest first, on arrival there or at once when one comes in while they are on it; closing it marks them all shown, so it never opens with them again, and the bell keeps any skipped.
+The actor never gets their own notification, and repeat replies, reactions or Laniakea recap counts collapse into one unread row. An official announcement from the admin page lands in every bell but the sender's, and opens in a window over the page; the admin page says how many accounts clicked it in the bell, never who, and Mark all read doesn't count. So does a poll, where each student ticks one or more options and votes once; who voted is kept only so no one votes twice, never what they picked, and only the admin page shows the counts. A poll can end on an Other where the student writes their own answer, kept without their name; it reaches the admins' bells and lists under the poll on the admin page. The dashboard also opens the announcements and polls a student hasn't read in a window, one at a time and oldest first, on arrival there or at once when one comes in while they are on it; closing it marks them all shown, so it never opens with them again, and the bell keeps any skipped.
 
 ### Profile, leaderboard and public profiles
 
@@ -289,7 +290,7 @@ Defined in [`apps/api/prisma/schema.prisma`](apps/api/prisma/schema.prisma), cam
 - **UserLessonProgress**, **UserSavedCode**, **LessonSubmission**, **DailyPick**: completion, saved code, judge attempts (the newest 20 per lesson) and the daily picks
 - **ForumCategory**, **ForumThread**, **ForumPost**, **ForumReaction**, **ForumThreadView**: the forum
 - **ProjectStepCheck**, **ProjectCompletion**: the project steps a student ticked, and the projects their tests passed
-- **SupportTicket**, **SupportMessage**, **Notification**, **Announcement**, **Poll**, **PollOption**, **PollVoter**, **PollViewer**, **PollAnswer**: support, the bell, and the announcements and polls sent (a voter and a viewer are kept only so each account counts once)
+- **SupportTicket**, **SupportMessage**, **Notification**, **Announcement**, **AnnouncementOpener**, **Poll**, **PollOption**, **PollVoter**, **PollViewer**, **PollAnswer**: support, the bell, and the announcements and polls sent (an opener, a voter and a viewer are kept only so each account counts once)
 - **Conversation**, **DirectMessage**, **DmReaction**, **Connection**: messages and connections
 - **TutorConversation**, **TutorMessage**, **TutorPrompt**, **UsageWindow**: the tutor's conversations, the students' messages counted for the admin page (a time each, no account) and the usage limits
 - **LaniakeaPlanet**: a student's planet: level, last pass, questions seen and the test going on
