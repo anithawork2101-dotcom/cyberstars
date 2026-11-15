@@ -1,13 +1,18 @@
+import fs from 'fs';
+import path from 'path';
 import { courses, lessons } from '@cyberstars/content/curriculum';
 import { lessonTitlesRo } from '@cyberstars/content/curriculum-ro';
+import { PROJECTS_DIR } from '@cyberstars/content/paths';
 import { isAdmin, type UserRole } from '@cyberstars/shared/auth';
 import { canAccessFeature, type FeatureKey } from '@cyberstars/shared/features';
 import { isClosedCourse } from '@cyberstars/shared/constants';
+import { PROJECTS, findProject, type ProjectDifficulty } from '@cyberstars/shared/projects';
 import { contentDir, readLocalized } from './paths.js';
 
 // What the tutor can look up while it answers: the lessons and algorithm
-// challenges (their statements only, never a solution or a test) and the app's
-// pages. The model asks for these through tool calls; tutor.service runs them.
+// challenges, the projects (their statements only, never a solution or a
+// test) and the app's pages. The model asks for these through tool calls;
+// tutor.service runs them.
 
 type Lang = 'en' | 'ro';
 
@@ -181,6 +186,13 @@ const PAGES: (PageInfo & { feature?: FeatureKey; adminOnly?: boolean })[] = [
   { link: '/', name: 'Dashboard', about: "the student's home: progress and today's picks" },
   { link: '/courses', name: 'Courses', about: 'every course and its lessons' },
   { link: '/algorithms', name: 'Algorithms', about: 'algorithm challenges in Python, Java and C' },
+  {
+    link: '/projects',
+    name: 'Projects',
+    about:
+      "real programs in Python, C, Java or Linux, each built step by step from an empty file; the student ticks the steps as notes for themselves, and passing the project's Run Tests finishes it, worth 100, 150 or 200 XP by difficulty; listed with list_projects",
+    feature: 'projects',
+  },
   { link: '/almanac', name: 'Almanac', about: 'short reads on the history of computing' },
   {
     link: '/laniakea',
@@ -258,4 +270,48 @@ export function listPages(role: UserRole | undefined, isProd: boolean): AppMap {
       (!p.feature || canAccessFeature(p.feature, role, isProd)) && (!p.adminOnly || isAdmin(role)),
   ).map(({ link, name, about }) => ({ link, name, about }));
   return { pages, courses: listCourses() };
+}
+
+// A project students build in Projects (packages/shared/projects.ts), in
+// English only
+interface ProjectInfo {
+  title: string;
+  language: string;
+  difficulty: ProjectDifficulty;
+  link: string;
+  about: string;
+  steps: string[];
+}
+
+// Longer than a lesson's: a project's story, input and output come whole
+const PROJECT_MAX_CHARS = 12_000;
+
+function projectInfo(p: (typeof PROJECTS)[number]): ProjectInfo {
+  return {
+    title: p.title,
+    language: p.language,
+    difficulty: p.difficulty,
+    link: `/projects/${p.language}/${p.slug}`,
+    about: p.summary,
+    steps: p.steps.map((step) => step.title),
+  };
+}
+
+// The projects, a language's only when one is given, in the order the page
+// lists them, so the tutor suggests one that fits what the student knows
+export function listProjects(language?: string): ProjectInfo[] {
+  return PROJECTS.filter((p) => !language || p.language === language).map(projectInfo);
+}
+
+// Only a project the catalog lists can be read, so a made-up slug never
+// reaches the disk. Reads <slug>.md alone: no solution, no tests.
+export function readProject(
+  language: string,
+  slug: string,
+): (ProjectInfo & { statement: string }) | null {
+  const project = findProject(language, slug);
+  if (!project) return null;
+  const file = path.join(PROJECTS_DIR, project.language, `${project.slug}.md`);
+  const statement = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+  return { ...projectInfo(project), statement: statement.slice(0, PROJECT_MAX_CHARS) };
 }

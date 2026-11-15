@@ -1611,7 +1611,8 @@
       "search": "Caut prin lecții",
       "read": "Citesc o lecție",
       "readTitle": "Citesc „{{title}}”",
-      "pages": "Mă uit prin aplicație"
+      "pages": "Mă uit prin aplicație",
+      "projects": "Mă uit prin proiecte"
     },
     "stuck": {
       "title": "Te ajut?"

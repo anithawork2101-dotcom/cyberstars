@@ -1585,7 +1585,8 @@
       "search": "Searching the lessons",
       "read": "Reading a lesson",
       "readTitle": "Reading “{{title}}”",
-      "pages": "Looking through the app"
+      "pages": "Looking through the app",
+      "projects": "Looking through the projects"
     },
     "stuck": {
       "title": "Need a hand?"

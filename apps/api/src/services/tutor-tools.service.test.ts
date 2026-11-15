@@ -5,9 +5,12 @@ import {
   lessonStatement,
   listCourses,
   listPages,
+  listProjects,
   readLesson,
+  readProject,
   searchLessons,
 } from './tutor-tools.service.js';
+import { PROJECTS } from '@cyberstars/shared/projects';
 
 describe('searchLessons', () => {
   it('finds the Python for loop lesson by its name', () => {
@@ -124,6 +127,19 @@ describe('listPages', () => {
   it('lists the courses along with the pages', () => {
     expect(listPages('USER', true).courses).toEqual(listCourses());
   });
+
+  it('lists Projects once launched, and only to those let in while in preview', () => {
+    const launchedProjects = PREVIEW_FEATURES.projects;
+    try {
+      PREVIEW_FEATURES.projects = false;
+      expect(links(listPages('USER', true))).toContain('/projects');
+      PREVIEW_FEATURES.projects = true;
+      expect(links(listPages('USER', true))).not.toContain('/projects');
+      expect(links(listPages('ADMIN', true))).toContain('/projects');
+    } finally {
+      PREVIEW_FEATURES.projects = launchedProjects;
+    }
+  });
 });
 
 describe('listCourses', () => {
@@ -141,5 +157,62 @@ describe('listCourses', () => {
     const java = listCourses().find((c) => c.title === 'Java')!;
     expect(java.about).toBe(courses.find((c) => c.key === 'java')!.description);
     expect(java.lessons).toBeGreaterThan(0);
+  });
+});
+
+describe('listCourses, once Web Development is launched', () => {
+  it('names Web Development with its lessons and its page', () => {
+    const launchedWeb = PREVIEW_FEATURES.webDevelopment;
+    expect(launchedWeb).toBe(false);
+    expect(listCourses()).toContainEqual(
+      expect.objectContaining({ title: 'Web Development', link: '/courses/web-dev' }),
+    );
+    expect(searchLessons('html headings').map((h) => h.link)).toContainEqual(
+      expect.stringMatching(/^\/lesson\/web-dev\//),
+    );
+  });
+});
+
+describe('listProjects', () => {
+  it('lists every project with its language, difficulty, steps and page', () => {
+    const list = listProjects();
+    expect(list).toHaveLength(PROJECTS.length);
+    expect(list).toContainEqual({
+      title: 'League Table',
+      language: 'python',
+      difficulty: 'easy',
+      link: '/projects/python/league-table',
+      about: expect.stringContaining('league table'),
+      steps: expect.arrayContaining(['Read all the lines']),
+    });
+  });
+
+  it("lists one language's projects when given one", () => {
+    const linux = listProjects('linux');
+    expect(linux.length).toBeGreaterThan(0);
+    expect(linux.every((p) => p.language === 'linux')).toBe(true);
+  });
+});
+
+describe('readProject', () => {
+  it("reads a project's statement, never its solution", () => {
+    const project = readProject('python', 'league-table')!;
+    expect(project.title).toBe('League Table');
+    expect(project.statement).toContain('Lions 2-1 Tigers');
+    expect(project.statement).not.toMatch(/^def |^import /m);
+  });
+
+  it('reads nothing for a project the catalog does not list', () => {
+    expect(readProject('python', 'league-table-solution')).toBeNull();
+    expect(readProject('python', '../python/league-table')).toBeNull();
+    expect(readProject('rust', 'league-table')).toBeNull();
+  });
+
+  it('reads every project whole', () => {
+    for (const p of PROJECTS) {
+      const statement = readProject(p.language, p.slug)!.statement;
+      expect(statement.length).toBeGreaterThan(0);
+      expect(statement.length).toBeLessThan(12_000);
+    }
   });
 });

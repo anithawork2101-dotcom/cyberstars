@@ -9,6 +9,8 @@ const tools = {
   listPages: vi.fn(),
   listCourses: vi.fn(),
   lessonStatement: vi.fn(),
+  listProjects: vi.fn(),
+  readProject: vi.fn(),
 };
 vi.mock('./tutor-tools.service.js', () => tools);
 
@@ -186,6 +188,8 @@ describe('askTutor', () => {
       'search_lessons',
       'read_lesson',
       'list_pages',
+      'list_projects',
+      'read_project',
     ]);
     expect(opts.system).toContain('Answer in English,');
     expect(opts.system).toContain('on the page /courses');
@@ -424,6 +428,63 @@ describe('askTutor', () => {
         { functionResponse: { name: 'search_lessons', id: 'abc', response: { results: hits } } },
       ],
     });
+  });
+
+  it('lists and reads the projects, naming the one read', async () => {
+    tools.listProjects.mockReturnValue([{ title: 'League Table' }]);
+    tools.readProject.mockReturnValue({ title: 'League Table', statement: 'text' });
+    stream
+      .mockReturnValueOnce(call('list_projects', { language: 'python' }))
+      .mockReturnValueOnce(call('read_project', { language: 'python', slug: 'league-table' }))
+      .mockReturnValueOnce(text('ok'));
+
+    const events = await collect(askTutor({ ...base, message: 'What should I build?' }));
+
+    expect(events.slice(0, 2)).toEqual([
+      { type: 'status', lookup: 'projects' },
+      { type: 'status', lookup: 'read', title: 'League Table' },
+    ]);
+    expect(tools.listProjects).toHaveBeenCalledWith('python');
+    expect(tools.readProject).toHaveBeenCalledWith('python', 'league-table');
+  });
+
+  it('keeps the projects from a student while Projects is in preview', async () => {
+    const { PREVIEW_FEATURES } = await import('@cyberstars/shared/features');
+    const launched = PREVIEW_FEATURES.projects;
+    PREVIEW_FEATURES.projects = true;
+    try {
+      stream.mockReturnValueOnce(call('list_projects')).mockReturnValueOnce(text('ok'));
+      await collect(askTutor(base));
+      expect(tools.listProjects).not.toHaveBeenCalled();
+      const result = stream.mock.calls[1][0].contents[2].parts[0].functionResponse;
+      expect(result.response).toEqual({ error: 'Projects are not open yet' });
+    } finally {
+      PREVIEW_FEATURES.projects = launched;
+    }
+  });
+
+  it("names the project a project's page is, for read_project", async () => {
+    stream.mockReturnValueOnce(text('ok'));
+    await collect(askTutor({ ...base, page: '/projects/python/league-table' }));
+    expect(stream.mock.calls[0][0].system).toContain(
+      'That page is the project python/league-table; read it with read_project',
+    );
+    stream.mockReturnValueOnce(text('ok'));
+    await collect(askTutor({ ...base, page: '/projects/python', message: 'ce proiect fac?' }));
+    expect(stream.mock.calls[1][0].system).not.toContain('Pagina este proiectul');
+  });
+
+  it('knows CyberStars teaches web development and has projects, in both languages', async () => {
+    stream.mockReturnValueOnce(text('ok')).mockReturnValueOnce(text('ok'));
+    await collect(askTutor(base));
+    await collect(askTutor({ ...base, message: 'ce proiect să fac?' }));
+    const [en, ro] = stream.mock.calls.map((c) => c[0].system as string);
+    expect(en).toContain('learn Python, Java, C, Linux and web development');
+    expect(en).toContain('suggest a project found with list_projects');
+    expect(en).not.toContain('like websites');
+    expect(ro).toContain('învață Python, Java, C, Linux și dezvoltare web');
+    expect(ro).toContain('propune-i un proiect găsit cu list_projects');
+    expect(ro).not.toContain('ca site-uri web');
   });
 
   it('reads a lesson in the language of the conversation', async () => {
