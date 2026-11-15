@@ -9,7 +9,7 @@ import {
 
 // The parts of CyberStars the landing page shows under What's inside, in order,
 // each with its picture. Messages, connections and the leaderboard stay off it;
-// Web Development comes last, marked Coming soon until it launches.
+// Web Development comes last, marked Coming soon until it launches, then New.
 export const FEATURES: [string, ComponentType][] = [
   ['courses', CoursesPicture],
   ['algorithms', AlgorithmsPicture],

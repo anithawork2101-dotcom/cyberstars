@@ -401,7 +401,7 @@
       },
       "romanian": {
         "q": "Is it in Romanian?",
-        "a": "Yes, the site and every lesson. Switch with EN and RO at the top."
+        "a": "Yes, the site and the lessons, except Web Development and the projects, which are in English for now. Switch with EN and RO at the top."
       }
     },
     "cta": {
@@ -1481,9 +1481,9 @@
   },
   "seo": {
     "landingTitle": "Learn to code for free, no card needed | CyberStars",
-    "landingDescription": "Totally free: no card, no paid plan, nothing to install. Learn Python, Java, C and Linux by doing: write code in your browser and test it right away.",
+    "landingDescription": "Totally free: no card, no paid plan, nothing to install. Learn Python, Java, C, Linux and the web by doing: write code in your browser and test it right away.",
     "coursesTitle": "Free coding courses, no card needed | CyberStars",
-    "coursesDescription": "Totally free, no card: short lessons in Python, Java, C and Linux. Learn by doing: write code in your browser and run it against tests.",
+    "coursesDescription": "Totally free, no card: short lessons in Python, Java, C, Linux and web development. Learn by doing: write code in your browser and run it against tests.",
     "courseTitle": "Learn {{course}} for free, no card needed | CyberStars",
     "free": "Free, no card.",
     "lessonTitle": "{{lesson}} in {{course}}: free lesson, no card | CyberStars",

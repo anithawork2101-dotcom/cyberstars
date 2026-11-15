@@ -109,10 +109,11 @@ describe('FeaturesSection', () => {
     expect(within(picture).queryByRole('heading')).toBeNull();
   });
 
-  it('marks Web Development Coming soon, its picture a page and the site it draws', () => {
+  it('marks Web Development New, its picture a page and the site it draws', () => {
     renderSection();
     const row = parts().getByRole('heading', { name: 'Web Development' }).closest('li')!;
-    expect(within(row).getByText('Coming soon')).toBeDefined();
+    expect(within(row).getByText('New')).toHaveClass('bg-[#facc15]');
+    expect(within(row).queryByText('Coming soon')).toBeNull();
     const picture = within(row).getByRole('img', { name: /A web lesson as the student has it/ });
     expect(picture).toHaveTextContent('index.htmlstyle.cssscript.js');
     expect(picture).toHaveTextContent('openDoors.addEventListener("click"');
