@@ -179,9 +179,9 @@ describe('multi-language courses', () => {
     expect(codeLanguageOf('python')).toBe('python');
   });
 
-  it('are Beta while they are being built', () => {
-    expect(isBeta('trees-graphs')).toBe(true);
-    expect(isBeta('algo-trees-graphs')).toBe(true);
+  it('are no longer Beta, now that they are whole', () => {
+    expect(isBeta('trees-graphs')).toBe(false);
+    expect(isBeta('algo-trees-graphs')).toBe(false);
     expect(isBeta('python')).toBe(false);
   });
 });

@@ -24,11 +24,11 @@ export type CodeLanguage = (typeof CODE_LANGUAGES)[number];
 export const MULTI_LANGUAGE_COURSE_KEYS = ['trees-graphs', 'algo-trees-graphs'] as const;
 
 // Courses still being built: open to everyone, labelled Beta, and left out of
-// what the landing page counts until they are whole.
-const BETA_COURSE_KEYS = [...MULTI_LANGUAGE_COURSE_KEYS] as const;
+// what the landing page counts until they are whole. None today
+const BETA_COURSE_KEYS: readonly string[] = [];
 
 export function isBeta(courseKey: string): boolean {
-  return (BETA_COURSE_KEYS as readonly string[]).includes(courseKey);
+  return BETA_COURSE_KEYS.includes(courseKey);
 }
 
 // What a multi-language lesson opens in before the student picks a language.

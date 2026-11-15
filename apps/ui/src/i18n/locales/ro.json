@@ -369,7 +369,7 @@
       "courses": {
         "title": "Cursuri",
         "text": "Python, Java, C și Linux, de la primul print la procese și fire de execuție, apoi Arbori și grafuri în toate cele trei limbaje.",
-        "picture": "Fiecare curs cu numărul lui de lecții: Python, Java, C, Arbori și grafuri, marcat Beta, și Linux."
+        "picture": "Fiecare curs cu numărul lui de lecții: Python, Java, C, Arbori și grafuri și Linux."
       },
       "algorithms": {
         "title": "Provocări de algoritmi",

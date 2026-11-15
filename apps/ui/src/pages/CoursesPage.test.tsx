@@ -130,7 +130,7 @@ const cssCourse = {
 describe('CoursesPage', () => {
   afterEach(() => vi.unstubAllEnvs());
 
-  it('labels a multi-language course with its languages and as Beta, card and syllabus', () => {
+  it('labels a multi-language course with its languages, no longer Beta', () => {
     mockUseCurriculum.mockReturnValue({
       courses: [pythonCourse, treesCourse],
       isLoading: false,
@@ -138,14 +138,11 @@ describe('CoursesPage', () => {
     });
     renderPage();
     expect(screen.getByText('Python · Java · C')).toBeInTheDocument();
-    expect(screen.getAllByText('Beta')).toHaveLength(1);
-    expect(screen.getByText('Beta')).toHaveAttribute(
-      'title',
-      'Still being built: more lessons are on the way',
-    );
+    expect(screen.queryByText('Beta')).toBeNull();
 
     renderPage('/courses/trees-graphs');
-    expect(screen.getAllByText('Beta')).toHaveLength(3);
+    expect(screen.getByRole('link', { name: /Trees/ })).toBeInTheDocument();
+    expect(screen.queryByText('Beta')).toBeNull();
   });
 
   it('shows the one web course as Web Development, New, and opens its lessons at once', () => {

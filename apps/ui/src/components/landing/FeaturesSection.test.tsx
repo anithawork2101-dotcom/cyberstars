@@ -75,11 +75,11 @@ describe('FeaturesSection', () => {
     expect(picture).not.toHaveTextContent('C Algorithms');
   });
 
-  it('lists Trees and Graphs among the courses, marked Beta', () => {
+  it('lists Trees and Graphs among the courses, no longer Beta', () => {
     renderSection();
     expect(parts().getByText(/then Trees and Graphs in all three languages/)).toBeDefined();
     const picture = parts().getByRole('img', { name: /Each course with its number of lessons/ });
-    expect(picture).toHaveTextContent('Trees and GraphsBeta12 lessons');
+    expect(picture).toHaveTextContent('Trees and Graphs12 lessons');
   });
 
   it('lists real challenges from easy to hard, the first ones solved', () => {
