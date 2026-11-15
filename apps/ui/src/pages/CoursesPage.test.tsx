@@ -30,10 +30,13 @@ vi.mock('../hooks/useGamification', () => ({
 vi.mock('../components/layout/Topbar', () => ({
   Topbar: () => <nav data-testid="topbar">Topbar</nav>,
 }));
-// No web course exists yet, so these tests give Web Development one
+// The web courses under Web Development: one, as today, or more, as a test sets
+const web = vi.hoisted(() => ({ keys: ['web-dev'] as readonly string[] }));
 vi.mock('@cyberstars/shared/constants', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@cyberstars/shared/constants')>()),
-  WEB_COURSE_KEYS: ['javascript'],
+  get WEB_COURSE_KEYS() {
+    return web.keys;
+  },
 }));
 
 const { useCurriculum } = await import('../context/CurriculumContext');
@@ -46,6 +49,27 @@ const { useAllProgress } = await import('../context/ProgressContext');
 const mockUseAllProgress = vi.mocked(useAllProgress);
 
 const { CoursesPage } = await import('./CoursesPage');
+
+const { PREVIEW_FEATURES } = await import('@cyberstars/shared/features');
+
+// Web Development back in preview for one test
+function inPreview(fn: () => void) {
+  const original = PREVIEW_FEATURES.webDevelopment;
+  PREVIEW_FEATURES.webDevelopment = true;
+  try {
+    fn();
+  } finally {
+    PREVIEW_FEATURES.webDevelopment = original;
+  }
+}
+
+function signedInAs(role?: 'USER' | 'MODERATOR' | 'ADMIN' | 'FOUNDER') {
+  mockUseAuth.mockReturnValue(
+    (role
+      ? { isLoggedIn: true, isLoading: false, user: { role } }
+      : { isLoggedIn: false, isLoading: false }) as unknown as ReturnType<typeof useAuth>,
+  );
+}
 
 function renderPage(path = '/courses') {
   return render(
@@ -82,11 +106,25 @@ const treesCourse = {
   lessons: [{ slug: 'trees', title: 'Trees', sortOrder: 1 }],
 };
 
+const webCourse = {
+  key: 'web-dev',
+  title: 'Web Development',
+  description: 'Build a website of your own',
+  lessons: [{ slug: 'first-page', title: 'Your First Tag', sortOrder: 1 }],
+};
+
 const jsCourse = {
   key: 'javascript',
   title: 'JavaScript',
   description: 'Learn JavaScript',
   lessons: [{ slug: 'console-log', title: 'console.log', sortOrder: 1 }],
+};
+
+const cssCourse = {
+  key: 'css',
+  title: 'CSS',
+  description: 'Learn CSS',
+  lessons: [{ slug: 'selectors', title: 'Selectors', sortOrder: 1 }],
 };
 
 describe('CoursesPage', () => {
@@ -110,117 +148,112 @@ describe('CoursesPage', () => {
     expect(screen.getAllByText('Beta')).toHaveLength(3);
   });
 
-  it('in production shows Web Development as coming soon, with nothing to open', () => {
+  it('shows the one web course as Web Development, New, and opens its lessons at once', () => {
     vi.stubEnv('PROD', true);
+    signedInAs('USER');
     mockUseCurriculum.mockReturnValue({
-      courses: [pythonCourse, jsCourse],
+      courses: [pythonCourse, webCourse],
       isLoading: false,
       refresh: vi.fn(),
     });
     mockNavigate.mockClear();
-    renderPage();
-    const card = screen.getByText('Web Development').closest('[aria-disabled="true"]')!;
-    expect(within(card as HTMLElement).getByText('HTML · CSS · JavaScript')).toBeInTheDocument();
-    expect(within(card as HTMLElement).getByText('Coming soon')).toBeInTheDocument();
-    expect(within(card as HTMLElement).queryByRole('button')).toBeNull();
-    expect(within(card as HTMLElement).queryByRole('link')).toBeNull();
-    fireEvent.click(card);
-    expect(mockNavigate).not.toHaveBeenCalled();
-    expect(screen.queryByText('JavaScript')).toBeNull();
-  });
-
-  it('in production keeps the web courses closed at their own addresses too', () => {
-    vi.stubEnv('PROD', true);
-    mockUseCurriculum.mockReturnValue({
-      courses: [pythonCourse, jsCourse],
-      isLoading: false,
-      refresh: vi.fn(),
-    });
-    for (const path of ['/courses/web', '/courses/javascript']) {
-      const { unmount } = renderPage(path);
-      expect(screen.getByText('Python')).toBeInTheDocument();
-      expect(screen.queryByText('JavaScript')).toBeNull();
-      unmount();
-    }
-  });
-
-  it('in production opens Web Development for admins and the founder only', () => {
-    vi.stubEnv('PROD', true);
-    mockUseCurriculum.mockReturnValue({
-      courses: [pythonCourse, jsCourse],
-      isLoading: false,
-      refresh: vi.fn(),
-    });
-    for (const role of ['USER', 'MODERATOR', 'ADMIN', 'FOUNDER'] as const) {
-      mockUseAuth.mockReturnValue({
-        isLoggedIn: true,
-        isLoading: false,
-        user: { role },
-      } as unknown as ReturnType<typeof useAuth>);
-      mockNavigate.mockClear();
-      const { unmount } = renderPage();
-      const card = screen.getByText('Web Development').closest('.panel')!;
-      expect(within(card as HTMLElement).getByText('Coming soon')).toBeInTheDocument();
-      fireEvent.click(card);
-      const opens = role === 'ADMIN' || role === 'FOUNDER';
-      expect(card.hasAttribute('aria-disabled')).toBe(!opens);
-      expect(mockNavigate).toHaveBeenCalledTimes(opens ? 1 : 0);
-      unmount();
-
-      const inside = renderPage('/courses/web');
-      expect(screen.queryByText('JavaScript') !== null).toBe(opens);
-      inside.unmount();
-    }
-    mockUseAuth.mockReturnValue({ isLoggedIn: false, isLoading: false } as ReturnType<
-      typeof useAuth
-    >);
-  });
-
-  it('in development opens Web Development, still marked coming soon', () => {
-    mockUseCurriculum.mockReturnValue({
-      courses: [pythonCourse, jsCourse],
-      isLoading: false,
-      refresh: vi.fn(),
-    });
-    mockNavigate.mockClear();
-    renderPage();
-    // A web course has no card of its own next to the others
-    expect(screen.queryByText('JavaScript')).toBeNull();
-    const card = screen.getByText('Web Development').closest('.panel')!;
+    const { unmount } = renderPage();
+    const card = screen.getByText('Web Development').closest('.panel') as HTMLElement;
     expect(card).not.toHaveAttribute('aria-disabled');
-    expect(within(card as HTMLElement).getByText('Coming soon')).toBeInTheDocument();
-    fireEvent.click(card);
-    expect(mockNavigate).toHaveBeenCalledWith('/courses/web');
-    mockNavigate.mockClear();
-    fireEvent.click(within(card as HTMLElement).getByRole('button', { name: /View Courses/ }));
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith('/courses/web');
-  });
-
-  it('lists the web courses inside Web Development, and opens their syllabus over them', () => {
-    mockUseCurriculum.mockReturnValue({
-      courses: [pythonCourse, jsCourse],
-      isLoading: false,
-      refresh: vi.fn(),
-    });
-    mockNavigate.mockClear();
-    const { unmount } = renderPage('/courses/web');
-    expect(screen.getByText('JavaScript')).toBeInTheDocument();
-    expect(screen.queryByText('Python')).toBeNull();
-    expect(screen.queryByText('Coming soon')).toBeNull();
-    fireEvent.click(screen.getByText('JavaScript'));
-    expect(mockNavigate).toHaveBeenCalledWith('/courses/javascript');
+    expect(within(card).getByText('HTML · CSS · JavaScript')).toBeInTheDocument();
+    expect(within(card).getByText('New')).toHaveClass('bg-[#facc15]');
+    expect(within(card).queryByText('Coming soon')).toBeNull();
+    expect(within(card).getByText(/lesson/)).toBeInTheDocument();
+    fireEvent.click(within(card).getByRole('button', { name: /View Syllabus/ }));
+    expect(mockNavigate).toHaveBeenCalledWith('/courses/web-dev');
     unmount();
 
+    // Its lessons open over the other courses, and close back to them
     mockNavigate.mockClear();
-    renderPage('/courses/javascript');
-    expect(screen.getByRole('link', { name: /console\.log/ })).toHaveAttribute(
+    const opened = renderPage('/courses/web-dev');
+    expect(screen.getByRole('link', { name: /Your First Tag/ })).toHaveAttribute(
       'href',
-      '/lesson/javascript/console-log',
+      '/lesson/web-dev/first-page',
     );
-    expect(screen.queryByText('Python')).toBeNull();
+    expect(screen.getByText('Python')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Close' }));
-    expect(mockNavigate).toHaveBeenCalledWith('/courses/web');
+    expect(mockNavigate).toHaveBeenCalledWith('/courses');
+    opened.unmount();
+
+    // The card's old address opens them too
+    renderPage('/courses/web');
+    expect(screen.getByRole('link', { name: /Your First Tag/ })).toBeInTheDocument();
+    signedInAs();
+  });
+
+  it('in preview shows Web Development as coming soon in production, opening for admins and the founder only', () => {
+    inPreview(() => {
+      vi.stubEnv('PROD', true);
+      mockUseCurriculum.mockReturnValue({
+        courses: [pythonCourse, webCourse],
+        isLoading: false,
+        refresh: vi.fn(),
+      });
+      for (const role of [undefined, 'USER', 'MODERATOR', 'ADMIN', 'FOUNDER'] as const) {
+        signedInAs(role);
+        mockNavigate.mockClear();
+        const opens = role === 'ADMIN' || role === 'FOUNDER';
+        const { unmount } = renderPage();
+        const card = screen.getByText('Web Development').closest('.panel') as HTMLElement;
+        expect(within(card).getByText('Coming soon')).toBeInTheDocument();
+        expect(within(card).queryByText('New')).toBeNull();
+        expect(card.hasAttribute('aria-disabled')).toBe(!opens);
+        fireEvent.click(card);
+        expect(mockNavigate).toHaveBeenCalledTimes(opens ? 1 : 0);
+        unmount();
+
+        const inside = renderPage('/courses/web-dev');
+        expect(screen.queryByRole('link', { name: /Your First Tag/ }) !== null).toBe(opens);
+        inside.unmount();
+      }
+      signedInAs();
+    });
+  });
+
+  it('with several web courses lists them inside Web Development, and opens their syllabus over them', () => {
+    web.keys = ['javascript', 'css'];
+    try {
+      mockUseCurriculum.mockReturnValue({
+        courses: [pythonCourse, jsCourse, cssCourse],
+        isLoading: false,
+        refresh: vi.fn(),
+      });
+      mockNavigate.mockClear();
+      const outside = renderPage();
+      // A web course has no card of its own next to the others
+      expect(screen.queryByText('JavaScript')).toBeNull();
+      const card = screen.getByText('Web Development').closest('.panel') as HTMLElement;
+      expect(within(card).getByText('New')).toBeInTheDocument();
+      fireEvent.click(within(card).getByRole('button', { name: /View Courses/ }));
+      expect(mockNavigate).toHaveBeenCalledWith('/courses/web');
+      outside.unmount();
+
+      mockNavigate.mockClear();
+      const { unmount } = renderPage('/courses/web');
+      expect(screen.getByText('JavaScript')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'CSS' })).toBeInTheDocument();
+      expect(screen.queryByText('Python')).toBeNull();
+      fireEvent.click(screen.getByText('JavaScript'));
+      expect(mockNavigate).toHaveBeenCalledWith('/courses/javascript');
+      unmount();
+
+      mockNavigate.mockClear();
+      renderPage('/courses/javascript');
+      expect(screen.getByRole('link', { name: /console\.log/ })).toHaveAttribute(
+        'href',
+        '/lesson/javascript/console-log',
+      );
+      expect(screen.queryByText('Python')).toBeNull();
+      fireEvent.click(screen.getByRole('button', { name: 'Close' }));
+      expect(mockNavigate).toHaveBeenCalledWith('/courses/web');
+    } finally {
+      web.keys = ['web-dev'];
+    }
   });
 
   it('shows loading state when curriculum is loading', () => {

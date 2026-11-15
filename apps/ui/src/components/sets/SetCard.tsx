@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { courseMeta, courseWash } from '../../constants/courses';
 import { BetaBadge } from '../ui/BetaBadge';
+import { NEW_TONE } from '../../constants/newMarks';
 import { CourseMark } from '../ui/CourseMark';
 import { ProgressBar } from './ProgressBar';
 
@@ -14,9 +15,10 @@ export interface SetCardProps {
   subtitle?: string | null;
   beta?: boolean;
   betaHint?: string;
-  // The pill on the right: the XP the set gives, or Coming soon
+  // The pill on the right: the XP the set gives (accent), Coming soon (muted)
+  // or New
   badge?: string;
-  badgeMuted?: boolean;
+  badgeTone?: 'accent' | 'muted' | 'new';
   description: string;
   // How much the set holds, the number in bold: 12 lessons, 40 challenges (or
   // a whole line, for a set whose words aren't counted in every language yet)
@@ -30,6 +32,12 @@ export interface SetCardProps {
   dimmed?: boolean;
 }
 
+const BADGE_TONE = {
+  accent: 'border-[var(--border)] bg-[var(--accent)]/10 text-[var(--accent)]',
+  muted: 'border-[var(--border)] text-[var(--text2)]',
+  new: `border-transparent ${NEW_TONE}`,
+};
+
 // One card for every set a student picks from: a course, a challenge set, a
 // language's projects. A started set offers Continue, any other one opens
 export function SetCard({
@@ -39,7 +47,7 @@ export function SetCard({
   beta,
   betaHint,
   badge,
-  badgeMuted,
+  badgeTone = 'accent',
   description,
   count,
   progress,
@@ -89,9 +97,7 @@ export function SetCard({
           </div>
           {badge && (
             <span
-              className={`flex-shrink-0 self-start text-[12px] font-semibold px-2.5 py-0.5 rounded-full border border-[var(--border)] ${
-                badgeMuted ? 'text-[var(--text2)]' : 'bg-[var(--accent)]/10 text-[var(--accent)]'
-              }`}
+              className={`flex-shrink-0 self-start text-[12px] font-semibold px-2.5 py-0.5 rounded-full border ${BADGE_TONE[badgeTone]}`}
             >
               {badge}
             </span>
