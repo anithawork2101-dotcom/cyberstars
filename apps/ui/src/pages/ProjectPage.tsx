@@ -13,7 +13,6 @@ import { Check, ChevronDown, ChevronRight } from 'lucide-react';
 import { Topbar } from '../components/layout/Topbar';
 import { LessonHeading } from '../components/ui/LessonHeading';
 import { ProgressBar } from '../components/sets/ProgressBar';
-import { BetaBadge } from '../components/ui/BetaBadge';
 import { LoadError } from '../components/ui/LoadError';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { ResizeHandle } from '../components/ui/ResizeHandle';
@@ -380,14 +379,11 @@ function ProjectView({ project }: { project: Project }) {
                   title={project.title}
                   position={t('projects.nOfM', { n: index + 1, total: siblings.length })}
                   badge={
-                    <>
-                      <BetaBadge hint={t('projects.betaHint')} />
-                      {finished && (
-                        <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-[1px] bg-[var(--success)]/15 text-[var(--success)]">
-                          {t('projects.finishedTag')}
-                        </span>
-                      )}
-                    </>
+                    finished && (
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-[1px] bg-[var(--success)]/15 text-[var(--success)]">
+                        {t('projects.finishedTag')}
+                      </span>
+                    )
                   }
                   difficulty={project.difficulty}
                   difficultyLabel={t(`algoList.filters.${project.difficulty}`)}

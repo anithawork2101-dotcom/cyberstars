@@ -438,7 +438,9 @@ export function LessonPage() {
       const meta = course?.lessons.find((l) => l.slug === lesson);
       const isLast = course && course.lessons[course.lessons.length - 1].slug === lesson;
       const base = isLast ? t('lesson.courseMilestone') : t('lesson.lessonComplete');
-      const xpGain = meta ? t('lesson.xpGained', { xp: xpForLesson(meta.sortOrder) }) : '';
+      const xpGain = meta
+        ? t('lesson.xpGained', { xp: xpForLesson(category, meta.sortOrder) })
+        : '';
       const courseDone =
         !!course && !!progress?.lessons.every((l) => l.completed || l.slug === lesson);
       const title = courseDone ? t('tutor.cheer.course', { course: course.title }) : base;
@@ -448,7 +450,7 @@ export function LessonPage() {
       });
       setShowToast(true);
     }
-  }, [lessonCompleted, course, lesson, progress, t]);
+  }, [lessonCompleted, course, category, lesson, progress, t]);
 
   const lessonList: LessonMeta[] = course?.lessons ?? [];
   const currentIndex = lessonList.findIndex((l) => l.slug === lesson);
@@ -749,7 +751,7 @@ export function LessonPage() {
                 xp={
                   currentIndex >= 0
                     ? t('common.xpReward', {
-                        xp: xpForLesson(lessonList[currentIndex].sortOrder),
+                        xp: xpForLesson(category, lessonList[currentIndex].sortOrder),
                       })
                     : null
                 }

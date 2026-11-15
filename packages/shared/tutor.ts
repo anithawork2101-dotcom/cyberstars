@@ -9,8 +9,9 @@ export const TUTOR_MESSAGE_MAX_LENGTH = 2000;
 export type TutorFinish = 'complete' | 'cut' | 'blocked';
 
 // What the tutor is looking up before its first words: searching the lessons,
-// reading one (by its title), or going through the app's pages.
-export type TutorLookup = 'search' | 'read' | 'pages';
+// reading one or a project (by its title), going through the app's pages or
+// through the projects.
+export type TutorLookup = 'search' | 'read' | 'pages' | 'projects';
 
 // The answer streams as server-sent events, each `data:` line one of these:
 // a `status` for each lookup before the first words, the next words, then

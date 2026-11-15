@@ -51,14 +51,13 @@ describe('curriculumCounts', () => {
     });
   });
 
-  it('counts a Beta course only once it is whole, but lists it, marked', () => {
+  it('counts Trees and Graphs, whole now, like any course', () => {
     const counts = curriculumCounts([course('python', 60), course('trees-graphs', 12)]);
-    expect(counts.courses).toBe(1);
-    expect(counts.lessons).toBe(60);
-    expect(counts.languages).toEqual(['Python']);
+    expect(counts.courses).toBe(2);
+    expect(counts.lessons).toBe(72);
     expect(counts.perCourse.map((c) => [c.key, c.lessons, c.beta])).toEqual([
       ['python', 60, false],
-      ['trees-graphs', 12, true],
+      ['trees-graphs', 12, false],
     ]);
   });
 

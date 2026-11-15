@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { PREVIEW_FEATURES } from '@cyberstars/shared/features';
+import { NEW_TONE, isMarkedNew } from '../../constants/newMarks';
 import { Reveal } from './Reveal';
 import { SectionHeading } from './SectionHeading';
 import { PinnedStory } from './PinnedStory';
@@ -17,6 +18,13 @@ function Words({ part }: { part: string }) {
           {t('common.comingSoon')}
         </span>
       )}
+      {part === 'web' && isMarkedNew('webDevelopment') && (
+        <span
+          className={`inline-flex mb-3 px-2 py-0.5 rounded-full text-[11px] font-bold ${NEW_TONE}`}
+        >
+          {t('common.new')}
+        </span>
+      )}
       <h3 className="text-[24px] sm:text-[28px] font-bold tracking-[-0.4px] leading-[1.15] m-0 mb-2">
         {t(`landing.features.${part}.title`)}
       </h3>
@@ -28,7 +36,7 @@ function Words({ part }: { part: string }) {
 // What's inside, told like How it works above: each part's picture held in
 // the middle while its name and a sentence rise past it, the same pictures
 // drawn from the app's own pieces. Web Development says Coming soon while it
-// is a preview feature, and stops saying it once launched.
+// is a preview feature, then New for a while once launched.
 export function FeaturesSection() {
   const { t } = useTranslation();
   return (

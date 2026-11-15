@@ -106,6 +106,19 @@ describe('getDaily', () => {
     expect(mockDailyRepo.createPick).not.toHaveBeenCalled();
   });
 
+  it('never picks a lesson of a web course', async () => {
+    mockDailyRepo.getPick.mockResolvedValue(null);
+    mockCurriculumRepo.getLessonsByCourse.mockResolvedValue([
+      { slug: 'a', title: 'A', sortOrder: 1 },
+    ]);
+
+    await getDaily(1);
+
+    const asked = mockCurriculumRepo.getLessonsByCourse.mock.calls.map(([key]) => key);
+    expect(asked).toContain('python');
+    expect(asked).not.toContain('web-dev');
+  });
+
   it('excludes lessons without a tests file so every pick is claimable', async () => {
     mockDailyRepo.getPick.mockResolvedValue(null);
     mockCurriculumRepo.getLessonsByCourse.mockImplementation(async (courseKey: string) =>

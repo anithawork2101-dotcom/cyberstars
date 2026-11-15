@@ -32,7 +32,7 @@ test('a multi-language lesson opens in Python, switches language and keeps the p
   const lesson = page.locator('[data-testid="lesson"]');
   const languages = page.getByRole('group', { name: 'Programming language' });
   await expect(lesson).toContainText('def __init__', { timeout: 10_000 });
-  await expect(lesson.getByText('Beta')).toBeVisible();
+  await expect(lesson.getByText('Beta', { exact: true })).toHaveCount(0);
   await expect(languages.getByRole('button', { name: 'Python' })).toHaveAttribute(
     'aria-pressed',
     'true',

@@ -37,7 +37,8 @@ import { useAllProgress } from '../../context/ProgressContext';
 import { FIRST_STEPS_LESSONS, LANIAKEA_COURSE } from '@cyberstars/shared/laniakea';
 import { firstSteps } from '../laniakea/firstSteps';
 import { isAdmin } from '@cyberstars/shared/auth';
-import { canAccessFeature } from '@cyberstars/shared/features';
+import { canAccessFeature, PREVIEW_FEATURES } from '@cyberstars/shared/features';
+import { NEW_TONE, isMarkedNew } from '../../constants/newMarks';
 
 // "wide" is a sidebar that was left open, unfolded only where there is room
 // for it beside the page
@@ -189,7 +190,7 @@ function LockedItem({ icon: Icon, label }: { icon: LucideIcon; label: string }) 
   );
 }
 
-// Beta and Coming soon share one look, at the end of the row
+// Beta and Coming soon share one look, at the end of the row (New has its own)
 function Tag({ hint, children }: { hint?: string; children: ReactNode }) {
   return (
     <span
@@ -204,6 +205,16 @@ function Tag({ hint, children }: { hint?: string; children: ReactNode }) {
 function ComingSoonTag() {
   const { t } = useTranslation();
   return <Tag>{t('common.comingSoon')}</Tag>;
+}
+
+// What just launched, in the yellow of every New (constants/newMarks.ts)
+function NewTag() {
+  const { t } = useTranslation();
+  return (
+    <span className={`ml-auto text-[10px] font-bold px-1.5 py-px rounded ${NEW_TONE}`}>
+      {t('common.new')}
+    </span>
+  );
 }
 
 // Groups are set apart by a line, with no title
@@ -339,21 +350,33 @@ export function Sidebar({ state, onNavigate }: { state: SidebarState; onNavigate
           {user && (
             <NavItem to="/" icon={House} label={t('nav.dashboard')} onNavigate={onNavigate} />
           )}
-          <NavItem to="/courses" icon={BookOpen} label={t('nav.courses')} onNavigate={onNavigate} />
+          <NavItem
+            to="/courses"
+            icon={BookOpen}
+            label={t('nav.courses')}
+            tag={isMarkedNew('webDevelopment') ? <NewTag /> : undefined}
+            onNavigate={onNavigate}
+          />
           <NavItem
             to="/algorithms"
             icon={Braces}
             label={t('nav.algorithms')}
             onNavigate={onNavigate}
           />
-          {/* Coming soon for everyone until every language has its projects;
-              whoever the feature rule lets in already opens it */}
+          {/* New for a while once launched; in preview Coming soon, opening
+              only to whoever the feature rule lets in */}
           {canAccessFeature('projects', user?.role, isProd) ? (
             <NavItem
               to="/projects"
               icon={FolderKanban}
               label={t('nav.projects')}
-              tag={<ComingSoonTag />}
+              tag={
+                isMarkedNew('projects') ? (
+                  <NewTag />
+                ) : PREVIEW_FEATURES.projects ? (
+                  <ComingSoonTag />
+                ) : undefined
+              }
               onNavigate={onNavigate}
             />
           ) : (

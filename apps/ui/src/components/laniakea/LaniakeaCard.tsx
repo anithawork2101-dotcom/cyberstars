@@ -45,9 +45,6 @@ export function LaniakeaCard() {
           <span className="w-7 h-7 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] flex items-center justify-center flex-shrink-0">
             {open ? <Orbit size={15} strokeWidth={1.75} /> : <Lock size={13} strokeWidth={1.75} />}
           </span>
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#facc15] text-[11px] font-bold text-[#1a1a1a]">
-            {t('home.laniakea.new')}
-          </span>
           {t('nav.laniakea')} <BetaBadge hint={t('laniakea.betaHint')} />
         </h3>
         <p className="m-0 mt-1 text-[13px] text-[var(--text2)]">

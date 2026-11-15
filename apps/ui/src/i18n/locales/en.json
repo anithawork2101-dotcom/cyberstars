@@ -225,7 +225,6 @@
     "laniakea": {
       "locked_one": "Finish the first Python lesson to open the explorer game, where the lessons you finish are planets to conquer.",
       "locked_other": "Finish the first {{count}} Python lessons to open the explorer game, where the lessons you finish are planets to conquer.",
-      "new": "New",
       "open": "Every Python lesson you finish is a planet to conquer.",
       "owned": "Planets conquered: {{owned}}/{{total}}",
       "recaps_one": "{{count}} recap open",
@@ -339,7 +338,7 @@
       "courses": {
         "title": "Courses",
         "text": "Python, Java, C and Linux, from your first print to processes and threads, then Trees and Graphs in all three languages.",
-        "picture": "Each course with its number of lessons: Python, Java, C, Trees and Graphs, marked Beta, and Linux."
+        "picture": "Each course with its number of lessons: Python, Java, C, Trees and Graphs, Linux and Web Development."
       },
       "algorithms": {
         "title": "Algorithm challenges",
@@ -403,7 +402,7 @@
       },
       "romanian": {
         "q": "Is it in Romanian?",
-        "a": "Yes, the site and every lesson. Switch with EN and RO at the top."
+        "a": "Yes, the site and the lessons, except Web Development and the projects, which are in English for now. Switch with EN and RO at the top."
       }
     },
     "cta": {
@@ -428,6 +427,7 @@
     "comingSoon": "Coming soon",
     "comingSoonHint": "We're still building this. It'll unlock for everyone soon.",
     "beta": "Beta",
+    "new": "New",
     "betaHint": "Still being built: more lessons are on the way",
     "xpTotal": "{{xp}} XP",
     "xpReward": "+{{xp}} XP",
@@ -554,7 +554,6 @@
     }
   },
   "projects": {
-    "betaHint": "Still being built: more projects for every language are on the way",
     "setTitle": "{{language}} Projects",
     "count": "Projects: {{count}}",
     "viewProjects": "View Projects",
@@ -1483,9 +1482,9 @@
   },
   "seo": {
     "landingTitle": "Learn to code for free, no card needed | CyberStars",
-    "landingDescription": "Totally free: no card, no paid plan, nothing to install. Learn Python, Java, C and Linux by doing: write code in your browser and test it right away.",
+    "landingDescription": "Totally free: no card, no paid plan, nothing to install. Learn Python, Java, C, Linux and the web by doing: write code in your browser and test it right away.",
     "coursesTitle": "Free coding courses, no card needed | CyberStars",
-    "coursesDescription": "Totally free, no card: short lessons in Python, Java, C and Linux. Learn by doing: write code in your browser and run it against tests.",
+    "coursesDescription": "Totally free, no card: short lessons in Python, Java, C, Linux and web development. Learn by doing: write code in your browser and run it against tests.",
     "courseTitle": "Learn {{course}} for free, no card needed | CyberStars",
     "free": "Free, no card.",
     "lessonTitle": "{{lesson}} in {{course}}: free lesson, no card | CyberStars",
@@ -1588,7 +1587,8 @@
       "search": "Searching the lessons",
       "read": "Reading a lesson",
       "readTitle": "Reading “{{title}}”",
-      "pages": "Looking through the app"
+      "pages": "Looking through the app",
+      "projects": "Looking through the projects"
     },
     "stuck": {
       "title": "Need a hand?"

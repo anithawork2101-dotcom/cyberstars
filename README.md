@@ -11,14 +11,15 @@
 
 # CyberStars
 
-A free, open-source platform to learn Python, Java, C and Linux in your browser. Read a lesson, write code next to it, run it, and pass the lesson's tests to finish it.
+A free, open-source platform to learn Python, Java, C, Linux and web development in your browser. Read a lesson, write code next to it, run it, and pass the lesson's tests to finish it.
 
-Live at [cyberstars.app](https://cyberstars.app), in English and Romanian.
+Live at [cyberstars.app](https://cyberstars.app), in English and Romanian (Web Development and the projects in English for now).
 
 ## Features
 
-- **Five courses**: Python (60 lessons), Java (49), C (47), Linux in a real terminal (55) and Trees and Graphs (12, Beta, each lesson in all three languages)
+- **Six courses**: Python (60 lessons), Java (49), C (47), Linux in a real terminal (55), Trees and Graphs (12, each lesson in all three languages) and Web Development (375, a website of your own in HTML, CSS and JavaScript, with a live preview)
 - **88 algorithm challenges** from Easy to Hard, graded against hidden tests, with your runtime next to the reference solution
+- **40 projects**: real programs in Python, C, Java and Linux, built step by step and finished by passing the judge
 - **Split-screen lessons**: the lesson on the left, a live editor on the right, and every example in the text runnable
 - **Graded, not honor-system**: a lesson counts as done only once the server's judge passes it
 - **Step-by-step visuals** of arrays, linked lists, trees, graphs and stacks, some asking you to predict the next step

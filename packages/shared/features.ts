@@ -24,8 +24,8 @@ export const PREVIEW_FEATURES: PreviewFlags<FeatureKey> = {
   // The Web Development card and its courses (WEB_COURSE_KEYS): while in
   // preview the card opens for admins and the founder only, and the courses
   // are listed nowhere else (isClosedCourse)
-  webDevelopment: true,
-  projects: true,
+  webDevelopment: false,
+  projects: false,
 };
 
 // Shared access rule (the access package's, over CyberStars' features and its

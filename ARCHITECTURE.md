@@ -33,12 +33,12 @@ cyberstars/
 │       ├── paths.ts               # courseDir: a course key (and language) to its folder
 │       ├── visuals.ts             # Puts a multi-language course's named visuals into its lessons
 │       ├── lessons/               # Courses: python (60), c (47), java (49), linux (55),
-│       │                          #   trees-graphs (12, Beta) in python/, java/, c/ plus visuals/,
-│       │                          #   and web-dev (375, a preview feature)
+│       │                          #   trees-graphs (12) in python/, java/, c/ plus visuals/,
+│       │                          #   and web-dev (375, English only)
 │       ├── algorithms/            # Challenge sets: python (20), java (20), c (32), and
-│       │                          #   trees-graphs (16, Beta) in python/, java/, c/
-│       ├── projects/              # Projects: python, java, c and linux, 10 each (a preview
-│       │                          #   feature), catalogued in packages/shared/projects.ts
+│       │                          #   trees-graphs (16) in python/, java/, c/
+│       ├── projects/              # Projects: python, java, c and linux, 10 each (English
+│       │                          #   only), catalogued in packages/shared/projects.ts
 │       ├── variants/              # Accepted and rejected solutions per tested lesson
 │       └── scripts/               # Static-content generator
 │
@@ -100,7 +100,7 @@ Not API routes: static files generated from `packages/content/` at build time in
 
 ### Web lessons and the practice API
 
-The Web Development course is a preview feature: on production only admins and the founder open it.
+The Web Development course is open to everyone since 2026-11-15, in English only.
 
 | Method | Endpoint                                    | Auth     | Description                                                                            |
 | ------ | ------------------------------------------- | -------- | -------------------------------------------------------------------------------------- |
@@ -157,7 +157,7 @@ A Linux project opens the same terminal, with `{ project: <slug> }` in the sessi
 
 ### Projects
 
-A preview feature: on production only admins and the founder open it.
+Open to everyone since 2026-11-15, in English only.
 
 | Method | Endpoint                                  | Auth  | Description                                                       |
 | ------ | ----------------------------------------- | ----- | ----------------------------------------------------------------- |

@@ -12,6 +12,8 @@ import {
   isClosedCourse,
   xpForLesson,
   xpForCourse,
+  dailyBonusXp,
+  PART_STARTS,
   levelFromXp,
   xpForLevel,
   levelTitleKey,
@@ -53,23 +55,40 @@ describe('baseLanguage', () => {
 
 describe('xpForLesson', () => {
   it('awards 10 for the first lesson (sortOrder 1) and grows with position', () => {
-    expect(xpForLesson(1)).toBe(10);
-    expect(xpForLesson(6)).toBe(15);
+    expect(xpForLesson('python', 1)).toBe(10);
+    expect(xpForLesson('python', 6)).toBe(15);
+  });
+
+  it('starts again at 10 on each part of a course split into parts', () => {
+    const [first, second] = PART_STARTS['web-dev'];
+    expect(xpForLesson('web-dev', first)).toBe(10);
+    expect(xpForLesson('web-dev', second - 1)).toBe(10 + (second - 1 - first));
+    expect(xpForLesson('web-dev', second)).toBe(10);
+    expect(xpForLesson('web-dev', second + 2)).toBe(12);
   });
 });
 
 describe('xpForCourse', () => {
   it('sums the per-lesson awards for an n-lesson course', () => {
-    expect(xpForCourse(0)).toBe(0);
-    expect(xpForCourse(1)).toBe(10);
+    expect(xpForCourse('python', 0)).toBe(0);
+    expect(xpForCourse('python', 1)).toBe(10);
     // 10 + 11 + 12 = 33
-    expect(xpForCourse(3)).toBe(33);
+    expect(xpForCourse('python', 3)).toBe(33);
   });
 
   it('matches the explicit sum of xpForLesson over 1-based sortOrders', () => {
-    let sum = 0;
-    for (let s = 1; s <= 12; s++) sum += xpForLesson(s);
-    expect(xpForCourse(12)).toBe(sum);
+    for (const courseKey of ['python', 'web-dev']) {
+      let sum = 0;
+      for (let s = 1; s <= 120; s++) sum += xpForLesson(courseKey, s);
+      expect(xpForCourse(courseKey, 120), courseKey).toBe(sum);
+    }
+  });
+});
+
+describe('dailyBonusXp', () => {
+  it("is a fifth of the lesson's award, counted within its part", () => {
+    expect(dailyBonusXp('python', 41)).toBe(10);
+    expect(dailyBonusXp('web-dev', PART_STARTS['web-dev'][1])).toBe(2);
   });
 });
 
@@ -179,9 +198,9 @@ describe('multi-language courses', () => {
     expect(codeLanguageOf('python')).toBe('python');
   });
 
-  it('are Beta while they are being built', () => {
-    expect(isBeta('trees-graphs')).toBe(true);
-    expect(isBeta('algo-trees-graphs')).toBe(true);
+  it('are no longer Beta, now that they are whole', () => {
+    expect(isBeta('trees-graphs')).toBe(false);
+    expect(isBeta('algo-trees-graphs')).toBe(false);
     expect(isBeta('python')).toBe(false);
   });
 });

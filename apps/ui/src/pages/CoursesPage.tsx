@@ -12,6 +12,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCurriculum } from '../context/CurriculumContext';
 import { useAllProgress } from '../context/ProgressContext';
 import { WEB_DEVELOPMENT, courseMeta, courseTitle } from '../constants/courses';
+import { isMarkedNew } from '../constants/newMarks';
 import {
   progressPct,
   xpForCourse,
@@ -39,7 +40,8 @@ interface CourseData {
   key: string;
   icon: string;
   name: string;
-  // The languages a multi-language course is taught in, as the card shows them.
+  // The languages a multi-language or a web course is taught in, as the card
+  // shows them.
   languages: string | null;
   beta: boolean;
   color: string;
@@ -51,6 +53,12 @@ interface CourseData {
   // A long course's parts, each with its own chapters; null for one list
   parts: { key: string; name: string; chapters: Chapter[] }[] | null;
   continueSlug?: string;
+}
+
+// A pill a card shows in place of its XP
+interface CardBadge {
+  text: string;
+  tone: 'muted' | 'new';
 }
 
 export function CoursesPage() {
@@ -70,31 +78,42 @@ export function CoursesPage() {
   const [searchParams] = useSearchParams();
   const legacyOpen = searchParams.get('open');
   // While Web Development is in preview its card opens in production only for
-  // admins and the founder (and for everyone in development); inside it, its
-  // courses take the place of the others, and a web course's syllabus opens
-  // over them
+  // admins and the founder (and for everyone in development). With one web
+  // course the card is that course and opens its syllabus over the others; with
+  // more, inside it the web courses take the place of the others, and a web
+  // course's syllabus opens over them
   const webOpen = canAccessFeature('webDevelopment', user?.role, import.meta.env.PROD);
+  const webPreview = PREVIEW_FEATURES.webDevelopment;
+  const oneWebCourse = WEB_COURSE_KEYS.length === 1 ? WEB_COURSE_KEYS[0] : null;
   const inWeb =
-    webOpen && (selectedKey === WEB_DEVELOPMENT || WEB_COURSE_KEYS.includes(selectedKey ?? ''));
+    !oneWebCourse &&
+    webOpen &&
+    (selectedKey === WEB_DEVELOPMENT || WEB_COURSE_KEYS.includes(selectedKey ?? ''));
   const openCourse = (key: string) => navigate(`/courses/${key}`);
   const closeCourse = () => navigate(inWeb ? `/courses/${WEB_DEVELOPMENT}` : '/courses');
 
+  // Coming soon in preview, then New for a while once launched
+  const webBadge: CardBadge | undefined = webPreview
+    ? { text: t('common.comingSoon'), tone: 'muted' }
+    : isMarkedNew('webDevelopment')
+      ? { text: t('common.new'), tone: 'new' }
+      : undefined;
+
   const isLoading = curriculumLoading || (isLoggedIn && progressLoading);
 
-  const allCourses: CourseData[] = useMemo(() => {
-    const visibleKeys: readonly string[] = inWeb
-      ? WEB_COURSE_KEYS
-      : [...MAIN_COURSE_KEYS, ...TERMINAL_COURSE_KEYS];
-    return serverCourses
-      .filter((c) => visibleKeys.includes(c.key))
-      .map((course) => {
+  const courseData = useMemo(() => {
+    const byKey = new Map(serverCourses.map((c) => [c.key, c]));
+    return (keys: readonly string[]): CourseData[] =>
+      keys.flatMap((key) => {
+        const course = byKey.get(key);
+        if (!course) return [];
         const p = progressMap[course.key];
         const doneSet = new Set((p?.lessons ?? []).filter((l) => l.completed).map((l) => l.slug));
         const chapters: Chapter[] = course.lessons.map((l, i) => ({
           name: l.title,
           slug: l.slug,
           number: i + 1,
-          xp: xpForLesson(l.sortOrder),
+          xp: xpForLesson(course.key, l.sortOrder),
           done: doneSet.has(l.slug),
         }));
         const bySlug = new Map(chapters.map((ch) => [ch.slug, ch]));
@@ -104,11 +123,13 @@ export function CoursesPage() {
           name: course.title,
           languages: isMultiLanguage(course.key)
             ? CODE_LANGUAGES.map((language) => courseMeta(language).label).join(' · ')
-            : null,
+            : WEB_COURSE_KEYS.includes(course.key)
+              ? courseMeta(course.key).langLabel
+              : null,
           beta: isBeta(course.key),
           color: courseMeta(course.key).color,
           lessonCount: course.lessons.length,
-          totalXp: xpForCourse(course.lessons.length),
+          totalXp: xpForCourse(course.key, course.lessons.length),
           progress: progressPct(p?.completed ?? 0, p?.total ?? course.lessons.length),
           desc: t(`courses.descriptions.${course.key}`, { defaultValue: course.description }),
           chapters,
@@ -121,11 +142,30 @@ export function CoursesPage() {
           continueSlug: continueSlug(course.lessons, p?.lessons),
         };
       });
-  }, [serverCourses, progressMap, t, inWeb]);
+  }, [serverCourses, progressMap, t]);
 
-  const syllabus = selectedKey ? allCourses.find((c) => c.key === selectedKey) : null;
+  // The cards shown: the web courses inside Web Development, else the others
+  const allCourses = useMemo(
+    () => courseData(inWeb ? WEB_COURSE_KEYS : [...MAIN_COURSE_KEYS, ...TERMINAL_COURSE_KEYS]),
+    [courseData, inWeb],
+  );
+  // The one web course standing as the Web Development card, its syllabus only
+  // for those its card opens for
+  const webCourse = useMemo(
+    () => (oneWebCourse ? (courseData([oneWebCourse])[0] ?? null) : null),
+    [courseData, oneWebCourse],
+  );
+
+  const syllabus = selectedKey
+    ? (allCourses.find((c) => c.key === selectedKey) ??
+      (webOpen && webCourse?.key === selectedKey ? webCourse : null))
+    : null;
 
   if (legacyOpen) return <Navigate to={`/courses/${legacyOpen}`} replace />;
+  // With one web course the Web Development card is that course, so its old
+  // address opens its syllabus
+  if (oneWebCourse && selectedKey === WEB_DEVELOPMENT)
+    return <Navigate to={`/courses/${oneWebCourse}`} replace />;
 
   if (isLoading) return <PageLoading />;
 
@@ -145,38 +185,30 @@ export function CoursesPage() {
         )}
         <SetGrid>
           {allCourses.map((c) => (
-            <SetCard
-              key={c.key}
-              setKey={c.key}
-              title={c.name}
-              subtitle={c.languages}
-              beta={c.beta}
-              badge={t('common.xpTotal', { xp: c.totalXp })}
-              description={c.desc}
-              count={{ n: c.lessonCount, noun: t('courses.lessons', { count: c.lessonCount }) }}
-              progress={
-                c.progress > 0
-                  ? { pct: c.progress, label: t('courses.percentComplete', { pct: c.progress }) }
-                  : undefined
-              }
-              onContinue={() => c.continueSlug && navigate(`/lesson/${c.key}/${c.continueSlug}`)}
-              onOpen={() => openCourse(c.key)}
-              openLabel={t('courses.viewSyllabus')}
-            />
+            <CourseCard key={c.key} course={c} open onOpen={openCourse} />
           ))}
-          {!inWeb && (
-            <SetCard
-              setKey={WEB_DEVELOPMENT}
-              title={courseTitle(WEB_DEVELOPMENT, t)}
-              subtitle={courseMeta(WEB_DEVELOPMENT).langLabel}
-              badge={PREVIEW_FEATURES.webDevelopment ? t('common.comingSoon') : undefined}
-              badgeMuted
-              description={t(`courses.descriptions.${WEB_DEVELOPMENT}`)}
-              onOpen={webOpen ? () => openCourse(WEB_DEVELOPMENT) : undefined}
-              openLabel={t('courses.viewCourses')}
-              dimmed={PREVIEW_FEATURES.webDevelopment}
-            />
-          )}
+          {!inWeb &&
+            (webCourse ? (
+              <CourseCard
+                course={webCourse}
+                badge={webBadge}
+                open={webOpen}
+                dimmed={webPreview}
+                onOpen={openCourse}
+              />
+            ) : (
+              <SetCard
+                setKey={WEB_DEVELOPMENT}
+                title={courseTitle(WEB_DEVELOPMENT, t)}
+                subtitle={courseMeta(WEB_DEVELOPMENT).langLabel}
+                badge={webBadge?.text}
+                badgeTone={webBadge?.tone}
+                description={t(`courses.descriptions.${WEB_DEVELOPMENT}`)}
+                onOpen={webOpen ? () => openCourse(WEB_DEVELOPMENT) : undefined}
+                openLabel={t('courses.viewCourses')}
+                dimmed={webPreview}
+              />
+            ))}
         </SetGrid>
       </PageContainer>
 
@@ -207,6 +239,45 @@ export function CoursesPage() {
         </SetDrawer>
       )}
     </div>
+  );
+}
+
+// A course's card: its languages, size, XP (or a pill of its own) and progress
+function CourseCard({
+  course: c,
+  badge,
+  open,
+  dimmed,
+  onOpen,
+}: {
+  course: CourseData;
+  badge?: CardBadge;
+  open: boolean;
+  dimmed?: boolean;
+  onOpen: (key: string) => void;
+}) {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  return (
+    <SetCard
+      setKey={c.key}
+      title={c.name}
+      subtitle={c.languages}
+      beta={c.beta}
+      badge={badge?.text ?? t('common.xpTotal', { xp: c.totalXp })}
+      badgeTone={badge?.tone}
+      description={c.desc}
+      count={{ n: c.lessonCount, noun: t('courses.lessons', { count: c.lessonCount }) }}
+      progress={
+        c.progress > 0
+          ? { pct: c.progress, label: t('courses.percentComplete', { pct: c.progress }) }
+          : undefined
+      }
+      onContinue={() => c.continueSlug && navigate(`/lesson/${c.key}/${c.continueSlug}`)}
+      onOpen={open ? () => onOpen(c.key) : undefined}
+      openLabel={t('courses.viewSyllabus')}
+      dimmed={dimmed}
+    />
   );
 }
 
