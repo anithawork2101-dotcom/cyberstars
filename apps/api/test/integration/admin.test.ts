@@ -31,6 +31,7 @@ describe('Admin stats', () => {
     const res = await a.get('/api/admin/stats').expect(200);
 
     const body = res.body;
+    expect(body.tutor).toEqual({ promptsLast7Days: expect.any(Number) });
     expect(body.users).toMatchObject({ total: expect.any(Number), byRole: expect.any(Object) });
     expect(body.progress).toMatchObject({
       totalCompletions: expect.any(Number),

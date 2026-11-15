@@ -38,6 +38,8 @@
     "refresh": "Reîmprospătează",
     "refreshing": "Se reîmprospătează…",
     "generatedAt": "Actualizat la {{time}}",
+    "tutor": "Tutor",
+    "tutorPrompts7": "Mesaje către tutor (7 zile)",
     "users": "Utilizatori",
     "totalUsers": "Total utilizatori",
     "active": "Activi (cu progres)",

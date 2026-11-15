@@ -4,6 +4,7 @@ import { prisma } from '../../src/config/db.js';
 import { config } from '../../src/config/index.js';
 import { saveExchange } from '../../src/services/tutor-conversations.service.js';
 import { record } from '../../src/services/submissions.service.js';
+import { clearCache } from '../../src/services/admin.service.js';
 
 // The config is read once, by setup.ts, before this file runs, so the tutor
 // gets its key here. The calls themselves are answered below, so no request
@@ -263,6 +264,21 @@ describe('Tutor conversations', () => {
     expect(list.body[0].title).toBe('newest');
     expect(list.body.map((c: { title: string }) => c.title)).not.toContain('old 0');
     expect(await prisma.tutorConversation.count({ where: { userId } })).toBe(50);
+  });
+
+  it("counts a student's messages for the admin page, past a deleted conversation, never an admin's", async () => {
+    const { agent: student } = await createAuthenticatedAgent();
+    const { agent: admin, email } = await createAuthenticatedAgent();
+    await prisma.user.update({ where: { id: await userIdFor(email) }, data: { role: 'ADMIN' } });
+
+    const first = await ask(student, {}).expect(200);
+    await ask(student, { conversationId: conversationOf(first) }).expect(200);
+    await ask(admin, {}).expect(200);
+    await student.delete(`/api/tutor/conversations/${conversationOf(first)}`).expect(204);
+
+    clearCache();
+    const stats = await admin.get('/api/admin/stats').expect(200);
+    expect(stats.body.tutor).toEqual({ promptsLast7Days: 2 });
   });
 
   it("takes a student's conversations and messages with them when their user row is deleted", async () => {

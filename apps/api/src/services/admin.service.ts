@@ -27,7 +27,8 @@ export async function getStats(force = false): Promise<AdminStatsDTO> {
     return { ...cached.dto, codeExec: codeExec(), online: await online() };
   }
 
-  const [users, progress, forum, support, onlineNow] = await Promise.all([
+  const [tutor, users, progress, forum, support, onlineNow] = await Promise.all([
+    adminRepo.tutorStats(),
     adminRepo.userStats(),
     adminRepo.progressStats(),
     adminRepo.forumStats(),
@@ -36,6 +37,7 @@ export async function getStats(force = false): Promise<AdminStatsDTO> {
   ]);
 
   const dto: AdminStatsDTO = {
+    tutor,
     users,
     progress,
     forum,

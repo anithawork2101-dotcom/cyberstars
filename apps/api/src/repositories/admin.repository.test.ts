@@ -12,6 +12,7 @@ const mockPrisma = {
   forumThread: { count: vi.fn() },
   forumPost: { count: vi.fn() },
   forumReaction: { count: vi.fn() },
+  tutorPrompt: { count: vi.fn() },
   supportTicket: {
     count: vi.fn(),
     groupBy: vi.fn(),
@@ -117,6 +118,21 @@ describe('progressStats', () => {
     const result = await repo.progressStats();
 
     expect(result.byCourse).toEqual([{ courseKey: 'python', completions: 2, learners: 0 }]);
+  });
+});
+
+describe('tutorStats', () => {
+  it('counts the messages sent to the tutor in the last 7 days', async () => {
+    vi.useFakeTimers({ now: new Date('2026-11-15T12:00:00Z') });
+    mockPrisma.tutorPrompt.count.mockResolvedValue(42);
+
+    const result = await repo.tutorStats();
+    vi.useRealTimers();
+
+    expect(result).toEqual({ promptsLast7Days: 42 });
+    expect(mockPrisma.tutorPrompt.count).toHaveBeenCalledWith({
+      where: { createdAt: { gte: new Date('2026-11-08T12:00:00Z') } },
+    });
   });
 });
 

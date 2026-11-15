@@ -9,6 +9,7 @@ process.env.DB_PASSWORD = 'test';
 process.env.ADMIN_STATS_CACHE_MS = '60000';
 
 const mockAdminRepo = {
+  tutorStats: vi.fn(),
   userStats: vi.fn(),
   progressStats: vi.fn(),
   forumStats: vi.fn(),
@@ -42,6 +43,7 @@ beforeEach(() => {
   clearUserSockets();
   mockAdminRepo.countNonFounders.mockResolvedValue(0);
   mockContainer.onlineGuests.mockReturnValue(0);
+  mockAdminRepo.tutorStats.mockResolvedValue({ promptsLast7Days: 9 });
   mockAdminRepo.userStats.mockResolvedValue({
     total: 3,
     byRole: { USER: 2, MODERATOR: 0, ADMIN: 1 },
@@ -71,6 +73,7 @@ beforeEach(() => {
 describe('admin.service getStats', () => {
   it('aggregates all sources on a cold call', async () => {
     const stats = await getStats();
+    expect(stats.tutor.promptsLast7Days).toBe(9);
     expect(stats.users.total).toBe(3);
     expect(stats.progress.totalCompletions).toBe(5);
     expect(stats.forum.posts).toBe(2);

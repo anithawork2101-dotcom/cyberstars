@@ -100,6 +100,12 @@ export function AdminPage() {
             </div>
           ) : stats ? (
             <div className="grid grid-cols-1 @2xl:grid-cols-3 gap-5">
+              {/* Whether students talk to the tutor: a count only, never who */}
+              <section className={CARD_CLS + ' @2xl:col-span-3'}>
+                <h2 className="text-[14px] font-semibold mb-4">{t('admin.tutor')}</h2>
+                <Stat label={t('admin.tutorPrompts7')} value={stats.tutor.promptsLast7Days} />
+              </section>
+
               {/* Users, on its own row above the visitors charts */}
               <section className={CARD_CLS + ' @2xl:col-span-3'}>
                 <h2 className="text-[14px] font-semibold mb-4">{t('admin.users')}</h2>
