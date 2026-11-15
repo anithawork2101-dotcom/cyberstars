@@ -120,8 +120,6 @@ export function ProjectsPage() {
                 key={l.language}
                 setKey={l.language}
                 title={courseLabel(l.language, t)}
-                beta
-                betaHint={t('projects.betaHint')}
                 description={t(`projects.desc.${l.language}`)}
                 count={t('projects.count', { count })}
                 progress={
@@ -183,8 +181,6 @@ function ProjectDrawer({
     <SetDrawer
       setKey={language}
       title={t('projects.setTitle', { language: courseLabel(language, t) })}
-      beta
-      betaHint={t('projects.betaHint')}
       meta={[{ text: t('projects.count', { count }) }]}
       description={t(`projects.desc.${language}`)}
       progress={

@@ -553,7 +553,6 @@
     }
   },
   "projects": {
-    "betaHint": "Still being built: more projects for every language are on the way",
     "setTitle": "{{language}} Projects",
     "count": "Projects: {{count}}",
     "viewProjects": "View Projects",
