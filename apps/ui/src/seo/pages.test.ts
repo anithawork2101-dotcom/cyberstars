@@ -41,6 +41,13 @@ const source: ContentSource = {
   },
   almanac: () => [{ ...article, fullText: undefined } as unknown as AlmanacArticle],
   article: (slug, lang) => (lang === 'en' ? { article, modified: '2026-09-30' } : null),
+  // Two Python projects have their text, every other project none
+  project(language, slug) {
+    if (language !== 'python') return null;
+    if (slug === 'league-table') return { text: 'League\n\n## Read', modified: '2026-11-01' };
+    if (slug === 'month-calendar') return { text: 'Calendar', modified: '2026-11-03' };
+    return null;
+  },
 };
 
 const pages = buildPages(source);
@@ -144,6 +151,49 @@ describe('the pre-rendered pages', () => {
         { position: 3, name: 'print', item: 'https://cyberstars.app/lesson/python/print' },
       ],
     });
+  });
+
+  it('gives each project a page of its own, in English only', () => {
+    const league = page('/projects/python/league-table');
+    expect(league).toMatchObject({
+      lang: 'en',
+      title: 'League Table: a free Python project, no card | CyberStars',
+      alternates: { en: '/projects/python/league-table' },
+      lastmod: '2026-11-01',
+      view: { kind: 'project', text: 'League\n\n## Read', next: { label: 'Wall Calendar' } },
+    });
+    expect(league.description).toMatch(/^Free, no card\. Read a season of football results/);
+    expect(league.description.length).toBeLessThanOrEqual(155);
+    expect(league.jsonLd).toMatchObject({
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { item: 'https://cyberstars.app/projects' },
+        { item: 'https://cyberstars.app/projects/python' },
+        { item: 'https://cyberstars.app/projects/python/league-table' },
+      ],
+    });
+    expect(pages.filter((p) => p.path.startsWith('/ro/projects'))).toEqual([]);
+  });
+
+  it('lists the projects that have their text, by language', () => {
+    expect(page('/projects/python')).toMatchObject({
+      title: 'Free Python projects, no card | CyberStars',
+      lastmod: '2026-11-03',
+      view: {
+        kind: 'projectSet',
+        name: 'Python Projects',
+        projects: [
+          { path: '/projects/python/league-table', label: 'League Table' },
+          { path: '/projects/python/month-calendar', label: 'Wall Calendar' },
+        ],
+      },
+    });
+    expect(page('/projects/c')).toBeUndefined();
+    expect(page('/projects')).toMatchObject({
+      alternates: { en: '/projects' },
+      view: { kind: 'projects', languages: [{ path: '/projects/python' }] },
+    });
+    expect(page('/projects').description.length).toBeLessThanOrEqual(155);
   });
 });
 

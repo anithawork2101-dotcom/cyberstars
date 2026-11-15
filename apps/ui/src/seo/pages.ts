@@ -6,6 +6,8 @@ import i18n from 'i18next';
 import type { Course } from '@cyberstars/shared/lesson';
 import type { AlmanacArticle, AlmanacCard } from '@cyberstars/shared/almanac';
 import { ALGO_COURSE_KEYS, LISTED_COURSE_KEYS, baseLanguage } from '@cyberstars/shared/constants';
+import { PREVIEW_FEATURES } from '@cyberstars/shared/features';
+import { PROJECTS, PROJECT_LANGUAGES, type ProjectLanguage } from '@cyberstars/shared/projects';
 import { courseLabel, courseTitle } from '../constants/courses';
 import { lessonTitle } from '../services/lessonService';
 import { twinPath, type Lang } from '../i18n';
@@ -18,6 +20,8 @@ export interface ContentSource {
   lesson(courseKey: string, slug: string, lang: Lang): { text: string; modified: string } | null;
   almanac(lang: Lang): AlmanacCard[];
   article(slug: string, lang: Lang): { article: AlmanacArticle; modified: string } | null;
+  // A project's text, in English only like the projects themselves
+  project(language: ProjectLanguage, slug: string): { text: string; modified: string } | null;
 }
 
 export interface Link {
@@ -36,7 +40,10 @@ export type View =
   | { kind: 'algorithms'; courses: Described[] }
   | { kind: 'challenges'; name: string; description: string; challenges: Link[] }
   | { kind: 'almanac'; articles: Described[] }
-  | { kind: 'article'; article: AlmanacArticle };
+  | { kind: 'article'; article: AlmanacArticle }
+  | { kind: 'projects'; languages: Described[] }
+  | { kind: 'projectSet'; name: string; description: string; projects: Described[] }
+  | { kind: 'project'; title: string; text: string; previous?: Link; next?: Link };
 
 export interface Page {
   path: string;
@@ -313,5 +320,87 @@ export function buildPages(source: ContentSource): Page[] {
     });
     pages.push(...articles.map((a) => a.page));
   }
+  if (!PREVIEW_FEATURES.projects) pages.push(...projectPages(source));
   return pages;
+}
+
+// The projects are in English only, so each of their pages is too: the list,
+// a page per language and one per project, none with a Romanian twin
+function projectPages(source: ContentSource): Page[] {
+  const lang: Lang = 'en';
+  const t = i18n.getFixedT(lang);
+  const free = t('seo.free');
+  const projectsLink = { path: '/projects', label: t('nav.projects') };
+  const only = (path: string): Page['alternates'] => ({ en: path });
+
+  const pages: Page[] = [];
+  const languages = PROJECT_LANGUAGES.flatMap((language) => {
+    const name = courseLabel(language, t);
+    const setName = t('projects.setTitle', { language: name });
+    const description = t(`projects.desc.${language}`);
+    const link = { path: `/projects/${language}`, label: setName };
+    const projects = PROJECTS.filter((p) => p.language === language).flatMap((project) => {
+      const content = source.project(language, project.slug);
+      if (!content) return [];
+      const projectLink = { path: `/projects/${language}/${project.slug}`, label: project.title };
+      return [{ project, content, link: projectLink }];
+    });
+    if (projects.length === 0) return [];
+
+    const projectPagesOfSet = projects.map(({ project, content, link: projectLink }, i): Page => {
+      const breadcrumb = [projectsLink, link, projectLink];
+      return {
+        path: projectLink.path,
+        lang,
+        title: t('seo.projectTitle', { project: project.title, language: name }),
+        description: freeFirst(free, project.summary),
+        alternates: only(projectLink.path),
+        breadcrumb,
+        view: {
+          kind: 'project',
+          title: project.title,
+          text: content.text,
+          previous: projects[i - 1]?.link,
+          next: projects[i + 1]?.link,
+        },
+        lastmod: content.modified,
+        jsonLd: breadcrumbLd(breadcrumb),
+      };
+    });
+    const setPage: Page = {
+      path: link.path,
+      lang,
+      title: t('seo.projectListTitle', { language: name }),
+      description: freeFirst(free, description),
+      alternates: only(link.path),
+      breadcrumb: [projectsLink, link],
+      view: {
+        kind: 'projectSet',
+        name: setName,
+        description,
+        projects: projects.map((p) => ({ ...p.link, description: p.project.summary })),
+      },
+      lastmod: latest(projectPagesOfSet.map((p) => p.lastmod)),
+    };
+    pages.push(setPage, ...projectPagesOfSet);
+    return [{ ...link, description, lastmod: setPage.lastmod }];
+  });
+  if (languages.length === 0) return [];
+
+  return [
+    {
+      path: projectsLink.path,
+      lang,
+      title: t('seo.projectsTitle'),
+      description: t('seo.projectsDescription'),
+      alternates: only(projectsLink.path),
+      breadcrumb: [projectsLink],
+      view: {
+        kind: 'projects',
+        languages: languages.map(({ path, label, description }) => ({ path, label, description })),
+      },
+      lastmod: latest(languages.map((l) => l.lastmod)),
+    },
+    ...pages,
+  ];
 }

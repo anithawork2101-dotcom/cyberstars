@@ -87,6 +87,44 @@ describe('the static pages', () => {
     expect(html).toContain('<article><h1>Ada</h1><p>One</p><p>Two</p></article>');
   });
 
+  it('draws a project with its steps and the projects beside it', () => {
+    const html = draw(
+      {
+        kind: 'project',
+        title: 'League Table',
+        text: 'Read the results.\n\n## Read all the lines\n\n```text\nA 2-1 B\n```',
+        next: { path: '/projects/python/month-calendar', label: 'Wall Calendar' },
+      },
+      {
+        breadcrumb: [
+          { path: '/projects', label: 'Projects' },
+          { path: '/projects/python', label: 'Python Projects' },
+          { path: '/projects/python/league-table', label: 'League Table' },
+        ],
+      },
+    );
+    expect(html).toContain('<h1>League Table</h1>');
+    expect(html).toContain('<h2>Read all the lines</h2>');
+    expect(html).toContain('<a href="/projects/python">Python Projects</a>');
+    expect(html).toContain('href="/projects/python/month-calendar" rel="next"');
+    expect(html).not.toContain('rel="prev"');
+  });
+
+  it('draws the project lists as links', () => {
+    const link = { path: '/projects/c', label: 'C Projects', description: 'Close to the machine' };
+    expect(draw({ kind: 'projects', languages: [link] })).toContain(
+      '<h1>Projects</h1><ul><li><a href="/projects/c">C Projects</a><p>Close to the machine</p>',
+    );
+    expect(
+      draw({ kind: 'projectSet', name: 'C Projects', description: 'Bytes', projects: [link] }),
+    ).toContain('<h1>C Projects</h1><p>Bytes</p>');
+  });
+
+  it('lists the projects in the header of the English pages only', () => {
+    expect(draw({ kind: 'courses', courses: [] })).toContain('<a href="/projects">Projects</a>');
+    expect(draw({ kind: 'courses', courses: [] }, { lang: 'ro' })).not.toContain('/projects');
+  });
+
   it('leaves the landing page to the app', () => {
     expect(draw({ kind: 'landing' })).not.toContain('<h1>');
   });
