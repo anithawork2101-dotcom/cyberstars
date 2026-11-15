@@ -77,4 +77,7 @@ export interface AnnouncementDTO {
   text: string;
   authorName: string | null; // null once the author's account is gone
   createdAt: string;
+  // Accounts that clicked it in the bell, each once, and accounts that got it.
+  // Null on the announcements sent before a click was counted
+  opens: { openers: number; recipients: number } | null;
 }

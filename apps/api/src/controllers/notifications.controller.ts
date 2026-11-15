@@ -56,6 +56,18 @@ export async function markSectionRead(
   }
 }
 
+// The bell's click on an announcement, counted for the admins' page
+export async function noteOpen(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const id = parseInt(req.params.id as string);
+    if (isNaN(id)) throw new AppError(400, 'Invalid notification ID');
+    await notificationsService.noteOpen(req.user!.id, id);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function markOneRead(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const id = parseInt(req.params.id as string);

@@ -25,5 +25,6 @@ router.post(
   notificationsController.markSectionRead,
 );
 router.post('/:id/read', notificationsController.markOneRead);
+router.post('/:id/opened', notificationsController.noteOpen);
 
 export default router;

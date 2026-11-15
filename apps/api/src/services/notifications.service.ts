@@ -157,7 +157,14 @@ export async function listAnnouncements(): Promise<AnnouncementDTO[]> {
     text: row.text,
     authorName: row.author?.name ?? null,
     createdAt: row.createdAt.toISOString(),
+    opens: row.countsOpens ? { openers: row.openers, recipients: row.recipients } : null,
   }));
+}
+
+// A click on an announcement in the bell. Mark all as read and the dashboard's
+// window don't come here, so only a click counts
+export async function noteOpen(userId: number, notificationId: number): Promise<void> {
+  await repo.noteOpen(userId, notificationId);
 }
 
 // Redaction hook for source-entity soft-deletes (forum post delete): drop the

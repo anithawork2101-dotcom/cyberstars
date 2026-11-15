@@ -9,11 +9,19 @@ const mockService = {
   getNotices: vi.fn(),
   markShown: vi.fn(),
   markSectionRead: vi.fn(),
+  noteOpen: vi.fn(),
 };
 vi.mock('../services/notifications.service.js', () => mockService);
 
-const { getNotifications, markRead, markOneRead, getNotices, markShown, markSectionRead } =
-  await import('./notifications.controller.js');
+const {
+  getNotifications,
+  markRead,
+  markOneRead,
+  getNotices,
+  markShown,
+  markSectionRead,
+  noteOpen,
+} = await import('./notifications.controller.js');
 
 const NO_SECTIONS = { forum: [], support: [], connections: 0, laniakea: 0 };
 
@@ -79,6 +87,23 @@ describe('markOneRead', () => {
     await markOneRead(mockReq({ params: { id: 'abc' } }), mockRes(), next);
     expect(next).toHaveBeenCalledWith(expect.any(AppError));
     expect(mockService.markOneRead).not.toHaveBeenCalled();
+  });
+});
+
+describe('noteOpen', () => {
+  it("counts the click on the user's announcement", async () => {
+    mockService.noteOpen.mockResolvedValue(undefined);
+    const res = mockRes();
+    await noteOpen(mockReq({ params: { id: '7' } }), res, vi.fn());
+    expect(mockService.noteOpen).toHaveBeenCalledWith(10, 7);
+    expect(res.status).toHaveBeenCalledWith(204);
+  });
+
+  it('rejects a non-numeric id', async () => {
+    const next = vi.fn();
+    await noteOpen(mockReq({ params: { id: 'abc' } }), mockRes(), next);
+    expect(next).toHaveBeenCalledWith(expect.any(AppError));
+    expect(mockService.noteOpen).not.toHaveBeenCalled();
   });
 });
 

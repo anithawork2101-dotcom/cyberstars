@@ -119,12 +119,12 @@ export function create(input: CreateNotificationInput): Promise<NotificationRow>
 // one insert and one transaction, so the history never lists one nobody got
 export function createAnnouncement(authorId: number, text: string): Promise<NotificationRow[]> {
   return prisma.$transaction(async (tx) => {
-    const { id } = await tx.announcement.create({
-      data: { authorId, text },
-      select: { id: true },
-    });
     const users = await tx.user.findMany({
       where: { id: { not: authorId } },
+      select: { id: true },
+    });
+    const { id } = await tx.announcement.create({
+      data: { authorId, text, recipients: users.length },
       select: { id: true },
     });
     return tx.notification.createManyAndReturn({
@@ -137,6 +137,29 @@ export function createAnnouncement(authorId: number, text: string): Promise<Noti
       })),
       include: actorInclude,
     });
+  });
+}
+
+// A click on this user's bell row of an announcement counts the account once in
+// its openers, however often it clicks. Only a row the user still has counts,
+// so no one counts for an announcement they never got
+export function noteOpen(userId: number, notificationId: number): Promise<void> {
+  return prisma.$transaction(async (tx) => {
+    const row = await tx.notification.findFirst({
+      where: { id: notificationId, userId, type: 'ANNOUNCEMENT' },
+      select: { entityId: true },
+    });
+    if (!row) return;
+    const { count } = await tx.announcementOpener.createMany({
+      data: [{ announcementId: row.entityId, userId }],
+      skipDuplicates: true,
+    });
+    if (count > 0) {
+      await tx.announcement.updateMany({
+        where: { id: row.entityId },
+        data: { openers: { increment: 1 } },
+      });
+    }
   });
 }
 

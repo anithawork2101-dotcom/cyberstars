@@ -3,7 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 const mockPrisma = {
   user: { findMany: vi.fn() },
   pollVoter: { findMany: vi.fn() },
-  announcement: { create: vi.fn(), findMany: vi.fn() },
+  announcement: { create: vi.fn(), findMany: vi.fn(), updateMany: vi.fn() },
+  announcementOpener: { createMany: vi.fn() },
   notification: {
     findMany: vi.fn(),
     count: vi.fn(),
@@ -319,7 +320,7 @@ describe('pruneOverCap', () => {
 });
 
 describe('createAnnouncement', () => {
-  it('keeps the announcement and inserts a row of it per account but the author, in one call', async () => {
+  it('keeps the announcement with its recipients and inserts a row of it per account but the author', async () => {
     mockPrisma.announcement.create.mockResolvedValue({ id: 4 });
     mockPrisma.user.findMany.mockResolvedValue([{ id: 10 }, { id: 11 }]);
     mockPrisma.notification.createManyAndReturn.mockResolvedValue([{ id: 1 }, { id: 2 }]);
@@ -327,7 +328,7 @@ describe('createAnnouncement', () => {
     expect(rows).toEqual([{ id: 1 }, { id: 2 }]);
     expect(mockPrisma.$transaction).toHaveBeenCalledWith(expect.any(Function));
     expect(mockPrisma.announcement.create).toHaveBeenCalledWith(
-      expect.objectContaining({ data: { authorId: 2, text: 'Hi' } }),
+      expect.objectContaining({ data: { authorId: 2, text: 'Hi', recipients: 2 } }),
     );
     expect(mockPrisma.user.findMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: { id: { not: 2 } } }),
@@ -341,6 +342,40 @@ describe('createAnnouncement', () => {
         ],
       }),
     );
+  });
+});
+
+describe('noteOpen', () => {
+  it("counts the account once among the openers of its own row's announcement", async () => {
+    mockPrisma.notification.findFirst.mockResolvedValue({ entityId: 4 });
+    mockPrisma.announcementOpener.createMany.mockResolvedValue({ count: 1 });
+    await repo.noteOpen(10, 7);
+    expect(mockPrisma.notification.findFirst).toHaveBeenCalledWith({
+      where: { id: 7, userId: 10, type: 'ANNOUNCEMENT' },
+      select: { entityId: true },
+    });
+    expect(mockPrisma.announcementOpener.createMany).toHaveBeenCalledWith({
+      data: [{ announcementId: 4, userId: 10 }],
+      skipDuplicates: true,
+    });
+    expect(mockPrisma.announcement.updateMany).toHaveBeenCalledWith({
+      where: { id: 4 },
+      data: { openers: { increment: 1 } },
+    });
+  });
+
+  it('adds nothing when the account clicked it before', async () => {
+    mockPrisma.notification.findFirst.mockResolvedValue({ entityId: 4 });
+    mockPrisma.announcementOpener.createMany.mockResolvedValue({ count: 0 });
+    await repo.noteOpen(10, 7);
+    expect(mockPrisma.announcement.updateMany).not.toHaveBeenCalled();
+  });
+
+  it("counts nothing for a row that isn't this user's announcement", async () => {
+    mockPrisma.notification.findFirst.mockResolvedValue(null);
+    await repo.noteOpen(10, 7);
+    expect(mockPrisma.announcementOpener.createMany).not.toHaveBeenCalled();
+    expect(mockPrisma.announcement.updateMany).not.toHaveBeenCalled();
   });
 });
 
