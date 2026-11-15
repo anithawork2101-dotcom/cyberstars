@@ -249,7 +249,9 @@
       "lessons_one": "lesson",
       "lessons_other": "lessons",
       "challenges_one": "algorithm challenge",
-      "challenges_other": "algorithm challenges"
+      "challenges_other": "algorithm challenges",
+      "projects_one": "project",
+      "projects_other": "projects"
     },
     "how": {
       "title": "How it works",

@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import i18n from 'i18next';
 import type { Course } from '@cyberstars/shared/lesson';
+import { PROJECTS } from '@cyberstars/shared/projects';
 
 const h = vi.hoisted(() => ({ courses: [] as Course[] }));
 vi.mock('../../context/CurriculumContext', () => ({
@@ -33,6 +34,7 @@ describe('ProofStrip', () => {
     expect(strip).toHaveTextContent('2courses');
     expect(strip).toHaveTextContent('61lessons');
     expect(strip).toHaveTextContent('32algorithm challenges');
+    expect(strip).toHaveTextContent(`${PROJECTS.length}projects`);
   });
 
   it('uses the Romanian plural forms, with "de" from 20 up', async () => {
@@ -43,6 +45,7 @@ describe('ProofStrip', () => {
     expect(strip).toHaveTextContent('1curs');
     expect(strip).toHaveTextContent('1lecție');
     expect(strip).toHaveTextContent('32de provocări de algoritmi');
+    expect(strip).toHaveTextContent(`${PROJECTS.length}de proiecte`);
   });
 
   it('renders nothing until the curriculum has loaded', () => {

@@ -279,7 +279,10 @@
       "lessons_other": "de lecții",
       "challenges_one": "provocare de algoritmi",
       "challenges_few": "provocări de algoritmi",
-      "challenges_other": "de provocări de algoritmi"
+      "challenges_other": "de provocări de algoritmi",
+      "projects_one": "proiect",
+      "projects_few": "proiecte",
+      "projects_other": "de proiecte"
     },
     "how": {
       "title": "Cum funcționează",
