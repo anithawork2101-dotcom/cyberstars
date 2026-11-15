@@ -115,9 +115,12 @@ export interface AuthOptions<
   sessions: SessionStore<Role>;
   // Which roles may pass requireAdmin
   isAdmin: (role: Role) => boolean;
-  // How long a session lasts: `user` for every account, `admin` for one
-  // isAdmin lets in, the most valuable to steal, so shorter
-  lifetimes: { user: SessionLifetime; admin: SessionLifetime };
+  // Which roles get the `short` lifetime: the accounts the app finds the most
+  // valuable to steal
+  shortSession: (role: Role) => boolean;
+  // How long a session lasts: `short` for a role shortSession names, `user`
+  // for every other account
+  lifetimes: { user: SessionLifetime; short: SessionLifetime };
   // Sends the cookie over HTTPS only, under the __Host- prefix
   secureCookie: boolean;
   // Hears that sessions of an account just ended (a logout, a password change
@@ -164,9 +167,9 @@ const MAX_RESET_ATTEMPTS = 5;
 
 // Accounts and sessions: a random token in an httpOnly cookie, kept by the app
 // as a session row and checked on every request. An app creates one with its
-// user and session stores, its admin rule, its session lifetimes and its
-// sign-up form, and mounts `router` for sign-up, login, logout, the password
-// reset and the account answer. The routes throw AppError, so the app mounts
+// user and session stores, its admin rule, its session lifetimes with the
+// roles that get the short one, and its sign-up form, and mounts `router` for
+// sign-up, login, logout, the password reset and the account answer. The routes throw AppError, so the app mounts
 // server-kit's errorHandler after them.
 export function createAuth<
   Role extends string,
@@ -197,7 +200,7 @@ export function createAuth<
   }
 
   function lifetimeOf(role: Role): SessionLifetime {
-    return options.isAdmin(role) ? lifetimes.admin : lifetimes.user;
+    return options.shortSession(role) ? lifetimes.short : lifetimes.user;
   }
 
   // How long the cookie of a session seen at `seenAt` should last: until its
@@ -315,8 +318,8 @@ export function createAuth<
   // then. A shorter one is deleted when its next request finds it timed out
   function deleteExpiredSessions(): Promise<number> {
     const now = Date.now();
-    const idleMs = Math.max(lifetimes.user.idleMs, lifetimes.admin.idleMs);
-    const absoluteMs = Math.max(lifetimes.user.absoluteMs, lifetimes.admin.absoluteMs);
+    const idleMs = Math.max(lifetimes.user.idleMs, lifetimes.short.idleMs);
+    const absoluteMs = Math.max(lifetimes.user.absoluteMs, lifetimes.short.absoluteMs);
     return sessions.deleteExpired(new Date(now - idleMs), new Date(now - absoluteMs));
   }
 

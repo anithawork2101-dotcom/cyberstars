@@ -131,9 +131,10 @@ function setup({
     store,
     sessions,
     isAdmin: (role) => role === 'ADMIN',
+    shortSession: (role) => role === 'ADMIN',
     lifetimes: {
       user: { idleMs: 60_000, absoluteMs: 120_000 },
-      admin: { idleMs: 30_000, absoluteMs: 60_000 },
+      short: { idleMs: 30_000, absoluteMs: 60_000 },
     },
     secureCookie: false,
     onSessionsEnded,
