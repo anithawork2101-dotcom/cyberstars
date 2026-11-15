@@ -44,6 +44,7 @@ export function LandingPage() {
                       3: <span className="text-[var(--text)] font-semibold" />,
                       5: <span className="text-[var(--text)] font-semibold" />,
                       7: <span className="text-[var(--text)] font-semibold" />,
+                      9: <span className="text-[var(--text)] font-semibold" />,
                     }}
                   />
                 </p>

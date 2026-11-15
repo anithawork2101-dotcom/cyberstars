@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { PREVIEW_FEATURES } from '@cyberstars/shared/features';
+import { PROJECTS } from '@cyberstars/shared/projects';
 import { useCurriculum } from '../../context/CurriculumContext';
 import { curriculumCounts } from './curriculumCounts';
 import { Reveal } from './Reveal';
 
 // Under the hero: how much there is to learn, in numbers,
-// counted from the curriculum so a new lesson moves the numbers on its own.
+// counted from the curriculum so a new lesson moves the numbers on its own,
+// and the projects from their catalog once they are open to everyone.
 // Until the curriculum arrives (or if it never does) there's nothing to claim.
 export function ProofStrip() {
   const { t } = useTranslation();
@@ -15,6 +18,7 @@ export function ProofStrip() {
     ['courses', counts.courses],
     ['lessons', counts.lessons],
     ['challenges', counts.challenges],
+    ...(PREVIEW_FEATURES.projects ? [] : [['projects', PROJECTS.length] as const]),
   ] as const;
 
   if (counts.courses === 0) return null;

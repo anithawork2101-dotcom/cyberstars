@@ -49,9 +49,9 @@ describe('currentChapter', () => {
 
   it("names a part of What's inside only once its picture is on screen", () => {
     scrollTo(5700);
-    expect(currentChapter(ids, 1000)).toBe('feature-web');
-    document.getElementById('feature-web')!.setAttribute('data-waiting', '');
-    expect(currentChapter(ids, 1000)).toBe('feature-tutor');
+    expect(currentChapter(ids, 1000)).toBe('feature-linux');
+    document.getElementById('feature-linux')!.setAttribute('data-waiting', '');
+    expect(currentChapter(ids, 1000)).toBe('feature-algorithms');
   });
 
   it('takes the last chapter at the very bottom, which never reaches that line', () => {
@@ -81,14 +81,14 @@ describe('ChapterRail', () => {
 
   it("looks again when the picture of What's inside changes, without a scroll", () => {
     scrollTo(5700);
-    document.getElementById('feature-web')!.setAttribute('data-waiting', '');
+    document.getElementById('feature-linux')!.setAttribute('data-waiting', '');
     const { container } = render(<ChapterRail />);
-    expect(container.querySelector('[aria-current]')).toHaveTextContent('An AI tutor');
-    document.getElementById('feature-web')!.removeAttribute('data-waiting');
+    expect(container.querySelector('[aria-current]')).toHaveTextContent('Algorithm challenges');
+    document.getElementById('feature-linux')!.removeAttribute('data-waiting');
     act(() => {
       window.dispatchEvent(new Event(PICTURE_CHANGED));
     });
-    expect(container.querySelector('[aria-current]')).toHaveTextContent('Web Development');
+    expect(container.querySelector('[aria-current]')).toHaveTextContent('Linux terminal');
   });
 
   it('goes to a chapter on a click', () => {

@@ -4,13 +4,14 @@ import { NEW_TONE, isMarkedNew } from '../../constants/newMarks';
 import { Reveal } from './Reveal';
 import { SectionHeading } from './SectionHeading';
 import { PinnedStory } from './PinnedStory';
-import { FEATURES, WIDE_PICTURES, featureId } from './featureList';
+import { FEATURES, FEATURE_FLAGS, WIDE_PICTURES, featureId } from './featureList';
 
 function Words({ part }: { part: string }) {
   const { t } = useTranslation();
+  const flag = FEATURE_FLAGS[part];
   return (
     <>
-      {part === 'web' && PREVIEW_FEATURES.webDevelopment && (
+      {flag && PREVIEW_FEATURES[flag] && (
         <span
           title={t('common.comingSoonHint')}
           className="inline-flex mb-3 px-2 py-0.5 rounded-full border border-[var(--border)] text-[11px] font-semibold text-[var(--text2)]"
@@ -18,7 +19,7 @@ function Words({ part }: { part: string }) {
           {t('common.comingSoon')}
         </span>
       )}
-      {part === 'web' && isMarkedNew('webDevelopment') && (
+      {flag && isMarkedNew(flag) && (
         <span
           className={`inline-flex mb-3 px-2 py-0.5 rounded-full text-[11px] font-bold ${NEW_TONE}`}
         >
@@ -35,8 +36,8 @@ function Words({ part }: { part: string }) {
 
 // What's inside, told like How it works above: each part's picture held in
 // the middle while its name and a sentence rise past it, the same pictures
-// drawn from the app's own pieces. Web Development says Coming soon while it
-// is a preview feature, then New for a while once launched.
+// drawn from the app's own pieces. Web Development and the projects say Coming
+// soon while they are preview features, then New for a while once launched.
 export function FeaturesSection() {
   const { t } = useTranslation();
   return (

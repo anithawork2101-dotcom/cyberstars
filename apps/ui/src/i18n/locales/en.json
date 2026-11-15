@@ -213,7 +213,7 @@
     "solveChallenge": "Solve challenge",
     "marketing": {
       "title": "Learn to code <1>for free</1>",
-      "subtitle": "<1>Python</1>, <3>Java</3>, <5>C</5> and <7>Linux</7>, right in your browser.",
+      "subtitle": "<1>Python</1>, <3>Java</3>, <5>C</5>, <7>Linux</7> and <9>web development</9>, right in your browser.",
       "startLearning": "Start learning",
       "noInstall": "Nothing to install",
       "signIn": "Sign in"
@@ -249,7 +249,9 @@
       "lessons_one": "lesson",
       "lessons_other": "lessons",
       "challenges_one": "algorithm challenge",
-      "challenges_other": "algorithm challenges"
+      "challenges_other": "algorithm challenges",
+      "projects_one": "project",
+      "projects_other": "projects"
     },
     "how": {
       "title": "How it works",
@@ -337,7 +339,7 @@
       "title": "What's inside",
       "courses": {
         "title": "Courses",
-        "text": "Python, Java, C and Linux, from your first print to processes and threads, then Trees and Graphs in all three languages.",
+        "text": "Python, Java, C, Linux and web development, from your first print to processes and threads, then Trees and Graphs in Python, Java and C.",
         "picture": "Each course with its number of lessons: Python, Java, C, Trees and Graphs, Linux and Web Development."
       },
       "algorithms": {
@@ -359,6 +361,11 @@
         "title": "Web Development",
         "text": "Build a website of your own, page by page, in HTML, CSS and JavaScript, and watch it change as you type.",
         "picture": "A web lesson as the student has it: script.js on the left opening the docking bay's doors on a click, and on the right the station's home page it runs on, with the station's picture, saying Doors open."
+      },
+      "projects": {
+        "title": "Projects",
+        "text": "Build real programs step by step: a league table, a text adventure and more, in Python, C, Java and Linux. Tests tell you when it all works.",
+        "picture": "The League Table project in Python, easy: its seven steps, the first three ticked off."
       }
     },
     "free": {
