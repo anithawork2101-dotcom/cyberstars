@@ -53,7 +53,7 @@ describe('LaniakeaCard', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('2 of 6 done')).toBeInTheDocument();
     expect(screen.getByText('Beta')).toBeInTheDocument();
-    expect(screen.getByText('New')).toBeInTheDocument();
+    expect(screen.queryByText('New')).toBeNull();
     expect(screen.getByRole('link', { name: 'Continue with Python' })).toHaveAttribute(
       'href',
       '/lesson/python/variables-str',
