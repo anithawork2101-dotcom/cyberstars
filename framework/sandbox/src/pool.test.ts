@@ -323,14 +323,13 @@ describe('groups', () => {
 });
 
 describe('liveMetrics', () => {
-  it('counts the containers, the busy ones, the sessions and each language right now', async () => {
+  it('counts the containers, the sessions and each language right now', async () => {
     await pool.acquireForRun('user:1', 'python');
     pool.releaseAfterRun('user:1');
     await pool.acquireForRun('user:2', 'java');
     pool.openSession('user:1');
     expect(pool.liveMetrics()).toEqual({
       activeContainers: 2,
-      runningNow: 1,
       maxContainers: 2,
       openSessions: 1,
       perLanguage: { python: 1, java: 1 },

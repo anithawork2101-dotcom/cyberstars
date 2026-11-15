@@ -62,7 +62,6 @@ beforeEach(() => {
   });
   mockContainer.liveMetrics.mockReturnValue({
     activeContainers: 0,
-    runningNow: 0,
     maxContainers: 50,
     openSessions: 0,
     perLanguage: {},
@@ -93,7 +92,6 @@ describe('admin.service getStats', () => {
     await getStats();
     mockContainer.liveMetrics.mockReturnValue({
       activeContainers: 4,
-      runningNow: 2,
       maxContainers: 50,
       openSessions: 3,
       perLanguage: { python: 4 },

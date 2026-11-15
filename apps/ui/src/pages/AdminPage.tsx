@@ -131,12 +131,11 @@ export function AdminPage() {
                 afterCharts={
                   <section className={CARD_CLS + ' @2xl:col-span-3'}>
                     <h2 className="text-[14px] font-semibold mb-4">{t('admin.codeExec')}</h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
                       <Stat
                         label={t('admin.activeContainers')}
                         value={`${stats.codeExec.activeContainers}/${stats.codeExec.maxContainers}`}
                       />
-                      <Stat label={t('admin.runningNow')} value={stats.codeExec.runningNow} />
                       <Stat
                         label={t('admin.busySandboxes')}
                         value={`${stats.codeExec.busySlots}/${stats.codeExec.maxBusySlots}`}

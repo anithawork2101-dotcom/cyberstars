@@ -262,14 +262,11 @@ export function createPool(options: PoolOptions) {
   // this reflects only the current instant.
   function liveMetrics() {
     const perLanguage: Record<string, number> = {};
-    let runningNow = 0;
     for (const c of containers.values()) {
       perLanguage[c.language] = (perLanguage[c.language] ?? 0) + 1;
-      if (c.busy) runningNow++;
     }
     return {
       activeContainers: containers.size,
-      runningNow,
       maxContainers: options.maxContainers,
       openSessions: sessionRefs.size,
       perLanguage,
