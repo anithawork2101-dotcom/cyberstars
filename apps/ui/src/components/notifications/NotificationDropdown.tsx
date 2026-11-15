@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import i18next from 'i18next';
 import { useNotifications } from '../../context/NotificationContext';
+import * as notificationsService from '../../services/notificationsService';
 import type { NotificationDTO } from '@cyberstars/shared/notifications';
 
 function timeAgo(iso: string): string {
@@ -104,7 +105,11 @@ export function NotificationDropdown({
     // has no page of its own, it opens in a window over this one
     if (n.type === 'POLL_ANSWER') navigate('/admin');
     else if (n.type === 'POLL') onPoll(n);
-    else onAnnouncement(n);
+    else {
+      // Counted for the admins' page; a lost count never keeps it from opening
+      notificationsService.noteOpen(n.id).catch(() => {});
+      onAnnouncement(n);
+    }
   };
 
   return (

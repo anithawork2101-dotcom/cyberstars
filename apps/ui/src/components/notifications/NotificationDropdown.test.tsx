@@ -20,6 +20,8 @@ const ctx = {
 const onAnnouncement = vi.fn();
 const onPoll = vi.fn();
 vi.mock('../../context/NotificationContext', () => ({ useNotifications: () => ctx }));
+const { noteOpen } = vi.hoisted(() => ({ noteOpen: vi.fn(() => Promise.resolve()) }));
+vi.mock('../../services/notificationsService', () => ({ noteOpen }));
 
 import { NotificationDropdown } from './NotificationDropdown';
 
@@ -79,7 +81,23 @@ describe('NotificationDropdown routing', () => {
     fireEvent.click(screen.getByRole('menuitem'));
     expect(onAnnouncement).toHaveBeenCalledWith(item);
     expect(ctx.markOneRead).toHaveBeenCalledWith(4);
+    expect(noteOpen).toHaveBeenCalledWith(4);
     expect(mockNavigate).not.toHaveBeenCalled();
+  });
+
+  it('still opens an announcement when its click fails to count', () => {
+    noteOpen.mockReturnValueOnce(Promise.reject(new Error('offline')));
+    const item = n({ id: 4, type: 'ANNOUNCEMENT', entityId: 0, data: { text: 'New course' } });
+    renderWith([item]);
+    fireEvent.click(screen.getByRole('menuitem'));
+    expect(onAnnouncement).toHaveBeenCalledWith(item);
+  });
+
+  it('counts no click for Mark all read', () => {
+    renderWith([n({ id: 4 })], { unreadCount: 1 });
+    fireEvent.click(screen.getByText('Mark all read'));
+    expect(ctx.markAllRead).toHaveBeenCalled();
+    expect(noteOpen).not.toHaveBeenCalled();
   });
 
   it('opens a poll in its own window', () => {
@@ -88,6 +106,7 @@ describe('NotificationDropdown routing', () => {
     fireEvent.click(screen.getByRole('menuitem'));
     expect(onPoll).toHaveBeenCalledWith(item);
     expect(onAnnouncement).not.toHaveBeenCalled();
+    expect(noteOpen).not.toHaveBeenCalled();
     expect(ctx.markOneRead).toHaveBeenCalledWith(6);
     expect(mockNavigate).not.toHaveBeenCalled();
   });
