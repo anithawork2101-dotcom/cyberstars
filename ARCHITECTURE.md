@@ -291,7 +291,7 @@ Defined in [`apps/api/prisma/schema.prisma`](apps/api/prisma/schema.prisma), cam
 - **ProjectStepCheck**, **ProjectCompletion**: the project steps a student ticked, and the projects their tests passed
 - **SupportTicket**, **SupportMessage**, **Notification**, **Announcement**, **Poll**, **PollOption**, **PollVoter**, **PollViewer**, **PollAnswer**: support, the bell, and the announcements and polls sent (a voter and a viewer are kept only so each account counts once)
 - **Conversation**, **DirectMessage**, **DmReaction**, **Connection**: messages and connections
-- **TutorConversation**, **TutorMessage**, **UsageWindow**: the tutor's conversations and the usage limits
+- **TutorConversation**, **TutorMessage**, **TutorPrompt**, **UsageWindow**: the tutor's conversations, the students' messages counted for the admin page (a time each, no account) and the usage limits
 - **LaniakeaPlanet**: a student's planet: level, last pass, questions seen and the test going on
 - **LaniakeaPass**: each test that moved a planet, its conquest or a recap, for the activity heatmap and the streak
 - **LaniakeaPlayer**: when a student last opened the game and was last told of open recaps
