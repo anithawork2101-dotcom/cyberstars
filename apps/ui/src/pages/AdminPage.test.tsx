@@ -68,15 +68,19 @@ describe('AdminPage', () => {
     expect(screen.getByText('Announcement')).toBeInTheDocument();
   });
 
-  it('shows the messages sent to the tutor first, above the users', async () => {
+  it('shows the messages sent to the tutor last in the users row, after the new accounts', async () => {
     getStats.mockResolvedValue(stats);
     renderPage();
     const tutor = await screen.findByText('Messages to the tutor (7 days)');
     expect(tutor.previousElementSibling).toHaveTextContent('37');
-    expect(
-      tutor.compareDocumentPosition(screen.getByText('Total users')) &
-        Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
+    const row = tutor.closest('div')!.parentElement!;
+    expect(Array.from(row.children, (c) => c.lastElementChild?.textContent)).toEqual([
+      'Total users',
+      'New (7 days)',
+      'New (30 days)',
+      'Messages to the tutor (7 days)',
+    ]);
+    expect(screen.queryByText('Active (with progress)')).not.toBeInTheDocument();
   });
 
   it('keeps the announcement card at the foot, after the stats', async () => {
