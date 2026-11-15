@@ -32,7 +32,6 @@ const stats: AdminStatsDTO = {
     byRole: { USER: 10, MODERATOR: 0, ADMIN: 1, FOUNDER: 1 },
     newLast7Days: 1,
     newLast30Days: 3,
-    active: 5,
   },
   progress: { totalCompletions: 0, byCourse: [], topLessons: [] },
   forum: { threads: 0, posts: 0, reactions: 0 },

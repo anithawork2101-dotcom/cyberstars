@@ -26,7 +26,7 @@ const repo = await import('./admin.repository.js');
 beforeEach(() => vi.clearAllMocks());
 
 describe('userStats', () => {
-  it('aggregates totals, roles, recency and active learners', async () => {
+  it('aggregates totals, roles and recency', async () => {
     mockPrisma.user.count
       .mockResolvedValueOnce(10) // total
       .mockResolvedValueOnce(3) // newLast7Days
@@ -35,21 +35,17 @@ describe('userStats', () => {
       { role: 'ADMIN', _count: { _all: 1 } },
       { role: 'USER', _count: { _all: 8 } },
     ]);
-    mockPrisma.userLessonProgress.groupBy.mockResolvedValueOnce([{ userId: 1 }, { userId: 2 }]);
-
     const result = await repo.userStats();
 
     expect(result.total).toBe(10);
     expect(result.byRole).toEqual({ USER: 8, MODERATOR: 0, ADMIN: 1, FOUNDER: 0 });
     expect(result.newLast7Days).toBe(3);
     expect(result.newLast30Days).toBe(6);
-    expect(result.active).toBe(2);
   });
 
   it('filters new-user counts by a createdAt lower bound', async () => {
     mockPrisma.user.count.mockResolvedValue(0);
     mockPrisma.user.groupBy.mockResolvedValue([]);
-    mockPrisma.userLessonProgress.groupBy.mockResolvedValue([]);
 
     await repo.userStats();
 

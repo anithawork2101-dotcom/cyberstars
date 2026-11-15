@@ -14,18 +14,17 @@ function daysAgo(days: number): Date {
 }
 
 export async function userStats(): Promise<AdminUserStats> {
-  const [total, roleGroups, newLast7Days, newLast30Days, activeGroups] = await Promise.all([
+  const [total, roleGroups, newLast7Days, newLast30Days] = await Promise.all([
     prisma.user.count(),
     prisma.user.groupBy({ by: ['role'], _count: { _all: true } }),
     prisma.user.count({ where: { createdAt: { gte: daysAgo(7) } } }),
     prisma.user.count({ where: { createdAt: { gte: daysAgo(30) } } }),
-    prisma.userLessonProgress.groupBy({ by: ['userId'] }),
   ]);
 
   const byRole: Record<Role, number> = { USER: 0, MODERATOR: 0, ADMIN: 0, FOUNDER: 0 };
   for (const g of roleGroups) byRole[g.role] = g._count._all;
 
-  return { total, byRole, newLast7Days, newLast30Days, active: activeGroups.length };
+  return { total, byRole, newLast7Days, newLast30Days };
 }
 
 export async function progressStats(): Promise<AdminProgressStats> {
