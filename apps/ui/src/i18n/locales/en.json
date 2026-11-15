@@ -336,7 +336,7 @@
       "courses": {
         "title": "Courses",
         "text": "Python, Java, C and Linux, from your first print to processes and threads, then Trees and Graphs in all three languages.",
-        "picture": "Each course with its number of lessons: Python, Java, C, Trees and Graphs and Linux."
+        "picture": "Each course with its number of lessons: Python, Java, C, Trees and Graphs, Linux and Web Development."
       },
       "algorithms": {
         "title": "Algorithm challenges",
