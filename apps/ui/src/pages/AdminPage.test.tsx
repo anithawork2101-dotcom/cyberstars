@@ -39,7 +39,6 @@ const stats: AdminStatsDTO = {
   codeExec: {
     activeContainers: 0,
     maxContainers: 4,
-    runningNow: 0,
     perLanguage: {},
     busySlots: 0,
     maxBusySlots: 2,
