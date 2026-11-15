@@ -49,7 +49,6 @@ beforeEach(() => {
     byRole: { USER: 2, MODERATOR: 0, ADMIN: 1 },
     newLast7Days: 1,
     newLast30Days: 2,
-    active: 2,
   });
   mockAdminRepo.progressStats.mockResolvedValue({
     totalCompletions: 5,

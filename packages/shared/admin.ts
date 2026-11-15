@@ -5,7 +5,6 @@ export interface AdminUserStats {
   byRole: { USER: number; MODERATOR: number; ADMIN: number; FOUNDER: number };
   newLast7Days: number;
   newLast30Days: number;
-  active: number; // users with at least one progress row
 }
 
 export interface AdminTutorStats {
