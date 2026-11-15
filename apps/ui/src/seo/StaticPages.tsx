@@ -106,6 +106,42 @@ function Content({ page }: { page: Page }): ReactNode {
           ))}
         </article>
       );
+    case 'projects':
+      return (
+        <>
+          <h1>{t('nav.projects')}</h1>
+          <Links links={view.languages} />
+        </>
+      );
+    case 'projectSet':
+      return (
+        <>
+          <h1>{view.name}</h1>
+          <p>{view.description}</p>
+          <Links links={view.projects} />
+        </>
+      );
+    case 'project':
+      return (
+        <>
+          <h1>{view.title}</h1>
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkDirective, remarkGreen]}>
+            {view.text}
+          </ReactMarkdown>
+          <nav>
+            {view.previous && (
+              <a href={view.previous.path} rel="prev">
+                {t('projects.previous')}: {view.previous.label}
+              </a>
+            )}{' '}
+            {view.next && (
+              <a href={view.next.path} rel="next">
+                {t('projects.next')}: {view.next.label}
+              </a>
+            )}
+          </nav>
+        </>
+      );
     case 'landing':
       return null;
   }
@@ -122,6 +158,12 @@ export function StaticPage({ page }: { page: Page }) {
         <nav>
           <a href={twinPath('/courses', page.lang)}>{t('nav.courses')}</a>{' '}
           <a href={twinPath('/algorithms', page.lang)}>{t('nav.algorithms')}</a>{' '}
+          {/* The projects are in English only, so only the English pages list them */}
+          {page.lang === 'en' && (
+            <>
+              <a href="/projects">{t('nav.projects')}</a>{' '}
+            </>
+          )}
           <a href={twinPath('/almanac', page.lang)}>{t('nav.almanac')}</a>
           {twin && (
             <>

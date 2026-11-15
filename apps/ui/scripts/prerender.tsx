@@ -2,7 +2,7 @@
 // Romanian, so a crawler, an AI answer engine or a link preview reads it
 // without running a script. Each page gets its own title, description,
 // canonical address, links to its twin in the other language and structured
-// data, plus the sitemap listing them all.
+// data, plus the sitemap listing them all. The projects are in English only.
 //
 // The landing page goes into dist/index.html (and dist/ro.html) drawn by the
 // app's own LandingPage, which a visitor sees until the app draws over it.
@@ -17,7 +17,7 @@ import { MemoryRouter } from 'react-router';
 import i18n from 'i18next';
 import type { Course } from '@cyberstars/shared/lesson';
 import type { AlmanacArticle, AlmanacCard } from '@cyberstars/shared/almanac';
-import { courseDir } from '../../../packages/content/paths';
+import { PROJECTS_DIR, courseDir } from '../../../packages/content/paths';
 import '../src/i18n';
 import type { Lang } from '../src/i18n';
 import { CurriculumProvider } from '../src/context/CurriculumContext';
@@ -53,6 +53,11 @@ const source: ContentSource = {
     if (!existsSync(file)) return null;
     const article = JSON.parse(readFileSync(file, 'utf8')) as AlmanacArticle;
     return { article, modified: modified(file) };
+  },
+  project(language, slug) {
+    const file = path.join(PROJECTS_DIR, language, `${slug}.md`);
+    if (!existsSync(file)) return null;
+    return { text: readFileSync(file, 'utf8'), modified: modified(file) };
   },
 };
 

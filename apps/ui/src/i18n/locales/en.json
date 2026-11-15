@@ -1502,6 +1502,10 @@
     "almanacTitle": "The Almanac: stories from the history of computing | CyberStars",
     "almanacDescription": "Short reads on the people, machines and ideas behind computing: legends, open source, the internet, security, space and AI.",
     "articleTitle": "{{title}} | CyberStars Almanac",
+    "projectsTitle": "Free coding projects, no card needed | CyberStars",
+    "projectsDescription": "Totally free, no card: real programs in Python, C, Java and Linux. Build them step by step in your browser and finish when they pass the tests.",
+    "projectListTitle": "Free {{language}} projects, no card | CyberStars",
+    "projectTitle": "{{project}}: a free {{language}} project, no card | CyberStars",
     "home": "Home",
     "imageAlt": "CyberStars: learn to code for free. Python, Java, C and Linux, right in your browser. No card, nothing to install."
   },

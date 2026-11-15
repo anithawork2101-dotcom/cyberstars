@@ -1,3 +1,9 @@
+import { PREVIEW_FEATURES } from './features.js';
+
+// The projects' pages are pre-rendered once Projects is launched; back in
+// preview they'd be app-only again
+const PROJECT_PATHS = ['/projects', '/projects/:language', '/projects/:language/:slug'];
+
 // The app's pages that only make sense inside the app: sign-in, the account,
 // the community and the rest. They have no pre-rendered page and stay out of
 // search results; the server sends them the app, and any address that's
@@ -14,9 +20,7 @@ export const APP_ONLY_PATHS = [
   '/rules',
   '/support',
   '/laniakea',
-  '/projects',
-  '/projects/:language',
-  '/projects/:language/:slug',
+  ...(PREVIEW_FEATURES.projects ? PROJECT_PATHS : []),
   '/admin',
   // The web courses' card: a list of courses, each with its own pre-rendered page
   '/courses/web',
