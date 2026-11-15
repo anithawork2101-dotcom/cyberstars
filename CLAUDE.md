@@ -128,7 +128,7 @@ CyberStars is a split-screen coding education platform (React frontend + Express
 
 ### Shared (`packages/shared/`)
 
-- The `@cyberstars/shared` workspace package, imported by name and module without an extension (`@cyberstars/shared/constants`); its `exports` point straight at the `.ts` files, so nothing builds it. DTO types and constants imported by both client and server, which keeps request/response shapes and course key constants in sync. Badges are derived client-side only (`useGamification`) from completion counts. XP formulas (`xpForLesson`/`xpForCourse`/`levelFromXp`/`xpForLevel`/`levelTitleKey`) live in `packages/shared/constants.ts` so client and server compute identical values
+- The `@cyberstars/shared` workspace package, imported by name and module without an extension (`@cyberstars/shared/constants`); its `exports` point straight at the `.ts` files, so nothing builds it. DTO types and constants imported by both client and server, which keeps request/response shapes and course key constants in sync. Badges are derived client-side only (`useGamification`) from completion counts. XP formulas (`xpForLesson`/`xpForCourse`/`levelFromXp`/`xpForLevel`/`levelTitleKey`) live in `packages/shared/constants.ts` so client and server compute identical values; a lesson's award grows with its position, starting again at 10 on each part of a course in `PART_STARTS` (Web Development), which `curriculum.test.ts` keeps in step with `courseParts`
 
 ### Lesson content (`packages/content/lessons/{python,c,java,linux}/`)
 

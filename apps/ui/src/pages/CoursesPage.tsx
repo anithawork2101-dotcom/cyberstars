@@ -113,7 +113,7 @@ export function CoursesPage() {
           name: l.title,
           slug: l.slug,
           number: i + 1,
-          xp: xpForLesson(l.sortOrder),
+          xp: xpForLesson(course.key, l.sortOrder),
           done: doneSet.has(l.slug),
         }));
         const bySlug = new Map(chapters.map((ch) => [ch.slug, ch]));
@@ -129,7 +129,7 @@ export function CoursesPage() {
           beta: isBeta(course.key),
           color: courseMeta(course.key).color,
           lessonCount: course.lessons.length,
-          totalXp: xpForCourse(course.lessons.length),
+          totalXp: xpForCourse(course.key, course.lessons.length),
           progress: progressPct(p?.completed ?? 0, p?.total ?? course.lessons.length),
           desc: t(`courses.descriptions.${course.key}`, { defaultValue: course.description }),
           chapters,

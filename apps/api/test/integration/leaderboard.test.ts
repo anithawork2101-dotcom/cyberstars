@@ -3,7 +3,7 @@ import { agent, createAuthenticatedAgent } from './helpers.js';
 import { prisma } from '../../src/config/db.js';
 import { markComplete } from '../../src/services/progress.service.js';
 import { clearCache } from '../../src/services/leaderboard.service.js';
-import { xpForLesson } from '@cyberstars/shared/constants';
+import { PART_STARTS, xpForLesson } from '@cyberstars/shared/constants';
 import { PROJECT_XP, findProject } from '@cyberstars/shared/projects';
 import type { LeaderboardPage, LeaderboardEntry } from '@cyberstars/shared/leaderboard';
 
@@ -48,12 +48,14 @@ describe('Leaderboard', () => {
     const [first, second] = board.entries;
     expect(first.name).toBe(nameA);
     expect(first.rank).toBe(1);
-    expect(first.totalXp).toBe(xpForLesson(l0.sortOrder) + xpForLesson(l1.sortOrder));
+    expect(first.totalXp).toBe(
+      xpForLesson('python', l0.sortOrder) + xpForLesson('python', l1.sortOrder),
+    );
     expect(first.lessonsDone).toBe(2);
 
     expect(second.name).toBe(nameB);
     expect(second.rank).toBe(2);
-    expect(second.totalXp).toBe(xpForLesson(l0.sortOrder));
+    expect(second.totalXp).toBe(xpForLesson('python', l0.sortOrder));
 
     // Sentinel earned nothing and sinks to the bottom.
     const last = board.entries[board.entries.length - 1];
@@ -108,7 +110,22 @@ describe('Leaderboard', () => {
     expect(first.totalXp).toBe(PROJECT_XP[findProject('python', 'library-desk')!.difficulty]);
     expect(first.lessonsDone).toBe(0);
     expect(second.name).toBe(nameA);
-    expect(second.totalXp).toBe(xpForLesson(l0.sortOrder));
+    expect(second.totalXp).toBe(xpForLesson('python', l0.sortOrder));
+  });
+
+  it('counts a lesson of a course split into parts from its part, not the course', async () => {
+    const second = PART_STARTS['web-dev'][1];
+    const lessons = await prisma.lesson.findMany({
+      where: { courseKey: 'web-dev', sortOrder: { in: [second, second + 1] } },
+      orderBy: { sortOrder: 'asc' },
+    });
+    const { agent: a, email } = await createAuthenticatedAgent();
+    const id = await userIdFor(email);
+    for (const l of lessons) await markComplete(id, 'web-dev', l.slug);
+
+    await fetchBoard(a);
+    const me = await a.get('/api/leaderboard/me').expect(200);
+    expect(me.body.totalXp).toBe(10 + 11);
   });
 
   it('GET /me returns the caller rank; 401 without auth', async () => {
@@ -120,7 +137,9 @@ describe('Leaderboard', () => {
     await fetchBoard(a); // refresh cache with current data
     const me = await a.get('/api/leaderboard/me').expect(200);
     expect(me.body.rank).toBe(1);
-    expect(me.body.totalXp).toBe(xpForLesson(l0.sortOrder) + xpForLesson(l1.sortOrder));
+    expect(me.body.totalXp).toBe(
+      xpForLesson('python', l0.sortOrder) + xpForLesson('python', l1.sortOrder),
+    );
 
     await agent().get('/api/leaderboard/me').expect(401);
   });

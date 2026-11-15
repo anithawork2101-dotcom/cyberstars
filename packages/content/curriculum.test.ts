@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { describe, it, expect } from 'vitest';
-import { WEB_COURSE_KEYS } from '@cyberstars/shared/constants';
+import { PART_STARTS, WEB_COURSE_KEYS } from '@cyberstars/shared/constants';
 import { parseWebFiles, startWebSite } from '@cyberstars/shared/webFiles';
 import { carriedFrom, courseParts, courses, freshStartLessons, lessons } from './curriculum.js';
 import { courseDir } from './paths.js';
@@ -23,6 +23,19 @@ describe('courseParts', () => {
         courseKey,
       ).toEqual(inOrder);
     }
+  });
+
+  it("matches PART_STARTS, where each part's XP starts again", () => {
+    const starts = Object.fromEntries(
+      Object.entries(courseParts).map(([courseKey, parts]) => [
+        courseKey,
+        parts.map(
+          (p) =>
+            lessons.find((l) => l.courseKey === courseKey && l.slug === p.lessons[0])?.sortOrder,
+        ),
+      ]),
+    );
+    expect(PART_STARTS).toEqual(starts);
   });
 
   it('gives each part a key of its own, a name and lessons', () => {

@@ -100,11 +100,31 @@ export function codeLanguageOf(courseKey: string, picked?: string | null): strin
 // server-authoritative (only a passing judge verdict marks a lesson complete).
 // These functions live in shared/ so client and server use the identical math.
 
-// A lesson's award grows with its position in the course, so later (harder)
-// lessons are worth more. sortOrder is 1-based per course (see
-// packages/content/curriculum.ts): the first lesson is worth 10 XP.
-export function xpForLesson(sortOrder: number): number {
-  return 10 + (sortOrder - 1);
+// Where each part of a course split into parts begins: the sortOrder of the
+// part's first lesson (packages/content/curriculum.ts `courseParts`, which
+// curriculum.test.ts keeps in step with this list). A course left out is one
+// list.
+export const PART_STARTS: Readonly<Record<string, readonly number[]>> = {
+  'web-dev': [1, 44, 112, 157, 207, 246, 292, 325, 359],
+};
+
+// The sortOrder a lesson's XP counts from: its part's first lesson, or the
+// course's first on a course without parts.
+function partStart(courseKey: string, sortOrder: number): number {
+  const starts = PART_STARTS[courseKey];
+  if (!starts) return 1;
+  let start = 1;
+  for (const s of starts) if (s <= sortOrder) start = s;
+  return start;
+}
+
+// A lesson's award grows with its position, so later (harder) lessons are
+// worth more. sortOrder is 1-based per course (see
+// packages/content/curriculum.ts): the first lesson is worth 10 XP. On a
+// course split into parts the award starts again at 10 on each part, so a
+// long course earns like several short ones rather than one long climb.
+export function xpForLesson(courseKey: string, sortOrder: number): number {
+  return 10 + (sortOrder - partStart(courseKey, sortOrder));
 }
 
 // Completing the lesson/algorithm of the day on its day grants this fraction of
@@ -113,13 +133,15 @@ export function xpForLesson(sortOrder: number): number {
 // server itself picked for that day, so a tampered client can't self-grant it.
 export const DAILY_BONUS_RATIO = 0.2;
 
-export function dailyBonusXp(sortOrder: number): number {
-  return Math.round(xpForLesson(sortOrder) * DAILY_BONUS_RATIO);
+export function dailyBonusXp(courseKey: string, sortOrder: number): number {
+  return Math.round(xpForLesson(courseKey, sortOrder) * DAILY_BONUS_RATIO);
 }
 
-// Total XP an n-lesson course is worth: Σ xpForLesson(s) for s in 1..n.
-export function xpForCourse(lessonCount: number): number {
-  return 10 * lessonCount + (lessonCount * (lessonCount - 1)) / 2;
+// Total XP an n-lesson course is worth: Σ xpForLesson(courseKey, s) for s in 1..n.
+export function xpForCourse(courseKey: string, lessonCount: number): number {
+  let total = 0;
+  for (let s = 1; s <= lessonCount; s++) total += xpForLesson(courseKey, s);
+  return total;
 }
 
 // Quadratic level curve. Level L begins at XP_LEVEL_CONSTANT·(L-1)², so each

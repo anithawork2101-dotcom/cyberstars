@@ -73,7 +73,7 @@ export function AlgorithmsPage() {
                 setKey={course.key}
                 title={courseLabel(course.key, t)}
                 beta={isBeta(course.key)}
-                badge={t('common.xpTotal', { xp: xpForCourse(count) })}
+                badge={t('common.xpTotal', { xp: xpForCourse(course.key, count) })}
                 description={t(`algorithms.desc.${course.key}`)}
                 count={{ n: count, noun: t('algoList.challengeNoun', { count }) }}
                 progress={
@@ -138,7 +138,7 @@ function ChallengeDrawer({
       beta={isBeta(course.key)}
       meta={[
         { text: t('algoList.challenges', { count }) },
-        { text: t('common.xpTotal', { xp: xpForCourse(count) }), accent: true },
+        { text: t('common.xpTotal', { xp: xpForCourse(course.key, count) }), accent: true },
       ]}
       description={t(`algorithms.desc.${course.key}`)}
       // Counted on the server, so a solved challenge that left the set still counts
@@ -166,7 +166,11 @@ function ChallengeDrawer({
               title={c.name}
               done={c.done}
               difficulty={c.diff}
-              trailing={c.hasTests ? t('common.xpReward', { xp: xpForLesson(c.sortOrder) }) : null}
+              trailing={
+                c.hasTests
+                  ? t('common.xpReward', { xp: xpForLesson(course.key, c.sortOrder) })
+                  : null
+              }
               order={i}
             />
           ))}

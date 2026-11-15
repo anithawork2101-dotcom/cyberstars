@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { prisma } from '../config/db.js';
-import { WEB_COURSE_KEYS, isClosedCourse } from '@cyberstars/shared/constants';
+import { PART_STARTS, WEB_COURSE_KEYS, isClosedCourse } from '@cyberstars/shared/constants';
 import { PROJECTS, PROJECT_XP } from '@cyberstars/shared/projects';
 
 export interface LeaderboardRow {
@@ -20,8 +20,10 @@ export interface LeaderboardRow {
 //
 // XP is DERIVED, never stored (see shared/constants.ts). We recompute the exact
 // same amount as progress.service.getCourseProgress, but in one aggregate query
-// instead of N Node calculations: the per-lesson award is xpForLesson(sortOrder)
-// = 10 + (sortOrder - 1), plus the daily-pick bonus round(award * 0.2) for
+// instead of N Node calculations: the per-lesson award is
+// xpForLesson(courseKey, sortOrder) = 10 + (sortOrder - the sortOrder its part
+// starts at, or 1 on a course without parts; PART_STARTS as a VALUES table of
+// part ranges), plus the daily-pick bonus round(award * 0.2) for
 // lessons the user was awarded a daily bonus on (DailyPick.bonusAwarded). The
 // join is on (course_key, lesson_slug), since UserLessonProgress has no lessonId,
 // and only completed rows that map to a real lesson count. A closed course
@@ -40,6 +42,16 @@ export async function getRanked(): Promise<LeaderboardRow[]> {
       (p) => Prisma.sql`(${p.language}::text, ${p.slug}::text, ${PROJECT_XP[p.difficulty]}::int)`,
     ),
   );
+  // Each part of a course split into parts as (course_key, first, last)
+  // sortOrder; a lesson outside every range counts from 1.
+  const parts = Prisma.join(
+    Object.entries(PART_STARTS).flatMap(([courseKey, starts]) =>
+      starts.map(
+        (first, i) =>
+          Prisma.sql`(${courseKey}::text, ${first}::int, ${(starts[i + 1] ?? 2 ** 31) - 1}::int)`,
+      ),
+    ),
+  );
   const projects = Prisma.sql`
     SELECT pc.user_id, SUM(px.xp)::int AS xp, MAX(pc.completed_at) AS reached_at
     FROM project_completions pc
@@ -53,14 +65,14 @@ export async function getRanked(): Promise<LeaderboardRow[]> {
       u.name,
       u.avatar_url,
       COALESCE(SUM(
-        (10 + (l.sort_order - 1))
+        (10 + (l.sort_order - COALESCE(pr.first, 1)))
         + CASE WHEN EXISTS (
             SELECT 1 FROM daily_picks dp
             WHERE dp.user_id = p.user_id
               AND dp.course_key = p.course_key
               AND dp.lesson_slug = p.lesson_slug
               AND dp.bonus_awarded = true
-          ) THEN round((10 + (l.sort_order - 1)) * 0.2) ELSE 0 END
+          ) THEN round((10 + (l.sort_order - COALESCE(pr.first, 1))) * 0.2) ELSE 0 END
       ), 0)::int AS total_xp,
       COUNT(l.id)::int AS lessons_done,
       MAX(CASE WHEN l.id IS NOT NULL THEN p.completed_at END) AS reached_at
@@ -68,6 +80,8 @@ export async function getRanked(): Promise<LeaderboardRow[]> {
     LEFT JOIN user_lesson_progress p ON p.user_id = u.id AND p.completed = true
       AND p.course_key <> ALL(${closed}::text[])
     LEFT JOIN lessons l ON l.course_key = p.course_key AND l.slug = p.lesson_slug
+    LEFT JOIN (VALUES ${parts}) AS pr(course_key, first, last)
+      ON pr.course_key = l.course_key AND l.sort_order BETWEEN pr.first AND pr.last
     GROUP BY u.id, u.name, u.avatar_url
   `;
   return prisma.$queryRaw<LeaderboardRow[]>(Prisma.sql`

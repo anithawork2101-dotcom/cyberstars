@@ -150,7 +150,7 @@ export function HomePage() {
         progressMap[pick.courseKey]?.lessons.find((l) => l.slug === pick.slug)?.completed ?? false;
       const sortOrder = lesson?.sortOrder ?? 1;
       // XP the user actually earns for the daily pick = base + daily bonus.
-      const xp = xpForLesson(sortOrder) + dailyBonusXp(sortOrder);
+      const xp = xpForLesson(pick.courseKey, sortOrder) + dailyBonusXp(pick.courseKey, sortOrder);
       return {
         courseKey: pick.courseKey,
         courseTitle: course?.title ?? pick.courseKey,
