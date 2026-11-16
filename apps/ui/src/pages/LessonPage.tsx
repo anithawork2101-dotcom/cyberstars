@@ -11,7 +11,7 @@ import {
   type CSSProperties,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Eye, RotateCcw, Save, Share2 } from 'lucide-react';
+import { Eye, LayoutPanelLeft, RotateCcw, Save, Share2 } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router';
 import { useLesson } from '../hooks/useLesson';
 import { useCodeSave } from '../hooks/useCodeSave';
@@ -883,7 +883,7 @@ export function LessonPage() {
           title={t('lesson.devModeReset')}
           className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border border-[var(--border)]"
         >
-          <RotateCcw size={14} aria-hidden="true" />
+          <LayoutPanelLeft size={14} aria-hidden="true" />
         </button>
       )}
       {devModeChoice.available && (
@@ -907,100 +907,99 @@ export function LessonPage() {
           )}
         </div>
       )}
-      {!devMode && (
-        <div className="relative" ref={menuRef}>
-          <button
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-haspopup="menu"
-            aria-expanded={menuOpen}
-            aria-label={t('lesson.actions')}
-            className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border border-[var(--border)]"
+      <div className="relative" ref={menuRef}>
+        <button
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-haspopup="menu"
+          aria-expanded={menuOpen}
+          aria-label={t('lesson.actions')}
+          className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border border-[var(--border)]"
+        >
+          <span className="text-[16px] leading-none">⋯</span>
+        </button>
+        {menuOpen && (
+          <div
+            role="menu"
+            // Wider for a web lesson's two Resets, so each stays on one line
+            className={`absolute right-0 mt-2 ${resetTargets.length > 1 ? 'w-64' : 'w-52'} bg-[var(--bg2)] border border-[var(--border)] rounded-[var(--radius)] shadow-[0_8px_32px_#0008] overflow-hidden z-50 fade-in-up`}
           >
-            <span className="text-[16px] leading-none">⋯</span>
-          </button>
-          {menuOpen && (
-            <div
-              role="menu"
-              // Wider for a web lesson's two Resets, so each stays on one line
-              className={`absolute right-0 mt-2 ${resetTargets.length > 1 ? 'w-64' : 'w-52'} bg-[var(--bg2)] border border-[var(--border)] rounded-[var(--radius)] shadow-[0_8px_32px_#0008] overflow-hidden z-50 fade-in-up`}
-            >
-              {tutor?.enabled && (
-                <button
-                  role="menuitem"
-                  data-track="ask-tutor"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    tutor.openLesson({
-                      courseKey: category,
-                      lessonSlug: lesson,
-                      title,
-                    });
-                  }}
-                  className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
-                >
-                  <TutorFace size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
-                  {t('lesson.askTutor')}
-                </button>
-              )}
-              {canShowSolution && (
-                <button
-                  role="menuitem"
-                  data-track="show-solution"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    setConfirmSolution(true);
-                  }}
-                  className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
-                >
-                  <Eye size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
-                  {t('lesson.showSolution')}
-                </button>
-              )}
-              {isLoggedIn && (
-                <button
-                  role="menuitem"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    codeSave.save(userCode);
-                  }}
-                  className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
-                >
-                  <Save size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
-                  {t('lesson.save')}
-                </button>
-              )}
-              {isLoggedIn && userCode.trim().length > 0 && (
-                <button
-                  role="menuitem"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    setShowShareModal(true);
-                  }}
-                  className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
-                >
-                  <Share2 size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
-                  {t('lesson.shareToForum')}
-                </button>
-              )}
-              {resetTargets.map((target) => (
-                <button
-                  key={target.track}
-                  role="menuitem"
-                  data-track={target.track}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    if (window.confirm(t(target.confirm))) setUserCode(target.code);
-                  }}
-                  className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
-                >
-                  <RotateCcw size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
-                  {t(target.label)}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+            {/* The tutor's panel opens under dev mode's full window */}
+            {tutor?.enabled && !devMode && (
+              <button
+                role="menuitem"
+                data-track="ask-tutor"
+                onClick={() => {
+                  setMenuOpen(false);
+                  tutor.openLesson({
+                    courseKey: category,
+                    lessonSlug: lesson,
+                    title,
+                  });
+                }}
+                className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
+              >
+                <TutorFace size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
+                {t('lesson.askTutor')}
+              </button>
+            )}
+            {canShowSolution && (
+              <button
+                role="menuitem"
+                data-track="show-solution"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setConfirmSolution(true);
+                }}
+                className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
+              >
+                <Eye size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
+                {t('lesson.showSolution')}
+              </button>
+            )}
+            {isLoggedIn && (
+              <button
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false);
+                  codeSave.save(userCode);
+                }}
+                className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
+              >
+                <Save size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
+                {t('lesson.save')}
+              </button>
+            )}
+            {isLoggedIn && userCode.trim().length > 0 && (
+              <button
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setShowShareModal(true);
+                }}
+                className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
+              >
+                <Share2 size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
+                {t('lesson.shareToForum')}
+              </button>
+            )}
+            {resetTargets.map((target) => (
+              <button
+                key={target.track}
+                role="menuitem"
+                data-track={target.track}
+                onClick={() => {
+                  setMenuOpen(false);
+                  if (window.confirm(t(target.confirm))) setUserCode(target.code);
+                }}
+                className="w-full flex items-center gap-2.5 text-left px-4 py-2.5 text-[13px] text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border-none"
+              >
+                <RotateCcw size={16} strokeWidth={1.75} className="text-[var(--text3)]" />
+                {t(target.label)}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 
