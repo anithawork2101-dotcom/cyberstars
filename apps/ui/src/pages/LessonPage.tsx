@@ -1038,9 +1038,17 @@ export function LessonPage() {
     </div>
   );
 
+  // Dev mode's window leaves the tutor's panel its room on the right, as the
+  // shell does with the sidebar closed; its history goes beside it from lg up
+  const devTutorRoom = tutor?.open
+    ? tutor.historyOpen
+      ? 'right-[400px] lg:right-[640px]'
+      : 'right-[400px]'
+    : 'right-0';
+
   return (
     <div
-      className={`${devMode ? 'fixed inset-0 z-[60] @container bg-[var(--page-bg)]' : 'h-screen bg-transparent'} flex flex-col text-[var(--text)] overflow-hidden`}
+      className={`${devMode ? `fixed inset-y-0 left-0 ${devTutorRoom} z-[60] @container bg-[var(--page-bg)]` : 'h-screen bg-transparent'} flex flex-col text-[var(--text)] overflow-hidden`}
     >
       {/* A new account held on the tour lesson gets no way off it: no topbar
           here and no sidebar in the shell */}
