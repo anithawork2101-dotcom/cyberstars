@@ -103,7 +103,7 @@ Fiecare navă care intră în flotă primește următorul număr liber, iar toat
 
 1. Scrie o clasă **Nava** cu două atribute ale clasei: `urmatorul_numar`, care pornește de la 1, și `flota`, care pornește ca `"Flota Libera"`. `__init__`-ul ei primește un `nume`, setează atributele `nume` și `numar`, dându-i navei următorul număr al clasei, și crește cu 1 următorul număr al clasei
 2. Începe programul cu două variabile: **nume**, o listă de string-uri, și **flota**, un string. De exemplu `nume = ["Speranta", "Fulger"]` și `flota = "Flota Stelara"`
-3. Fă câte o `Nava` pentru fiecare nume. Apoi setează numele flotei clasei la **flota** și afișează câte o linie pentru fiecare navă: `#`, numărul ei, ` `, numele ei, ` din ` și numele flotei, citit prin navă
+3. Fă câte o `Nava` pentru fiecare nume. Apoi setează numele flotei clasei la **flota** și afișează câte o linie pentru fiecare navă: `#`, numărul ei, un spațiu, numele ei, `din` cu câte un spațiu de fiecare parte, și numele flotei, citit prin navă
 4. Afișează `Urmatorul numar liber: ` și următorul număr al clasei
 
 **nume** are între 1 și 10 nume

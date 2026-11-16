@@ -10,7 +10,7 @@ Several ships wait to leave the station, one launch a day. The order is drawn by
 2. Set the seed with `random.seed(seed)`, then draw the launch order with one call: `random.sample(ships, len(ships))`
 3. For each ship in that order, print a line: its launch date as the day with two digits and the month's short name, like `14 May`, then `: `, the ship, `, `, the hours of its flight and ` h`. The first ship leaves on the start day, the next one a day later, and so on. A flight takes one hour for every 3,000 km, and a part of an hour counts as a whole hour
 4. Print `Total: ` and the hours of all the flights added up, then ` h`
-5. Print `Most common: `, the number of hours that comes up most often, ` h, `, and how many flights take that long. If several come up equally often, take the one that comes first in the launch order
+5. Print `Most common: `, the number of hours that comes up most often, a space, `h,` and a space, and how many flights take that long. If several come up equally often, take the one that comes first in the launch order
 
 Use `math`, `random`, `collections` and `datetime`. There are from 1 to 10 ships, with different names, and each distance is from 1 to 50,000 km. `%b` in `strftime()` gives the month's short name
 

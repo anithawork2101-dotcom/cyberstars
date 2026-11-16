@@ -105,7 +105,7 @@ Output
 The trainers of the station's football team test every player twice: once at the start of the month and once at the end. They want to see each player's change, and who improved the most
 
 1. Start your program with three variables: **names**, a list of strings, and **before** and **after**, two lists of whole numbers: the players' scores, in the same order as the names. For example `names = ["Kai", "Mila", "Tom"]`, `before = [60, 75, 80]` and `after = [72, 70, 95]`
-2. For each player, print the name, `: `, the score before, ` -> `, the score after, and the change in brackets, with a `+` in front of it when it isn't negative
+2. For each player, print the name, `: `, the score before, `->` with a space on each side, the score after, and the change in brackets, with a `+` in front of it when it isn't negative
 3. Print `Most improved: ` and the name of the player with the biggest change. If two players have the same biggest change, print the one that comes first
 
 Use `zip()`, not `range()`. The three lists have the same length, from 1 to 20 players, and every score is from 0 to 100

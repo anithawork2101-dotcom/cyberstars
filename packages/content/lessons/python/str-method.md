@@ -108,7 +108,7 @@ The station's school shows a card for each planet. Each card is one line of text
 1. Write a class **Planet** with an `__init__` that takes a `name`, a number of `moons` and `rings` (True or False), and a `__str__` that returns `name, moons: N`, with `, rings` added at the end when the planet has rings. A planet with 0 moons says `name, no moons` instead of `moons: 0`
 2. Start your program with three variables: **names**, **moons** and **rings**, three lists in the same order. For example `names = ["Saturn", "Mars", "Venus"]`, `moons = [146, 2, 0]` and `rings = [True, False, False]`
 3. Make a `Planet` for each, and print each one with `print()`, giving it the object itself
-4. Print `With rings: ` and the cards of the planets with rings joined with ` / `, or `none`
+4. Print `With rings: ` and the cards of the planets with rings joined with `/` with a space on each side, or `none`
 
 The lists have from 1 to 10 planets, with 0 to 200 moons each
 

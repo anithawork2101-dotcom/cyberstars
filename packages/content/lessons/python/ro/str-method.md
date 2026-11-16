@@ -108,7 +108,7 @@ Venus | Marte
 1. Scrie o clasă **Planeta** cu un `__init__` care primește un `nume`, un număr de `luni` și `inele` (True sau False), și un `__str__` care returnează `nume, luni: N`, cu `, inele` adăugat la final când planeta are inele. O planetă cu 0 luni spune `nume, fara luni` în loc de `luni: 0`
 2. Începe programul cu trei variabile: **nume**, **luni** și **inele**, trei liste în aceeași ordine. De exemplu `nume = ["Saturn", "Marte", "Venus"]`, `luni = [146, 2, 0]` și `inele = [True, False, False]`
 3. Fă câte o `Planeta` pentru fiecare și afișează-le pe fiecare cu `print()`, dându-i chiar obiectul
-4. Afișează `Cu inele: ` și fișele planetelor cu inele unite cu ` / `, sau `niciuna`
+4. Afișează `Cu inele: ` și fișele planetelor cu inele unite cu `/` cu câte un spațiu de fiecare parte, sau `niciuna`
 
 Listele au între 1 și 10 planete, cu 0 până la 200 de luni fiecare
 

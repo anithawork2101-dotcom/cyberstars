@@ -103,7 +103,7 @@ Every ship that joins the fleet gets the next free number, and all ships fly und
 
 1. Write a class **Ship** with two class attributes: `next_number`, which starts at 1, and `fleet`, which starts as `"Free Fleet"`. Its `__init__` takes a `name`, sets the attributes `name` and `number`, giving the ship the class's next number, and moves the class's next number up by 1
 2. Start your program with two variables: **names**, a list of strings, and **fleet**, a string. For example `names = ["Hope", "Swift"]` and `fleet = "Star Fleet"`
-3. Make a `Ship` for each name. Then set the class's fleet name to **fleet**, and print one line for each ship: `#`, its number, ` `, its name and ` of ` the fleet name, read through the ship
+3. Make a `Ship` for each name. Then set the class's fleet name to **fleet**, and print one line for each ship: `#`, its number, a space, its name, `of` with a space on each side, and the fleet name, read through the ship
 4. Print `Next free number: ` and the class's next number
 
 **names** has from 1 to 10 names

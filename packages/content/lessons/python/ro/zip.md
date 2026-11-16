@@ -105,7 +105,7 @@ Rezultat
 Antrenorii echipei de fotbal a stației testează fiecare jucător de două ori: o dată la începutul lunii și o dată la final. Vor să vadă schimbarea fiecărui jucător și cine a progresat cel mai mult
 
 1. Începe programul cu trei variabile: **nume**, o listă de string-uri, și **inainte** și **dupa**, două liste de numere întregi: punctajele jucătorilor, în aceeași ordine ca numele. De exemplu `nume = ["Kai", "Mila", "Tom"]`, `inainte = [60, 75, 80]` și `dupa = [72, 70, 95]`
-2. Pentru fiecare jucător, afișează numele, `: `, punctajul de dinainte, ` -> `, punctajul de după și schimbarea între paranteze, cu un `+` în față când nu e negativă
+2. Pentru fiecare jucător, afișează numele, `: `, punctajul de dinainte, `->` cu câte un spațiu de fiecare parte, punctajul de după și schimbarea între paranteze, cu un `+` în față când nu e negativă
 3. Afișează `Cel mai mare progres: ` și numele jucătorului cu cea mai mare schimbare. Dacă doi jucători au aceeași schimbare, cea mai mare, afișează-l pe cel care vine primul
 
 Folosește `zip()`, nu `range()`. Cele trei liste au aceeași lungime, între 1 și 20 de jucători, iar fiecare punctaj e de la 0 la 100

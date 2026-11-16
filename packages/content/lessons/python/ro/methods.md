@@ -95,9 +95,9 @@ Prima plată a lui Alan merge, a doua nu: `and` se oprește la primul False
 Rezervorul unei nave ține combustibil până la capacitatea lui. Piloții îl umplu și îl folosesc, iar rezervorul nu trebuie să treacă niciodată peste capacitate sau sub gol
 
 1. Scrie o clasă **Rezervor** cu un `__init__` care primește o `capacitate` și pornește cu `combustibil` la 0, și trei metode:
-   * **umple(cantitate)** adaugă cât încape din cantitate și returnează cât a adăugat de fapt
-   * **foloseste(cantitate)** scoate cantitatea dacă e destul combustibil și returnează True, sau nu schimbă nimic și returnează False
-   * **procent()** returnează cât de plin e rezervorul, în procente, ca număr întreg rotunjit în jos. Înmulțește cu 100 înainte să împarți: `29 / 100 * 100` dă `28.999999999999996`, nu 29
+   - **umple(cantitate)** adaugă cât încape din cantitate și returnează cât a adăugat de fapt
+   - **foloseste(cantitate)** scoate cantitatea dacă e destul combustibil și returnează True, sau nu schimbă nimic și returnează False
+   - **procent()** returnează cât de plin e rezervorul, în procente, ca număr întreg rotunjit în jos. Înmulțește cu 100 înainte să împarți: `29 / 100 * 100` dă `28.999999999999996`, nu 29
 2. Începe programul cu două variabile: **capacitate**, un număr întreg, și **actiuni**, o listă de string-uri ca `"umple 50"` sau `"foloseste 20"`. De exemplu `capacitate = 80` și `actiuni = ["umple 50", "foloseste 20", "umple 70", "foloseste 100"]`
 3. Pentru fiecare acțiune, apelează metoda și afișează acțiunea, `: ` și ce a returnat metoda
 4. Afișează `Plin: `, procentul și `%`

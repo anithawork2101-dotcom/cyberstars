@@ -95,9 +95,9 @@ Alan's first payment works, the second doesn't: `and` stops at the first False
 A ship's tank holds fuel up to its capacity. Pilots fill it and use it, and the tank must never go over its capacity or below empty
 
 1. Write a class **Tank** with an `__init__` that takes a `capacity` and starts with `fuel` at 0, and three methods:
-   * **fill(amount)** adds as much of the amount as fits, and returns how much it really added
-   * **use(amount)** takes the amount out if there is enough fuel and returns True, or changes nothing and returns False
-   * **percent()** returns how full the tank is, in percent, as a whole number rounded down. Multiply by 100 before you divide: `29 / 100 * 100` gives `28.999999999999996`, not 29
+   - **fill(amount)** adds as much of the amount as fits, and returns how much it really added
+   - **use(amount)** takes the amount out if there is enough fuel and returns True, or changes nothing and returns False
+   - **percent()** returns how full the tank is, in percent, as a whole number rounded down. Multiply by 100 before you divide: `29 / 100 * 100` gives `28.999999999999996`, not 29
 2. Start your program with two variables: **capacity**, a whole number, and **actions**, a list of strings like `"fill 50"` or `"use 20"`. For example `capacity = 80` and `actions = ["fill 50", "use 20", "fill 70", "use 100"]`
 3. For each action, call the method and print the action, `: ` and what the method returned
 4. Print `Full: `, the percent and `%`

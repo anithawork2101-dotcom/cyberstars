@@ -104,7 +104,7 @@ The station's computer gets software updates with version numbers like `1.10.2`.
 
 1. Write a class **Version** with an `__init__` that takes a `text` like `"1.10.2"` and keeps it, together with its parts as whole numbers, a `__str__` that returns the text, an `__eq__` that says two versions are equal when their numbers are, and an `__lt__` that compares the first numbers, then the second ones on a tie, then the third
 2. Start your program with two variables: **versions**, a list of strings, and **current**, a string. For example `versions = ["1.10.2", "1.9.0", "2.0.0", "1.9.0"]` and `current = "1.10.2"`
-3. Print the versions from the oldest to the newest, using `sorted()` on `Version` objects, joined with ` < `
+3. Print the versions from the oldest to the newest, using `sorted()` on `Version` objects, joined with `<` with a space on each side
 4. Print `Newest: ` and the newest version
 5. Print `Up to date: ` and `yes` if the current version equals the newest one, or `no`
 

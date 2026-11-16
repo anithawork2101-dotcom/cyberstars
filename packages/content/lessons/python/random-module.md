@@ -77,9 +77,9 @@ Every week the station draws lots: who cleans the kitchen, in which order the cr
 
 1. Start your program with two variables: **seed**, a whole number, and **crew**, a list of names. For example `seed = 3` and `crew = ["Ada", "Ben", "Cy", "Dee"]`
 2. Set the seed with `random.seed(seed)`. Then do these three draws, in this order, each with one call:
-   * make a copy of the list and mix the copy with `random.shuffle()`
-   * pick the person who cleans with `random.choice()` from the original list
-   * roll the bonus points with `random.randint(1, 6)`
+   - make a copy of the list and mix the copy with `random.shuffle()`
+   - pick the person who cleans with `random.choice()` from the original list
+   - roll the bonus points with `random.randint(1, 6)`
 3. Print `Order: ` and the mixed copy joined with `, `
 4. Print `Cleaner: ` and the person who cleans
 5. Print `Bonus: ` and the bonus points

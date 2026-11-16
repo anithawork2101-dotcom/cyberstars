@@ -89,7 +89,7 @@ Every person on the station has a name and an age. Pilots also have their flight
 1. Write a class **Person** with an `__init__` that takes a `name` and an `age`, and a method **info()** that returns `name, age`
 2. Write a class **Pilot** that inherits from `Person`. Its `__init__` takes a `name`, an `age` and `hours`, uses `super()` to set the name and the age, and sets `hours` itself. Add a method **long_trips()** that returns True if the pilot has at least 500 hours
 3. Start your program with three variables: **names**, **ages** and **hours**, three lists in the same order. For example `names = ["Ada", "Ben"]`, `ages = [36, 29]` and `hours = [800, 120]`
-4. Make a `Pilot` for each, and print a line for each: the info, ` | hours: `, the hours, ` | long trips: ` and `yes` or `no`
+4. Make a `Pilot` for each, and print a line for each: the info, `| hours:` with a space on each side, the hours, `| long trips:` with a space on each side, and `yes` or `no`
 5. Print `Most hours: ` and the info of the pilot with the most hours, the first one if several have as many
 
 The lists have from 1 to 10 pilots, ages from 20 to 70 and hours from 0 to 5,000

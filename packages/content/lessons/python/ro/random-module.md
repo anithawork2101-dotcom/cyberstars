@@ -77,9 +77,9 @@ Grace
 
 1. Începe programul cu două variabile: **seed**, un număr întreg, și **echipaj**, o listă de nume. De exemplu `seed = 3` și `echipaj = ["Ada", "Ben", "Cy", "Dee"]`
 2. Fixează seed-ul cu `random.seed(seed)`. Apoi fă aceste trei trageri, în ordinea asta, fiecare cu un singur apel:
-   * fă o copie a listei și amestec-o cu `random.shuffle()`
-   * alege persoana care face curat cu `random.choice()` din lista inițială
-   * aruncă punctele bonus cu `random.randint(1, 6)`
+   - fă o copie a listei și amestec-o cu `random.shuffle()`
+   - alege persoana care face curat cu `random.choice()` din lista inițială
+   - aruncă punctele bonus cu `random.randint(1, 6)`
 3. Afișează `Ordine: ` și copia amestecată, unită cu `, `
 4. Afișează `Curatenie: ` și persoana care face curat
 5. Afișează `Bonus: ` și punctele bonus

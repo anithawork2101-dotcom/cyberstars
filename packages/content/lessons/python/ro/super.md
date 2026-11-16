@@ -89,7 +89,7 @@ Fiecare om de pe stație are un nume și o vârstă. Piloții au și orele lor d
 1. Scrie o clasă **Persoana** cu un `__init__` care primește un `nume` și o `varsta` și o metodă **info()** care returnează `nume, varsta`
 2. Scrie o clasă **Pilot** care moștenește din `Persoana`. `__init__`-ul ei primește un `nume`, o `varsta` și `ore`, folosește `super()` ca să seteze numele și vârsta și setează singur `ore`. Adaugă o metodă **drumuri_lungi()** care returnează True dacă pilotul are cel puțin 500 de ore
 3. Începe programul cu trei variabile: **nume**, **varste** și **ore**, trei liste în aceeași ordine. De exemplu `nume = ["Ada", "Ben"]`, `varste = [36, 29]` și `ore = [800, 120]`
-4. Fă câte un `Pilot` pentru fiecare și afișează câte o linie pentru fiecare: informația, ` | ore: `, orele, ` | drumuri lungi: ` și `da` sau `nu`
+4. Fă câte un `Pilot` pentru fiecare și afișează câte o linie pentru fiecare: informația, `| ore:` cu câte un spațiu de fiecare parte, orele, `| drumuri lungi:` cu câte un spațiu de fiecare parte, și `da` sau `nu`
 5. Afișează `Cele mai multe ore: ` și informația pilotului cu cele mai multe ore, primul dacă mai mulți au tot atâtea
 
 Listele au între 1 și 10 piloți, vârste de la 20 la 70 și ore de la 0 la 5000

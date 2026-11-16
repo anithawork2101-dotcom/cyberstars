@@ -104,7 +104,7 @@ Calculatorul stației primește actualizări cu numere de versiune ca `1.10.2`. 
 
 1. Scrie o clasă **Versiune** cu un `__init__` care primește un `text` ca `"1.10.2"` și îl păstrează, împreună cu părțile lui ca numere întregi, un `__str__` care returnează textul, un `__eq__` care spune că două versiuni sunt egale când numerele lor sunt egale și un `__lt__` care compară primele numere, apoi pe al doilea la egalitate, apoi pe al treilea
 2. Începe programul cu două variabile: **versiuni**, o listă de string-uri, și **curenta**, un string. De exemplu `versiuni = ["1.10.2", "1.9.0", "2.0.0", "1.9.0"]` și `curenta = "1.10.2"`
-3. Afișează versiunile de la cea mai veche la cea mai nouă, folosind `sorted()` pe obiecte `Versiune`, unite cu ` < `
+3. Afișează versiunile de la cea mai veche la cea mai nouă, folosind `sorted()` pe obiecte `Versiune`, unite cu `<` cu câte un spațiu de fiecare parte
 4. Afișează `Cea mai noua: ` și cea mai nouă versiune
 5. Afișează `La zi: ` și `da` dacă versiunea curentă e egală cu cea mai nouă, sau `nu`
 
