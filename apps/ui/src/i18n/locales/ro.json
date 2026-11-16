@@ -568,7 +568,7 @@
     "chapters": "Capitole",
     "partDone": "{{done}} / {{total}}",
     "descriptions": {
-      "python": "Cel mai bun început dacă n-ai mai programat. De la print și variabile la funcții, liste și dicționare, apoi căutare, sortare și recursivitate, cu trei proiecte mici la final.",
+      "python": "Cel mai bun început dacă n-ai mai programat. De la print și variabile la funcții, liste și dicționare, apoi căutare, sortare și recursivitate, module, fișiere și clase, cu șase proiecte mici la final.",
       "c": "Cum funcționează un program pe dedesubt: pointeri, memorie gestionată de mână, structuri și fișiere, apoi procese, pipe-uri, thread-uri și semafoare, cu un mini shell construit de tine la final.",
       "java": "Programare orientată pe obiecte de la zero. După bazele limbajului, construiești programe din clase și obiecte, moștenire, polimorfism și interfețe, apoi colecții, cu trei proiecte mai mari la final.",
       "linux": "Un terminal adevărat, direct în browser. Lucrezi cu fișiere, cauți cu grep și find, legi comenzi cu pipe-uri, editezi text cu sed și awk, apoi permisiuni și procese.",

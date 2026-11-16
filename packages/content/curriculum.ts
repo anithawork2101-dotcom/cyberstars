@@ -8,7 +8,7 @@ export const courses = [
     key: 'python',
     title: 'Python',
     description:
-      "The best place to start if you've never coded. From print and variables to functions, lists and dictionaries, then searching, sorting and recursion, ending with three small projects.",
+      "The best place to start if you've never coded. From print and variables to functions, lists and dictionaries, then searching, sorting and recursion, modules, files and classes, ending with six small projects.",
     sortOrder: 1,
   },
   {
