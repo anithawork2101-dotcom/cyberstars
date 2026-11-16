@@ -174,7 +174,8 @@ describe('the signed-in hint', () => {
     await waitFor(() => expect(state()).toBe('in:Ada'));
     fireEvent.click(screen.getByText('logout'));
     await waitFor(() => expect(state()).toBe('out:-'));
-    expect(wasSignedIn()).toBe(false);
+    // Cleared by the same effect, after that render
+    await waitFor(() => expect(wasSignedIn()).toBe(false));
   });
 
   it('reads as not signed in when storage is blocked', () => {

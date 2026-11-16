@@ -923,8 +923,7 @@ export function LessonPage() {
             // Wider for a web lesson's two Resets, so each stays on one line
             className={`absolute right-0 mt-2 ${resetTargets.length > 1 ? 'w-64' : 'w-52'} bg-[var(--bg2)] border border-[var(--border)] rounded-[var(--radius)] shadow-[0_8px_32px_#0008] overflow-hidden z-50 fade-in-up`}
           >
-            {/* The tutor's panel opens under dev mode's full window */}
-            {tutor?.enabled && !devMode && (
+            {tutor?.enabled && (
               <button
                 role="menuitem"
                 data-track="ask-tutor"
@@ -1038,9 +1037,17 @@ export function LessonPage() {
     </div>
   );
 
+  // Dev mode's window leaves the tutor's panel its room on the right, as the
+  // shell does with the sidebar closed; its history goes beside it from lg up
+  const devTutorRoom = tutor?.open
+    ? tutor.historyOpen
+      ? 'right-[400px] lg:right-[640px]'
+      : 'right-[400px]'
+    : 'right-0';
+
   return (
     <div
-      className={`${devMode ? 'fixed inset-0 z-[60] @container bg-[var(--page-bg)]' : 'h-screen bg-transparent'} flex flex-col text-[var(--text)] overflow-hidden`}
+      className={`${devMode ? `fixed inset-y-0 left-0 ${devTutorRoom} z-[60] @container bg-[var(--page-bg)]` : 'h-screen bg-transparent'} flex flex-col text-[var(--text)] overflow-hidden`}
     >
       {/* A new account held on the tour lesson gets no way off it: no topbar
           here and no sidebar in the shell */}
@@ -1272,7 +1279,7 @@ export function LessonPage() {
         badge={gamification.newBadge ?? undefined}
         onClose={gamification.dismissNewBadge}
       />
-      {tutor?.enabled && !devMode && failedRuns >= 3 && !stuckClosed && (
+      {tutor?.enabled && failedRuns >= 3 && !stuckClosed && (
         <TutorToast
           text={t('tutor.stuck.title')}
           mood="idle"

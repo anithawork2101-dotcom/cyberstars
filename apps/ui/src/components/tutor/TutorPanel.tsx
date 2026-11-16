@@ -261,7 +261,8 @@ export function TutorPanel() {
       onKeyDown={(e) => {
         if (e.key === 'Escape') tutor.close();
       }}
-      className="fixed inset-y-0 right-0 z-50 w-full md:w-[400px] flex flex-col bg-[var(--bg2)] border-l border-[var(--border)]"
+      // Over dev mode's window (z-60), under the tour and the modals
+      className="fixed inset-y-0 right-0 z-[70] w-full md:w-[400px] flex flex-col bg-[var(--bg2)] border-l border-[var(--border)]"
     >
       {tutor.historyOpen && <TutorHistory />}
       <header className="flex items-center gap-2 h-12 pl-2 pr-4 flex-shrink-0 border-b border-[var(--border)]">
