@@ -1290,7 +1290,16 @@
     "notEarned": " (neobținută încă)",
     "tierDesc_one": "Finalizează o lecție de {{course}}",
     "tierDesc_few": "Finalizează {{count}} lecții de {{course}}",
-    "tierDesc_other": "Finalizează {{count}} de lecții de {{course}}"
+    "tierDesc_other": "Finalizează {{count}} de lecții de {{course}}",
+    "firstProject": "Primul proiect în {{language}}",
+    "firstProjectDesc": "Finalizează primul tău proiect în {{language}}",
+    "projectTier": "Proiecte {{language}} {{tier}}",
+    "projectTierDesc_one": "Finalizează un proiect în {{language}}",
+    "projectTierDesc_few": "Finalizează {{count}} proiecte în {{language}}",
+    "projectTierDesc_other": "Finalizează {{count}} de proiecte în {{language}}",
+    "partDesc": "Finalizează toate lecțiile din {{part}}",
+    "complete": "Stație completă",
+    "completeDesc": "Finalizează toate părțile din {{course}}"
   },
   "level": {
     "label": "Nivel {{n}}",
