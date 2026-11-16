@@ -47,7 +47,7 @@ describe('AchievementToast', () => {
         title="Badge earned: Python Gold"
         visible
         onClose={vi.fn()}
-        badge={{ courseKey: 'python', level: 3 }}
+        badge={{ kind: 'course', key: 'python', level: 3 }}
       />,
     );
     expect(container.ownerDocument.querySelector('#corner svg')).not.toBeNull();

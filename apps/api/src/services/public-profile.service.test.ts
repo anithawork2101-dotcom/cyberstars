@@ -12,6 +12,7 @@ function slugs(courseKey: string, n: number): string[] {
 }
 const mockLeaderboardService = { getMyRank: vi.fn() };
 const mockLaniakeaRepo = { listPasses: vi.fn() };
+const mockProjectsRepo = { listCompletions: vi.fn() };
 const mockActivityService = { computeStreak: vi.fn() };
 const mockConnectionsService = { relationTo: vi.fn(), publicConnections: vi.fn() };
 
@@ -19,6 +20,7 @@ vi.mock('../repositories/user.repository.js', () => mockUserRepo);
 vi.mock('../repositories/progress.repository.js', () => mockProgressRepo);
 vi.mock('./leaderboard.service.js', () => mockLeaderboardService);
 vi.mock('../repositories/laniakea.repository.js', () => mockLaniakeaRepo);
+vi.mock('../repositories/projects.repository.js', () => mockProjectsRepo);
 vi.mock('./activity.service.js', async (importOriginal) => ({
   ...(await importOriginal<typeof import('./activity.service.js')>()),
   ...mockActivityService,
@@ -31,6 +33,7 @@ vi.mock('@cyberstars/shared/constants', async (importOriginal) => ({
 }));
 
 const { getPublicProfile } = await import('./public-profile.service.js');
+const { courseParts } = await import('@cyberstars/content/curriculum');
 
 function makeUser(overrides: Record<string, unknown> = {}) {
   return {
@@ -54,6 +57,7 @@ beforeEach(() => {
   mockProgressRepo.getCompletedByCourse.mockResolvedValue([]);
   mockProgressRepo.getActivityDates.mockResolvedValue([]);
   mockLaniakeaRepo.listPasses.mockResolvedValue([]);
+  mockProjectsRepo.listCompletions.mockResolvedValue([]);
   mockLeaderboardService.getMyRank.mockResolvedValue(null);
   mockActivityService.computeStreak.mockReturnValue(0);
   mockConnectionsService.relationTo.mockResolvedValue('none');
@@ -181,9 +185,9 @@ describe('getPublicProfile', () => {
       rank: 5,
       badges: 3,
       badgeList: [
-        { courseKey: 'python', level: 0 },
-        { courseKey: 'python', level: 1 },
-        { courseKey: 'algo-c', level: 0 },
+        { kind: 'course', key: 'python', level: 0 },
+        { kind: 'course', key: 'python', level: 1 },
+        { kind: 'course', key: 'algo-c', level: 0 },
       ],
     });
   });
@@ -201,7 +205,7 @@ describe('getPublicProfile', () => {
       activeCourses: 1,
       courses: [{ courseKey: 'python', lessons: slugs('python', 2) }],
     });
-    expect(p.progress?.badgeList).toEqual([{ courseKey: 'python', level: 0 }]);
+    expect(p.progress?.badgeList).toEqual([{ kind: 'course', key: 'python', level: 0 }]);
   });
 
   it('skips the activity query and drops empty-slug courses from badges when only progress is shown', async () => {
@@ -216,7 +220,38 @@ describe('getPublicProfile', () => {
     expect(p.activity).toBeNull();
     expect(mockProgressRepo.getActivityDates).not.toHaveBeenCalled();
     expect(mockLaniakeaRepo.listPasses).not.toHaveBeenCalled();
-    expect(p.progress?.badgeList).toEqual([{ courseKey: 'python', level: 0 }]);
+    expect(p.progress?.badgeList).toEqual([{ kind: 'course', key: 'python', level: 0 }]);
+  });
+
+  it('gives the web course its first tiers and a badge for each part finished', async () => {
+    mockUserRepo.findById.mockResolvedValue(makeUser({ showStats: false }));
+    const [home] = courseParts['web-dev'];
+    mockProgressRepo.getCompletedByCourse.mockResolvedValue([
+      { courseKey: 'web-dev', slugs: home.lessons },
+    ]);
+
+    const p = await getPublicProfile(7, 42);
+    expect(p.progress?.badgeList).toEqual([
+      ...[0, 1, 2, 3, 4].map((level) => ({ kind: 'course', key: 'web-dev', level })),
+      { kind: 'part', key: home.key, level: 3 },
+    ]);
+  });
+
+  it("counts a language's finished projects, leaving out one no longer in the catalog", async () => {
+    mockUserRepo.findById.mockResolvedValue(makeUser({ showStats: false }));
+    mockProjectsRepo.listCompletions.mockResolvedValue(
+      ['league-table', 'month-calendar', 'wordle-referee', 'gone'].map((projectSlug) => ({
+        language: 'python',
+        projectSlug,
+        completedAt: new Date(),
+      })),
+    );
+
+    const p = await getPublicProfile(7, 42);
+    expect(p.progress?.badgeList).toEqual([
+      { kind: 'project', key: 'python', level: 0 },
+      { kind: 'project', key: 'python', level: 1 },
+    ]);
   });
 
   it('returns the owner their recent activity by kind, filtered to the window', async () => {

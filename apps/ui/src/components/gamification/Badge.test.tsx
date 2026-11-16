@@ -10,7 +10,12 @@ const { Badge } = await import('./Badge');
 describe('Badge', () => {
   it('uses the description as tooltip when earned', () => {
     render(
-      <Badge courseKey="python" level={3} label="Gold" earned description="Finish 30 lessons" />,
+      <Badge
+        badge={{ kind: 'course', key: 'python', level: 3 }}
+        label="Gold"
+        earned
+        description="Finish 30 lessons"
+      />,
     );
     const badge = screen.getByText('Gold').closest('div') as HTMLElement;
     expect(badge).toHaveAttribute('title', 'Finish 30 lessons');
@@ -18,7 +23,7 @@ describe('Badge', () => {
   });
 
   it('falls back to the label as tooltip when earned without a description', () => {
-    render(<Badge courseKey="python" level={1} label="Bronze" earned />);
+    render(<Badge badge={{ kind: 'course', key: 'python', level: 1 }} label="Bronze" earned />);
     const badge = screen.getByText('Bronze').closest('div') as HTMLElement;
     expect(badge).toHaveAttribute('title', 'Bronze');
   });
@@ -26,8 +31,7 @@ describe('Badge', () => {
   it('appends the not-earned suffix when locked with a description', () => {
     render(
       <Badge
-        courseKey="python"
-        level={2}
+        badge={{ kind: 'course', key: 'python', level: 2 }}
         label="Silver"
         earned={false}
         description="Finish 20 lessons"
@@ -39,13 +43,21 @@ describe('Badge', () => {
   });
 
   it('appends the not-earned suffix to the label when locked without a description', () => {
-    render(<Badge courseKey="python" level={0} label="First Steps" earned={false} />);
+    render(
+      <Badge
+        badge={{ kind: 'course', key: 'python', level: 0 }}
+        label="First Steps"
+        earned={false}
+      />,
+    );
     const badge = screen.getByText('First Steps').closest('div') as HTMLElement;
     expect(badge).toHaveAttribute('title', 'First Steps (locked)');
   });
 
   it("draws the course's emblem above the label", () => {
-    const { container } = render(<Badge courseKey="c" level={2} label="Silver" earned />);
+    const { container } = render(
+      <Badge badge={{ kind: 'course', key: 'c', level: 2 }} label="Silver" earned />,
+    );
     expect(container.querySelector('svg')).not.toBeNull();
   });
 });

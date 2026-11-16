@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Corner } from '../layout/Corner';
+import type { BadgeRef } from '@cyberstars/shared/badges';
 import { BadgeEmblem } from './BadgeEmblem';
 
 interface AchievementToastProps {
@@ -8,7 +9,7 @@ interface AchievementToastProps {
   visible: boolean;
   onClose: () => void;
   // the badge just earned, drawn before the title
-  badge?: { courseKey: string; level: number };
+  badge?: BadgeRef;
 }
 
 // In the bottom-right corner with the other toasts, so a lesson's XP and the
@@ -39,7 +40,7 @@ export function AchievementToast({ title, visible, onClose, badge }: Achievement
           animation: 'toast-in 0.4s cubic-bezier(.22,1,.36,1)',
         }}
       >
-        {badge && <BadgeEmblem courseKey={badge.courseKey} level={badge.level} size={36} />}
+        {badge && <BadgeEmblem badge={badge} size={36} />}
         <span className="text-sm font-bold text-[var(--text)]">{title}</span>
         <button
           onClick={onClose}

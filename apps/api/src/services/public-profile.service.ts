@@ -1,6 +1,7 @@
 import * as userRepo from '../repositories/user.repository.js';
 import * as progressRepo from '../repositories/progress.repository.js';
 import * as laniakeaRepo from '../repositories/laniakea.repository.js';
+import * as projectsRepo from '../repositories/projects.repository.js';
 import * as leaderboardService from './leaderboard.service.js';
 import * as connectionsService from './connections.service.js';
 import { computeStreak, listDone, recentActivity } from './activity.service.js';
@@ -11,22 +12,30 @@ import {
   LISTED_COURSE_KEYS,
 } from '@cyberstars/shared/constants';
 import type { PublicProfile, PublicProfileBadge } from '@cyberstars/shared/profile';
+import { courseBadges, projectBadges, type BadgeState } from '@cyberstars/shared/badges';
+import { PROJECT_LANGUAGES, findProject } from '@cyberstars/shared/projects';
+import { courseParts, lessons } from '@cyberstars/content/curriculum';
 import { AppError } from '@cyberstars-framework/server-kit/errors';
 
 const ACTIVE_COURSE_KEYS = new Set<string>(LISTED_COURSE_KEYS);
 
-// Earned badges from per-course completion counts, mirroring the client's
-// useGamification: "First Steps" at >=1 lesson (level 0), then one tier per 10
-// lessons (level 1=Bronze, 2=Silver, 3=Gold...). done never exceeds a course's
-// lesson count, so floor(done/10) can't exceed the course's max tier.
-function earnedBadges(courses: { courseKey: string; slugs: string[] }[]): PublicProfileBadge[] {
-  const badges: PublicProfileBadge[] = [];
+// Earned badges from the same rules as the client's useGamification
+function earnedBadges(
+  courses: { courseKey: string; slugs: string[] }[],
+  projects: { language: string; projectSlug: string }[],
+): PublicProfileBadge[] {
+  const badges: BadgeState[] = [];
   for (const { courseKey, slugs } of courses) {
-    const done = slugs.length;
-    if (done >= 1) badges.push({ courseKey, level: 0 });
-    for (let lvl = 1; lvl <= Math.floor(done / 10); lvl++) badges.push({ courseKey, level: lvl });
+    const total = lessons.filter((l) => l.courseKey === courseKey).length;
+    badges.push(...courseBadges(courseKey, total, new Set(slugs), courseParts[courseKey]));
   }
-  return badges;
+  for (const language of PROJECT_LANGUAGES) {
+    const done = projects.filter(
+      (p) => p.language === language && findProject(language, p.projectSlug),
+    );
+    badges.push(...projectBadges(language, done.length));
+  }
+  return badges.filter((b) => b.earned).map(({ kind, key, level }) => ({ kind, key, level }));
 }
 
 export async function getPublicProfile(
@@ -69,11 +78,12 @@ export async function getPublicProfile(
 
   if (!needStats && !needProgress && !needActivity) return profile;
 
-  const [rank, allCompleted, activityRows, passes] = await Promise.all([
+  const [rank, allCompleted, activityRows, passes, projects] = await Promise.all([
     needStats || needProgress ? leaderboardService.getMyRank(targetId) : Promise.resolve(null),
     needStats || needProgress ? progressRepo.getCompletedByCourse(targetId) : Promise.resolve([]),
     needStats || needActivity ? progressRepo.getActivityDates(targetId) : Promise.resolve([]),
     needStats || needActivity ? laniakeaRepo.listPasses(targetId) : Promise.resolve([]),
+    needProgress ? projectsRepo.listCompletions(targetId) : Promise.resolve([]),
   ]);
   const done = listDone(activityRows, passes);
   // A closed course counts nowhere on a profile: no lessons, course or badge
@@ -105,7 +115,7 @@ export async function getPublicProfile(
 
   if (needProgress) {
     const level = rank?.level ?? levelFromXp(totalXp);
-    const badgeList = earnedBadges(completed);
+    const badgeList = earnedBadges(completed, projects);
     profile.progress = {
       level,
       totalXp,

@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next';
+import type { BadgeRef } from '@cyberstars/shared/badges';
 import { BadgeEmblem } from './BadgeEmblem';
 
 interface BadgeProps {
-  courseKey: string;
-  level: number;
+  badge: BadgeRef;
   label: string;
   earned: boolean;
   description?: string;
 }
 
-export function Badge({ courseKey, level, label, earned, description }: BadgeProps) {
+export function Badge({ badge, label, earned, description }: BadgeProps) {
   const { t } = useTranslation();
   const tooltip = earned
     ? (description ?? label)
@@ -25,7 +25,7 @@ export function Badge({ courseKey, level, label, earned, description }: BadgePro
       style={earned ? { boxShadow: '0 0 12px var(--accent-glow)' } : undefined}
       title={tooltip}
     >
-      <BadgeEmblem courseKey={courseKey} level={level} />
+      <BadgeEmblem badge={badge} />
       <span className="text-[10px] font-semibold text-center text-[var(--text2)] leading-tight">
         {label}
       </span>

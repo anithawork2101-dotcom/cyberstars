@@ -20,6 +20,7 @@ import * as userService from '../services/userService';
 import * as connectionsService from '../services/connectionsService';
 import { ApiClientError } from '../services/apiClient';
 import type { PublicProfile } from '@cyberstars/shared/profile';
+import { badgeId, type BadgeRef } from '@cyberstars/shared/badges';
 import type { ConnectionRelation } from '@cyberstars/shared/connections';
 import type { Course } from '@cyberstars/shared/lesson';
 
@@ -108,6 +109,12 @@ export function PublicProfilePage() {
   const { t, i18n } = useTranslation();
   const { user, isLoading: authLoading } = useAuth();
   const { openWith } = useMessages();
+  const { courses: curriculum } = useCurriculum();
+  // A part badge is named by its part, the others by their course or project language
+  const badgeName = (b: BadgeRef) =>
+    b.kind === 'part'
+      ? (curriculum.flatMap((c) => c.parts ?? []).find((p) => p.key === b.key)?.title ?? b.key)
+      : courseTitle(b.key);
   // Logged-in only (no guests): profiles ride the leaderboard gate.
   const canAccess = !!user && canAccessFeature('leaderboard', user.role, import.meta.env.PROD);
   // Messaging needs an identity: without the user check a logged-out visitor
@@ -340,12 +347,11 @@ export function PublicProfilePage() {
                 <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-2.5">
                   {profile.progress.badgeList.map((b) => (
                     <Badge
-                      key={`${b.courseKey}-${b.level}`}
-                      courseKey={b.courseKey}
-                      level={b.level}
-                      label={badgeLabel(t, courseTitle(b.courseKey), b.level)}
+                      key={badgeId(b)}
+                      badge={b}
+                      label={badgeLabel(t, b, badgeName(b))}
                       earned
-                      description={badgeDescription(t, courseTitle(b.courseKey), b.level)}
+                      description={badgeDescription(t, b, badgeName(b))}
                     />
                   ))}
                 </div>

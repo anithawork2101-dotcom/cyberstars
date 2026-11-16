@@ -1,5 +1,6 @@
 import { useId } from 'react';
-import { courseGlyph } from './courseGlyphs';
+import type { BadgeRef } from '@cyberstars/shared/badges';
+import { courseGlyph, partGlyph } from './courseGlyphs';
 import { TIERS } from './badgeMeta';
 
 function hexPoints(r: number): string {
@@ -15,18 +16,19 @@ const OUTER = hexPoints(47);
 const INNER = hexPoints(40);
 
 interface BadgeEmblemProps {
-  courseKey: string;
-  level: number;
+  badge: BadgeRef;
   size?: number;
 }
 
-// Algorithm courses (algo-*) reuse their base course's symbol plus a flowchart decision pip
-export function BadgeEmblem({ courseKey, level, size = 56 }: BadgeEmblemProps) {
+// Algorithm courses (algo-*) reuse their base course's symbol plus a flowchart decision pip,
+// project badges their language's symbol plus a cube pip, a part the page it builds
+export function BadgeEmblem({ badge, size = 56 }: BadgeEmblemProps) {
   // useId's separators (colons in older React) don't belong in url(#...)
   const gradientId = `badge${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
-  const tier = TIERS[Math.min(level, TIERS.length - 1)];
-  const algo = courseKey.startsWith('algo-');
-  const glyph = courseGlyph(courseKey);
+  const tier = TIERS[Math.min(badge.level, TIERS.length - 1)];
+  const algo = badge.kind === 'course' && badge.key.startsWith('algo-');
+  const pip = algo || badge.kind === 'project';
+  const glyph = badge.kind === 'part' ? partGlyph(badge.key) : courseGlyph(badge.key);
   const metal = `url(#${gradientId})`;
 
   return (
@@ -42,7 +44,7 @@ export function BadgeEmblem({ courseKey, level, size = 56 }: BadgeEmblemProps) {
       <polygon points={INNER} fill="var(--surface)" />
       <polygon points={INNER} fill={tier.mid} opacity="0.08" />
       <g
-        transform={algo ? 'translate(-3 -3)' : undefined}
+        transform={pip ? 'translate(-3 -3)' : undefined}
         color={tier.light}
         fill="none"
         stroke="currentColor"
@@ -52,15 +54,19 @@ export function BadgeEmblem({ courseKey, level, size = 56 }: BadgeEmblemProps) {
       >
         {glyph}
       </g>
-      {algo && (
+      {pip && (
         <>
           <circle cx="31" cy="31" r="15" fill="var(--bg)" />
           <circle cx="31" cy="31" r="12.5" fill={metal} />
           <path
-            d="M31 24 L38 31 L31 38 L24 31 Z"
+            d={
+              algo
+                ? 'M31 24 L38 31 L31 38 L24 31 Z'
+                : 'M31 23.5 L37.5 27 L37.5 35 L31 38.5 L24.5 35 L24.5 27 Z M24.5 27 L31 30.5 L37.5 27 M31 30.5 V38.5'
+            }
             fill="none"
             stroke="var(--bg)"
-            strokeWidth="2.6"
+            strokeWidth={algo ? 2.6 : 2.2}
             strokeLinejoin="round"
           />
         </>

@@ -22,9 +22,9 @@ export interface BadgeState extends BadgeRef {
 
 export const GOLD = 3;
 export const LEGEND = 6;
-const LESSONS_PER_TIER = 10;
+export const LESSONS_PER_TIER = 10;
 const PARTS_TIER_CAP = 4;
-const PROJECTS_PER_TIER = 3;
+export const PROJECTS_PER_TIER = 3;
 
 export function badgeId(b: BadgeRef): string {
   return `${b.kind}:${b.key}:${b.level}`;
