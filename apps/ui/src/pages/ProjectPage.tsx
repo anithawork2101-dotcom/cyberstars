@@ -28,6 +28,8 @@ import { setRunWait, withRunWait } from '../hooks/useRunWait';
 import { useAuth } from '../context/AuthContext';
 import { useGuestSignupPrompt } from '../context/GuestSignupPromptContext';
 import { useCodeExecution } from '../hooks/useCodeExecution';
+import { useGamification } from '../hooks/useGamification';
+import { AchievementToast } from '../components/gamification/AchievementToast';
 import { useResizeSplit } from '../hooks/useResizeSplit';
 import { useTerminalSession } from '../hooks/useTerminalSession';
 import { courseLabel, courseMeta } from '../constants/courses';
@@ -241,6 +243,7 @@ function ProjectView({ project }: { project: Project }) {
   const [code, setCode] = useState(() => readCode(project));
   const { user } = useAuth();
   const { notifyRunComplete } = useGuestSignupPrompt();
+  const gamification = useGamification();
   const { output, isRunning, inputEnded, execute, stop, sendInput, endInput } =
     useCodeExecution(notifyRunComplete);
   // Only passing the project's judge finishes it; the ticks are the student's notes
@@ -314,7 +317,9 @@ function ProjectView({ project }: { project: Project }) {
     execute(code, project.language);
   };
   const passed = (ok: boolean) => {
-    if (ok && user) setFinished(true);
+    if (!ok || !user) return;
+    setFinished(true);
+    gamification.refresh();
   };
 
   const runTests = async () => {
@@ -516,6 +521,13 @@ function ProjectView({ project }: { project: Project }) {
           </div>
         </div>
       </div>
+
+      <AchievementToast
+        title={t('lesson.badgeEarned', { label: gamification.newBadge?.label ?? '' })}
+        visible={!!gamification.newBadge}
+        badge={gamification.newBadge ?? undefined}
+        onClose={gamification.dismissNewBadge}
+      />
     </div>
   );
 }

@@ -35,6 +35,13 @@ vi.mock('../context/CurriculumContext', () => ({
           { slug: 'py-2', title: 'Variables', sortOrder: 2 },
         ],
       },
+      {
+        key: 'web-dev',
+        title: 'Web Development',
+        description: '',
+        lessons: [{ slug: 'first-page', title: 'First Page', sortOrder: 1 }],
+        parts: [{ key: 'station-home', title: 'Station Home', lessons: ['first-page'] }],
+      },
     ],
     isLoading: false,
     refresh: vi.fn(),
@@ -80,9 +87,11 @@ const fullProfile: PublicProfile = {
     rank: 5,
     badges: 6,
     badgeList: [
-      { courseKey: 'python', level: 0 },
-      { courseKey: 'python', level: 1 },
-      { courseKey: 'algo-c', level: 0 },
+      { kind: 'course', key: 'python', level: 0 },
+      { kind: 'course', key: 'python', level: 1 },
+      { kind: 'course', key: 'algo-c', level: 0 },
+      { kind: 'part', key: 'station-home', level: 3 },
+      { kind: 'project', key: 'python', level: 0 },
     ],
   },
   activity: [
@@ -129,6 +138,9 @@ describe('PublicProfilePage', () => {
     expect(screen.getByText('Active Courses')).toBeDefined();
     // "Badges" appears twice: the stat cell label and the enumerated section header.
     expect(screen.getAllByText('Badges').length).toBeGreaterThan(0);
+    expect(screen.getByText('Python First Steps')).toBeDefined();
+    expect(screen.getByText('Station Home')).toBeDefined();
+    expect(screen.getByText('Python First Project')).toBeDefined();
     expect(screen.getByText('Day Streak')).toBeDefined();
     expect(screen.getByText('#5')).toBeDefined();
     expect(screen.getByText(/250/)).toBeDefined();

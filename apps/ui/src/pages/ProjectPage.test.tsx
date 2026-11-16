@@ -101,6 +101,10 @@ vi.mock('../components/layout/Topbar', () => ({
   ),
 }));
 vi.mock('./NotFoundPage', () => ({ NotFoundPage: () => <p>Not found</p> }));
+const refreshBadges = vi.fn();
+vi.mock('../hooks/useGamification', () => ({
+  useGamification: () => ({ newBadge: null, dismissNewBadge: vi.fn(), refresh: refreshBadges }),
+}));
 
 const { useAuth } = await import('../context/AuthContext');
 const { canAccessFeature } = await import('@cyberstars/shared/features');
@@ -268,6 +272,8 @@ describe('ProjectPage', () => {
     expect(await screen.findByText('Project finished: +100 XP')).toBeInTheDocument();
     expect(projectsService.runTests).toHaveBeenCalledWith('python', 'shop', '', 'run-1');
     expect(screen.getByText('Finished')).toBeInTheDocument();
+    // The badges are read again, so one the project earns is announced
+    expect(refreshBadges).toHaveBeenCalledOnce();
     fireEvent.click(screen.getByRole('button', { name: 'Back to output' }));
     expect(screen.queryByText('Verdict: passed')).toBeNull();
   });
@@ -281,6 +287,7 @@ describe('ProjectPage', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Run Tests' }));
     expect(await screen.findByText('Verdict: failed')).toBeInTheDocument();
     expect(screen.queryByText('Finished')).toBeNull();
+    expect(refreshBadges).not.toHaveBeenCalled();
   });
 
   it('tells a guest whose run passes that the project needs an account', async () => {
@@ -311,6 +318,7 @@ describe('ProjectPage', () => {
     fireEvent.click(await screen.findByRole('button', { name: 'Check the terminal' }));
     expect(await screen.findByText('Project finished: +100 XP')).toBeInTheDocument();
     expect(projectsService.checkTerminal).toHaveBeenCalledWith('session-1', 'tidy');
+    expect(refreshBadges).toHaveBeenCalledOnce();
   });
 
   it.each([

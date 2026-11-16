@@ -315,9 +315,8 @@ export function ProfilePage() {
             <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-2.5">
               {g.badges.map((b) => (
                 <Badge
-                  key={`${b.courseKey}-${b.level}`}
-                  courseKey={b.courseKey}
-                  level={b.level}
+                  key={b.id}
+                  badge={b}
                   label={b.label}
                   earned={b.earned}
                   description={b.description}

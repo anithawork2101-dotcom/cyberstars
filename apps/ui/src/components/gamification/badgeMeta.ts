@@ -1,4 +1,5 @@
 import type { TFunction } from 'i18next';
+import { LESSONS_PER_TIER, PROJECTS_PER_TIER, type BadgeRef } from '@cyberstars/shared/badges';
 
 // Frame metal per badge level: 0 First Steps, then Bronze, Silver, Gold, Platinum, Diamond, Legend
 export const TIERS = [
@@ -14,20 +15,34 @@ export const TIERS = [
 // Tier names for levels 1..6, one per frame in BadgeEmblem; beyond that the level, as the page's language shortens it.
 const TIER_KEYS = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'legend'];
 
-// level 0 = "First Steps" (>=1 lesson), level N = the Nth 10-lesson tier.
-export function badgeLabel(t: TFunction, courseTitle: string, level: number): string {
-  if (level === 0) return t('gamification.firstSteps', { course: courseTitle });
-  const tierKey = TIER_KEYS[level - 1];
-  const tier = tierKey ? t(`gamification.${tierKey}`) : t('level.short', { n: level });
-  return t('gamification.tier', { course: courseTitle, tier });
+// name is the course's title, the part's, or for a project badge its language's
+export function badgeLabel(t: TFunction, badge: BadgeRef, name: string): string {
+  if (badge.kind === 'part') return name;
+  if (badge.kind === 'complete') return t('gamification.complete');
+  const project = badge.kind === 'project';
+  if (badge.level === 0) {
+    return project
+      ? t('gamification.firstProject', { language: name })
+      : t('gamification.firstSteps', { course: name });
+  }
+  const tierKey = TIER_KEYS[badge.level - 1];
+  const tier = tierKey ? t(`gamification.${tierKey}`) : t('level.short', { n: badge.level });
+  return project
+    ? t('gamification.projectTier', { language: name, tier })
+    : t('gamification.tier', { course: name, tier });
 }
 
-export function badgeDescription(t: TFunction, courseTitle: string, level: number): string {
-  if (level === 0) return t('gamification.firstStepsDesc', { course: courseTitle });
-  return t('gamification.tierDesc', { course: courseTitle, count: level * 10 });
-}
-
-// A course has First Steps, then one badge per full 10 lessons (at least one)
-export function badgeMaxLevel(total: number): number {
-  return Math.max(1, Math.floor(total / 10));
+export function badgeDescription(t: TFunction, badge: BadgeRef, name: string): string {
+  if (badge.kind === 'part') return t('gamification.partDesc', { part: name });
+  if (badge.kind === 'complete') return t('gamification.completeDesc', { course: name });
+  if (badge.kind === 'project') {
+    return badge.level === 0
+      ? t('gamification.firstProjectDesc', { language: name })
+      : t('gamification.projectTierDesc', {
+          language: name,
+          count: badge.level * PROJECTS_PER_TIER,
+        });
+  }
+  if (badge.level === 0) return t('gamification.firstStepsDesc', { course: name });
+  return t('gamification.tierDesc', { course: name, count: badge.level * LESSONS_PER_TIER });
 }

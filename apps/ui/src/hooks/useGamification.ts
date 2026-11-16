@@ -11,17 +11,16 @@ import {
   xpForCourse,
 } from '@cyberstars/shared/constants';
 import { canAccessFeature } from '@cyberstars/shared/features';
-import { PROJECT_XP, findProject } from '@cyberstars/shared/projects';
+import { PROJECT_LANGUAGES, PROJECT_XP, findProject } from '@cyberstars/shared/projects';
+import { badgeId, courseBadges, projectBadges, type BadgeState } from '@cyberstars/shared/badges';
 import * as projectsService from '../services/projectsService';
-import { badgeLabel, badgeDescription, badgeMaxLevel } from '../components/gamification/badgeMeta';
+import { badgeLabel, badgeDescription } from '../components/gamification/badgeMeta';
+import { courseTitle } from '../constants/courses';
 
-interface BadgeDef {
+interface BadgeDef extends BadgeState {
+  id: string;
   label: string;
   description: string;
-  courseKey: string;
-  level: number;
-  maxLevel: number;
-  earned: boolean;
 }
 
 interface XpState {
@@ -62,6 +61,8 @@ export function useGamification(): Gamification {
   // Finished projects add their XP on top of the courses'. Only a student the
   // projects feature lets in has any; a failed read just leaves them out.
   const [projectXp, setProjectXp] = useState(0);
+  // Finished projects per language; null until read, so a badge earned before isn't announced
+  const [projectsDone, setProjectsDone] = useState<Record<string, number> | null>(null);
   const projectsOpen = isLoggedIn && canAccessFeature('projects', user?.role, import.meta.env.PROD);
   useEffect(() => {
     if (!projectsOpen) return;
@@ -71,11 +72,15 @@ export function useGamification(): Gamification {
       .then((done) => {
         if (!live) return;
         let xp = 0;
+        const counts: Record<string, number> = {};
         for (const c of done) {
           const project = findProject(c.language, c.slug);
-          if (project) xp += PROJECT_XP[project.difficulty];
+          if (!project) continue;
+          xp += PROJECT_XP[project.difficulty];
+          counts[project.language] = (counts[project.language] ?? 0) + 1;
         }
         setProjectXp(xp);
+        setProjectsDone(counts);
       })
       .catch(() => {});
     return () => {
@@ -123,59 +128,57 @@ export function useGamification(): Gamification {
 
   const badges: BadgeDef[] = useMemo(() => {
     const result: BadgeDef[] = [];
-
-    for (const c of courses) {
-      const { done, total } = perCourse[c.key] ?? { done: 0, total: 0 };
-      const maxLevel = badgeMaxLevel(total);
-
+    const add = (b: BadgeState, name: string) =>
       result.push({
-        label: badgeLabel(t, c.title, 0),
-        description: badgeDescription(t, c.title, 0),
-        courseKey: c.key,
-        level: 0,
-        maxLevel,
-        earned: done >= 1,
+        ...b,
+        id: badgeId(b),
+        label: badgeLabel(t, b, name),
+        description: badgeDescription(t, b, name),
       });
 
-      for (let lvl = 1; lvl <= maxLevel; lvl++) {
-        result.push({
-          label: badgeLabel(t, c.title, lvl),
-          description: badgeDescription(t, c.title, lvl),
-          courseKey: c.key,
-          level: lvl,
-          maxLevel,
-          earned: done >= lvl * 10,
-        });
+    for (const c of courses) {
+      const total = perCourse[c.key]?.total ?? 0;
+      const done = new Set(
+        progressMap[c.key]?.lessons.filter((l) => l.completed).map((l) => l.slug),
+      );
+      const partTitles = new Map(c.parts?.map((p) => [p.key, p.title]));
+      for (const b of courseBadges(c.key, total, done, c.parts)) {
+        add(b, b.kind === 'part' ? (partTitles.get(b.key) ?? b.key) : c.title);
+      }
+    }
+    if (projectsOpen) {
+      for (const language of PROJECT_LANGUAGES) {
+        for (const b of projectBadges(language, projectsDone?.[language] ?? 0)) {
+          add(b, courseTitle(language));
+        }
       }
     }
 
     return result;
-  }, [courses, perCourse, t]);
+  }, [courses, perCourse, progressMap, projectsOpen, projectsDone, t]);
 
   const [newBadge, setNewBadge] = useState<BadgeDef | null>(null);
   const prevEarnedRef = useRef<Set<string>>(new Set());
   const initializedRef = useRef(false);
+  // Project badges are new only once the completions were read before
+  const projectsKnownRef = useRef(false);
 
   useEffect(() => {
     if (isLoading) return;
-    const earnedKeys = new Set(
-      badges.filter((b) => b.earned).map((b) => `${b.courseKey}-${b.level}`),
-    );
-    if (!initializedRef.current) {
-      prevEarnedRef.current = earnedKeys;
-      initializedRef.current = true;
-      return;
-    }
-    const prev = prevEarnedRef.current;
-    for (const key of earnedKeys) {
-      if (!prev.has(key)) {
-        const badge = badges.find((b) => `${b.courseKey}-${b.level}` === key);
-        if (badge) setTimeout(() => setNewBadge(badge), 0);
-        break;
-      }
+    const earnedKeys = new Set(badges.filter((b) => b.earned).map((b) => b.id));
+    if (initializedRef.current) {
+      const prev = prevEarnedRef.current;
+      // The last new one is the biggest: a finished station beats its last part
+      const fresh = badges.filter(
+        (b) => b.earned && !prev.has(b.id) && (b.kind !== 'project' || projectsKnownRef.current),
+      );
+      const badge = fresh.at(-1);
+      if (badge) setTimeout(() => setNewBadge(badge), 0);
     }
     prevEarnedRef.current = earnedKeys;
-  }, [badges, isLoading]);
+    initializedRef.current = true;
+    projectsKnownRef.current = projectsDone !== null;
+  }, [badges, isLoading, projectsDone]);
 
   const dismissNewBadge = useCallback(() => setNewBadge(null), []);
 
