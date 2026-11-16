@@ -186,6 +186,35 @@ describe('ResultPanel', () => {
     expect(screen.queryByText(/tests\.structure/)).toBeNull();
   });
 
+  it('words a check that may name what it asks for, with the name and without', () => {
+    render(
+      <ResultPanel
+        showRuntime={false}
+        results={{
+          ...base,
+          structureFailures: [
+            { type: 'require', rule: { kind: 'import', name: 'math' } },
+            { type: 'require', rule: { kind: 'keyword_arg' } },
+            { type: 'require', rule: { kind: 'extends', name: 'Exception' } },
+            { type: 'require', rule: { kind: 'override' } },
+            { type: 'require', rule: { kind: 'decorator', name: 'dataclass' } },
+            { type: 'require', rule: { kind: 'loop', type: 'generator_expression' } },
+            { type: 'require', rule: { kind: 'format_spec' } },
+          ],
+          cases: [{ index: 0, visible: true, passed: true }],
+        }}
+      />,
+    );
+    expect(screen.getByText('Import math')).toBeInTheDocument();
+    expect(screen.getByText(/argument passed by its name \(name=value\)/)).toBeInTheDocument();
+    expect(screen.getByText('Make a class inherit from Exception')).toBeInTheDocument();
+    expect(screen.getByText('Override a method of the parent class')).toBeInTheDocument();
+    expect(screen.getByText('Use the @dataclass decorator')).toBeInTheDocument();
+    expect(screen.getByText(/generator expression/)).toBeInTheDocument();
+    expect(screen.getByText(/format spec, like \{x:\.2f\}/)).toBeInTheDocument();
+    expect(screen.queryByText(/tests\.structure/)).toBeNull();
+  });
+
   it('names a timeout and a crash', () => {
     const { unmount } = render(
       <ResultPanel
