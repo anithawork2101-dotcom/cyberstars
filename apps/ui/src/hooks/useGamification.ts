@@ -82,9 +82,7 @@ export function useGamification(): Gamification {
         setProjectXp(xp);
         setProjectsDone(counts);
       })
-      .catch(() => {
-        if (live) setProjectsDone((d) => d ?? {});
-      });
+      .catch(() => {});
     return () => {
       live = false;
     };
@@ -162,25 +160,25 @@ export function useGamification(): Gamification {
   const [newBadge, setNewBadge] = useState<BadgeDef | null>(null);
   const prevEarnedRef = useRef<Set<string>>(new Set());
   const initializedRef = useRef(false);
+  // Project badges are new only once the completions were read before
+  const projectsKnownRef = useRef(false);
 
   useEffect(() => {
-    if (isLoading || (projectsOpen && projectsDone === null)) return;
+    if (isLoading) return;
     const earnedKeys = new Set(badges.filter((b) => b.earned).map((b) => b.id));
-    if (!initializedRef.current) {
-      prevEarnedRef.current = earnedKeys;
-      initializedRef.current = true;
-      return;
-    }
-    const prev = prevEarnedRef.current;
-    for (const key of earnedKeys) {
-      if (!prev.has(key)) {
-        const badge = badges.find((b) => b.id === key);
-        if (badge) setTimeout(() => setNewBadge(badge), 0);
-        break;
-      }
+    if (initializedRef.current) {
+      const prev = prevEarnedRef.current;
+      // The last new one is the biggest: a finished station beats its last part
+      const fresh = badges.filter(
+        (b) => b.earned && !prev.has(b.id) && (b.kind !== 'project' || projectsKnownRef.current),
+      );
+      const badge = fresh.at(-1);
+      if (badge) setTimeout(() => setNewBadge(badge), 0);
     }
     prevEarnedRef.current = earnedKeys;
-  }, [badges, isLoading, projectsOpen, projectsDone]);
+    initializedRef.current = true;
+    projectsKnownRef.current = projectsDone !== null;
+  }, [badges, isLoading, projectsDone]);
 
   const dismissNewBadge = useCallback(() => setNewBadge(null), []);
 

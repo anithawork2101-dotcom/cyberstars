@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import type { CourseProgress } from '@cyberstars/shared/progress';
 
 const lesson = (slug: string, completed: boolean) => ({
@@ -85,11 +85,46 @@ describe('useGamification badges', () => {
 
   it('announces a badge earned after the page loaded', async () => {
     getCompletions.mockResolvedValue([]);
+    progressMap = { 'web-dev': progress('web-dev', ['a'], WEB) };
+    const { result, rerender } = renderHook(() => useGamification());
+    await waitFor(() => expect(getCompletions).toHaveBeenCalled());
+    await new Promise((r) => setTimeout(r, 0));
+    progressMap = { 'web-dev': progress('web-dev', ['a', 'b'], WEB) };
+    rerender();
+    await waitFor(() => expect(result.current.newBadge?.label).toBe('Station Home'));
+  });
+
+  it('announces the finished station over the last part it finishes with', async () => {
+    getCompletions.mockResolvedValue([]);
     const { result, rerender } = renderHook(() => useGamification());
     await waitFor(() => expect(getCompletions).toHaveBeenCalled());
     await new Promise((r) => setTimeout(r, 0));
     progressMap = { 'web-dev': progress('web-dev', WEB, WEB) };
     rerender();
-    await waitFor(() => expect(result.current.newBadge?.label).toBe('Crew Directory'));
+    await waitFor(() => expect(result.current.newBadge?.label).toBe('Station Complete'));
+  });
+
+  it('announces a project badge earned after the page loaded', async () => {
+    getCompletions.mockResolvedValue([]);
+    const { result } = renderHook(() => useGamification());
+    await waitFor(() => expect(getCompletions).toHaveBeenCalled());
+    await new Promise((r) => setTimeout(r, 0));
+    getCompletions.mockResolvedValue(finished('league-table'));
+    act(() => result.current.refresh());
+    await waitFor(() => expect(result.current.newBadge?.id).toBe('project:python:0'));
+  });
+
+  it("doesn't announce old project badges when the first read failed", async () => {
+    getCompletions.mockRejectedValueOnce(new Error('down'));
+    const { result } = renderHook(() => useGamification());
+    await waitFor(() => expect(getCompletions).toHaveBeenCalled());
+    await new Promise((r) => setTimeout(r, 0));
+    getCompletions.mockResolvedValue(finished('league-table'));
+    act(() => result.current.refresh());
+    await waitFor(() =>
+      expect(result.current.badges.find((b) => b.id === 'project:python:0')?.earned).toBe(true),
+    );
+    await new Promise((r) => setTimeout(r, 0));
+    expect(result.current.newBadge).toBeNull();
   });
 });
