@@ -672,6 +672,27 @@ export const lessons = [
     sortOrder: 109,
     hasCodeFile: true,
   },
+  {
+    courseKey: 'python',
+    slug: 'project-bank-account',
+    title: 'Project: Bank Account',
+    sortOrder: 110,
+    hasCodeFile: true,
+  },
+  {
+    courseKey: 'python',
+    slug: 'project-cargo-inventory',
+    title: 'Project: Cargo Inventory',
+    sortOrder: 111,
+    hasCodeFile: true,
+  },
+  {
+    courseKey: 'python',
+    slug: 'project-grade-report',
+    title: 'Project: Grade Report',
+    sortOrder: 112,
+    hasCodeFile: true,
+  },
   { courseKey: 'c', slug: 'print', title: 'Print', sortOrder: 1, hasCodeFile: true },
   {
     courseKey: 'c',

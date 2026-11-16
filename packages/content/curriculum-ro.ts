@@ -116,6 +116,9 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     'project-guessing-game': 'Proiect: Ghicește numărul',
     'project-quiz': 'Proiect: Joc de quiz',
     'project-todo': 'Proiect: Lista de sarcini',
+    'project-bank-account': 'Proiect: Contul bancar',
+    'project-cargo-inventory': 'Proiect: Inventarul cargoului',
+    'project-grade-report': 'Proiect: Raportul cu note',
   },
   c: {
     print: 'Afișare cu printf',
