@@ -923,8 +923,7 @@ export function LessonPage() {
             // Wider for a web lesson's two Resets, so each stays on one line
             className={`absolute right-0 mt-2 ${resetTargets.length > 1 ? 'w-64' : 'w-52'} bg-[var(--bg2)] border border-[var(--border)] rounded-[var(--radius)] shadow-[0_8px_32px_#0008] overflow-hidden z-50 fade-in-up`}
           >
-            {/* The tutor's panel opens under dev mode's full window */}
-            {tutor?.enabled && !devMode && (
+            {tutor?.enabled && (
               <button
                 role="menuitem"
                 data-track="ask-tutor"
