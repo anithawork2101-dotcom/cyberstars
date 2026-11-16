@@ -189,6 +189,117 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'def dock(ship, bay=1):\n    print(ship, bay)\n',
       'def dock(ship, bay):\n    print(ship, bay)\n',
     ],
+    [{ kind: 'lambda' }, 'double = lambda x: x * 2\n', 'def double(x):\n    return x * 2\n'],
+    [
+      { kind: 'yield' },
+      'def count():\n    yield 1\n    yield 2\n',
+      'def count():\n    return [1, 2]\n',
+    ],
+    [
+      { kind: 'with' },
+      'with open("a.txt", "w") as f:\n    f.write("hi")\n',
+      'f = open("a.txt", "w")\nf.write("hi")\nf.close()\n',
+    ],
+    [
+      { kind: 'raise' },
+      'def check(x):\n    if x < 0:\n        raise ValueError("no")\n',
+      'def check(x):\n    if x < 0:\n        print("no")\n',
+    ],
+    [{ kind: 'import' }, 'import math\nprint(math.pi)\n', 'print(3.14)\n'],
+    [
+      { kind: 'import', name: 'collections' },
+      'from collections import Counter\nprint(Counter("aab"))\n',
+      'import math\nprint(math.pi)\n',
+    ],
+    [{ kind: 'import', name: 'os' }, 'import os.path\n', 'import ospath\n'],
+    [
+      { kind: 'keyword_arg' },
+      'def greet(name, mood):\n    print(name, mood)\n\ngreet(mood="calm", name="Ada")\n',
+      'def greet(name, mood):\n    print(name, mood, end="")\n\ngreet("Ada", "calm")\n',
+    ],
+    [
+      { kind: 'keyword_arg' },
+      'class Ship:\n    def __init__(self, name):\n        self.name = name\n\nShip(name="Hope")\n',
+      'class Ship:\n    def __init__(self, name):\n        self.name = name\n\nShip("Hope")\n',
+    ],
+    [
+      { kind: 'keyword_arg', name: 'key' },
+      'print(sorted(["bb", "a"], key=len))\n',
+      'print(sorted(["bb", "a"], reverse=True))\n',
+    ],
+    [
+      { kind: 'var_args' },
+      'def total(*numbers):\n    return sum(numbers)\n',
+      'def total(numbers):\n    return sum(numbers)\n',
+    ],
+    [
+      { kind: 'var_kwargs' },
+      'def card(**info):\n    print(info)\n',
+      'def card(*info):\n    print(info)\n',
+    ],
+    [
+      { kind: 'decorator', name: 'dataclass' },
+      'from dataclasses import dataclass\n\n@dataclass\nclass Point:\n    x: int\n',
+      'class Point:\n    def __init__(self, x):\n        self.x = x\n',
+    ],
+    [
+      { kind: 'decorator', name: 'dataclass' },
+      'import dataclasses\n\n@dataclasses.dataclass(order=True)\nclass Point:\n    x: int\n',
+      'def dataclass(c):\n    return c\n\nprint(dataclass(1))\n',
+    ],
+    [
+      { kind: 'extends' },
+      'class Animal:\n    pass\n\nclass Dog(Animal):\n    pass\n',
+      'class Animal(object):\n    pass\n\nclass Dog:\n    pass\n',
+    ],
+    [
+      { kind: 'extends', name: 'Exception' },
+      'class TooFar(Exception):\n    pass\n',
+      'class TooFar(ValueError):\n    pass\n',
+    ],
+    [
+      { kind: 'override' },
+      'class A:\n    def speak(self):\n        return "a"\n\nclass B(A):\n    def speak(self):\n        return "b"\n',
+      'class A:\n    def __init__(self):\n        pass\n\nclass B(A):\n    def __init__(self):\n        pass\n',
+    ],
+    [
+      { kind: 'override', name: 'speak' },
+      'class A:\n    def speak(self):\n        pass\n\nclass B(A):\n    pass\n\nclass C(B):\n    def speak(self):\n        pass\n',
+      'class A:\n    def speak(self):\n        pass\n\nclass B:\n    def speak(self):\n        pass\n',
+    ],
+    [
+      { kind: 'class_attribute' },
+      'class Robot:\n    count = 0\n',
+      'class Robot:\n    def __init__(self):\n        self.count = 0\n',
+    ],
+    [
+      { kind: 'class_attribute', name: 'wheels' },
+      'class Car:\n    wheels: int = 4\n',
+      'class Car:\n    doors = 4\n',
+    ],
+    [{ kind: 'format_spec' }, 'x = 2.5\nprint(f"{x:.2f}")\n', 'x = 2.5\nprint(f"{x}")\n'],
+    [{ kind: 'format_spec' }, 'print(format(2.5, ".1f"))\n', 'print(format(2.5))\n'],
+    [{ kind: 'format_spec' }, 'print("{:>5}".format(7))\n', 'print("{}".format(7))\n'],
+    [
+      { kind: 'loop', type: 'dict_comprehension' },
+      'print({w: len(w) for w in ["a", "bb"]})\n',
+      'print([len(w) for w in ["a", "bb"]])\n',
+    ],
+    [
+      { kind: 'loop', type: 'set_comprehension' },
+      'print({w[0] for w in ["ab", "ac"]})\n',
+      'print(set([w[0] for w in ["ab", "ac"]]))\n',
+    ],
+    [
+      { kind: 'loop', type: 'generator_expression' },
+      'print(sum(x * x for x in range(4)))\n',
+      'print(sum([x * x for x in range(4)]))\n',
+    ],
+    [
+      { kind: 'loop', type: 'list_comprehension' },
+      'print([x for x in range(3)])\n',
+      'print(list(x for x in range(3)))\n',
+    ],
   ])('requires %j only where the construct is there', (rule, withIt, without) => {
     const header = (userCode: string) =>
       runRunner(

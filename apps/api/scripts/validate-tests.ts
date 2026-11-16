@@ -221,6 +221,19 @@ export const STRUCTURE_KINDS: Record<Lang, Set<string>> = {
     'return',
     'default_param',
     'slice',
+    'lambda',
+    'yield',
+    'with',
+    'raise',
+    'import',
+    'keyword_arg',
+    'var_args',
+    'var_kwargs',
+    'decorator',
+    'extends',
+    'override',
+    'class_attribute',
+    'format_spec',
   ]),
   c: new Set([
     ...COMMON_KINDS,
@@ -250,7 +263,15 @@ export const STRUCTURE_KINDS: Record<Lang, Set<string>> = {
   ]),
 };
 const LOOP_TYPES: Record<Lang, Set<string>> = {
-  python: new Set(['for', 'while', 'comprehension']),
+  python: new Set([
+    'for',
+    'while',
+    'comprehension',
+    'list_comprehension',
+    'dict_comprehension',
+    'set_comprehension',
+    'generator_expression',
+  ]),
   c: new Set(['for', 'while', 'do_while']),
   java: new Set(['for', 'while', 'do_while']),
 };

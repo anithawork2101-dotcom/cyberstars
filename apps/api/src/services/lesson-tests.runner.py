@@ -686,6 +686,10 @@ LOOP_NODES = {
     "while": (ast.While,),
     "do_while": (),
     "comprehension": (ast.comprehension,),
+    "list_comprehension": (ast.ListComp,),
+    "dict_comprehension": (ast.DictComp,),
+    "set_comprehension": (ast.SetComp,),
+    "generator_expression": (ast.GeneratorExp,),
 }
 
 
@@ -854,6 +858,140 @@ def has_default_param(tree):
     )
 
 
+def base_name(node):
+    # The name a base class, a decorator or a called function goes by:
+    # Exception, dataclasses.dataclass, dataclass(order=True).
+    if isinstance(node, ast.Call):
+        node = node.func
+    if isinstance(node, ast.Name):
+        return node.id
+    if isinstance(node, ast.Attribute):
+        return node.attr
+    return None
+
+
+def has_import(tree, name=None):
+    # import math, import math as m, from collections import Counter: the
+    # module by its full name or its first part (os.path counts as os).
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            modules = [alias.name for alias in node.names]
+        elif isinstance(node, ast.ImportFrom) and node.module and not node.level:
+            modules = [node.module]
+        else:
+            continue
+        if name is None or any(m == name or m.split(".")[0] == name for m in modules):
+            return True
+    return False
+
+
+def has_keyword_arg(tree, name=None):
+    # A call that passes an argument by its name. With a name, that argument to
+    # any call (sorted(..., key=...)); without one, any to a function or class
+    # of the student's own, since print(end="") isn't what a lesson on keyword
+    # arguments teaches. **options passes no name of its own.
+    own = {fn.name for fn in function_defs(tree)} | class_names(tree)
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        named = [k.arg for k in node.keywords if k.arg is not None]
+        if name is not None:
+            if name in named:
+                return True
+        elif named and called_function(node) in own:
+            return True
+    return False
+
+
+def has_var_param(tree, field):
+    # *args (vararg) or **kwargs (kwarg) on a function or a lambda, however named.
+    return any(
+        getattr(node.args, field) is not None
+        for node in ast.walk(tree)
+        if isinstance(node, FUNCTION_NODES + (ast.Lambda,))
+    )
+
+
+def has_decorator(tree, name=None):
+    return any(
+        name is None or base_name(d) == name
+        for node in ast.walk(tree)
+        if isinstance(node, FUNCTION_NODES + (ast.ClassDef,))
+        for d in node.decorator_list
+    )
+
+
+def class_bases(cls):
+    return [base_name(b) for b in cls.bases if base_name(b) not in (None, "object")]
+
+
+def has_extends(tree, name=None):
+    # A class that inherits: from a class of the student's own or a library's
+    # (Exception), and with a name from that one.
+    for cls in (n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)):
+        bases = class_bases(cls)
+        if bases and (name is None or name in bases):
+            return True
+    return False
+
+
+def method_names(cls):
+    return {n.name for n in cls.body if isinstance(n, FUNCTION_NODES)}
+
+
+def has_override(tree, name=None):
+    # A method a class defines again after a class of the student's own it
+    # inherits from, at any depth, defined it. __init__ is the constructor,
+    # not an override, as in the Java runner.
+    classes = {n.name: n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)}
+
+    def inherited(cls, seen):
+        found = set()
+        for base in class_bases(cls):
+            if base in classes and base not in seen:
+                seen.add(base)
+                found |= method_names(classes[base]) | inherited(classes[base], seen)
+        return found
+
+    for cls in classes.values():
+        again = (method_names(cls) & inherited(cls, {cls.name})) - {"__init__"}
+        if again and (name is None or name in again):
+            return True
+    return False
+
+
+def has_class_attribute(tree, name=None):
+    # A value set in the class body itself, outside its methods: shared by
+    # every object made from it.
+    for cls in (n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)):
+        for stmt in cls.body:
+            names = list(assigned_names(stmt))
+            if names and (name is None or name in names):
+                return True
+    return False
+
+
+def has_format_spec(tree):
+    # A number shaped by a format spec: f"{x:.2f}", format(x, ".2f") or
+    # "{:.2f}".format(x).
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FormattedValue) and node.format_spec is not None:
+            return True
+        if isinstance(node, ast.Call):
+            func = node.func
+            if isinstance(func, ast.Name) and func.id == "format" and len(node.args) >= 2:
+                return True
+            if (
+                isinstance(func, ast.Attribute)
+                and func.attr == "format"
+                and isinstance(func.value, ast.Constant)
+                and isinstance(func.value.value, str)
+                and re.search(r"\{[^{}]*:[^{}]+\}", func.value.value)
+            ):
+                return True
+    return False
+
+
 TRY_NODES = tuple(t for t in (ast.Try, getattr(ast, "TryStar", None)) if t)
 STATEMENT_KINDS = {
     "if": (ast.If,),
@@ -862,6 +1000,10 @@ STATEMENT_KINDS = {
     "continue": (ast.Continue,),
     "try": TRY_NODES,
     "slice": (ast.Slice,),
+    "lambda": (ast.Lambda,),
+    "yield": (ast.Yield, ast.YieldFrom),
+    "with": (ast.With, ast.AsyncWith),
+    "raise": (ast.Raise,),
 }
 
 
@@ -901,6 +1043,24 @@ def rule_holds(tree, source, rule):
         return has_return_value(tree)
     if kind == "default_param":
         return has_default_param(tree)
+    if kind == "import":
+        return has_import(tree, rule.get("name"))
+    if kind == "keyword_arg":
+        return has_keyword_arg(tree, rule.get("name"))
+    if kind == "var_args":
+        return has_var_param(tree, "vararg")
+    if kind == "var_kwargs":
+        return has_var_param(tree, "kwarg")
+    if kind == "decorator":
+        return has_decorator(tree, rule.get("name"))
+    if kind == "extends":
+        return has_extends(tree, rule.get("name"))
+    if kind == "override":
+        return has_override(tree, rule.get("name"))
+    if kind == "class_attribute":
+        return has_class_attribute(tree, rule.get("name"))
+    if kind == "format_spec":
+        return has_format_spec(tree)
     return True
 
 
