@@ -366,7 +366,7 @@ A lesson is `<slug>.md` (the text, with runnable code blocks) and `<slug>-code.m
 - **Shared types**: the `packages/shared` workspace prevents client/server type drift
 - **Cookie auth**: httpOnly cookies prevent XSS access to tokens
 - **Filesystem lessons**: easy to author with git, metadata in PostgreSQL for querying
-- **Derived gamification**: badges computed client-side from `UserLessonProgress` counts; XP/levels derived from judge-completed lessons (the server recomputes XP authoritatively, never storing or trusting a client value), no extra gamification tables
+- **Derived gamification**: badges derived from finished lessons and projects by `packages/shared/badges.ts` (client and public profile alike); XP/levels derived from judge-completed lessons (the server recomputes XP authoritatively, never storing or trusting a client value), no extra gamification tables
 - **CurriculumContext**: curriculum fetched once at startup, shared via context
 - **CSS variables**: all theming via custom properties, re-theming is a one-file change
 - **`npm run dev` does everything**: DB setup, migration, seeding, server start in one command
