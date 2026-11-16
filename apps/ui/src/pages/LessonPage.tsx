@@ -11,7 +11,7 @@ import {
   type CSSProperties,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Eye, RotateCcw, Save, Share2 } from 'lucide-react';
+import { Eye, LayoutPanelLeft, RotateCcw, Save, Share2 } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router';
 import { useLesson } from '../hooks/useLesson';
 import { useCodeSave } from '../hooks/useCodeSave';
@@ -883,7 +883,7 @@ export function LessonPage() {
           title={t('lesson.devModeReset')}
           className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border border-[var(--border)]"
         >
-          <RotateCcw size={14} aria-hidden="true" />
+          <LayoutPanelLeft size={14} aria-hidden="true" />
         </button>
       )}
       {devModeChoice.available && (

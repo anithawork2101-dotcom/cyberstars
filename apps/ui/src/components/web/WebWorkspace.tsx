@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RotateCcw, X } from 'lucide-react';
+import { LayoutPanelLeft, X } from 'lucide-react';
 import {
   WEB_MAX_FILES,
   WEB_MAX_LENGTH,
@@ -664,7 +664,7 @@ export default function WebWorkspace({
                 title={t('lesson.devModeReset')}
                 className="w-8 h-8 shrink-0 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition cursor-pointer bg-transparent border border-[var(--border)]"
               >
-                <RotateCcw size={14} aria-hidden="true" />
+                <LayoutPanelLeft size={14} aria-hidden="true" />
               </button>
             )}
             {wide && <div className="shrink-0">{actions}</div>}
