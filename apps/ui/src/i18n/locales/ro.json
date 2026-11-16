@@ -1401,6 +1401,8 @@
         "class_attribute": "Dă clasei atributul {{name}}, în afara metodelor",
         "class_attribute_any": "Dă clasei un atribut al ei, în afara metodelor",
         "format_spec": "Formatează numărul cu un format, ca {x:.2f}",
+        "try_else": "Folosește else după try, pentru codul care rulează doar când nu a dat nimic greș",
+        "finally": "Folosește finally, pentru codul care rulează mereu",
         "other": "Codul tău nu folosește ce cere lecția"
       },
       "forbid": {

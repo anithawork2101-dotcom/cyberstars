@@ -66,6 +66,10 @@ type StructureKind =
   | 'class_attribute'
   /** a number shaped by a format spec: f"{x:.2f}", format(x, ".2f") */
   | 'format_spec'
+  /** a try with an else block (a loop's else doesn't count) */
+  | 'try_else'
+  /** a try with a finally block */
+  | 'finally'
   // c
   | 'struct'
   | 'typedef'

@@ -281,6 +281,16 @@ describe.skipIf(!has('python3'))('python runner', () => {
     [{ kind: 'format_spec' }, 'print(format(2.5, ".1f"))\n', 'print(format(2.5))\n'],
     [{ kind: 'format_spec' }, 'print("{:>5}".format(7))\n', 'print("{}".format(7))\n'],
     [
+      { kind: 'try_else' },
+      'try:\n    x = int("4")\nexcept ValueError:\n    x = 0\nelse:\n    print(x)\n',
+      'for i in range(2):\n    pass\nelse:\n    print(i)\ntry:\n    pass\nexcept ValueError:\n    pass\n',
+    ],
+    [
+      { kind: 'finally' },
+      'try:\n    print(1)\nfinally:\n    print("done")\n',
+      'try:\n    print(1)\nexcept ValueError:\n    print("done")\n',
+    ],
+    [
       { kind: 'loop', type: 'dict_comprehension' },
       'print({w: len(w) for w in ["a", "bb"]})\n',
       'print([len(w) for w in ["a", "bb"]])\n',

@@ -1372,6 +1372,8 @@
         "class_attribute": "Give the class the attribute {{name}}, outside its methods",
         "class_attribute_any": "Give the class an attribute of its own, outside its methods",
         "format_spec": "Shape the number with a format spec, like {x:.2f}",
+        "try_else": "Use else after try, for the code that runs only when nothing failed",
+        "finally": "Use finally, for the code that always runs",
         "other": "Your code doesn't use what this lesson asks for"
       },
       "forbid": {

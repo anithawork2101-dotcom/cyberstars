@@ -234,6 +234,8 @@ export const STRUCTURE_KINDS: Record<Lang, Set<string>> = {
     'override',
     'class_attribute',
     'format_spec',
+    'try_else',
+    'finally',
   ]),
   c: new Set([
     ...COMMON_KINDS,

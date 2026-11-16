@@ -1061,6 +1061,10 @@ def rule_holds(tree, source, rule):
         return has_class_attribute(tree, rule.get("name"))
     if kind == "format_spec":
         return has_format_spec(tree)
+    if kind == "try_else":
+        return any(isinstance(n, TRY_NODES) and n.orelse for n in ast.walk(tree))
+    if kind == "finally":
+        return any(isinstance(n, TRY_NODES) and n.finalbody for n in ast.walk(tree))
     return True
 
 
