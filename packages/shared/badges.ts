@@ -6,7 +6,7 @@ import { PROJECTS, type ProjectLanguage } from './projects.js';
 // those at 40, inside its first part, then earns a badge per finished part and
 // one for finishing them all. A project language earns First Project, then one
 // badge per 3 finished projects.
-export type BadgeKind = 'course' | 'part' | 'complete' | 'project';
+type BadgeKind = 'course' | 'part' | 'complete' | 'project';
 
 // key is the course, the part or the project language; level is the frame
 // (0 the first badge, then Bronze, Silver, Gold, Platinum, Diamond, Legend)
