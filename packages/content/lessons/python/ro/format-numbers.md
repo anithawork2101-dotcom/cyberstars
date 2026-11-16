@@ -87,7 +87,7 @@ Stația are un șir de rezervoare de combustibil, iar inginerii vor un raport pe
 
 `Rezervor 01: ` și `Total:` cu cele șapte spații ale lui au amândouă 13 caractere, așa că numerele liniei de total stau chiar sub celelalte
 
-**rezervoare** are între 1 și 20 de rezervoare, fiecare cu 0 până la 40,000 de litri, cu cel mult 2 zecimale
+**rezervoare** are între 1 și 20 de rezervoare, fiecare cu 0 până la 40000 de litri, cu cel mult 2 zecimale
 
 **Exemplu** pentru rezervoare = [1250.5, 87.25, 30000]
 
