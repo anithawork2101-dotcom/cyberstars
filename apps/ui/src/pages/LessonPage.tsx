@@ -1279,7 +1279,7 @@ export function LessonPage() {
         badge={gamification.newBadge ?? undefined}
         onClose={gamification.dismissNewBadge}
       />
-      {tutor?.enabled && !devMode && failedRuns >= 3 && !stuckClosed && (
+      {tutor?.enabled && failedRuns >= 3 && !stuckClosed && (
         <TutorToast
           text={t('tutor.stuck.title')}
           mood="idle"
