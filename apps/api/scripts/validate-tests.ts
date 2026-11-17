@@ -103,12 +103,27 @@ function injectKeys(spec: LessonTestsSpec): Set<string> {
   return keys;
 }
 
+// The kinds whose name is an identifier the solution writes: the variable,
+// function, call, class, base class, method, decorator, module or argument.
+const NAMED_KINDS = [
+  'variable',
+  'function',
+  'call',
+  'class',
+  'extends',
+  'override',
+  'decorator',
+  'class_attribute',
+  'import',
+  'keyword_arg',
+];
+
 // Names a solution must contain for its own structure `requires` to pass;
 // a renamed contract variable/function/call would fail every honest solution.
 function requireNames(spec: LessonTestsSpec): string[] {
   const names: string[] = [];
   for (const rule of spec.structure?.requires ?? []) {
-    if (rule.name && ['variable', 'function', 'call', 'class'].includes(rule.kind)) {
+    if (rule.name && NAMED_KINDS.includes(rule.kind)) {
       names.push(rule.name);
     }
   }
