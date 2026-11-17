@@ -98,6 +98,7 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     'static-scope': 'Domeniul variabilelor și static',
     'recap-recursion': 'Recapitulare: Numărătorul de apeluri',
     'nested-loops': 'Bucle imbricate',
+    'arrays-2d': 'Array-uri 2D',
     pointers: 'Pointeri',
     'pointers-functions': 'Pointeri și funcții',
     'recap-pointers': 'Recapitulare: Statistici pe matrice',
