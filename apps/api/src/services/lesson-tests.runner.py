@@ -912,9 +912,31 @@ def has_var_param(tree, field):
     )
 
 
+def own_bindings(tree):
+    # The names the student makes themselves: a def, a class, an assignment or
+    # a loop variable, not an import.
+    names = {n.name for n in ast.walk(tree) if isinstance(n, FUNCTION_NODES + (ast.ClassDef,))}
+    names |= {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and not isinstance(n.ctx, ast.Load)}
+    return names
+
+
+def root_name(node):
+    # The name an expression starts from: dataclass, dataclasses in
+    # dataclasses.dataclass, the function in dataclass(order=True).
+    if isinstance(node, ast.Call):
+        node = node.func
+    while isinstance(node, ast.Attribute):
+        node = node.value
+    return node.id if isinstance(node, ast.Name) else None
+
+
 def has_decorator(tree, name=None):
+    # A decorator a lesson names is the library's (@dataclass): a function of
+    # the student's own by that name, or a name of theirs it is reached
+    # through, isn't it.
+    own = own_bindings(tree) if name is not None else set()
     return any(
-        name is None or base_name(d) == name
+        name is None or (base_name(d) == name and root_name(d) not in own)
         for node in ast.walk(tree)
         if isinstance(node, FUNCTION_NODES + (ast.ClassDef,))
         for d in node.decorator_list
@@ -927,10 +949,12 @@ def class_bases(cls):
 
 def has_extends(tree, name=None):
     # A class that inherits: from a class of the student's own or a library's
-    # (Exception), and with a name from that one.
+    # (Exception), and with a name from that one. A builtin the lesson names
+    # is Python's, so a class of the student's called Exception isn't it.
+    shadowed = name is not None and hasattr(builtins, name) and name in own_bindings(tree)
     for cls in (n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)):
         bases = class_bases(cls)
-        if bases and (name is None or name in bases):
+        if bases and (name is None or (name in bases and not shadowed)):
             return True
     return False
 

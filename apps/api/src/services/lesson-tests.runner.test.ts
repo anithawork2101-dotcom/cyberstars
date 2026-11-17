@@ -261,6 +261,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'def dataclass(c):\n    return c\n\nprint(dataclass(1))\n',
     ],
     [
+      { kind: 'decorator', name: 'dataclass' },
+      'from dataclasses import dataclass\n\n@dataclass\nclass Point:\n    x: int\n',
+      'def dataclass(c):\n    return c\n\n@dataclass\nclass Point:\n    x: int\n',
+    ],
+    [
       { kind: 'extends' },
       'class Animal:\n    pass\n\nclass Dog(Animal):\n    pass\n',
       'class Animal(object):\n    pass\n\nclass Dog:\n    pass\n',
@@ -269,6 +274,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       { kind: 'extends', name: 'Exception' },
       'class TooFar(Exception):\n    pass\n',
       'class TooFar(ValueError):\n    pass\n',
+    ],
+    [
+      { kind: 'extends', name: 'Exception' },
+      'class TooFar(Exception):\n    pass\n',
+      'class Exception:\n    pass\n\nclass TooFar(Exception):\n    pass\n',
     ],
     [
       { kind: 'override' },
