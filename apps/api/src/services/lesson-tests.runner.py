@@ -888,9 +888,17 @@ def has_import(tree, name=None):
 def has_keyword_arg(tree, name=None):
     # A call that passes an argument by its name. With a name, that argument to
     # any call (sorted(..., key=...)); without one, any to a function or class
-    # of the student's own, since print(end="") isn't what a lesson on keyword
-    # arguments teaches. **options passes no name of its own.
+    # of the student's own, a method of theirs on an object too (ship.move(x=1)),
+    # since print(end="") isn't what a lesson on keyword arguments teaches.
+    # **options passes no name of its own.
     own = {fn.name for fn in function_defs(tree)} | class_names(tree)
+    methods = {
+        stmt.name
+        for cls in ast.walk(tree)
+        if isinstance(cls, ast.ClassDef)
+        for stmt in cls.body
+        if isinstance(stmt, FUNCTION_NODES)
+    }
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
@@ -898,7 +906,10 @@ def has_keyword_arg(tree, name=None):
         if name is not None:
             if name in named:
                 return True
-        elif named and called_function(node) in own:
+        elif named and (
+            called_function(node) in own
+            or (isinstance(node.func, ast.Attribute) and node.func.attr in methods)
+        ):
             return True
     return False
 

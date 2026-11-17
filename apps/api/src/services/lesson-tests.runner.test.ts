@@ -236,6 +236,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'class Ship:\n    def __init__(self, name):\n        self.name = name\n\nShip("Hope")\n',
     ],
     [
+      { kind: 'keyword_arg' },
+      'class Ship:\n    def move(self, x):\n        pass\n\nship = Ship()\nship.move(x=1)\n',
+      'class Ship:\n    def move(self, x):\n        pass\n\nship = Ship()\nship.move(1)\n',
+    ],
+    [
       { kind: 'keyword_arg', name: 'key' },
       'print(sorted(["bb", "a"], key=len))\n',
       'print(sorted(["bb", "a"], reverse=True))\n',
