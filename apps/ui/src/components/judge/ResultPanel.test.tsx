@@ -221,7 +221,9 @@ describe('ResultPanel', () => {
         showRuntime={false}
         results={{
           ...base,
-          structureFailures: [{ type: 'forbid', rule: { kind: 'loop', type: 'list_comprehension' } }],
+          structureFailures: [
+            { type: 'forbid', rule: { kind: 'loop', type: 'list_comprehension' } },
+          ],
           cases: [{ index: 0, visible: true, passed: true }],
         }}
       />,
