@@ -140,6 +140,19 @@ describe.skipIf(!has('python3'))('python runner', () => {
     expect(lines[1]).toMatchObject({ user: { stdout: '7 0\n' } });
   });
 
+  it('puts the input at the top when only a class attribute is named like it', () => {
+    const lines = runRunner(
+      'lesson-tests.runner.py',
+      {
+        userCode: 'class Ship:\n    fleet = "Star Fleet"\n\nprint(Ship.fleet)\n',
+        structure: {},
+        cases: [{ inject: { fleet: 'Moon Guard' } }],
+      },
+      ['stop'],
+    );
+    expect(lines[1]).toMatchObject({ user: { stdout: 'Star Fleet\n' } });
+  });
+
   // Each new kind: a program that has the construct, and one that only gets
   // the same output without it.
   it.each([

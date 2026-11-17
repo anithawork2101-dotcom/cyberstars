@@ -1145,7 +1145,7 @@ def to_ast_value(v):
     return ast.Constant(v)
 
 
-def scoped_assigns(node, params=frozenset(), top_level=True):
+def scoped_assigns(node, params=frozenset(), top_level=True, class_body=False):
     # Yields (single-name Assign, parameters of its enclosing functions, whether
     # it sits outside every function and class).
     for child in ast.iter_child_nodes(node):
@@ -1156,16 +1156,18 @@ def scoped_assigns(node, params=frozenset(), top_level=True):
             yield from scoped_assigns(child, params | names, False)
             continue
         if isinstance(child, ast.ClassDef):
-            # A class attribute named like the input isn't the input.
-            yield from scoped_assigns(child, params, False)
+            # A class attribute named like the input isn't the input, even
+            # when nothing else assigns it: the input then goes in at the top.
+            yield from scoped_assigns(child, params, False, True)
             continue
         if (
-            isinstance(child, ast.Assign)
+            not class_body
+            and isinstance(child, ast.Assign)
             and len(child.targets) == 1
             and isinstance(child.targets[0], ast.Name)
         ):
             yield child, params, top_level
-        yield from scoped_assigns(child, params, top_level)
+        yield from scoped_assigns(child, params, top_level, class_body)
 
 
 def inject_values(code, values):
