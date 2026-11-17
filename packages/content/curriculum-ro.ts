@@ -123,6 +123,7 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     preprocessor: 'Preprocesorul',
     'file-io': 'Lucrul cu fișiere',
     bitwise: 'Operatori pe biți',
+    'compiler-errors': 'Citirea erorilor de compilare',
     'recap-advanced': 'Recapitulare: Configurări și permisiuni',
     'os-intro': 'SO: procese',
     'os-fork': 'SO: fork',
