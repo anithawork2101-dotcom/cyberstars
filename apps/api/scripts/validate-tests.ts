@@ -267,6 +267,8 @@ export function auditKinds(lang: Lang, spec: LessonTestsSpec): string[] {
       messages.push(`structure kind "${rule.kind}" is not implemented for ${lang}`);
     } else if (rule.kind === 'loop' && rule.type && !LOOP_TYPES[lang].has(rule.type)) {
       messages.push(`loop type "${rule.type}" does not exist in ${lang}`);
+    } else if (rule.kind === 'recursion' && rule.name && lang !== 'c') {
+      messages.push(`a recursion rule with a name is c-only`);
     } else if (rule.in && lang !== 'python') {
       messages.push(`a rule scoped with "in" is python-only`);
     } else if (['operator', 'modifier'].includes(rule.kind) && !rule.name) {

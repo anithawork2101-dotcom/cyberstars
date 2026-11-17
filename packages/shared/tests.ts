@@ -70,7 +70,7 @@ interface StructureRule {
   kind: StructureKind;
   /**
    * call / variable / function / class name, operator spelling, modifier
-   * keyword, or define name. A function or class rule without one asks for any
+   * keyword, define name, or (c) the function a recursion rule wants recursive. A function or class rule without one asks for any
    * function / class of the student's own (main aside), named however they like.
    */
   name?: string;

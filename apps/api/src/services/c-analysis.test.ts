@@ -171,6 +171,11 @@ describe('checkStructure', () => {
       '#define SIZE 3\nint main(void){ int a = 6; return 0; }',
     ],
     [
+      { kind: 'recursion', name: 'fib' },
+      'int fib(int n){ return n < 2 ? n : fib(n - 1) + fib(n - 2); }\nint main(void){ return fib(5); }',
+      'int calls(int n){ return n < 2 ? 1 : calls(n - 1); }\nint fib(int n){ return n + calls(n); }\nint main(void){ return fib(5); }',
+    ],
+    [
       { kind: 'ternary' },
       'int main(void){ int a = 3; int b = a > 2 ? 1 : 0; return b; }',
       'int main(void){ int a = 3; int b = 0; if (a > 2) b = 1; return b; }',

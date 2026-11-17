@@ -207,6 +207,8 @@ function ruleHolds(root: Node, rule: StructureFailure['rule']): boolean {
       for (const node of walk(root)) {
         if (node.type !== 'function_definition') continue;
         const name = declaratorName(node.childForFieldName('declarator'));
+        // With a name, that function itself must recurse, not some helper.
+        if (rule.name !== undefined && name !== rule.name) continue;
         for (const inner of walk(node)) if (name && callName(inner) === name) return true;
       }
       return false;
