@@ -215,6 +215,21 @@ describe('ResultPanel', () => {
     expect(screen.queryByText(/tests\.structure/)).toBeNull();
   });
 
+  it('names the loop a forbid is about, never a bare loop', () => {
+    render(
+      <ResultPanel
+        showRuntime={false}
+        results={{
+          ...base,
+          structureFailures: [{ type: 'forbid', rule: { kind: 'loop', type: 'list_comprehension' } }],
+          cases: [{ index: 0, visible: true, passed: true }],
+        }}
+      />,
+    );
+    expect(screen.getByText(/Don't use a list comprehension/)).toBeInTheDocument();
+    expect(screen.queryByText("Don't use a loop here")).toBeNull();
+  });
+
   it('names a timeout and a crash', () => {
     const { unmount } = render(
       <ResultPanel
