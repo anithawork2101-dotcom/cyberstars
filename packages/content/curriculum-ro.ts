@@ -134,6 +134,8 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     directories: 'OS: Citirea unui director',
     'recap-syscalls': 'Recapitulare: Consola bibliotecii de benzi',
     'os-fork': 'SO: fork',
+    'exit-status': 'OS: Codul de ieșire și waitpid',
+    exec: 'OS: Rularea altui program cu exec',
     'os-pipes': 'SO: pipe-uri',
     'os-threads': 'SO: thread-uri',
     'os-semaphores': 'SO: semafoare',
