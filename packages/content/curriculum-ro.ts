@@ -118,6 +118,8 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     enums: 'Enumerări',
     typedef: 'Typedef',
     'recap-memory': 'Recapitulare: Managerul de sarcini',
+    'function-pointers': 'Pointeri la funcții',
+    qsort: 'Sortarea cu qsort',
     preprocessor: 'Preprocesorul',
     'file-io': 'Lucrul cu fișiere',
     bitwise: 'Operatori pe biți',
