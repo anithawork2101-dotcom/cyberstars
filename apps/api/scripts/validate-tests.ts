@@ -232,6 +232,10 @@ export const STRUCTURE_KINDS: Record<Lang, Set<string>> = {
     'sizeof',
     'define',
     'enum',
+    'ternary',
+    'static',
+    'array_2d',
+    'function_pointer',
   ]),
   java: new Set([
     ...COMMON_KINDS,

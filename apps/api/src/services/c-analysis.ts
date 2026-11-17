@@ -140,7 +140,30 @@ const C_NODE_KINDS: Record<string, (node: Node) => boolean> = {
     (n.type === 'field_expression' && n.childForFieldName('operator')?.text === '->'),
   struct: (n) => n.type === 'struct_specifier' && n.childForFieldName('body') !== null,
   enum: (n) => n.type === 'enum_specifier' && n.childForFieldName('body') !== null,
+  ternary: (n) => n.type === 'conditional_expression',
+  // A variable kept with `static` (a function's own `static` is about linking).
+  static: (n) =>
+    n.type === 'storage_class_specifier' &&
+    n.text === 'static' &&
+    n.parent?.type === 'declaration' &&
+    !n.parent.childrenForFieldName('declarator').some((d) => d && isFunctionDeclarator(d)),
+  // int grid[3][4], or a parameter int grid[][4]
+  array_2d: (n) =>
+    n.type === 'array_declarator' &&
+    n.childForFieldName('declarator')?.type === 'array_declarator',
+  // int (*op)(int, int): a variable, parameter, field or typedef holding a function's address
+  function_pointer: (n) =>
+    n.type === 'function_declarator' &&
+    n.childForFieldName('declarator')?.type === 'parenthesized_declarator' &&
+    n.childForFieldName('declarator')?.namedChild(0)?.type === 'pointer_declarator',
 };
+
+function isFunctionDeclarator(declarator: Node): boolean {
+  let d: Node | null = declarator;
+  while (d && (d.type === 'init_declarator' || d.type === 'pointer_declarator'))
+    d = d.childForFieldName('declarator');
+  return d?.type === 'function_declarator';
+}
 
 const LOOP_NODE_TYPES = new Set<string>(Object.values(C_LOOP_NODES));
 
