@@ -1,0 +1,197 @@
+{
+  "comparator": "trimmed",
+  "structure": {
+    "requires": [
+      {
+        "kind": "call",
+        "name": "read"
+      },
+      {
+        "kind": "call",
+        "name": "write"
+      }
+    ],
+    "forbids": [
+      {
+        "kind": "call",
+        "name": "scanf"
+      },
+      {
+        "kind": "call",
+        "name": "fgets"
+      },
+      {
+        "kind": "call",
+        "name": "getchar"
+      },
+      {
+        "kind": "call",
+        "name": "fread"
+      },
+      {
+        "kind": "call",
+        "name": "fscanf"
+      },
+      {
+        "kind": "call",
+        "name": "getc"
+      },
+      {
+        "kind": "call",
+        "name": "fgetc"
+      },
+      {
+        "kind": "call",
+        "name": "gets"
+      },
+      {
+        "kind": "call",
+        "name": "getline"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "visible": true,
+      "stdin": "LOAD TAPE 7\nRUN\n"
+    },
+    {
+      "stdin": "x\n"
+    },
+    {
+      "stdin": "no newline"
+    },
+    {
+      "stdin": "\n\n\n"
+    },
+    {
+      "stdin": "exactly sixteen\n"
+    },
+    {
+      "stdin": "aaaaaaaaaaaaaaaaa\n"
+    },
+    {
+      "stdin": "tabs\tand  spaces  \n"
+    },
+    {
+      "stdin": "PRINT PRINT -- -- reel core RUN reel\n",
+      "generated": true
+    },
+    {
+      "stdin": "RUN 42 RUN LOAD\nTAPE 7 PRINT\n",
+      "generated": true
+    },
+    {
+      "stdin": "reel # core 42 -- reel\n42 7 reel core LOAD dump 7\n-- TAPE TAPE -- -- LOAD reel 42 7\n",
+      "generated": true
+    },
+    {
+      "stdin": "42 PRINT dump #\ncore LOAD END dump\n",
+      "generated": true
+    },
+    {
+      "stdin": "RUN END END -- reel core -- RUN dump RUN --\nTAPE 7 core RUN 42 # LOAD RUN # 42 7\nTAPE core RUN 42 core reel END\n\n# END 7 7 RUN 7 dump LOAD dump RUN LOAD\n",
+      "generated": true
+    },
+    {
+      "stdin": "\ndump core TAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "7 reel LOAD # TAPE\nRUN\n",
+      "generated": true
+    },
+    {
+      "stdin": "LOAD dump 42\n-- -- core 42 dump dump PRINT\n",
+      "generated": true
+    },
+    {
+      "stdin": "RUN PRINT\nLOAD 42 END\nLOAD 7 42 END\n# 42 PRINT END END dump dump dump END LOAD END\nreel core reel\ndump reel dump PRINT LOAD RUN LOAD # core END\ncore 42 reel -- 42 7 reel TAPE RUN # PRINT\n7\n# 42 PRINT TAPE LOAD 42 7\nEND\nLOAD RUN # # dump dump 42 RUN RUN RUN\nTAPE\n-- LOAD 7 7 # dump # reel core 42\nreel #\nEND reel LOAD PRINT END -- TAPE # dump\n7 7 7 TAPE RUN END\ndump -- -- 7 # RUN TAPE TAPE core\nLOAD # # -- TAPE core core # RUN PRINT 42\nTAPE END PRINT core reel core # 7 LOAD -- LOAD\n42 -- core dump LOAD 7\ncore TAPE 7 core\n\n\ncore 42 reel LOAD LOAD 42 LOAD core TAPE 7 RUN\ndump -- # LOAD reel reel 42 7 PRINT --\nRUN -- -- RUN END\n7 --\ncore core dump RUN RUN PRINT core\nRUN core PRINT reel 7 # 42 TAPE --\n\nLOAD core RUN RUN LOAD # TAPE core 42 core\nLOAD 7 42 PRINT END LOAD RUN TAPE\nPRINT\n42 LOAD LOAD dump\nEND 42 7 42 core reel --\nEND core TAPE dump END core -- PRINT LOAD\n\n7 RUN core LOAD TAPE 7 core reel 7 42\nRUN dump reel # RUN\nTAPE RUN 7 LOAD RUN END 7\nreel LOAD TAPE\n42 -- END dump 42 RUN LOAD 42 PRINT\nRUN PRINT 7\n\n\n-- RUN LOAD 42 -- core 7 PRINT dump 42 RUN #\n7 TAPE TAPE LOAD TAPE RUN core TAPE\nreel TAPE -- -- PRINT\n7 42 dump TAPE LOAD core END RUN RUN\n42 42 7 # #\ndump # # TAPE 7 PRINT -- reel\nRUN 7 -- # -- 7 RUN dump PRINT\n\n# # RUN dump\n-- -- core 7 42 42 END PRINT core PRINT END\ncore --\nTAPE # -- 7 LOAD # #\nLOAD\nLOAD RUN reel\nEND PRINT dump 42 reel\n# dump 7 dump PRINT LOAD reel reel TAPE -- dump\nEND dump 42 # TAPE RUN 42 RUN\nEND LOAD -- reel 42 reel -- PRINT 7 TAPE LOAD\nreel # -- TAPE reel dump reel reel # reel -- LOAD\n\n",
+      "generated": true
+    },
+    {
+      "stdin": "# reel END RUN\nPRINT END PRINT RUN TAPE LOAD reel\nEND core TAPE -- LOAD 7 LOAD TAPE dump core #\n-- END RUN END END END core reel TAPE RUN\n\n-- PRINT 42 core TAPE END\nTAPE TAPE RUN PRINT # LOAD dump core core core\n7 TAPE PRINT PRINT LOAD RUN\nRUN reel\n42 -- TAPE core 42 TAPE -- -- 42 END #\nreel LOAD core\nTAPE RUN\n# # dump RUN\n# dump PRINT LOAD LOAD\n-- PRINT 42 LOAD TAPE TAPE\n\nTAPE # core RUN RUN RUN 7 reel RUN 42 42\nreel TAPE core TAPE 7 reel TAPE RUN reel core 42\nTAPE TAPE\nRUN -- 7 reel --\n42 dump TAPE RUN dump TAPE # 7 END END\nreel core TAPE reel reel core\nTAPE reel # core dump TAPE TAPE 7 LOAD LOAD RUN TAPE\n42 # dump LOAD END LOAD --\n--\nRUN 7 -- 7 # # TAPE reel\n-- -- LOAD core END dump -- PRINT core -- --\n7 LOAD TAPE dump reel END 42 -- LOAD PRINT\n-- TAPE -- TAPE TAPE 42 # -- LOAD\n\n42 LOAD -- RUN END reel\nreel core PRINT -- TAPE LOAD 7\n42 7 reel dump 42 42 dump\n-- 7 -- core dump 7 dump LOAD\ncore reel -- core TAPE\ncore dump -- -- dump reel --\nEND --\nPRINT RUN PRINT reel dump # core reel -- core PRINT\nLOAD TAPE dump PRINT --\ncore -- RUN 42 # # LOAD RUN reel dump reel\nEND PRINT END PRINT LOAD 42 42 RUN 42 42\n7 LOAD END dump 42 7\ncore RUN RUN -- # --\n\nPRINT reel\ncore 42 42 TAPE END 42 42\n7 dump core # 7 7\n# LOAD 42 PRINT\nLOAD 7 dump core END\nLOAD RUN LOAD RUN LOAD reel\n-- reel 42 7 END\n# # core RUN TAPE dump 42\nPRINT TAPE dump 7 dump\nEND PRINT LOAD PRINT dump dump 7\nRUN # --\nEND 42 END reel reel LOAD PRINT END PRINT END\nEND PRINT\n\n\nPRINT LOAD 42 PRINT TAPE dump reel # 42\n42 LOAD dump -- LOAD # core\nRUN END 42 PRINT\ndump core 42 RUN reel PRINT END\ndump dump dump PRINT dump LOAD\ncore 7 42\nPRINT 7 core LOAD 42 TAPE\n42 RUN RUN -- END RUN # 42 PRINT core -- --\n7 -- TAPE\n-- 42 core core core RUN\n7\ncore RUN reel END dump # core -- 7 PRINT RUN reel\ndump -- END 42 TAPE\n# core\n",
+      "generated": true
+    },
+    {
+      "stdin": "dump 42 TAPE\n# 42 RUN LOAD LOAD --\n42 reel PRINT LOAD core\nLOAD -- # core\n42 END PRINT 42 7 dump dump core -- reel\n-- 42 TAPE TAPE reel --\n42 -- END\n\ncore -- LOAD reel TAPE core RUN -- -- TAPE reel --\n# 7 # PRINT TAPE\nPRINT TAPE 7 LOAD -- core\n42 RUN reel PRINT PRINT core LOAD PRINT\nEND RUN PRINT RUN 42 PRINT END TAPE # reel core\n7\n-- dump END # dump # # 7\n7 LOAD 42 7\n\n7 TAPE END #\nRUN dump # PRINT 42 RUN RUN 42 reel\nRUN # reel -- TAPE # 42 RUN 7 core core #\n42 TAPE reel PRINT END TAPE END dump 7 PRINT 7 dump\n-- 42 TAPE 42 42\ncore # TAPE -- -- 42 TAPE 7 -- core LOAD reel\nEND PRINT 42 END\n\nEND 42 LOAD\nEND 42 reel RUN PRINT\nPRINT reel\nEND # reel PRINT PRINT RUN\nreel TAPE # TAPE reel dump END 7\nTAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "dump TAPE TAPE PRINT reel dump END RUN -- RUN\n",
+      "generated": true
+    },
+    {
+      "stdin": "7 reel RUN RUN\n",
+      "generated": true
+    },
+    {
+      "stdin": "# dump LOAD PRINT -- END LOAD END 7 RUN --\n-- TAPE core END LOAD END\n\nreel reel # TAPE dump dump LOAD reel reel END 42\nLOAD reel LOAD RUN core 7 reel PRINT # 42 LOAD\n\nEND core -- 42 dump END RUN TAPE\n-- -- TAPE\nLOAD dump\nPRINT LOAD 7 PRINT LOAD # LOAD LOAD core\n# 7\n7 TAPE TAPE # PRINT END RUN TAPE\n42 TAPE TAPE LOAD\nreel reel TAPE END 42 reel PRINT core core LOAD\nRUN\nreel LOAD dump reel RUN END LOAD core LOAD RUN\n7 TAPE RUN RUN LOAD LOAD --\nTAPE dump\nTAPE 42 7 42 dump END PRINT END END #\n\nreel RUN 42 RUN dump LOAD dump 7 LOAD 42 42\n42 END TAPE\ncore\n# RUN TAPE TAPE -- 42 42 # dump -- #\n42 dump LOAD dump\ndump\n# core 42 # dump dump 42 dump RUN reel TAPE\n42 TAPE\nLOAD END\ndump reel END TAPE # TAPE\ncore # RUN\n\n7 reel core LOAD\nTAPE core dump\nEND PRINT 42\nTAPE RUN reel\n42 END TAPE reel # -- TAPE\nTAPE dump #\n# 7 RUN\n42 END dump END dump reel TAPE PRINT 7\nLOAD TAPE dump # reel -- -- reel 7\n-- core LOAD dump -- 7 -- RUN\ncore 42\n7 dump RUN\nreel\nEND\nreel END PRINT --\n-- PRINT PRINT END\n\ncore TAPE END LOAD LOAD RUN LOAD TAPE reel -- -- 42\n-- 42 LOAD RUN dump 7 #\nLOAD # PRINT 7\nreel # core reel 7 END 7 TAPE TAPE reel\nLOAD\ncore -- --\n42 dump 42 TAPE TAPE\n7\nreel\nPRINT 42 # PRINT END RUN 7 dump dump core LOAD TAPE\nEND PRINT 7 RUN core RUN LOAD reel RUN reel dump\nEND reel PRINT TAPE -- END dump LOAD reel\nreel END core PRINT END RUN\nreel -- PRINT PRINT\n\nTAPE # END\ncore 7 PRINT END RUN 42 LOAD RUN LOAD RUN RUN\nEND TAPE LOAD 42 PRINT\n\nRUN PRINT TAPE 42 42 PRINT TAPE END dump LOAD PRINT --\n",
+      "generated": true
+    },
+    {
+      "stdin": "TAPE # LOAD # # # --\n",
+      "generated": true
+    },
+    {
+      "stdin": "TAPE END -- END dump dump RUN PRINT 7 #\ndump core dump 7 # -- reel\n--\n",
+      "generated": true
+    },
+    {
+      "stdin": "-- PRINT PRINT\n",
+      "generated": true
+    },
+    {
+      "stdin": "42 core core RUN # TAPE reel core -- # dump PRINT\n\n-- -- RUN\ncore 42 dump LOAD TAPE -- # PRINT RUN dump reel\n",
+      "generated": true
+    },
+    {
+      "stdin": "reel END TAPE # 7 reel LOAD END END TAPE LOAD\nRUN RUN 42 7 -- 7 TAPE TAPE 7 7\n",
+      "generated": true
+    },
+    {
+      "stdin": "TAPE # -- # RUN # 7 -- # 7 PRINT\nreel PRINT core TAPE 42 TAPE RUN END -- TAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "LOAD 7 #\n-- RUN LOAD RUN\n42 reel reel dump LOAD 42\n42 dump dump dump reel LOAD PRINT 42 END 42 TAPE TAPE\nPRINT TAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "reel # LOAD\n# # reel # PRINT reel LOAD PRINT 7 LOAD LOAD END\nPRINT TAPE reel END 7 LOAD PRINT\n\n42\n#\n7 dump 7\nEND core 7 # # -- TAPE reel # 42\n42 # # LOAD # 7 LOAD\ncore PRINT LOAD PRINT -- -- 7 PRINT dump\nEND # -- core RUN\nLOAD # LOAD TAPE core dump -- RUN RUN END LOAD PRINT\n-- core 42 reel RUN TAPE # 42\n\n42 END TAPE LOAD reel TAPE core reel\n7 LOAD #\n\n7\nEND LOAD 7 RUN core LOAD TAPE reel END -- # --\n-- core END\nLOAD core core reel END # END\nLOAD PRINT # # PRINT RUN\n\n7 7\n\nreel 7 END # -- dump\ncore reel TAPE dump dump 7 dump 7 --\nEND\nTAPE TAPE TAPE RUN LOAD --\ncore PRINT -- # END LOAD LOAD TAPE dump END\nRUN 42 TAPE RUN\n-- -- dump 7 42 -- reel\n\n# -- LOAD END core\nPRINT -- END 42 RUN core TAPE 42 TAPE\n42 RUN -- TAPE # TAPE TAPE TAPE reel\n\n",
+      "generated": true
+    },
+    {
+      "stdin": "\nLOAD core core END -- reel TAPE # RUN\nPRINT TAPE\n7\nLOAD # END -- reel LOAD PRINT 42\ndump PRINT reel #\nPRINT 7 -- PRINT core RUN RUN 7 TAPE LOAD --\nLOAD -- END core LOAD\ncore dump 42 END LOAD # # #\n# TAPE\n42 TAPE\nEND\n\n\n42 7 core RUN RUN core 7\n42 LOAD # TAPE END 42 7 reel --\nEND reel LOAD # --\n42\nEND LOAD 42 42 LOAD END 7 7 LOAD\n-- dump TAPE dump 7 dump RUN\n# LOAD 7 7 RUN RUN 7 reel TAPE TAPE\n-- RUN PRINT 7 dump PRINT reel reel RUN\n",
+      "generated": true
+    },
+    {
+      "stdin": "PRINT 42 RUN # core RUN -- dump RUN\n7 # TAPE -- PRINT PRINT -- reel reel\ndump END\nTAPE -- TAPE\n42 reel\ncore # PRINT -- 42 core -- END\ncore 7 reel reel -- reel\ncore END LOAD -- RUN # core RUN\nEND reel reel\nreel -- -- END PRINT # 7 reel 7 TAPE\nPRINT 7 RUN # -- LOAD PRINT dump reel TAPE\nEND RUN # reel -- 42 # # #\nEND # -- TAPE core -- reel TAPE LOAD 7 core TAPE\ndump END -- -- core reel RUN reel PRINT LOAD LOAD\nTAPE\nreel 7\n",
+      "generated": true
+    },
+    {
+      "stdin": "# END reel reel TAPE reel reel LOAD LOAD\ndump dump RUN LOAD\nLOAD 42 reel LOAD 42 7 7 -- core\nLOAD 7\n-- 42 RUN LOAD\n# -- # 42 LOAD\nRUN END PRINT PRINT reel RUN\nreel dump END reel reel reel\n\ncore reel reel LOAD LOAD 7 TAPE LOAD reel PRINT core\n7 LOAD reel LOAD reel LOAD RUN 7 # LOAD 42 #\ncore\n42 7 reel TAPE 7 -- 42 RUN\nLOAD RUN TAPE PRINT\n7 dump LOAD dump core LOAD core\ndump dump LOAD reel LOAD 42 core reel\n7 LOAD reel -- dump 7 42 TAPE 7 core\n42 END TAPE # dump reel 42 LOAD PRINT --\n-- TAPE 42 LOAD dump TAPE RUN core TAPE END dump\n\n7 core 7 reel\nRUN LOAD core # dump 42 TAPE\ncore 42 TAPE reel TAPE\nLOAD 42 LOAD 42\ncore\nPRINT LOAD reel RUN\nreel TAPE\n42 END 7 dump dump 7 42 42 END\nTAPE # LOAD\nTAPE 42 PRINT 42 -- PRINT END TAPE LOAD PRINT LOAD TAPE\nEND core LOAD RUN LOAD TAPE RUN dump END\n-- reel\nTAPE LOAD LOAD PRINT -- PRINT #\nRUN RUN END TAPE PRINT 7 dump RUN PRINT --\ndump RUN # 7 PRINT dump LOAD\nEND END LOAD RUN 7 PRINT RUN LOAD\nEND reel PRINT 7 42 TAPE\n42 core END 42 RUN\nTAPE RUN reel\ncore reel\n-- -- dump 42 7 RUN --\ndump dump 7 RUN reel END -- RUN LOAD END #\n-- # PRINT TAPE dump\n7 dump END PRINT PRINT RUN 42 # # #\nPRINT 42 -- END RUN TAPE LOAD\n7 # PRINT 42 END 42 42 PRINT 42\n\nreel core core TAPE # core -- LOAD --\nLOAD dump -- 7 END TAPE core RUN PRINT\n42 reel TAPE 7 42\n7 END reel core PRINT END core\nreel RUN\nEND dump 7\ndump TAPE PRINT TAPE core\n42 RUN dump -- RUN reel LOAD LOAD 7 dump PRINT PRINT\nTAPE reel LOAD -- 7 core\ndump -- 42 7 dump dump LOAD LOAD END\n\ndump TAPE\nreel dump dump END 7 reel END core LOAD\nEND core -- END dump END PRINT RUN core core core\n-- # TAPE RUN 7 END\n",
+      "generated": true
+    },
+    {
+      "stdin": "LOAD RUN -- -- -- LOAD -- PRINT END PRINT\n# LOAD -- PRINT core # PRINT RUN PRINT -- LOAD LOAD\n# PRINT dump LOAD RUN # 42\nRUN RUN 42\nTAPE reel 7 RUN LOAD core 7 7 PRINT TAPE\nEND 7 RUN # 42 TAPE -- dump END reel\n-- -- # reel # core PRINT reel reel\n# core LOAD 42 -- 7 TAPE reel\n7 TAPE END core RUN reel core TAPE reel core 7\nPRINT 42 # RUN 7\nPRINT RUN RUN END reel 42 dump\n7 PRINT core core END\nRUN\nreel dump PRINT dump -- -- # dump\nLOAD 7 reel RUN dump 7 RUN 7\n-- LOAD dump 7 TAPE END PRINT # # PRINT\n42 7 PRINT TAPE RUN\nEND 7 42 7 PRINT dump\nRUN 42 core PRINT PRINT RUN LOAD dump core reel\nEND TAPE # LOAD RUN 7 dump PRINT\nRUN\nPRINT LOAD reel dump # 7 -- 7 --\ncore TAPE --\ndump reel\n7 core dump PRINT RUN 7 END 42",
+      "generated": true
+    },
+    {
+      "stdin": "RUN PRINT\n7 reel # 42 # RUN TAPE TAPE 42\n",
+      "generated": true
+    },
+    {
+      "stdin": "\ncore TAPE\n42\nTAPE TAPE dump RUN reel\nTAPE reel -- # END 7 END TAPE END\nreel PRINT dump dump RUN dump 7 TAPE dump RUN RUN\ncore 7 reel PRINT\ncore # RUN\n7 END\nreel core -- END\nTAPE LOAD reel reel END LOAD # PRINT 42 reel\n42 --\nreel -- RUN RUN 42 END TAPE core dump core 7\n-- --\nreel END TAPE LOAD # reel\n",
+      "generated": true
+    },
+    {
+      "stdin": "7 7 reel #\ndump\nTAPE LOAD PRINT\ncore 7 LOAD PRINT core RUN\nRUN\n",
+      "generated": true
+    },
+    {
+      "stdin": "PRINT 7 TAPE reel END dump 7 LOAD core -- reel RUN\n\n",
+      "generated": true
+    }
+  ]
+}

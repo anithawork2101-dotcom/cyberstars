@@ -1,0 +1,151 @@
+{
+  "comparator": "trimmed",
+  "structure": {
+    "requires": [
+      {
+        "kind": "call",
+        "name": "open"
+      },
+      {
+        "kind": "call",
+        "name": "close"
+      },
+      {
+        "kind": "call",
+        "name": "read"
+      },
+      {
+        "kind": "call",
+        "name": "write"
+      }
+    ],
+    "forbids": [
+      {
+        "kind": "call",
+        "name": "fopen"
+      },
+      {
+        "kind": "call",
+        "name": "fdopen"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "visible": true,
+      "stdin": "reel 7\npayroll 1969\n"
+    },
+    {
+      "stdin": "a much longer first tape, so a later shorter copy shows what O_TRUNC is for\nand a second line\n"
+    },
+    {
+      "stdin": "x\n"
+    },
+    {
+      "stdin": "\n"
+    },
+    {
+      "stdin": "census 1970\norbit 1971\nmoon 1969\n"
+    },
+    {
+      "stdin": "orbit 1969 7 census END\npayroll 1971 orbit tape census census reel\n7 payroll LOAD LOAD\norbit dump\ndump tape tape 1969 dump\nreel 1969 END core tape 1969\ndump orbit 1971 dump 1969\ntape reel dump\npayroll orbit core dump dump\nLOAD census LOAD 1969 core\norbit core reel 7 dump LOAD payroll\norbit 7 1971 END 7 dump tape orbit\n1969 reel core orbit core END 1969\ncensus LOAD 1969 1969 END\nLOAD payroll reel 7 END\n1969 END\npayroll\ntape core 1969 census reel tape\n1971\n1969 core dump\nEND core 1971 7 tape census\ntape dump END reel\ndump reel dump orbit reel\nreel 1969\npayroll\ndump 1969 LOAD 1969 payroll payroll\norbit payroll tape\n1971 END core reel 1969 core reel\nEND payroll payroll dump\ncore orbit census dump core census 1971\npayroll LOAD orbit core 7 END census reel\n1969 dump 1971 orbit core 1969 payroll 1969\npayroll tape LOAD census orbit\ndump census\ncensus 7 orbit payroll core orbit census\norbit orbit payroll 1969 7\ncensus census END\npayroll census 1969\n7 LOAD LOAD dump\n1969 END reel payroll tape dump\n1969\n7 1969 END END tape orbit reel LOAD\nLOAD orbit 7 dump census dump LOAD\norbit census core END LOAD core LOAD\ncensus END core dump 1969\n7 7 core tape payroll\n1971\ncensus reel payroll 7\norbit orbit 1969\nreel orbit dump reel dump 1971\ntape core tape tape\npayroll payroll payroll census 1971 1971\n1969 payroll 7 orbit END\n7 payroll dump\nLOAD core payroll END orbit\nLOAD tape reel LOAD\nEND orbit tape tape END LOAD\n",
+      "generated": true
+    },
+    {
+      "stdin": "census dump LOAD 7 core payroll payroll\ncensus 7\ncensus tape END census LOAD\nreel LOAD 1969 payroll dump core\ndump\nreel 1969 reel orbit reel reel\npayroll END orbit\nEND 1971 1971 core 1971 payroll\ntape 1971 tape END reel\ntape 1969 orbit dump LOAD 7 END\nLOAD 7\nreel END dump LOAD 1969\nEND census core core payroll orbit\nLOAD 1969 census LOAD reel core core LOAD\nEND tape payroll tape LOAD dump payroll\ncore 1971 END dump 1969\ncensus LOAD 7 LOAD 1969 1969\ncensus orbit 1971 LOAD\n1971\npayroll orbit\n1969 orbit census\n1971 dump 1969 END 1971\ntape END reel LOAD\ncore dump core\ncore LOAD dump payroll 1969\n7\ntape 1971 END 1969 tape dump reel payroll\n1971 END 7 LOAD payroll LOAD census\ndump\ncensus 1971 core dump 1971\n7 census\nLOAD payroll 1969 core 1971 orbit reel\nEND census census\n1969 reel\n1969 core dump 1971 1971\ntape LOAD\ncore\nEND END census\nLOAD reel orbit orbit dump\ntape census END 1969\nEND\ncensus\norbit tape payroll dump 7 census orbit\nEND payroll tape LOAD LOAD payroll\nLOAD census\n7 1969 orbit dump 1971\nEND\ncore dump payroll 1971 1969 1971 LOAD\nLOAD core tape census\n7 dump 1969\nEND census 1969 7 1971 reel\nreel payroll 1971 1971\ntape payroll LOAD payroll orbit\n1969\npayroll reel 1971 1971 reel\npayroll 1971 dump orbit END\ntape\ncore LOAD core core LOAD core tape\nreel orbit dump\npayroll dump 1969 dump END payroll LOAD\n7 dump\ncensus\norbit 7 dump tape census census LOAD\ncore reel\n7 tape core\ncore orbit END core 1969 payroll\norbit census\nreel dump core\npayroll census dump 1969 payroll 7 census reel\nEND\ntape 1969 1969 7 LOAD census END core\ncensus dump 7 core 1969 orbit\nEND 1971 1971 1971 END\n1971\ncore reel core 7 dump payroll reel\ncore census orbit dump 1969 tape 1969 7\npayroll LOAD 1969 payroll tape tape\npayroll\n1969 core payroll dump END dump LOAD\norbit 7 dump orbit 1971 payroll payroll payroll\n",
+      "generated": true
+    },
+    {
+      "stdin": "reel payroll 7 END core LOAD\ncore 1971 payroll 7\n7 7\nEND 7 census core core\n7 census reel reel 7\n1971 END 1971 7 core 1971\nreel payroll reel\nEND core 1971 census tape orbit 1969\ndump 1969 7 1971 reel\ncensus orbit orbit core dump\n1971 7 reel orbit payroll\n1969 payroll END LOAD orbit 7 reel tape\nLOAD dump\nLOAD 7 dump tape 7 dump END\nreel core 1971 1971 1969\nLOAD LOAD 7 payroll 1969\npayroll\ntape\ndump dump tape core 7 orbit orbit\n7 reel 1971 7\ncensus 7 dump census 7 core payroll 1969\ncore orbit\n7 reel payroll tape 7 dump 1971\nreel payroll 7 core dump dump core\ncensus core census LOAD dump\ncensus 1971 1969\n1971 tape tape 7 census\ncore core END\ntape core LOAD\nreel\nEND\nreel 7 dump tape\nreel 7\n1971 1971 END tape\n7\n1969\ncensus census payroll core\n1969 orbit END dump 7\nEND orbit tape dump 7 1971 dump END\nreel dump payroll census END orbit 1971 core\npayroll tape 1969 payroll reel 7\nLOAD reel payroll\nEND payroll tape\n7 1971 END\ndump tape\npayroll LOAD core 7\ncore core\ndump dump 1971 tape 1971 payroll 1971 LOAD\n1971 dump 1969 payroll\norbit\n1971 dump core tape census dump\n1969 tape LOAD 1969\ntape LOAD\ncensus END END reel tape\ndump census census 7 census END core 1971\ndump orbit core dump core 1971 END census\nLOAD 1969 LOAD payroll\n1969 1971 reel LOAD\n7 census 1969 LOAD core core core tape\nreel dump core payroll tape payroll payroll dump\n1969 LOAD census\ntape 7 LOAD 1969 reel dump orbit 1969\n1971 payroll 1971 tape\npayroll 1971 dump\norbit tape\ncensus\ncensus orbit dump orbit core tape census dump\nreel dump orbit core LOAD 1971 orbit\n7\npayroll dump LOAD reel\ntape 7\nreel reel 7 tape payroll reel 7\ntape\n7 1969\ncensus 1971\npayroll census END LOAD 1971 END 1971 7\n1969 1969 census reel END\n7 1971 reel LOAD 1971 1971 reel\n",
+      "generated": true
+    },
+    {
+      "stdin": "payroll payroll END core 1971 census 7\nLOAD\ncensus\ncensus core tape orbit 1969 END payroll core\n1971 census tape END census tape\npayroll 1969 orbit census core\ncensus 7 payroll census core\npayroll census orbit\nLOAD census END payroll tape tape LOAD LOAD\n1971 1969 1971 LOAD 1971 orbit LOAD reel\npayroll LOAD\n1969 payroll tape 1971 reel\n7 1969 core 7 core 1969 1969\ncore reel dump\ntape payroll 1971 1969 tape\nEND orbit 7 payroll reel END\nreel\nreel reel orbit payroll END\n7 dump payroll census\n1971 dump payroll\nreel dump reel 1969 reel\n1969 1971\ncore LOAD census reel payroll\n1971 1969 7 core 1971 payroll orbit\npayroll 1969\ntape payroll LOAD core payroll\n7 core core\n1969 1969 LOAD payroll payroll 1971 orbit payroll\norbit\norbit dump reel LOAD payroll tape\n7 census LOAD dump reel 1969\n7 7 census\norbit END core dump core orbit LOAD END\ntape 7 census 1969 7 dump orbit\nreel payroll census LOAD 1969 LOAD END\n1969 1971\npayroll 1969 orbit END\n1971 reel census 1971 END\n1969 reel census END LOAD tape\n7 reel 1969 1969 orbit\n1969 1971 1971 census\ncore LOAD 7 1971 1969 tape census census\nLOAD dump 7 END 1969 1969\n1969 tape reel\n1969 1971 LOAD payroll orbit 1969 7\norbit 1971 END orbit payroll orbit 1971 reel\nLOAD LOAD 7 END 1971 7\nEND orbit reel census LOAD\ncensus orbit END census\n1969\ncore census\npayroll LOAD census core\n7 payroll 7 reel dump payroll census\ncore 7\ncensus\npayroll tape END dump 1971 7\npayroll 7 orbit\ncensus orbit core orbit 1971 payroll tape\norbit tape\nreel\n7 census reel core tape\npayroll 7 reel LOAD 1971\n7 payroll 7 tape payroll orbit census dump\ncensus tape\nEND orbit tape END orbit 1969 dump END\ndump census\nLOAD LOAD LOAD dump\norbit LOAD 1971 core core orbit payroll\nreel LOAD payroll\ncore LOAD 1969 1969 tape LOAD core\nLOAD orbit payroll reel reel 1971 7 orbit\ntape census END dump reel\ntape core core reel dump 1969 tape\n1971 7 1969 core 1971\nreel LOAD core orbit 1969 dump\nreel 1969 dump 1971 END 7 orbit LOAD\n1969 reel\n1969 census dump 1969\n1969 payroll END END\n1969 reel\n",
+      "generated": true
+    },
+    {
+      "stdin": "census reel 7\ncensus orbit 1971\nEND\nLOAD\nEND 1971 1971 payroll orbit orbit dump LOAD\ncensus payroll reel tape payroll census 1971 orbit\ncore reel tape dump orbit\nLOAD 1971 1971 orbit payroll LOAD\npayroll END orbit orbit census reel orbit\norbit 7 orbit orbit dump orbit\norbit payroll\nreel LOAD END LOAD reel tape orbit\n7 END END 1971 census LOAD orbit tape\ncore reel reel 1971 END LOAD core LOAD\ndump core tape\npayroll core 7 dump reel 1971\nLOAD END tape census\n1969 dump tape 7\nLOAD 1971 reel census dump\norbit LOAD 7 orbit\npayroll END census dump orbit 1969\n1971 tape reel 1971\nreel 1971 7 tape END tape\ncensus core\nEND payroll LOAD payroll 7 dump reel\nLOAD reel dump\npayroll END core core END census dump orbit\ncensus census END payroll census 1971\ntape core core 1971 1969 LOAD orbit\nreel 1969 census END\n1969 tape census\n1971 7\n7 dump core payroll payroll tape orbit\nEND reel tape\nEND reel orbit dump 1969 1971 orbit\n7 1969 payroll\n7 1971 tape census core core END\n1969 tape 1971 1971 orbit orbit dump\norbit END 1969 tape\n7 7 dump census tape LOAD\ndump dump END LOAD core orbit 1971\norbit reel 7 core END 1971\n1969 dump tape payroll\nreel\n1971 orbit core 1971 census\ndump 7 END tape 7 LOAD tape END\nEND orbit\ncore payroll\ncore census END LOAD END tape 7 1969\nEND census END payroll 1969 orbit 1971 tape\n7 tape LOAD core reel 1969 payroll\nEND END 1971 7 census\n1969 dump 1971 core tape reel LOAD\norbit payroll tape core dump census payroll\ntape orbit END tape 1971 LOAD\n1971 census END orbit core END\norbit reel\ncensus\ncore END\npayroll orbit dump dump\ncensus dump orbit core payroll 1971 7\ntape tape census census 1969 reel orbit\npayroll dump dump LOAD tape payroll END core\nreel 1969 orbit tape dump\n1969\norbit dump\ncensus census END reel orbit payroll\norbit tape payroll\ntape reel census\ncore 7 orbit 1969 orbit\n1969 1969 END 1971 dump 1971 payroll 1971\npayroll dump census tape tape reel core\n1971 dump dump reel 7 1971\norbit END 1971\n1971 1971 dump\ncore tape END dump reel orbit 1969\n1969 payroll dump 7 payroll\nEND LOAD\n7 LOAD census END dump orbit\nLOAD tape payroll dump census census core census\npayroll reel 1969 census\n1971 core tape\nreel END tape 1969 LOAD\n",
+      "generated": true
+    },
+    {
+      "stdin": "reel 1971 tape END\ncore 1969 orbit\n",
+      "generated": true
+    },
+    {
+      "stdin": "LOAD core dump\ntape payroll census 7 core END orbit 1971\ncensus census\n",
+      "generated": true
+    },
+    {
+      "stdin": "1971 payroll tape reel\n",
+      "generated": true
+    },
+    {
+      "stdin": "core core END tape LOAD core\ncore orbit census 1969 END tape 1971 census\npayroll 1971 core LOAD dump orbit 1969 reel\ndump LOAD 1971 census 1969 1969\npayroll 1971 1971 census payroll\n1969 1971 reel orbit 1971 LOAD orbit\n1971 reel reel payroll END payroll dump 7\ntape core 1971 core 1971 1969\nEND END\n1969 reel reel census census LOAD census census\nEND reel 1971 1971 tape core LOAD\ncore\n7\ncore LOAD census tape payroll\nLOAD\n7 1971 LOAD payroll core LOAD\ncensus 1969 END END\nLOAD dump\n7 payroll core 1969 LOAD 7 dump reel\ndump 7 dump orbit dump tape 7\n7 LOAD\n1969 tape 1969 orbit 1971 1969 payroll\n7 1969 1971 core core reel orbit\nreel 1971 7 orbit core census core core\ndump\n1971 END LOAD census core 1969 1969 orbit\nEND 7 1971 1971 reel LOAD\nEND\ndump\npayroll LOAD LOAD dump reel 1969\norbit orbit 7 dump LOAD 1969\npayroll core 7 core dump reel 1971\norbit\ntape END core reel orbit\ndump core\ncensus reel census dump\ndump orbit LOAD dump\npayroll core reel\ndump core tape orbit core\npayroll\n1971 orbit census payroll payroll reel payroll census\nreel tape LOAD LOAD dump census\n1971 LOAD census\n1969 LOAD END 1971 payroll END tape\ncensus 1969 1971 payroll END 1971 census reel\ndump 1971 reel 1971 1969 census\ncensus\ncore reel core core dump\nreel core reel\n7 tape 1969\ncensus orbit LOAD dump\n1969 1969 reel 7 7 core\ndump orbit 7 7 orbit payroll\ntape payroll dump orbit 7 census payroll\ntape 1971 reel LOAD 1969 END\ndump dump reel\nLOAD\ncensus payroll 1971 LOAD\n7 END\nEND LOAD\nreel\n1969 orbit reel\nLOAD core\npayroll tape dump END census\npayroll core\n7 1971 tape tape\nEND tape dump\n1969 1971\ncore reel\n1971 1971 reel LOAD 1969 7 1969\ncore END payroll 1969 LOAD census core\ntape 7 orbit tape dump\norbit tape core LOAD payroll core reel 1971\ncensus END LOAD\norbit census 7 1969 1971 tape END\n",
+      "generated": true
+    },
+    {
+      "stdin": "7 core tape 1969 census dump\nEND payroll\norbit reel 1969 7 payroll tape 7 payroll\nreel core reel END END orbit END END\n",
+      "generated": true
+    },
+    {
+      "stdin": "1971 dump\ndump orbit payroll orbit\nEND 1971 1969 1969\nLOAD 1971 orbit core dump census\ncore 1969 1971 1971\n7\n7\nEND LOAD core reel LOAD LOAD END\ncore tape payroll END reel\n7 1969 core census 1971 END dump END\n7\n1971 reel tape 1971 payroll 1971 census payroll\ncore tape 1969 payroll\n1969 reel dump reel\n7 1971\npayroll dump payroll tape payroll 7\ntape\n1969 END census END 7 core orbit tape\ndump 7 dump core 1969 dump\ndump census core 1969 LOAD payroll\ncensus 1971 dump orbit payroll orbit core\nLOAD 1971 END core payroll\n1971 census\ncore dump\ncensus END\nEND tape dump 1971\norbit reel reel LOAD core payroll 7\nEND 1971 1969 dump\norbit LOAD\norbit census LOAD LOAD tape 7 tape orbit\n1971 orbit 1969 1971 1969 LOAD dump core\ntape orbit core dump census dump orbit\nreel LOAD reel tape 7 payroll 7\norbit END END\ntape\norbit\norbit 1969 payroll 7 dump\nLOAD reel 1969 dump 1969 reel\nreel\n1971 tape census reel\nEND dump\norbit core END tape\norbit 7 core LOAD 7\nreel END 1969\n1971\norbit orbit dump reel tape LOAD census\ntape 1971 1969 7 orbit\nreel END tape END\norbit END reel 1969 census orbit reel\nEND 1969 7 reel core END census\norbit 1969 1969 1969 1971 1971\nLOAD payroll 1969 7 payroll dump core 1969\npayroll 1971 1969 census LOAD census dump END\ncensus dump END reel 1971 dump\nLOAD 7 reel LOAD payroll payroll LOAD core\norbit tape payroll dump\n",
+      "generated": true
+    },
+    {
+      "stdin": "payroll 7 7 core tape core\ncore core 1969 1971 orbit\n1969 reel dump\ntape census core 7 payroll orbit core census\ntape payroll 1971 LOAD 7 END 7 LOAD\ncore LOAD census tape dump 1971\nreel census reel tape 7 payroll LOAD census\ncensus tape 1969 tape END tape\ncensus orbit 1969 LOAD tape core core 7\n1969\nLOAD census core\nLOAD END\ncore 1971 core reel reel 7 7 tape\nLOAD\n1969 LOAD core END reel payroll 1969\nreel 1969 tape orbit reel dump 7\ndump payroll 1969\n7 payroll orbit\n7 1969 tape 7\ndump dump LOAD payroll payroll\npayroll\ncore payroll END LOAD dump LOAD\npayroll payroll 1971\npayroll 7 1971 7 LOAD dump\nreel tape orbit payroll END dump\n7 END tape tape 7 1969 1969 census\n1971 END\n1971 reel END reel tape 1971 census\ncensus 1971 payroll 1969\norbit reel 7 1971 7 payroll\nreel dump\nLOAD census reel payroll\npayroll\ncensus dump census 1969 LOAD census\n7 orbit orbit reel LOAD reel core\nLOAD\ncensus orbit orbit LOAD\ndump tape 1971 census END END core orbit\ndump tape dump END orbit\ndump 1969 dump LOAD\ncore orbit LOAD LOAD\nEND orbit\ncore LOAD reel 7 payroll\ncore census 1969 LOAD\n7 1971 dump tape 1971 orbit\norbit dump\n7 orbit\ntape reel orbit dump 1971 dump LOAD\nreel END payroll orbit orbit 1971 END\n7 orbit reel core\npayroll 1969 1969 END\n1971 LOAD orbit\npayroll 1971 payroll\npayroll 7 tape\ncensus reel\nLOAD\n1971 core payroll 1971 reel 1969 END\n7 payroll tape 1969 tape payroll\npayroll END LOAD END 1969 LOAD 1969 1971\nEND census dump dump LOAD\ndump END 1971 7 payroll END tape\n7 core LOAD dump\ndump END dump LOAD 1969\norbit dump reel 1971 census census\ncore core 1969 orbit tape tape\nLOAD payroll\n1969 1969\norbit 1971 tape dump END 1971 7 reel\norbit END\ntape orbit reel 1969 orbit LOAD\npayroll census 1969 dump LOAD tape\n",
+      "generated": true
+    },
+    {
+      "stdin": "orbit census END census dump tape core\n7 reel reel 1971 dump END\ndump LOAD 1971 tape 7\nEND\ncensus END reel 1971 1969\nLOAD payroll payroll dump census 7\nLOAD 1969 orbit orbit tape LOAD\n1971 core END core 1971\nLOAD orbit reel LOAD END\npayroll core 1971 7 7\ncore tape census 1969 census\n7\norbit 1969 core orbit core census tape\ncore 7 1971 1971 LOAD core\ntape tape dump reel\nEND\npayroll END orbit census\n7 reel payroll payroll\norbit\ncensus 1971 LOAD census 1969 7\ndump tape LOAD orbit reel census\ntape payroll END orbit dump END\npayroll 7 1971 1971\nEND reel LOAD census 1969 reel\n1969 LOAD dump LOAD reel END\nreel\ncensus LOAD tape\norbit END 1971\ndump orbit core 7 1969 1969 reel\n1969\n1971 reel 1971 census END END reel 1969\nreel dump 1971 7 LOAD tape\nreel LOAD reel\n7 dump\n1969 1969 core\n7 tape census\npayroll 1969 tape core\nLOAD dump tape 1971 census 1969\npayroll payroll\ndump dump 1969 core\ncensus\nLOAD 7 1971 tape payroll orbit\nEND tape\nLOAD orbit 7 core 1969 census reel\ncensus reel LOAD tape core END 1971\ncensus\ntape\npayroll census census\npayroll\n7 END core 1971 core reel reel LOAD\n1969 1971 1969 7 reel\n1969 orbit tape dump core reel\nLOAD LOAD tape payroll payroll\n1969 census reel\ndump\ncore census 1969\nreel\ncore\ncensus reel tape 1971\norbit core dump payroll LOAD dump\n1971\n1969 dump orbit dump dump orbit dump\n1971 1971 1969 dump orbit census\npayroll 7 core core 7 payroll LOAD\ncore dump 1971 orbit tape orbit 7\ncensus core LOAD 7 tape census\nEND reel core\norbit\ncore 1971 1971\ndump\ncensus LOAD census\n7 LOAD tape END 1969 1969\n1969\nLOAD LOAD 1971 core LOAD core core tape\n",
+      "generated": true
+    },
+    {
+      "stdin": "dump payroll LOAD reel 1971 dump census tape\n",
+      "generated": true
+    },
+    {
+      "stdin": "dump END tape\n7 LOAD\nLOAD END 1969 dump reel\ndump\npayroll 7 LOAD\n1969 LOAD dump LOAD LOAD LOAD\n1971 1971 LOAD orbit core core\n1971 7 tape dump\nLOAD tape\ndump END payroll census dump\ncore dump reel\nLOAD\nEND core dump\ncensus 1969 LOAD orbit\norbit core 7 census LOAD orbit 1969\npayroll\n1969 orbit 7 dump LOAD\nEND\norbit END payroll orbit core core payroll END\ndump LOAD END tape dump 7 tape\nLOAD payroll\ndump tape reel 7\ncensus dump tape 1971\nreel tape reel core LOAD payroll 1969 1969\norbit\n1969\nLOAD LOAD reel 1969 LOAD dump\norbit 7 orbit\norbit orbit orbit\n7\n1969 1969 dump reel\ncore 1971\ncore END 7 dump 7 1971\ntape payroll dump tape\ncore LOAD census 7 1971 tape\n1969 1971 census END\norbit\ndump reel payroll tape payroll\ncore core 1971 reel orbit\n",
+      "generated": true
+    },
+    {
+      "stdin": "reel reel dump tape LOAD\n7 1969 tape payroll dump payroll core\n1969 tape 1971 7 reel payroll\nEND END LOAD 1969\npayroll payroll census 1971 reel 1971\n7 reel dump tape payroll payroll LOAD\nLOAD census\n1969 payroll census 1969\n1969 orbit census\nEND reel\ncore\nEND core 7 payroll census\ndump payroll payroll 1969 core reel 7 census\n1971 END 7 census reel 7 core 7\ncensus 1969\n1971 END LOAD dump 1971 reel END\nLOAD core\nreel reel\n1971 7 LOAD\ncensus\ndump reel 1971\n7 reel\n7 reel dump END END\n1969 orbit reel core census dump\n1969 tape END dump 7 census payroll\n1969 END core 1971 core\norbit reel orbit 1971\nEND reel LOAD orbit payroll LOAD\ncore LOAD reel orbit\ndump 7 dump\n1971 census LOAD orbit orbit orbit orbit core\npayroll core core core 1971\ncore payroll 1969 census LOAD tape LOAD orbit\ndump LOAD payroll tape END census\ndump END census 1971\ndump\ntape END LOAD payroll census\nreel payroll LOAD census\nLOAD reel\n1971 7 END 7 orbit\n",
+      "generated": true
+    },
+    {
+      "stdin": "1971 1969 1969 core 7 7 1971 core\npayroll 7\n",
+      "generated": true
+    },
+    {
+      "stdin": "tape tape 7 LOAD dump dump core orbit\n1971 END LOAD\npayroll orbit END 7 orbit LOAD\ntape END reel LOAD\ncensus 1971 core core 7\ntape tape END\n",
+      "generated": true
+    },
+    {
+      "stdin": "core 1971 census END 7 core 1971 payroll\ntape census LOAD 1971 1971\n1969 orbit census tape 7 orbit\n1971 7 orbit dump\ndump dump payroll census\ntape 1969 reel END dump 7\ncore orbit reel LOAD payroll orbit\ncore payroll 1969 reel 1969 END 7\npayroll LOAD\ndump tape tape\ntape END dump core\nEND\npayroll 1969 LOAD 7 1971 core tape\ncore END core payroll orbit core 1969 orbit\ntape dump orbit\norbit LOAD orbit 7\n1969 tape dump payroll core reel\ncore END core\norbit dump END\ncensus 1969 tape 1971 core\nreel 7 1971 payroll orbit payroll\n7 census END orbit core LOAD 7\n1969\npayroll LOAD reel orbit payroll\ncore LOAD tape 1969 core 1969 core dump\nLOAD 7 1969 orbit END core\n1969 1969 LOAD reel 7 END\ntape dump 1971\n7 reel 1969 orbit 7 LOAD dump\ncore dump 1971 tape tape reel\npayroll census LOAD dump END tape dump\ndump END 7 dump\n7 LOAD LOAD LOAD 1969 census\nLOAD payroll tape dump dump dump\n1971 reel 7 payroll END 7 census 1969\n1971 orbit 7 END reel core\npayroll dump reel dump END tape 1971\nLOAD\nreel 1971 1969 1969\n1971 1969 dump\n7 END reel\nEND census dump reel payroll census\nLOAD LOAD census 1971 tape dump LOAD\nreel orbit core reel 1969 core census\n1969 payroll payroll END\n7 orbit 1969\ntape 1969 census core\npayroll orbit END 1969 reel\ndump orbit payroll orbit\ndump END\nEND payroll\n1969\ndump\n",
+      "generated": true
+    },
+    {
+      "stdin": "1971 reel LOAD core\nEND 1971 census payroll\ncore END dump census orbit LOAD orbit\ntape\nEND\n1971 1969 1971\ndump dump reel 1969\nLOAD\nreel dump 7 1969 orbit\nreel 7 orbit payroll\n1969 LOAD census\npayroll\nEND 7 7 1969\nLOAD payroll orbit END 1971 1971\nreel LOAD dump tape census END reel\nEND census orbit LOAD 7\nEND orbit 7 7 orbit\ncensus 7 core reel 1971\nEND dump 7 core dump reel\norbit tape END census\ncensus core LOAD 1969\norbit 1969 LOAD dump core reel LOAD\norbit payroll 7 core\n1971 7 1971\nreel tape payroll orbit\n7 LOAD 7 tape 7 1971 payroll\ndump\ntape LOAD 7 payroll\n1969\n1969\n7 orbit dump 1971 tape END core 7\n1971 core\ndump 1971 reel census 1971 1971 payroll census\norbit 1969 census tape dump reel census\npayroll payroll 1971\ncore LOAD 1969\ncore tape 1969 payroll tape LOAD\nreel\n7 dump 1971 1971 dump core\npayroll END\n1969 LOAD 1969 census core\nreel LOAD tape 1971 1971 orbit reel\ncore dump\nEND tape dump orbit core\nEND census\n",
+      "generated": true
+    },
+    {
+      "stdin": "LOAD dump LOAD tape payroll 7 tape tape\n",
+      "generated": true
+    },
+    {
+      "stdin": "LOAD 1969 dump LOAD dump orbit\n",
+      "generated": true
+    },
+    {
+      "stdin": "1969\nreel reel END core 1971 7 core\norbit 7 END 1971 LOAD\nreel reel 7 tape\nEND 1969 1969 census\npayroll 1969 7 orbit census 1971\ncore END dump reel 1971 reel\ncensus payroll 7 1971 7\npayroll 1969\ndump 1969 LOAD 7 dump LOAD 1969 1971\n",
+      "generated": true
+    },
+    {
+      "stdin": "1971 tape LOAD tape dump payroll reel core\npayroll 7 dump 7\n",
+      "generated": true
+    },
+    {
+      "stdin": "payroll 1969 core census\n1969 core\norbit dump orbit orbit orbit payroll census core\nreel\npayroll dump reel core census 7 reel tape\npayroll\n1971 tape\n1971\nEND\n1971 LOAD\ncensus LOAD orbit 1969 reel core\norbit 1971 census core core 1971\nLOAD\ncensus census orbit 7 END\nreel tape census reel core 1969 1971\nLOAD reel 1969 payroll core census 7 reel\ncensus reel END END 1971 payroll\norbit LOAD dump END census payroll\norbit census core census END tape 1971 END\norbit 1969 7 7 dump core\ntape orbit orbit 7 dump\norbit census\n1969 7 LOAD payroll\norbit core 7 tape orbit 1971 1971 payroll\n1971 orbit payroll reel 1969 tape census\ndump 7 census\n7 tape reel orbit END\ndump 1971 dump END 1971\n1969 orbit\n1971 tape 7 LOAD\nreel END LOAD orbit payroll reel orbit\ntape tape\n1969 payroll 1969\nEND 1969 7 payroll dump END payroll tape\ndump orbit census\nEND\norbit\ncensus\n1969 END census LOAD\n7 census tape tape\nreel 1971 dump\ncensus payroll 1971 1971 1969 7 1971 LOAD\nLOAD orbit\n1971 7 dump census 7 census\ncore core 7 END 7\nEND orbit dump core\ndump core LOAD payroll dump END census\nEND tape reel orbit dump\nEND 1971 reel dump census reel\n1971 payroll payroll 7 payroll 1971 1971 payroll\ncore 7 payroll 1969 dump END 1969 census\nEND census 1969 7\ntape core 7 LOAD LOAD tape\nreel core reel 1971 END tape tape\ntape LOAD LOAD 1971 LOAD dump reel\ncore reel 1971 1969 END\nreel\ntape census\n1969 1969 dump LOAD dump dump census END\ntape tape payroll\norbit\ndump core 7 reel core 1969 1969\nreel 1969\npayroll reel dump core orbit tape\ncensus dump\ncensus LOAD\nLOAD census census 7 1969 reel LOAD\nEND\ntape tape\ncensus payroll 1969 1969\ndump 1969 payroll payroll reel LOAD 1969 core\n1971 orbit\ndump END tape\norbit dump dump 1969\n1971 tape dump dump LOAD 7\nEND\nEND census 1969 1969 tape 1971 1969 1969\norbit 1971 orbit orbit payroll\n7 END dump core END\npayroll orbit dump tape dump 7 tape\ndump reel LOAD core payroll reel dump census\nreel tape tape reel 1971\ncore census payroll LOAD census\n",
+      "generated": true
+    }
+  ]
+}

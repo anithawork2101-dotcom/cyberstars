@@ -1,0 +1,140 @@
+{
+  "comparator": "trimmed",
+  "structure": {
+    "requires": [
+      {
+        "kind": "call",
+        "name": "strerror"
+      },
+      {
+        "kind": "call",
+        "name": "open"
+      },
+      {
+        "kind": "call",
+        "name": "unlink"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "visible": true,
+      "stdin": "OPEN ghost.txt\nCREATE notes.txt\nCREATE notes.txt\nOPEN notes.txt\nOPEN notes.txt/inside\nREMOVE notes.txt\nREMOVE notes.txt\n"
+    },
+    {
+      "stdin": "OPEN nothing.txt\n"
+    },
+    {
+      "stdin": "CREATE a.txt\nREMOVE a.txt\n"
+    },
+    {
+      "stdin": "CREATE b.txt\nCREATE b.txt\nCREATE b.txt\nREMOVE b.txt\n"
+    },
+    {
+      "stdin": "OPEN missing/deeper/file.txt\nCREATE missing/new.txt\n"
+    },
+    {
+      "stdin": "CREATE c.txt\nCREATE c.txt/d.txt\nREMOVE c.txt/d.txt\nREMOVE c.txt"
+    },
+    {
+      "stdin": "REMOVE notes.txt\nREMOVE log.txt\nOPEN reel7.txt/crew.dat\nCREATE report.txt\nOPEN notes.txt\nREMOVE log.txt\nOPEN notes.txt/crew.dat\nOPEN notes.txt\nREMOVE notes.txt\nREMOVE log.txt\nCREATE report.txt\nREMOVE report.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE log.txt\nCREATE tape.dat\nOPEN report.txt\nOPEN report.txt\nREMOVE tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE log.txt\nOPEN crew.dat\nCREATE reel7.txt\nREMOVE tape.dat\nOPEN report.txt\nREMOVE report.txt/report.txt\nREMOVE reel7.txt\nCREATE reel7.txt\nCREATE tape.dat\nOPEN log.txt\nCREATE report.txt\nREMOVE crew.dat\nREMOVE reel7.txt\nREMOVE report.txt\nREMOVE tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE report.txt\nCREATE tape.dat\nCREATE report.txt\nCREATE log.txt\nREMOVE reel7.txt\nREMOVE tape.dat\nOPEN reel7.txt\nCREATE notes.txt\nREMOVE report.txt\nREMOVE log.txt\nREMOVE notes.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE log.txt\nCREATE report.txt\nREMOVE crew.dat\nCREATE notes.txt\nREMOVE notes.txt\nREMOVE report.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "CREATE reel7.txt\nREMOVE reel7.txt/crew.dat\nCREATE reel7.txt\nREMOVE report.txt\nCREATE notes.txt\nOPEN notes.txt\nREMOVE report.txt\nOPEN log.txt\nREMOVE notes.txt\nREMOVE reel7.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE tape.dat\nREMOVE report.txt\nCREATE report.txt/tape.dat\nOPEN notes.txt\nREMOVE notes.txt\nREMOVE crew.dat\nREMOVE notes.txt/reel7.txt\nOPEN reel7.txt\nREMOVE report.txt/tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "OPEN log.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "OPEN reel7.txt\nREMOVE report.txt\nREMOVE log.txt\nCREATE tape.dat\nOPEN tape.dat\nCREATE report.txt\nREMOVE log.txt\nCREATE log.txt\nREMOVE reel7.txt\nREMOVE log.txt\nREMOVE report.txt\nREMOVE tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "CREATE report.txt\nREMOVE notes.txt\nREMOVE report.txt\nOPEN crew.dat\nREMOVE log.txt\nCREATE log.txt\nREMOVE reel7.txt/log.txt\nREMOVE reel7.txt\nCREATE tape.dat\nREMOVE tape.dat\nREMOVE log.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "CREATE tape.dat/crew.dat\nCREATE log.txt/reel7.txt\nOPEN report.txt/reel7.txt\nCREATE tape.dat\nOPEN reel7.txt\nREMOVE log.txt\nREMOVE crew.dat\nREMOVE log.txt\nOPEN crew.dat\nREMOVE tape.dat\nREMOVE crew.dat\nOPEN log.txt\nCREATE notes.txt\nREMOVE log.txt\nREMOVE log.txt/reel7.txt\nREMOVE notes.txt\nREMOVE tape.dat/crew.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE report.txt\nREMOVE report.txt\nREMOVE report.txt/notes.txt\nOPEN notes.txt\nREMOVE log.txt\nOPEN notes.txt\nOPEN reel7.txt\nREMOVE reel7.txt\nOPEN tape.dat\nOPEN crew.dat/tape.dat\nOPEN notes.txt/tape.dat\nREMOVE report.txt\nREMOVE log.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "OPEN notes.txt\nREMOVE tape.dat\nOPEN crew.dat\nCREATE crew.dat\nREMOVE tape.dat\nOPEN notes.txt\nREMOVE reel7.txt\nCREATE log.txt\nREMOVE crew.dat\nREMOVE log.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE reel7.txt\nOPEN reel7.txt\nCREATE tape.dat\nCREATE notes.txt\nCREATE crew.dat\nOPEN log.txt\nCREATE notes.txt\nREMOVE report.txt\nCREATE log.txt\nREMOVE crew.dat\nREMOVE log.txt\nREMOVE notes.txt\nREMOVE tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "OPEN tape.dat\nREMOVE crew.dat\nCREATE crew.dat\nREMOVE reel7.txt\nREMOVE crew.dat\nCREATE reel7.txt\nOPEN crew.dat\nREMOVE crew.dat\nREMOVE report.txt\nREMOVE tape.dat\nREMOVE tape.dat\nCREATE reel7.txt\nREMOVE report.txt\nCREATE tape.dat/reel7.txt\nREMOVE reel7.txt\nREMOVE tape.dat/reel7.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "CREATE notes.txt\nREMOVE reel7.txt\nREMOVE crew.dat\nREMOVE log.txt\nREMOVE tape.dat/report.txt\nOPEN reel7.txt\nOPEN log.txt\nCREATE crew.dat\nREMOVE crew.dat\nCREATE report.txt/log.txt\nREMOVE notes.txt\nREMOVE report.txt/log.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "OPEN reel7.txt\nCREATE notes.txt\nCREATE notes.txt\nOPEN log.txt\nREMOVE notes.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE reel7.txt\nCREATE crew.dat\nCREATE reel7.txt/log.txt\nCREATE log.txt\nCREATE notes.txt\nOPEN log.txt\nCREATE report.txt/tape.dat\nCREATE crew.dat/log.txt\nOPEN crew.dat\nOPEN tape.dat\nCREATE report.txt/notes.txt\nOPEN crew.dat\nREMOVE crew.dat\nREMOVE crew.dat/log.txt\nREMOVE log.txt\nREMOVE notes.txt\nREMOVE reel7.txt/log.txt\nREMOVE report.txt/notes.txt\nREMOVE report.txt/tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "CREATE notes.txt\nCREATE tape.dat\nREMOVE reel7.txt\nOPEN crew.dat\nREMOVE notes.txt\nREMOVE notes.txt\nCREATE notes.txt\nCREATE reel7.txt/notes.txt\nOPEN notes.txt\nOPEN notes.txt\nREMOVE notes.txt\nREMOVE reel7.txt/notes.txt\nREMOVE tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "CREATE crew.dat\nCREATE crew.dat\nOPEN reel7.txt\nREMOVE crew.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "CREATE notes.txt\nCREATE crew.dat\nOPEN crew.dat\nOPEN reel7.txt\nOPEN crew.dat\nREMOVE crew.dat\nREMOVE notes.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE reel7.txt\nOPEN reel7.txt\nREMOVE crew.dat\nREMOVE crew.dat\nREMOVE tape.dat/crew.dat\nCREATE reel7.txt/report.txt\nCREATE notes.txt\nREMOVE notes.txt\nREMOVE reel7.txt/report.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "OPEN log.txt\nOPEN log.txt\nCREATE notes.txt\nCREATE report.txt\nCREATE tape.dat\nREMOVE notes.txt\nREMOVE tape.dat\nREMOVE report.txt\nCREATE report.txt\nREMOVE report.txt\n",
+      "generated": true
+    },
+    {
+      "stdin": "REMOVE notes.txt\nOPEN crew.dat\nCREATE tape.dat\nCREATE notes.txt/notes.txt\nCREATE crew.dat\nCREATE log.txt\nREMOVE tape.dat\nCREATE crew.dat\nOPEN crew.dat\nREMOVE crew.dat/tape.dat\nREMOVE log.txt\nCREATE tape.dat\nREMOVE crew.dat\nREMOVE notes.txt/notes.txt\nREMOVE tape.dat\n",
+      "generated": true
+    },
+    {
+      "stdin": "OPEN crew.dat\nCREATE log.txt\nREMOVE tape.dat\nREMOVE reel7.txt\nREMOVE reel7.txt\nOPEN crew.dat\nOPEN crew.dat\nCREATE notes.txt\nOPEN log.txt\nOPEN notes.txt\nOPEN report.txt/log.txt\nREMOVE tape.dat\nREMOVE reel7.txt\nREMOVE notes.txt/crew.dat\nREMOVE log.txt\nREMOVE notes.txt\n",
+      "generated": true
+    }
+  ]
+}
