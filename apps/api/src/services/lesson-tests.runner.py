@@ -631,11 +631,18 @@ def assigned_names(node):
             yield node.target.id
 
 
+def outside_class_bodies(node, in_class=False):
+    # Every node but those a class body runs itself (its methods' count):
+    # a class attribute isn't a variable, as inject_values sees it.
+    for child in ast.iter_child_nodes(node):
+        inside = False if isinstance(child, FUNCTION_NODES + (ast.Lambda,)) else in_class
+        if not inside:
+            yield child
+        yield from outside_class_bodies(child, inside or isinstance(child, ast.ClassDef))
+
+
 def has_variable(tree, name):
-    for node in ast.walk(tree):
-        if name in assigned_names(node):
-            return True
-    return False
+    return any(name in assigned_names(node) for node in outside_class_bodies(tree))
 
 
 def function_defs(tree):
