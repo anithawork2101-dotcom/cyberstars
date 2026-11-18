@@ -1413,7 +1413,7 @@
         "loop_for": "Nu folosi o buclă for aici",
         "loop_while": "Nu folosi o buclă while aici",
         "loop_do_while": "Nu folosi o buclă do-while aici",
-        "loop_comprehension": "Nu folosi o list comprehension ([x for x in ...]) aici",
+        "loop_comprehension": "Nu folosi o comprehension sau o generator expression ([x for x in ...], (x for x in ...)) aici",
         "loop_list_comprehension": "Nu folosi o list comprehension ([x for x in ...]) aici",
         "loop_dict_comprehension": "Nu folosi o dict comprehension ({k: v for ...}) aici",
         "loop_set_comprehension": "Nu folosi o set comprehension ({x for x in ...}) aici",

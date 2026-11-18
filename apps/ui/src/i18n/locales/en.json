@@ -1384,7 +1384,7 @@
         "loop_for": "Don't use a for loop here",
         "loop_while": "Don't use a while loop here",
         "loop_do_while": "Don't use a do-while loop here",
-        "loop_comprehension": "Don't use a list comprehension ([x for x in ...]) here",
+        "loop_comprehension": "Don't use a comprehension or a generator expression ([x for x in ...], (x for x in ...)) here",
         "loop_list_comprehension": "Don't use a list comprehension ([x for x in ...]) here",
         "loop_dict_comprehension": "Don't use a dictionary comprehension ({k: v for ...}) here",
         "loop_set_comprehension": "Don't use a set comprehension ({x for x in ...}) here",
