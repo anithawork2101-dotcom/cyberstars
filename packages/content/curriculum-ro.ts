@@ -146,6 +146,8 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     fifo: 'OS: Pipe-uri cu nume',
     'shared-memory': 'OS: Memorie comună cu mmap',
     'recap-ipc': 'Recapitulare: Stația de releu',
+    signals: 'OS: Semnale',
+    sigaction: 'OS: sigaction și blocarea semnalelor',
     'os-threads': 'SO: thread-uri',
     'os-semaphores': 'SO: semafoare',
     'os-semaphores-signal': 'SO: semnalizarea cu semafoare',
