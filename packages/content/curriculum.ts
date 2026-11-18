@@ -15,7 +15,7 @@ export const courses = [
     key: 'c',
     title: 'C',
     description:
-      'How a program really works underneath: pointers, memory you manage by hand, structs and files, then processes, pipes, threads and semaphores, ending with a mini shell of your own.',
+      'How a program really works underneath: pointers, recursion, memory you manage by hand, linked lists and files, then a full tour of the operating system: system calls, processes, exec, pipes, signals, threads, deadlock, and the scheduling and memory algorithms behind them, ending with a shell of your own.',
     sortOrder: 2,
   },
   {
