@@ -30,6 +30,7 @@ const stats: AdminStatsDTO = {
   users: {
     total: 12,
     byRole: { USER: 10, MODERATOR: 0, ADMIN: 1, FOUNDER: 1 },
+    bots: 4,
     newLast7Days: 1,
     newLast30Days: 3,
   },
