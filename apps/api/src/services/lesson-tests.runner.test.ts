@@ -334,6 +334,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'class Box:\n    def sort(self):\n        pass\n\nitems = [2, 1]\nitems.sort(reverse=True)\n',
     ],
     [
+      { kind: 'var_args' },
+      'def summary(*boxes):\n    return sum(boxes)\n',
+      'def summary(boxes):\n    return sum(boxes)\n\nf = lambda *a: a\n',
+    ],
+    [
       { kind: 'try_else' },
       'try:\n    x = int("4")\nexcept ValueError:\n    x = 0\nelse:\n    print(x)\n',
       'for i in range(2):\n    pass\nelse:\n    print(i)\ntry:\n    pass\nexcept ValueError:\n    pass\n',

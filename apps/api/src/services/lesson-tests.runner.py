@@ -919,12 +919,8 @@ def has_keyword_arg(tree, name=None):
 
 
 def has_var_param(tree, field):
-    # *args (vararg) or **kwargs (kwarg) on a function or a lambda, however named.
-    return any(
-        getattr(node.args, field) is not None
-        for node in ast.walk(tree)
-        if isinstance(node, FUNCTION_NODES + (ast.Lambda,))
-    )
+    # *args (vararg) or **kwargs (kwarg) on a function, however named.
+    return any(getattr(fn.args, field) is not None for fn in function_defs(tree))
 
 
 def own_bindings(tree):
