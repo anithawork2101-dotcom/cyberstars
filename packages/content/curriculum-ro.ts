@@ -165,6 +165,8 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     'round-robin': 'OS: Round Robin',
     'priority-scheduling': 'OS: Planificarea cu priorități',
     'recap-scheduling': 'Recapitulare: Concursul planificatorilor',
+    paging: 'OS: Paginarea',
+    'fifo-pages': 'OS: Înlocuirea paginilor cu FIFO',
     'project-student-db': 'Proiect: Baza de date cu studenți',
     'project-mini-shell': 'Proiect: Mini shell',
   },

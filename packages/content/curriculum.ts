@@ -875,18 +875,26 @@ export const lessons = [
     sortOrder: 96,
     hasCodeFile: true,
   },
+  { courseKey: 'c', slug: 'paging', title: 'OS: Paging', sortOrder: 97, hasCodeFile: true },
+  {
+    courseKey: 'c',
+    slug: 'fifo-pages',
+    title: 'OS: Page Replacement with FIFO',
+    sortOrder: 98,
+    hasCodeFile: true,
+  },
   {
     courseKey: 'c',
     slug: 'project-student-db',
     title: 'Project: Student Database',
-    sortOrder: 97,
+    sortOrder: 99,
     hasCodeFile: true,
   },
   {
     courseKey: 'c',
     slug: 'project-mini-shell',
     title: 'Project: Mini Shell',
-    sortOrder: 98,
+    sortOrder: 100,
     hasCodeFile: true,
   },
   // Module 1: Basics (control flow + I/O) [16]
