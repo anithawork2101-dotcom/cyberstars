@@ -1,0 +1,97 @@
+{
+  "comparator": "trimmed",
+  "structure": {
+    "requires": [
+      {
+        "kind": "call",
+        "name": "setenv"
+      },
+      {
+        "kind": "call",
+        "name": "unsetenv"
+      },
+      {
+        "kind": "call",
+        "name": "getenv"
+      },
+      {
+        "kind": "call",
+        "name": "fork"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "visible": true,
+      "stdin": "SET SHIFT night\nGET SHIFT\nCHILD SHIFT\nUNSET SHIFT\nGET SHIFT\nCHILD SHIFT\n"
+    },
+    {
+      "stdin": "GET ROOM\nCHILD ROOM\n"
+    },
+    {
+      "stdin": "SET ROOM B12\nSET ROOM C7\nGET ROOM\nCHILD ROOM\n"
+    },
+    {
+      "stdin": "UNSET NOTHING\nGET NOTHING\n"
+    },
+    {
+      "stdin": "SET A 1\nSET B 2\nCHILD A\nCHILD B\nUNSET A\nCHILD A\nGET B"
+    },
+    {
+      "stdin": "SET TAPE night\nSET CHIEF night\nSET CHIEF ken\nUNSET SHIFT\nCHILD TAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "SET LEVEL ada\nSET CHIEF day\nGET TAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "CHILD SHIFT\nCHILD CHIEF\nGET ROOM\nUNSET ROOM\nUNSET LEVEL\nCHILD LEVEL\nCHILD SHIFT\n",
+      "generated": true
+    },
+    {
+      "stdin": "SET LEVEL night\nUNSET REEL\nUNSET SHIFT\nGET LEVEL\n",
+      "generated": true
+    },
+    {
+      "stdin": "CHILD SHIFT\nSET ROOM ken\nUNSET CHIEF\nCHILD SHIFT\nSET CHIEF ken\nCHILD SHIFT\nUNSET TAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "SET CHIEF day\nCHILD TAPE\nGET CHIEF\nSET REEL C7\nUNSET REEL\n",
+      "generated": true
+    },
+    {
+      "stdin": "UNSET TAPE\n",
+      "generated": true
+    },
+    {
+      "stdin": "GET TAPE\nGET ROOM\nSET CHIEF high\nCHILD LEVEL\nSET ROOM ada\nSET TAPE night\nCHILD ROOM\nUNSET TAPE\nSET LEVEL C7\nCHILD SHIFT\n",
+      "generated": true
+    },
+    {
+      "stdin": "CHILD ROOM\nSET LEVEL night\nCHILD LEVEL\nSET ROOM day\nGET REEL\nSET ROOM C7\nSET SHIFT B12\n",
+      "generated": true
+    },
+    {
+      "stdin": "SET TAPE B12\nUNSET ROOM\nUNSET REEL\nUNSET SHIFT\nGET ROOM\nUNSET ROOM\nGET CHIEF\nCHILD TAPE\nCHILD LEVEL\nSET CHIEF high\n",
+      "generated": true
+    },
+    {
+      "stdin": "SET REEL night\nCHILD SHIFT\nGET LEVEL\n",
+      "generated": true
+    },
+    {
+      "stdin": "CHILD ROOM\nGET SHIFT\nGET REEL\nSET SHIFT high\nUNSET SHIFT\nCHILD CHIEF\nSET LEVEL ken\nSET SHIFT ada\nSET TAPE 7\n",
+      "generated": true
+    },
+    {
+      "stdin": "UNSET CHIEF\nUNSET LEVEL\n",
+      "generated": true
+    },
+    {
+      "stdin": "SET SHIFT high\nSET LEVEL 7\n",
+      "generated": true
+    }
+  ]
+}
