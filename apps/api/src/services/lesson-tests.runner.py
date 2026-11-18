@@ -895,28 +895,25 @@ def has_import(tree, name=None):
 def has_keyword_arg(tree, name=None):
     # A call that passes an argument by its name. With a name, that argument to
     # any call (sorted(..., key=...)); without one, any to a function or class
-    # of the student's own, a method of theirs on an object too (ship.move(x=1)),
-    # since print(end="") isn't what a lesson on keyword arguments teaches.
-    # **options passes no name of its own.
+    # of the student's own, a method of theirs on an object surely of their
+    # class too (ship.move(x=1)), since print(end="") or d.get(default=0) isn't
+    # what a lesson on keyword arguments teaches. **options passes no name.
+    calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and any(k.arg for k in n.keywords)]
+    if name is not None:
+        return any(name in (k.arg for k in n.keywords) for n in calls)
     own = {fn.name for fn in function_defs(tree)} | class_names(tree)
-    methods = {
-        stmt.name
-        for cls in ast.walk(tree)
-        if isinstance(cls, ast.ClassDef)
-        for stmt in cls.body
-        if isinstance(stmt, FUNCTION_NODES)
-    }
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.Call):
-            continue
-        named = [k.arg for k in node.keywords if k.arg is not None]
-        if name is not None:
-            if name in named:
-                return True
-        elif named and (
-            called_function(node) in own
-            or (isinstance(node.func, ast.Attribute) and node.func.attr in methods)
-        ):
+    if any(called_function(n) in own for n in calls):
+        return True
+    methods = {c.name: method_names(c) for c in ast.walk(tree) if isinstance(c, ast.ClassDef)}
+    on_objects = [n for n in calls if isinstance(n.func, ast.Attribute)]
+    names = Names(tree) if on_objects else None
+    for node in on_objects:
+        receiver = node.func.value
+        if isinstance(receiver, ast.Call) and isinstance(receiver.func, ast.Name):
+            classes = {receiver.func.id} & set(methods)
+        else:
+            classes = names.receiver_classes(receiver) or set()
+        if any(node.func.attr in methods.get(c, ()) for c in classes):
             return True
     return False
 
