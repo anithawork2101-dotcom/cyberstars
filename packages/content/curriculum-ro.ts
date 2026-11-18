@@ -141,6 +141,8 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     environment: 'OS: Variabile de mediu',
     'recap-processes': 'Recapitulare: Verificările de dimineață',
     'os-pipes': 'SO: pipe-uri',
+    dup2: 'OS: Redirecționarea cu dup2',
+    pipeline: 'OS: Construirea unui pipeline',
     'os-threads': 'SO: thread-uri',
     'os-semaphores': 'SO: semafoare',
     'os-semaphores-signal': 'SO: semnalizarea cu semafoare',
