@@ -597,8 +597,7 @@ class Names:
                 if isinstance(node, ast.alias) and node.name.split(".")[-1] in PROCESS_CALLS:
                     self.dynamic.append(node)
                 elif isinstance(node, (ast.Import, ast.ImportFrom)):
-                    modules = [a.name for a in node.names] if isinstance(node, ast.Import) else [node.module or ""]
-                    if any(m.split(".")[0] in DYNAMIC_MODULES for m in modules):
+                    if any(m.split(".")[0] in DYNAMIC_MODULES for m in imported_modules(node)):
                         self.dynamic.append(node)
             for dynamic in DYNAMIC_NAMES:
                 self.dynamic += self.foreign_reads(dynamic)
@@ -619,6 +618,15 @@ class Names:
         found += [n for n in self.keys if n.slice.value == name]
         found += [n for n in self.lookups if self.by_name_lookup(n, name)]
         return found
+
+
+def imported_modules(node):
+    # The modules an import names by their full name: import os.path, from
+    # os import path (os, and os.path in case path is a module).
+    if isinstance(node, ast.Import):
+        return [alias.name for alias in node.names]
+    module = node.module or ""
+    return [module] + [f"{module}.{alias.name}" for alias in node.names]
 
 
 def assigned_names(node):
@@ -881,12 +889,9 @@ def has_import(tree, name=None):
     # import math, import math as m, from collections import Counter: the
     # module by its full name or its first part (os.path counts as os).
     for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            modules = [alias.name for alias in node.names]
-        elif isinstance(node, ast.ImportFrom) and node.module and not node.level:
-            modules = [node.module]
-        else:
+        if not isinstance(node, (ast.Import, ast.ImportFrom)) or getattr(node, "level", 0):
             continue
+        modules = imported_modules(node)
         if name is None or any(m == name or m.split(".")[0] == name for m in modules):
             return True
     return False

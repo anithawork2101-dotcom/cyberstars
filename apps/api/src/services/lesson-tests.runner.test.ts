@@ -338,6 +338,7 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'def summary(*boxes):\n    return sum(boxes)\n',
       'def summary(boxes):\n    return sum(boxes)\n\nf = lambda *a: a\n',
     ],
+    [{ kind: 'import', name: 'os.path' }, 'from os import path\n', 'import os\n'],
     [
       { kind: 'try_else' },
       'try:\n    x = int("4")\nexcept ValueError:\n    x = 0\nelse:\n    print(x)\n',
