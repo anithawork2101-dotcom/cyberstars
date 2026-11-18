@@ -1027,22 +1027,47 @@ def has_class_attribute(tree, name=None):
     return False
 
 
+# A spec only a number takes: a number's type (.2f, d, %, x...) or a
+# thousands separator; padding alone ({name:<14}) shapes text as well.
+NUMBER_SPEC = re.compile(r"[,_]|[bdeEfFgGnoxX%]$")
+
+
+def spec_text(spec):
+    # An f-string's spec with each {nested} field read as a 1: {x:.{n}f}.
+    if isinstance(spec, ast.Constant):
+        return spec.value if isinstance(spec.value, str) else None
+    if isinstance(spec, ast.JoinedStr):
+        return "".join(p.value if isinstance(p, ast.Constant) else "1" for p in spec.values)
+    return None
+
+
+def number_spec(spec):
+    # A spec not known before the run counts.
+    text = spec_text(spec)
+    return text is None or bool(NUMBER_SPEC.search(text))
+
+
 def has_format_spec(tree):
     # A number shaped by a format spec: f"{x:.2f}", format(x, ".2f") or
     # "{:.2f}".format(x).
     for node in ast.walk(tree):
         if isinstance(node, ast.FormattedValue) and node.format_spec is not None:
-            return True
+            if number_spec(node.format_spec):
+                return True
         if isinstance(node, ast.Call):
             func = node.func
             if isinstance(func, ast.Name) and func.id == "format" and len(node.args) >= 2:
-                return True
+                if number_spec(node.args[1]):
+                    return True
             if (
                 isinstance(func, ast.Attribute)
                 and func.attr == "format"
                 and isinstance(func.value, ast.Constant)
                 and isinstance(func.value.value, str)
-                and re.search(r"\{[^{}]*:[^{}]+\}", func.value.value)
+                and any(
+                    NUMBER_SPEC.search(spec)
+                    for spec in re.findall(r"\{[^{}]*:([^{}]+)\}", func.value.value)
+                )
             ):
                 return True
     return False
