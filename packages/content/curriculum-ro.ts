@@ -172,6 +172,9 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     'recap-paging': 'Recapitulare: Memoria virtuală',
     'project-student-db': 'Proiect: Baza de date cu studenți',
     'project-mini-shell': 'Proiect: Mini shell',
+    'project-library-catalog': 'Proiect: Catalogul bibliotecii',
+    'project-pipe-shell': 'Proiect: Un shell cu pipe-uri',
+    'project-job-scheduler': 'Proiect: Planificatorul de lucrări',
   },
   java: {
     print: 'Afișare cu println',

@@ -918,6 +918,27 @@ export const lessons = [
     sortOrder: 103,
     hasCodeFile: true,
   },
+  {
+    courseKey: 'c',
+    slug: 'project-library-catalog',
+    title: 'Project: Library Catalog',
+    sortOrder: 104,
+    hasCodeFile: true,
+  },
+  {
+    courseKey: 'c',
+    slug: 'project-pipe-shell',
+    title: 'Project: A Shell with Pipes',
+    sortOrder: 105,
+    hasCodeFile: true,
+  },
+  {
+    courseKey: 'c',
+    slug: 'project-job-scheduler',
+    title: 'Project: Job Scheduler',
+    sortOrder: 106,
+    hasCodeFile: true,
+  },
   // Module 1: Basics (control flow + I/O) [16]
   { courseKey: 'java', slug: 'print', title: 'Print', sortOrder: 1, hasCodeFile: true },
   { courseKey: 'java', slug: 'comment', title: 'Comments', sortOrder: 2, hasCodeFile: true },
