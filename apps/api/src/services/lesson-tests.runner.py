@@ -998,9 +998,18 @@ def has_override(tree, name=None):
 def has_class_attribute(tree, name=None):
     # A value set in the class body itself, outside its methods: shared by
     # every object made from it.
+    # A bare annotation (fleet: str) sets nothing; a, b = 1, 2 sets both.
     for cls in (n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)):
         for stmt in cls.body:
-            names = list(assigned_names(stmt))
+            if isinstance(stmt, ast.Assign):
+                targets = stmt.targets
+            elif isinstance(stmt, (ast.AnnAssign, ast.AugAssign)) and stmt.value is not None:
+                targets = [stmt.target]
+            else:
+                continue
+            names = {
+                n.id for t in targets for n in ast.walk(t) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store)
+            }
             if names and (name is None or name in names):
                 return True
     return False
