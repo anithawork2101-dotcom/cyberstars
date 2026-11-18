@@ -952,9 +952,17 @@ def has_decorator(tree, name=None):
     # A decorator a lesson names is the library's (@dataclass): a function of
     # the student's own by that name, or a name of theirs it is reached
     # through, isn't it.
+    # from dataclasses import dataclass as dc makes @dc the library's too.
     own = own_bindings(tree) if name is not None else set()
+    aliases = {
+        a.asname: a.name
+        for n in ast.walk(tree)
+        if isinstance(n, ast.ImportFrom)
+        for a in n.names
+        if a.asname
+    }
     return any(
-        name is None or (base_name(d) == name and root_name(d) not in own)
+        name is None or (aliases.get(base_name(d), base_name(d)) == name and root_name(d) not in own)
         for node in ast.walk(tree)
         if isinstance(node, FUNCTION_NODES + (ast.ClassDef,))
         for d in node.decorator_list

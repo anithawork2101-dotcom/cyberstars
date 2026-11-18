@@ -319,6 +319,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'class Ship:\n    fleet = "Star Fleet"\n\nprint(Ship.fleet)\n',
     ],
     [
+      { kind: 'decorator', name: 'dataclass' },
+      'from dataclasses import dataclass as dc\n\n@dc\nclass Point:\n    x: int\n',
+      'from functools import cache as dataclass\n\n@dataclass\ndef f():\n    pass\n',
+    ],
+    [
       { kind: 'try_else' },
       'try:\n    x = int("4")\nexcept ValueError:\n    x = 0\nelse:\n    print(x)\n',
       'for i in range(2):\n    pass\nelse:\n    print(i)\ntry:\n    pass\nexcept ValueError:\n    pass\n',
