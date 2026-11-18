@@ -160,6 +160,8 @@ export const lessonTitlesRo: Record<string, Record<string, string>> = {
     deadlock: 'OS: Deadlock',
     bankers: 'OS: Algoritmul bancherului',
     'recap-os': 'Recapitulare: Numărarea cuvintelor în paralel',
+    fcfs: 'OS: Planificarea FCFS',
+    sjf: 'OS: Întâi lucrarea cea mai scurtă',
     'project-student-db': 'Proiect: Baza de date cu studenți',
     'project-mini-shell': 'Proiect: Mini shell',
   },

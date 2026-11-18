@@ -842,16 +842,30 @@ export const lessons = [
   },
   {
     courseKey: 'c',
+    slug: 'fcfs',
+    title: 'OS: Scheduling with FCFS',
+    sortOrder: 92,
+    hasCodeFile: true,
+  },
+  {
+    courseKey: 'c',
+    slug: 'sjf',
+    title: 'OS: Shortest Job First',
+    sortOrder: 93,
+    hasCodeFile: true,
+  },
+  {
+    courseKey: 'c',
     slug: 'project-student-db',
     title: 'Project: Student Database',
-    sortOrder: 92,
+    sortOrder: 94,
     hasCodeFile: true,
   },
   {
     courseKey: 'c',
     slug: 'project-mini-shell',
     title: 'Project: Mini Shell',
-    sortOrder: 93,
+    sortOrder: 95,
     hasCodeFile: true,
   },
   // Module 1: Basics (control flow + I/O) [16]
