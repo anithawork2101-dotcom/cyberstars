@@ -1,29 +1,17 @@
 import i18next, { type TFunction } from 'i18next';
 import type { InjectValue, StructureFailure, TestCaseResult } from '@cyberstars/shared/tests';
 
-// Kinds whose rule may name what it asks for or leave it open: without a name
-// the text says "a function of your own", "a module"...
-const NAMED_OR_ANY = new Set([
-  'function',
-  'class',
-  'extends',
-  'override',
-  'import',
-  'keyword_arg',
-  'decorator',
-  'class_attribute',
-]);
-
-// The most precise text first: a loop of one statement, a function or class
-// the student names, then the kind alone, then a general one for a kind
-// without a text yet, so the student never sees a raw key.
+// The most precise text first: a loop of one statement, or a rule without a
+// name ("a function of your own", "a module") where its kind has such a text,
+// then the kind alone, then a general one for a kind without a text yet, so
+// the student never sees a raw key.
 export function structureMessage(failure: StructureFailure, t: TFunction): string {
   const { kind, type, name } = failure.rule;
   const base = `tests.structure.${failure.type}`;
   const specific =
     kind === 'loop' && type
       ? `${base}.loop_${type}`
-      : NAMED_OR_ANY.has(kind) && !name
+      : !name
         ? `${base}.${kind}_any`
         : null;
   const keys = [specific, `${base}.${kind}`, `${base}.other`].filter((k) => k !== null);
