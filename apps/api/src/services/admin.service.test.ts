@@ -43,7 +43,7 @@ beforeEach(() => {
   clearUserSockets();
   mockAdminRepo.countNonFounders.mockResolvedValue(0);
   mockContainer.onlineGuests.mockReturnValue(0);
-  mockAdminRepo.tutorStats.mockResolvedValue({ promptsLast7Days: 9 });
+  mockAdminRepo.tutorStats.mockResolvedValue({ promptsLast7Days: 9, promptsLast30Days: 30 });
   mockAdminRepo.userStats.mockResolvedValue({
     total: 3,
     byRole: { USER: 2, MODERATOR: 0, ADMIN: 1 },

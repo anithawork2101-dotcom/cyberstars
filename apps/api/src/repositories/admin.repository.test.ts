@@ -120,16 +120,19 @@ describe('progressStats', () => {
 });
 
 describe('tutorStats', () => {
-  it('counts the messages sent to the tutor in the last 7 days', async () => {
+  it('counts the messages sent to the tutor in the last 7 and 30 days', async () => {
     vi.useFakeTimers({ now: new Date('2026-11-15T12:00:00Z') });
-    mockPrisma.tutorPrompt.count.mockResolvedValue(42);
+    mockPrisma.tutorPrompt.count.mockResolvedValueOnce(42).mockResolvedValueOnce(120);
 
     const result = await repo.tutorStats();
     vi.useRealTimers();
 
-    expect(result).toEqual({ promptsLast7Days: 42 });
+    expect(result).toEqual({ promptsLast7Days: 42, promptsLast30Days: 120 });
     expect(mockPrisma.tutorPrompt.count).toHaveBeenCalledWith({
       where: { createdAt: { gte: new Date('2026-11-08T12:00:00Z') } },
+    });
+    expect(mockPrisma.tutorPrompt.count).toHaveBeenCalledWith({
+      where: { createdAt: { gte: new Date('2026-10-16T12:00:00Z') } },
     });
   });
 });

@@ -278,7 +278,7 @@ describe('Tutor conversations', () => {
 
     clearCache();
     const stats = await admin.get('/api/admin/stats').expect(200);
-    expect(stats.body.tutor).toEqual({ promptsLast7Days: 2 });
+    expect(stats.body.tutor).toEqual({ promptsLast7Days: 2, promptsLast30Days: 2 });
   });
 
   it("takes a student's conversations and messages with them when their user row is deleted", async () => {

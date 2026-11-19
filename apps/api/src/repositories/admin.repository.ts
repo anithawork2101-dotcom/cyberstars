@@ -107,12 +107,14 @@ export async function supportStats(): Promise<AdminSupportStats> {
   return { total, byStatus };
 }
 
-// How many messages students sent the tutor in the last 7 days; admins' and the
-// founder's were never counted.
+// How many messages students sent the tutor in the last 7 and 30 days; admins'
+// and the founder's were never counted.
 export async function tutorStats(): Promise<AdminTutorStats> {
-  return {
-    promptsLast7Days: await prisma.tutorPrompt.count({ where: { createdAt: { gte: daysAgo(7) } } }),
-  };
+  const [promptsLast7Days, promptsLast30Days] = await Promise.all([
+    prisma.tutorPrompt.count({ where: { createdAt: { gte: daysAgo(7) } } }),
+    prisma.tutorPrompt.count({ where: { createdAt: { gte: daysAgo(30) } } }),
+  ]);
+  return { promptsLast7Days, promptsLast30Days };
 }
 
 // How many of these users aren't the founder

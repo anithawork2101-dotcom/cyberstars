@@ -103,12 +103,13 @@ export function AdminPage() {
               {/* Users, on its own row above the visitors charts */}
               <section className={CARD_CLS + ' @2xl:col-span-3'}>
                 <h2 className="text-[14px] font-semibold mb-4">{t('admin.users')}</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-4">
                   <Stat label={t('admin.totalUsers')} value={stats.users.total} />
                   <Stat label={t('admin.new7')} value={stats.users.newLast7Days} />
                   <Stat label={t('admin.new30')} value={stats.users.newLast30Days} />
                   {/* Whether students talk to the tutor: a count only, never who */}
                   <Stat label={t('admin.tutorPrompts7')} value={stats.tutor.promptsLast7Days} />
+                  <Stat label={t('admin.tutorPrompts30')} value={stats.tutor.promptsLast30Days} />
                 </div>
                 <div className="pt-3 border-t border-[var(--border)] flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-[var(--text2)]">
                   {(['FOUNDER', 'ADMIN', 'MODERATOR', 'USER'] as const).map((role) => (

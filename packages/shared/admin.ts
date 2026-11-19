@@ -10,6 +10,7 @@ export interface AdminUserStats {
 
 export interface AdminTutorStats {
   promptsLast7Days: number; // messages students sent the tutor, admins and the founder left out
+  promptsLast30Days: number;
 }
 
 interface AdminCourseProgress {
