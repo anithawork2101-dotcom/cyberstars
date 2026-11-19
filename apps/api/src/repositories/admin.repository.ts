@@ -1,4 +1,5 @@
 import { prisma } from '../config/db.js';
+import { BOT_EMAIL_ENDINGS } from './user.repository.js';
 import type { Role } from '@prisma/client';
 import type {
   AdminUserStats,
@@ -12,9 +13,6 @@ import type { TicketStatus } from '@cyberstars/shared/support';
 function daysAgo(days: number): Date {
   return new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 }
-
-// The test accounts we made ourselves, told apart by their email's domain
-const BOT_EMAIL_ENDINGS = ['@fake.com', '.fake.com', '@bots.cyberstars.app'];
 
 export async function userStats(): Promise<AdminUserStats> {
   const [total, roleGroups, newLast7Days, newLast30Days, bots] = await Promise.all([
@@ -107,8 +105,8 @@ export async function supportStats(): Promise<AdminSupportStats> {
   return { total, byStatus };
 }
 
-// How many messages students sent the tutor in the last 7 and 30 days; admins'
-// and the founder's were never counted.
+// How many messages students sent the tutor in the last 7 and 30 days; only
+// USER accounts that aren't bots were ever counted.
 export async function tutorStats(): Promise<AdminTutorStats> {
   const [promptsLast7Days, promptsLast30Days] = await Promise.all([
     prisma.tutorPrompt.count({ where: { createdAt: { gte: daysAgo(7) } } }),
