@@ -30,6 +30,7 @@ const stats: AdminStatsDTO = {
   users: {
     total: 12,
     byRole: { USER: 10, MODERATOR: 0, ADMIN: 1, FOUNDER: 1 },
+    bots: 4,
     newLast7Days: 1,
     newLast30Days: 3,
   },
@@ -108,11 +109,12 @@ describe('AdminPage', () => {
     expect(screen.getByText('Poll')).toBeInTheDocument();
   });
 
-  it('shows how many users and guests are online now in the role row, after the User count', async () => {
+  it('shows how many users and guests are online now in the role row, after the User and Bot counts', async () => {
     getStats.mockResolvedValue(stats);
     renderPage();
     const online = await screen.findByText('Online now: 3 signed in · 5 guests');
-    expect(online.previousElementSibling).toHaveTextContent(/^User \d+$/);
+    expect(online.previousElementSibling).toHaveTextContent('Bot 4');
+    expect(online.previousElementSibling?.previousElementSibling).toHaveTextContent('User 10');
   });
 
   it('says the stats could not be loaded, and clears it once a refresh brings them', async () => {

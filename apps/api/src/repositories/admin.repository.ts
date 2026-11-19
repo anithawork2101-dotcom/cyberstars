@@ -13,18 +13,26 @@ function daysAgo(days: number): Date {
   return new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 }
 
+// The test accounts we made ourselves, told apart by their email's domain
+const BOT_EMAIL_ENDINGS = ['@fake.com', '.fake.com', '@bots.cyberstars.app'];
+
 export async function userStats(): Promise<AdminUserStats> {
-  const [total, roleGroups, newLast7Days, newLast30Days] = await Promise.all([
+  const [total, roleGroups, newLast7Days, newLast30Days, bots] = await Promise.all([
     prisma.user.count(),
     prisma.user.groupBy({ by: ['role'], _count: { _all: true } }),
     prisma.user.count({ where: { createdAt: { gte: daysAgo(7) } } }),
     prisma.user.count({ where: { createdAt: { gte: daysAgo(30) } } }),
+    prisma.user.count({
+      where: { role: 'USER', OR: BOT_EMAIL_ENDINGS.map((endsWith) => ({ email: { endsWith } })) },
+    }),
   ]);
 
   const byRole: Record<Role, number> = { USER: 0, MODERATOR: 0, ADMIN: 0, FOUNDER: 0 };
   for (const g of roleGroups) byRole[g.role] = g._count._all;
+  // Bots are USER accounts, shown apart from the real ones
+  byRole.USER -= bots;
 
-  return { total, byRole, newLast7Days, newLast30Days };
+  return { total, byRole, bots, newLast7Days, newLast30Days };
 }
 
 export async function progressStats(): Promise<AdminProgressStats> {

@@ -3,6 +3,7 @@ import type { TicketStatus } from './support.js';
 export interface AdminUserStats {
   total: number;
   byRole: { USER: number; MODERATOR: number; ADMIN: number; FOUNDER: number };
+  bots: number; // our test accounts, left out of byRole.USER
   newLast7Days: number;
   newLast30Days: number;
 }
