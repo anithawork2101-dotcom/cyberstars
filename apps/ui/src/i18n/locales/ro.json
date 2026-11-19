@@ -39,6 +39,7 @@
     "refreshing": "Se reîmprospătează…",
     "generatedAt": "Actualizat la {{time}}",
     "tutorPrompts7": "Mesaje către tutor (7 zile)",
+    "tutorPrompts30": "Mesaje către tutor (30 de zile)",
     "users": "Utilizatori",
     "totalUsers": "Total utilizatori",
     "bots": "Bot",

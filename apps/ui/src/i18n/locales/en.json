@@ -39,6 +39,7 @@
     "refreshing": "Refreshing…",
     "generatedAt": "Data as of {{time}}",
     "tutorPrompts7": "Messages to the tutor (7 days)",
+    "tutorPrompts30": "Messages to the tutor (30 days)",
     "users": "Users",
     "totalUsers": "Total users",
     "bots": "Bot",
