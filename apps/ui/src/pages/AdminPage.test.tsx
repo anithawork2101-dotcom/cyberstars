@@ -72,9 +72,9 @@ describe('AdminPage', () => {
     renderPage();
     const tutor = await screen.findByText('Messages to the tutor (7 days)');
     expect(tutor.previousElementSibling).toHaveTextContent('37');
-    expect(screen.getByText('Messages to the tutor (30 days)').previousElementSibling).toHaveTextContent(
-      '90',
-    );
+    expect(
+      screen.getByText('Messages to the tutor (30 days)').previousElementSibling,
+    ).toHaveTextContent('90');
     const row = tutor.closest('div')!.parentElement!;
     expect(Array.from(row.children, (c) => c.lastElementChild?.textContent)).toEqual([
       'Total users',
