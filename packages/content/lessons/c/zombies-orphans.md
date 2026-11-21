@@ -9,8 +9,22 @@ On Linux, the kernel shows every process as a folder in **/proc**. The file /pro
 To build that path, we need the PID inside a string. **snprintf** does it: it works like printf, but writes into an array of chars, and never more than the size we give it
 
 ```c
-char path[64];
-snprintf(path, sizeof(path), "/proc/%d/stat", pid);
+#include <stdio.h>
+#include <unistd.h>
+
+int main(void) {
+    pid_t pid = 1;
+    char path[64];
+    snprintf(path, sizeof(path), "/proc/%d/stat", pid);
+    printf("%s\n", path);
+    return 0;
+}
+```
+
+Output
+
+```text
+/proc/1/stat
 ```
 
 ---
@@ -71,7 +85,7 @@ One zombie costs almost nothing. But a long running program that starts children
 
 The other way round: what if the **parent** ends first? Its children become **orphans**. They keep running, and the kernel gives them a new parent: process number 1, the first process of the system, or of the container. Process 1 waits for every child it gets, so orphans never stay zombies for long
 
-```c
+```text
 pid_t pid = fork();
 if (pid == 0) {
     sleep(1);

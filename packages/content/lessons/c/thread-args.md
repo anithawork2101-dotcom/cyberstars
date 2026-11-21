@@ -49,7 +49,7 @@ Each thread gets the address of its own struct. It reads its range from it, and 
 
 A classic mistake: giving every thread the address of the loop variable
 
-```c
+```text
 for (int i = 0; i < 4; i++) {
     pthread_create(&t[i], NULL, work, &i);
 }
@@ -62,11 +62,35 @@ All four threads get the same address, &i. By the time a thread reads it, the lo
 The thread's function returns a `void *`, and pthread_join can catch it in its second argument. So a thread can also hand back a result as a pointer, for example to memory it got with malloc. Then main must free it
 
 ```c
-void *result;
-pthread_join(t, &result);
-long *value = result;
-printf("%ld\n", *value);
-free(value);
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+void *square(void *arg) {
+    long n = *(long *)arg;
+    long *value = malloc(sizeof(long));
+    *value = n * n;
+    return value;
+}
+
+int main(void) {
+    pthread_t t;
+    long n = 12;
+    pthread_create(&t, NULL, square, &n);
+
+    void *result;
+    pthread_join(t, &result);
+    long *value = result;
+    printf("%ld\n", *value);
+    free(value);
+    return 0;
+}
+```
+
+Output
+
+```text
+144
 ```
 
 Writing into the struct is often simpler, and there's nothing to free

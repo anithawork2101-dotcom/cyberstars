@@ -9,8 +9,22 @@ Pe Linux, kernelul arată fiecare proces ca un folder în **/proc**. Fișierul /
 Ca să construim acea cale, avem nevoie de PID într-un șir. **snprintf** face asta: merge ca printf, dar scrie într-un array de caractere și niciodată mai mult decât mărimea pe care i-o dăm
 
 ```c
-char cale[64];
-snprintf(cale, sizeof(cale), "/proc/%d/stat", pid);
+#include <stdio.h>
+#include <unistd.h>
+
+int main(void) {
+    pid_t pid = 1;
+    char cale[64];
+    snprintf(cale, sizeof(cale), "/proc/%d/stat", pid);
+    printf("%s\n", cale);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+/proc/1/stat
 ```
 
 ---
@@ -71,7 +85,7 @@ Un singur zombie nu costă aproape nimic. Dar un program care rulează mult timp
 
 Invers: ce se întâmplă dacă **părintele** se termină primul? Copiii lui devin **orfani**. Continuă să ruleze, iar kernelul le dă un părinte nou: procesul numărul 1, primul proces din sistem sau din container. Procesul 1 își așteaptă fiecare copil primit, deci orfanii nu rămân zombi mult timp
 
-```c
+```text
 pid_t pid = fork();
 if (pid == 0) {
     sleep(1);

@@ -49,7 +49,7 @@ Fiecare thread primește adresa propriului struct. Își citește intervalul din
 
 O greșeală clasică: dăm fiecărui thread adresa variabilei din buclă
 
-```c
+```text
 for (int i = 0; i < 4; i++) {
     pthread_create(&t[i], NULL, lucreaza, &i);
 }
@@ -62,11 +62,35 @@ Toate cele patru thread-uri primesc aceeași adresă, &i. Până când un thread
 Funcția thread-ului întoarce un `void *`, iar pthread_join îl poate prinde în al doilea argument. Deci un thread poate da înapoi un rezultat și ca pointer, de exemplu spre memorie luată cu malloc. Atunci main trebuie s-o elibereze
 
 ```c
-void *rezultat;
-pthread_join(t, &rezultat);
-long *valoare = rezultat;
-printf("%ld\n", *valoare);
-free(valoare);
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+void *patrat(void *arg) {
+    long n = *(long *)arg;
+    long *valoare = malloc(sizeof(long));
+    *valoare = n * n;
+    return valoare;
+}
+
+int main(void) {
+    pthread_t t;
+    long n = 12;
+    pthread_create(&t, NULL, patrat, &n);
+
+    void *rezultat;
+    pthread_join(t, &rezultat);
+    long *valoare = rezultat;
+    printf("%ld\n", *valoare);
+    free(valoare);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+144
 ```
 
 Scrierea în struct e de multe ori mai simplă și nu e nimic de eliberat
