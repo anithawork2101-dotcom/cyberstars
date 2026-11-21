@@ -334,6 +334,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'class Box:\n    def sort(self):\n        pass\n\nitems = [2, 1]\nitems.sort(reverse=True)\n',
     ],
     [
+      { kind: 'keyword_arg' },
+      'class Ship:\n    def move(self, x=0):\n        pass\n\nclass Big(Ship):\n    pass\n\nBig().move(x=1)\n',
+      'class Ship:\n    def move(self, x=0):\n        pass\n\nclass Big:\n    pass\n\nb = Big()\nb.move(x=1)\n',
+    ],
+    [
       { kind: 'var_args' },
       'def summary(*boxes):\n    return sum(boxes)\n',
       'def summary(boxes):\n    return sum(boxes)\n\nf = lambda *a: a\n',

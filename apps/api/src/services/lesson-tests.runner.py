@@ -909,7 +909,10 @@ def has_keyword_arg(tree, name=None):
     own = {fn.name for fn in function_defs(tree)} | class_names(tree)
     if any(called_function(n) in own for n in calls):
         return True
-    methods = {c.name: method_names(c) for c in ast.walk(tree) if isinstance(c, ast.ClassDef)}
+    classes = {c.name: c for c in ast.walk(tree) if isinstance(c, ast.ClassDef)}
+    methods = {
+        name: method_names(c) | inherited_methods(classes, c, {name}) for name, c in classes.items()
+    }
     on_objects = [n for n in calls if isinstance(n.func, ast.Attribute)]
     names = Names(tree) if on_objects else None
     for node in on_objects:
@@ -987,22 +990,24 @@ def method_names(cls):
     return {n.name for n in cls.body if isinstance(n, FUNCTION_NODES)}
 
 
+def inherited_methods(classes, cls, seen):
+    # The methods a class gets from the student's own classes it inherits
+    # from, at any depth.
+    found = set()
+    for base in class_bases(cls):
+        if base in classes and base not in seen:
+            seen.add(base)
+            found |= method_names(classes[base]) | inherited_methods(classes, classes[base], seen)
+    return found
+
+
 def has_override(tree, name=None):
     # A method a class defines again after a class of the student's own it
     # inherits from, at any depth, defined it. __init__ is the constructor,
     # not an override, as in the Java runner.
     classes = {n.name: n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)}
-
-    def inherited(cls, seen):
-        found = set()
-        for base in class_bases(cls):
-            if base in classes and base not in seen:
-                seen.add(base)
-                found |= method_names(classes[base]) | inherited(classes[base], seen)
-        return found
-
     for cls in classes.values():
-        again = (method_names(cls) & inherited(cls, {cls.name})) - {"__init__"}
+        again = (method_names(cls) & inherited_methods(classes, cls, {cls.name})) - {"__init__"}
         if again and (name is None or name in again):
             return True
     return False
