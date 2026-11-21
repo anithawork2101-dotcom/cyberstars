@@ -58,8 +58,40 @@ mmap primește multe argumente. Pentru memorie împărțită între un părinte 
 Putem cere loc pentru mai multe valori deodată și putem folosi pointerul ca pe un array
 
 ```c
-long *rezultate = mmap(NULL, n * sizeof(long), PROT_READ | PROT_WRITE,
-                       MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <sys/wait.h>
+
+int main(void) {
+    int n = 3;
+    long *rezultate = mmap(NULL, n * sizeof(long), PROT_READ | PROT_WRITE,
+                           MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+
+    for (int i = 0; i < n; i++) {
+        fflush(stdout);
+        if (fork() == 0) {
+            rezultate[i] = (i + 1) * 100;
+            _exit(0);
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        wait(NULL);
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%ld\n", rezultate[i]);
+    }
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+100
+200
+300
 ```
 
 Fiecare copil scrie doar în locul lui, rezultate[i]. Fiindcă niciun proces nu scrie în același loc cu altul, nu se pot încurca. Când două procese scriu în **același** loc în același timp, avem o condiție de cursă (race condition), ca la thread-uri, și ne-ar trebui un semafor ca să vină pe rând

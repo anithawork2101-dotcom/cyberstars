@@ -95,11 +95,29 @@ Uită-te atent: trei sonerii, dar un singur apel al handler-ului. Un semnal nu e
 Ca să întrebăm dacă un semnal așteaptă, **sigpending** umple o mulțime cu semnalele în așteptare, iar **sigismember** verifică unul dintre ele
 
 ```c
-sigset_t asteapta;
-sigpending(&asteapta);
-if (sigismember(&asteapta, SIGUSR1)) {
-    // SIGUSR1 e în așteptare
+#include <stdio.h>
+#include <signal.h>
+
+int main(void) {
+    sigset_t multime;
+    sigemptyset(&multime);
+    sigaddset(&multime, SIGUSR1);
+    sigprocmask(SIG_BLOCK, &multime, NULL);
+    raise(SIGUSR1);
+
+    sigset_t asteapta;
+    sigpending(&asteapta);
+    if (sigismember(&asteapta, SIGUSR1)) {
+        printf("SIGUSR1 e in asteptare\n");
+    }
+    return 0;
 }
+```
+
+Ieșire
+
+```text
+SIGUSR1 e in asteptare
 ```
 
 ---

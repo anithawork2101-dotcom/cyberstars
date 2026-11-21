@@ -41,12 +41,39 @@ There is a catch. If there is no free room right after the old block, realloc fi
 And if there is no memory at all, realloc returns NULL, but the old block is still there. If we wrote `v = realloc(v, ...)` and got NULL, we would lose our only pointer to the old block, and it would leak. The safe way uses a second pointer
 
 ```c
-int *bigger = realloc(v, new_size);
-if (bigger == NULL) {
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *v = malloc(2 * sizeof(int));
+    v[0] = 10;
+    v[1] = 20;
+
+    int new_size = 4 * sizeof(int);
+    int *bigger = realloc(v, new_size);
+    if (bigger == NULL) {
+        free(v);
+        return 1;
+    }
+    v = bigger;
+
+    v[2] = 30;
+    v[3] = 40;
+    for (int i = 0; i < 4; i++) {
+        printf("%d\n", v[i]);
+    }
     free(v);
-    return 1;
+    return 0;
 }
-v = bigger;
+```
+
+Output
+
+```text
+10
+20
+30
+40
 ```
 
 ---

@@ -58,8 +58,40 @@ It returns a pointer, like malloc. On failure it returns **MAP_FAILED**, not NUL
 We can ask for room for many values at once and use the pointer as an array
 
 ```c
-long *results = mmap(NULL, n * sizeof(long), PROT_READ | PROT_WRITE,
-                     MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <sys/wait.h>
+
+int main(void) {
+    int n = 3;
+    long *results = mmap(NULL, n * sizeof(long), PROT_READ | PROT_WRITE,
+                         MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+
+    for (int i = 0; i < n; i++) {
+        fflush(stdout);
+        if (fork() == 0) {
+            results[i] = (i + 1) * 100;
+            _exit(0);
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        wait(NULL);
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("%ld\n", results[i]);
+    }
+    return 0;
+}
+```
+
+Output
+
+```text
+100
+200
+300
 ```
 
 Each child writes only into its own slot, results[i]. Since no two processes write to the same place, they can't step on each other. When two processes write to the **same** place at the same time, we get a race condition, just like with threads, and we'd need a semaphore to take turns

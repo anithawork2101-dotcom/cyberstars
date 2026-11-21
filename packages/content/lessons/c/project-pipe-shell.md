@@ -21,12 +21,29 @@ There is no code to copy, only a plan. Build it step by step, and test each step
 A good way to keep it tidy is to first turn a line into stages, and only then run them
 
 ```c
+#include <stdio.h>
+
 struct stage {
     char *args[16];
     char *in;
     char *out;
     int append;
 };
+
+int main(void) {
+    // sort -r < names.txt >> sorted.txt
+    struct stage s = { { "sort", "-r", NULL }, "names.txt", "sorted.txt", 1 };
+    printf("run: %s %s\n", s.args[0], s.args[1]);
+    printf("in: %s, out: %s, append: %d\n", s.in, s.out, s.append);
+    return 0;
+}
+```
+
+Output
+
+```text
+run: sort -r
+in: names.txt, out: sorted.txt, append: 1
 ```
 
 in and out stay NULL when there's no redirection

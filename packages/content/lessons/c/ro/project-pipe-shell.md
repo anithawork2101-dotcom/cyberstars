@@ -21,12 +21,29 @@ Aici nu e cod de copiat, doar un plan. Construiește-l pas cu pas și testează 
 O cale bună de a ține totul în ordine e să transformi întâi o linie în etape și abia apoi să le rulezi
 
 ```c
+#include <stdio.h>
+
 struct etapa {
     char *argumente[16];
     char *in;
     char *out;
     int adauga;
 };
+
+int main(void) {
+    // sort -r < nume.txt >> sortat.txt
+    struct etapa s = { { "sort", "-r", NULL }, "nume.txt", "sortat.txt", 1 };
+    printf("rulez: %s %s\n", s.argumente[0], s.argumente[1]);
+    printf("in: %s, out: %s, adauga: %d\n", s.in, s.out, s.adauga);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+rulez: sort -r
+in: nume.txt, out: sortat.txt, adauga: 1
 ```
 
 in și out rămân NULL când nu există redirecționare

@@ -41,12 +41,39 @@ Există o capcană. Dacă imediat după blocul vechi nu e loc liber, realloc gă
 Iar dacă nu mai e deloc memorie, realloc întoarce NULL, dar blocul vechi e tot acolo. Dacă am fi scris `v = realloc(v, ...)` și am fi primit NULL, am pierde singurul pointer spre blocul vechi, iar memoria lui s-ar pierde (leak). Calea sigură folosește un al doilea pointer
 
 ```c
-int *mai_mare = realloc(v, marime_noua);
-if (mai_mare == NULL) {
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *v = malloc(2 * sizeof(int));
+    v[0] = 10;
+    v[1] = 20;
+
+    int marime_noua = 4 * sizeof(int);
+    int *mai_mare = realloc(v, marime_noua);
+    if (mai_mare == NULL) {
+        free(v);
+        return 1;
+    }
+    v = mai_mare;
+
+    v[2] = 30;
+    v[3] = 40;
+    for (int i = 0; i < 4; i++) {
+        printf("%d\n", v[i]);
+    }
     free(v);
-    return 1;
+    return 0;
 }
-v = mai_mare;
+```
+
+Ieșire
+
+```text
+10
+20
+30
+40
 ```
 
 ---

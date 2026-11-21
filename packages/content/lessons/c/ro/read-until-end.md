@@ -49,9 +49,29 @@ Cum se termină datele? Când un program citește un fișier, sfârșitul fișie
 O linie goală nu e sfârșitul. Pentru o linie goală, fgets întoarce un șir care conține doar `'\n'`, iar după ce tăiem linia nouă, un șir gol, cu lungimea 0. Doar EOF oprește bucla
 
 ```c
-if (strlen(linie) == 0) {
-    // o linie goală
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char linii[3][16] = { "bobina 7", "", "bobina 9" };
+    for (int i = 0; i < 3; i++) {
+        char *linie = linii[i];
+        if (strlen(linie) == 0) {
+            printf("o linie goala\n");
+        } else {
+            printf("%s\n", linie);
+        }
+    }
+    return 0;
 }
+```
+
+Ieșire
+
+```text
+bobina 7
+o linie goala
+bobina 9
 ```
 
 ---

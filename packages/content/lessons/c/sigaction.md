@@ -95,11 +95,29 @@ Look closely: three rings, but only one handler call. A signal is not a queue. P
 To ask if a signal is waiting, **sigpending** fills a set with the pending signals, and **sigismember** checks one of them
 
 ```c
-sigset_t waiting;
-sigpending(&waiting);
-if (sigismember(&waiting, SIGUSR1)) {
-    // SIGUSR1 is pending
+#include <stdio.h>
+#include <signal.h>
+
+int main(void) {
+    sigset_t set;
+    sigemptyset(&set);
+    sigaddset(&set, SIGUSR1);
+    sigprocmask(SIG_BLOCK, &set, NULL);
+    raise(SIGUSR1);
+
+    sigset_t waiting;
+    sigpending(&waiting);
+    if (sigismember(&waiting, SIGUSR1)) {
+        printf("SIGUSR1 is pending\n");
+    }
+    return 0;
 }
+```
+
+Output
+
+```text
+SIGUSR1 is pending
 ```
 
 ---

@@ -49,9 +49,29 @@ How does the input end? When a program reads a file, the end of the file is the 
 An empty line is not the end. For an empty line, fgets gives back a string with only the `'\n'` in it, and after we cut the newline, an empty string with length 0. Only EOF stops the loop
 
 ```c
-if (strlen(line) == 0) {
-    // an empty line
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char lines[3][16] = { "reel 7", "", "reel 9" };
+    for (int i = 0; i < 3; i++) {
+        char *line = lines[i];
+        if (strlen(line) == 0) {
+            printf("an empty line\n");
+        } else {
+            printf("%s\n", line);
+        }
+    }
+    return 0;
 }
+```
+
+Output
+
+```text
+reel 7
+an empty line
+reel 9
 ```
 
 ---
