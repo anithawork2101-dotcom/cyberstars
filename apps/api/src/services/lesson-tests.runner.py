@@ -1036,6 +1036,13 @@ def has_class_attribute(tree, name=None):
 # A spec only a number takes: a number's type (.2f, d, %, x...) or a
 # thousands separator; padding alone ({name:<14}) shapes text as well.
 NUMBER_SPEC = re.compile(r"[,_]|[bdeEfFgGnoxX%]$")
+# A fill character and its alignment: the _ in {name:_<10} pads, it doesn't
+# group thousands.
+FILL_ALIGN = re.compile(r"^.?[<>=^]")
+
+
+def is_number_spec(text):
+    return bool(NUMBER_SPEC.search(FILL_ALIGN.sub("", text, count=1)))
 
 
 def spec_text(spec):
@@ -1050,7 +1057,7 @@ def spec_text(spec):
 def number_spec(spec):
     # A spec not known before the run counts.
     text = spec_text(spec)
-    return text is None or bool(NUMBER_SPEC.search(text))
+    return text is None or is_number_spec(text)
 
 
 def has_format_spec(tree):
@@ -1071,7 +1078,7 @@ def has_format_spec(tree):
                 and isinstance(func.value, ast.Constant)
                 and isinstance(func.value.value, str)
                 and any(
-                    NUMBER_SPEC.search(spec)
+                    is_number_spec(spec)
                     for spec in re.findall(r"\{[^{}]*:([^{}]+)\}", func.value.value)
                 )
             ):
