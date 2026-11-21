@@ -74,9 +74,37 @@ The first child is `seq 3 > numbers.txt`. The second is `sort -r < numbers.txt`:
 Since the program's output now goes into the file, an error message printed with printf would go there too. That's exactly why stderr, descriptor 2, exists: we didn't redirect it, so errors still reach the screen
 
 ```c
-execvp(args[0], args);
-perror(args[0]);
-_exit(127);
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(void) {
+    char *args[] = { "nosuch", NULL };
+
+    fflush(stdout);
+    pid_t pid = fork();
+    if (pid == 0) {
+        int fd = open("out.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        dup2(fd, 1);
+        close(fd);
+        execvp(args[0], args);
+        perror(args[0]);
+        _exit(127);
+    }
+
+    int status;
+    waitpid(pid, &status, 0);
+    printf("exit %d\n", WEXITSTATUS(status));
+    return 0;
+}
+```
+
+Output
+
+```text
+nosuch: No such file or directory
+exit 127
 ```
 
 ---
@@ -84,12 +112,36 @@ _exit(127);
 If the parent itself needs its old stdout back later, it can keep a copy first with **dup**, which returns a new number pointing to the same place
 
 ```c
-int saved = dup(1);
-dup2(fd, 1);
-// ... output goes to the file
-fflush(stdout);
-dup2(saved, 1);
-close(saved);
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main(void) {
+    int fd = open("log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+    int saved = dup(1);
+    dup2(fd, 1);
+    printf("this goes into the file\n");
+    fflush(stdout);
+    dup2(saved, 1);
+    close(saved);
+    close(fd);
+
+    printf("back on the screen\n");
+    FILE *f = fopen("log.txt", "r");
+    char line[64];
+    fgets(line, sizeof(line), f);
+    printf("the file holds: %s", line);
+    fclose(f);
+    return 0;
+}
+```
+
+Output
+
+```text
+back on the screen
+the file holds: this goes into the file
 ```
 
 Note the fflush before switching back: text still waiting in printf's buffer would otherwise land on the wrong side

@@ -3,7 +3,14 @@ Two operators need the same two tape drives. The first one takes drive A and wai
 With threads, the drives are mutexes
 
 ```c
+#include <stdio.h>
+#include <pthread.h>
+
+pthread_mutex_t a = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t b = PTHREAD_MUTEX_INITIALIZER;
+
 void *first(void *arg) {
+    (void)arg;
     pthread_mutex_lock(&a);
     pthread_mutex_lock(&b);
     // work
@@ -13,6 +20,7 @@ void *first(void *arg) {
 }
 
 void *second(void *arg) {
+    (void)arg;
     pthread_mutex_lock(&b);
     pthread_mutex_lock(&a);
     // work
@@ -20,6 +28,22 @@ void *second(void *arg) {
     pthread_mutex_unlock(&b);
     return NULL;
 }
+
+int main(void) {
+    pthread_t t1, t2;
+    pthread_create(&t1, NULL, first, NULL);
+    pthread_create(&t2, NULL, second, NULL);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    printf("both threads are done\n");
+    return 0;
+}
+```
+
+Output
+
+```text
+both threads are done
 ```
 
 Most of the time this program works, because one thread is a little faster and takes both mutexes before the other starts. But sometimes the first thread gets a, the second gets b, and the program freezes. A bug that appears once in a thousand runs is the hardest kind to find
@@ -42,6 +66,12 @@ The fix: give every mutex a fixed place in an order, and **always lock them in t
 When the mutexes are in an array, the order is simply the index: lock the smaller index first
 
 ```c
+#include <stdio.h>
+#include <pthread.h>
+
+pthread_mutex_t locks[3];
+int moves = 0;
+
 void lock_both(int i, int j) {
     if (i < j) {
         pthread_mutex_lock(&locks[i]);
@@ -51,6 +81,47 @@ void lock_both(int i, int j) {
         pthread_mutex_lock(&locks[i]);
     }
 }
+
+void *forward(void *arg) {
+    (void)arg;
+    for (int k = 0; k < 100000; k++) {
+        lock_both(0, 2);
+        moves++;
+        pthread_mutex_unlock(&locks[0]);
+        pthread_mutex_unlock(&locks[2]);
+    }
+    return NULL;
+}
+
+void *backward(void *arg) {
+    (void)arg;
+    for (int k = 0; k < 100000; k++) {
+        lock_both(2, 0);
+        moves++;
+        pthread_mutex_unlock(&locks[2]);
+        pthread_mutex_unlock(&locks[0]);
+    }
+    return NULL;
+}
+
+int main(void) {
+    for (int i = 0; i < 3; i++) {
+        pthread_mutex_init(&locks[i], NULL);
+    }
+    pthread_t t1, t2;
+    pthread_create(&t1, NULL, forward, NULL);
+    pthread_create(&t2, NULL, backward, NULL);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    printf("moves: %d\n", moves);
+    return 0;
+}
+```
+
+Output
+
+```text
+moves: 200000
 ```
 
 Unlocking order doesn't matter: unlocking never waits

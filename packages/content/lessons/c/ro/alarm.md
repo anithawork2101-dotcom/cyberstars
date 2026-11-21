@@ -42,11 +42,44 @@ Fără un handler, acțiunea implicită a lui SIGALRM termină programul. Un pro
 alarm numără în secunde întregi. Pentru timpi mai scurți există **setitimer**, din sys/time.h. Primește un struct cu secunde și microsecunde. O microsecundă e o milionime de secundă, deci 250 ms înseamnă 250000 de microsecunde
 
 ```c
-struct itimerval ceas;
-memset(&ceas, 0, sizeof(ceas));
-ceas.it_value.tv_sec = 0;
-ceas.it_value.tv_usec = 250000;
-setitimer(ITIMER_REAL, &ceas, NULL);
+#include <stdio.h>
+#include <string.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/time.h>
+
+volatile sig_atomic_t rang = 0;
+
+void on_alarm(int sig) {
+    (void)sig;
+    rang = 1;
+}
+
+int main(void) {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = on_alarm;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGALRM, &sa, NULL);
+
+    struct itimerval ceas;
+    memset(&ceas, 0, sizeof(ceas));
+    ceas.it_value.tv_sec = 0;
+    ceas.it_value.tv_usec = 250000;
+    setitimer(ITIMER_REAL, &ceas, NULL);
+
+    while (!rang) {
+        pause();
+    }
+    printf("a trecut un sfert de secunda\n");
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+a trecut un sfert de secunda
 ```
 
 `it_value` e momentul în care sună. Struct-ul mai are și `it_interval`, ca să sune iar și iar, dar îl lăsăm la 0 pentru o singură sonerie. Ca să anulăm ceasul, apelăm setitimer din nou cu totul pe 0
@@ -56,10 +89,48 @@ setitimer(ITIMER_REAL, &ceas, NULL);
 Partea interesantă e ce face un semnal unui apel care **așteaptă**, ca waitpid care așteaptă un copil sau read care așteaptă date. Dacă handler-ul nostru a fost instalat **fără** SA_RESTART, apelul care aștepta renunță: întoarce -1 și pune errno pe **EINTR**, adică „întrerupt”. Exact asta vrem pentru o limită de timp
 
 ```c
-pid_t gata = waitpid(pid, &stare, 0);
-if (gata == -1 && errno == EINTR) {
-    // ceasul a sunat înainte să se termine copilul
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+void on_alarm(int sig) {
+    (void)sig;
 }
+
+int main(void) {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = on_alarm;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGALRM, &sa, NULL);
+
+    fflush(stdout);
+    pid_t pid = fork();
+    if (pid == 0) {
+        sleep(5);
+        _exit(0);
+    }
+
+    alarm(1);
+    int stare;
+    pid_t gata = waitpid(pid, &stare, 0);
+    if (gata == -1 && errno == EINTR) {
+        // ceasul a sunat înainte să se termine copilul
+        printf("prea incet, il opresc\n");
+        kill(pid, SIGKILL);
+        waitpid(pid, &stare, 0);
+    }
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+prea incet, il opresc
 ```
 
 ---

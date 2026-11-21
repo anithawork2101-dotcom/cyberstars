@@ -74,9 +74,37 @@ Primul copil e `seq 3 > numere.txt`. Al doilea e `sort -r < numere.txt`: sort ci
 Fiindcă ieșirea programului merge acum în fișier, un mesaj de eroare afișat cu printf ar ajunge și el acolo. Exact de aceea există stderr, descriptorul 2: pe el nu l-am redirecționat, deci erorile ajung tot pe ecran
 
 ```c
-execvp(argumente[0], argumente);
-perror(argumente[0]);
-_exit(127);
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(void) {
+    char *argumente[] = { "nuexista", NULL };
+
+    fflush(stdout);
+    pid_t pid = fork();
+    if (pid == 0) {
+        int fd = open("iesire.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        dup2(fd, 1);
+        close(fd);
+        execvp(argumente[0], argumente);
+        perror(argumente[0]);
+        _exit(127);
+    }
+
+    int stare;
+    waitpid(pid, &stare, 0);
+    printf("exit %d\n", WEXITSTATUS(stare));
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+nuexista: No such file or directory
+exit 127
 ```
 
 ---
@@ -84,12 +112,36 @@ _exit(127);
 Dacă părintele are nevoie mai târziu de vechiul lui stdout, poate păstra întâi o copie cu **dup**, care întoarce un număr nou care arată spre același loc
 
 ```c
-int salvat = dup(1);
-dup2(fd, 1);
-// ... ieșirea merge în fișier
-fflush(stdout);
-dup2(salvat, 1);
-close(salvat);
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main(void) {
+    int fd = open("jurnal.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+    int salvat = dup(1);
+    dup2(fd, 1);
+    printf("asta merge in fisier\n");
+    fflush(stdout);
+    dup2(salvat, 1);
+    close(salvat);
+    close(fd);
+
+    printf("din nou pe ecran\n");
+    FILE *f = fopen("jurnal.txt", "r");
+    char linie[64];
+    fgets(linie, sizeof(linie), f);
+    printf("fisierul are: %s", linie);
+    fclose(f);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+din nou pe ecran
+fisierul are: asta merge in fisier
 ```
 
 Observă fflush-ul dinainte de comutarea înapoi: textul care încă așteaptă în bufferul lui printf ar ajunge altfel în partea greșită

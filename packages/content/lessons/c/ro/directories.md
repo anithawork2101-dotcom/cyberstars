@@ -39,10 +39,24 @@ Două lucruri îi surprind pe toți
 **mkdir** face un director nou, cu permisiuni ca la open. 0755 îi lasă pe toți să intre în el și să-l citească, dar doar pe noi să-l schimbăm. Dacă directorul există deja, mkdir eșuează cu EEXIST, ceea ce de multe ori e în regulă: voiam să fie acolo, și este
 
 ```c
-if (mkdir("cutie", 0755) == -1 && errno != EEXIST) {
-    perror("mkdir cutie");
-    return 1;
+#include <stdio.h>
+#include <errno.h>
+#include <sys/stat.h>
+
+int main(void) {
+    if (mkdir("cutie", 0755) == -1 && errno != EEXIST) {
+        perror("mkdir cutie");
+        return 1;
+    }
+    printf("cutie e acolo\n");
+    return 0;
 }
+```
+
+Ieșire
+
+```text
+cutie e acolo
 ```
 
 **rmdir** șterge un director, dar doar unul gol. Ca să ștergem un director plin de fișiere, facem întâi unlink pe fiecare fișier din el
@@ -52,9 +66,40 @@ if (mkdir("cutie", 0755) == -1 && errno != EEXIST) {
 readdir ne dă doar numele, de exemplu a.txt, nu calea cutie/a.txt. Ca să deschidem fișierul sau să-i facem stat, construim calea întreagă: directorul, un `/` și numele
 
 ```c
-char cale[300];
-strcpy(cale, "cutie/");
-strcat(cale, intrare->d_name);
+#include <stdio.h>
+#include <string.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
+int main(void) {
+    mkdir("cutie", 0755);
+    close(open("cutie/a.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644));
+
+    DIR *dir = opendir("cutie");
+    if (dir == NULL) {
+        return 1;
+    }
+    struct dirent *intrare;
+    while ((intrare = readdir(dir)) != NULL) {
+        if (strcmp(intrare->d_name, ".") == 0 || strcmp(intrare->d_name, "..") == 0) {
+            continue;
+        }
+        char cale[300];
+        strcpy(cale, "cutie/");
+        strcat(cale, intrare->d_name);
+        printf("%s\n", cale);
+    }
+    closedir(dir);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+cutie/a.txt
 ```
 
 ---

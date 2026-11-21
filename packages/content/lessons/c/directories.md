@@ -39,10 +39,24 @@ Two things surprise everyone
 **mkdir** makes a new directory, with permissions like open's. 0755 lets everyone enter it and read it, but only us change it. If the directory already exists, mkdir fails with EEXIST, which is often fine: we wanted it to be there, and it is
 
 ```c
-if (mkdir("box", 0755) == -1 && errno != EEXIST) {
-    perror("mkdir box");
-    return 1;
+#include <stdio.h>
+#include <errno.h>
+#include <sys/stat.h>
+
+int main(void) {
+    if (mkdir("box", 0755) == -1 && errno != EEXIST) {
+        perror("mkdir box");
+        return 1;
+    }
+    printf("box is there\n");
+    return 0;
 }
+```
+
+Output
+
+```text
+box is there
 ```
 
 **rmdir** removes a directory, but only an empty one. To remove a directory full of files, we first unlink each file inside it
@@ -52,9 +66,40 @@ if (mkdir("box", 0755) == -1 && errno != EEXIST) {
 readdir gives us only the name, like a.txt, not the path box/a.txt. To open the file or stat it, we build the full path: the directory, a `/`, and the name
 
 ```c
-char path[300];
-strcpy(path, "box/");
-strcat(path, entry->d_name);
+#include <stdio.h>
+#include <string.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
+int main(void) {
+    mkdir("box", 0755);
+    close(open("box/a.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644));
+
+    DIR *dir = opendir("box");
+    if (dir == NULL) {
+        return 1;
+    }
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+            continue;
+        }
+        char path[300];
+        strcpy(path, "box/");
+        strcat(path, entry->d_name);
+        printf("%s\n", path);
+    }
+    closedir(dir);
+    return 0;
+}
+```
+
+Output
+
+```text
+box/a.txt
 ```
 
 ---

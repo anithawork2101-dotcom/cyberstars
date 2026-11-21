@@ -42,11 +42,44 @@ Without a handler, SIGALRM's default action ends the program. There is only one 
 alarm counts in whole seconds. For shorter times, there is **setitimer**, from sys/time.h. It takes a struct with seconds and microseconds. A microsecond is a millionth of a second, so 250 ms is 250000 microseconds
 
 ```c
-struct itimerval timer;
-memset(&timer, 0, sizeof(timer));
-timer.it_value.tv_sec = 0;
-timer.it_value.tv_usec = 250000;
-setitimer(ITIMER_REAL, &timer, NULL);
+#include <stdio.h>
+#include <string.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/time.h>
+
+volatile sig_atomic_t rang = 0;
+
+void on_alarm(int sig) {
+    (void)sig;
+    rang = 1;
+}
+
+int main(void) {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = on_alarm;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGALRM, &sa, NULL);
+
+    struct itimerval timer;
+    memset(&timer, 0, sizeof(timer));
+    timer.it_value.tv_sec = 0;
+    timer.it_value.tv_usec = 250000;
+    setitimer(ITIMER_REAL, &timer, NULL);
+
+    while (!rang) {
+        pause();
+    }
+    printf("a quarter of a second passed\n");
+    return 0;
+}
+```
+
+Output
+
+```text
+a quarter of a second passed
 ```
 
 `it_value` is when it rings. The struct also has `it_interval`, to make it ring again and again, but we leave it at 0 for a single ring. To cancel the timer, we call setitimer again with everything 0
@@ -56,10 +89,48 @@ setitimer(ITIMER_REAL, &timer, NULL);
 The interesting part is what a signal does to a call that is **waiting**, like waitpid waiting for a child, or read waiting for input. If our handler was installed **without** SA_RESTART, the waiting call gives up: it returns -1 and sets errno to **EINTR**, "interrupted". That's exactly what we want for a timeout
 
 ```c
-pid_t done = waitpid(pid, &status, 0);
-if (done == -1 && errno == EINTR) {
-    // the timer rang before the child ended
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+void on_alarm(int sig) {
+    (void)sig;
 }
+
+int main(void) {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = on_alarm;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGALRM, &sa, NULL);
+
+    fflush(stdout);
+    pid_t pid = fork();
+    if (pid == 0) {
+        sleep(5);
+        _exit(0);
+    }
+
+    alarm(1);
+    int status;
+    pid_t done = waitpid(pid, &status, 0);
+    if (done == -1 && errno == EINTR) {
+        // the timer rang before the child ended
+        printf("too slow, stopping it\n");
+        kill(pid, SIGKILL);
+        waitpid(pid, &status, 0);
+    }
+    return 0;
+}
+```
+
+Output
+
+```text
+too slow, stopping it
 ```
 
 ---

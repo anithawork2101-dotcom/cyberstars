@@ -79,7 +79,22 @@ G
 Dar doar pentru litere mici. Un spațiu sau o cifră s-ar face altceva, ciudat. Așa că întâi verificăm că c e între `'a'` și `'z'`
 
 ```c
-if (c >= 'a' && c <= 'z')
+#include <stdio.h>
+
+int main(void) {
+    char c = '7';
+    if (c >= 'a' && c <= 'z') {
+        c = c - ('a' - 'A');
+    }
+    printf("%c\n", c);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+7
 ```
 
 ---

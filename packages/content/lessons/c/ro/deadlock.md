@@ -3,7 +3,14 @@ Doi operatori au nevoie de aceleași două unități de bandă. Primul ia unitat
 La thread-uri, unitățile sunt mutex-uri
 
 ```c
+#include <stdio.h>
+#include <pthread.h>
+
+pthread_mutex_t a = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t b = PTHREAD_MUTEX_INITIALIZER;
+
 void *primul(void *arg) {
+    (void)arg;
     pthread_mutex_lock(&a);
     pthread_mutex_lock(&b);
     // treabă
@@ -13,6 +20,7 @@ void *primul(void *arg) {
 }
 
 void *al_doilea(void *arg) {
+    (void)arg;
     pthread_mutex_lock(&b);
     pthread_mutex_lock(&a);
     // treabă
@@ -20,6 +28,22 @@ void *al_doilea(void *arg) {
     pthread_mutex_unlock(&b);
     return NULL;
 }
+
+int main(void) {
+    pthread_t t1, t2;
+    pthread_create(&t1, NULL, primul, NULL);
+    pthread_create(&t2, NULL, al_doilea, NULL);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    printf("ambele thread-uri au terminat\n");
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+ambele thread-uri au terminat
 ```
 
 De cele mai multe ori programul merge, pentru că un thread e puțin mai rapid și ia ambele mutex-uri înainte să pornească celălalt. Dar uneori primul thread ia a, al doilea ia b, iar programul îngheață. Un bug care apare o dată la o mie de rulări e cel mai greu de găsit
@@ -42,6 +66,12 @@ Reparația: dă fiecărui mutex un loc fix într-o ordine și **blochează-le me
 Când mutex-urile sunt într-un array, ordinea e pur și simplu indicele: blochează întâi indicele mai mic
 
 ```c
+#include <stdio.h>
+#include <pthread.h>
+
+pthread_mutex_t lacate[3];
+int mutari = 0;
+
 void blocheaza_ambele(int i, int j) {
     if (i < j) {
         pthread_mutex_lock(&lacate[i]);
@@ -51,6 +81,47 @@ void blocheaza_ambele(int i, int j) {
         pthread_mutex_lock(&lacate[i]);
     }
 }
+
+void *inainte(void *arg) {
+    (void)arg;
+    for (int k = 0; k < 100000; k++) {
+        blocheaza_ambele(0, 2);
+        mutari++;
+        pthread_mutex_unlock(&lacate[0]);
+        pthread_mutex_unlock(&lacate[2]);
+    }
+    return NULL;
+}
+
+void *inapoi(void *arg) {
+    (void)arg;
+    for (int k = 0; k < 100000; k++) {
+        blocheaza_ambele(2, 0);
+        mutari++;
+        pthread_mutex_unlock(&lacate[2]);
+        pthread_mutex_unlock(&lacate[0]);
+    }
+    return NULL;
+}
+
+int main(void) {
+    for (int i = 0; i < 3; i++) {
+        pthread_mutex_init(&lacate[i], NULL);
+    }
+    pthread_t t1, t2;
+    pthread_create(&t1, NULL, inainte, NULL);
+    pthread_create(&t2, NULL, inapoi, NULL);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    printf("mutari: %d\n", mutari);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+mutari: 200000
 ```
 
 Ordinea de deblocare nu contează: deblocarea nu așteaptă niciodată
