@@ -205,6 +205,11 @@ describe('checkStructure', () => {
       'int apply(int (*f)(int), int x){ return f(x); }\nint main(void){ return 0; }',
       'int apply(int f, int x){ return f + x; }\nint main(void){ return 0; }',
     ],
+    [
+      { kind: 'function_pointer' },
+      'typedef int test_fn(int);\nint apply(test_fn *f, int x){ return f(x); }\nint main(void){ return 0; }',
+      'typedef int test_fn(int);\nint apply(int *f, int x){ return *f + x; }\nint main(void){ return 0; }',
+    ],
   ] as const)('requires %j only where the construct is there', async (rule, withIt, without) => {
     const requires = [rule as StructureFailure['rule']];
     expect(checkStructure(await parseC(withIt), { requires })).toEqual([]);
