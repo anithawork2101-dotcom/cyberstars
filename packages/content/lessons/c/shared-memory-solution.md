@@ -39,7 +39,7 @@ int main(void) {
                 count = count + is_prime(x);
             }
             counts[i] = count;
-            exit(0);
+            _exit(0);
         }
     }
 

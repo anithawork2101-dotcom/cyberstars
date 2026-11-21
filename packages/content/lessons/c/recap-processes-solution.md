@@ -33,7 +33,7 @@ int main(void) {
             if (count > 0) {
                 execvp(args[0], args);
             }
-            exit(127);
+            _exit(127);
         }
     }
 

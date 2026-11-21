@@ -22,7 +22,7 @@ void ruleaza(char *argumente[], const char *fisier, int spre_fisier) {
         close(fd);
         execvp(argumente[0], argumente);
         perror(argumente[0]);
-        exit(127);
+        _exit(127);
     }
     waitpid(pid, NULL, 0);
 }

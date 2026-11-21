@@ -14,7 +14,7 @@ int main(void) {
     if (pid == 0) {
         FILE *in = fopen("mailbox", "r");
         if (in == NULL) {
-            exit(1);
+            _exit(1);
         }
         char message[128];
         int count = 0;
@@ -24,7 +24,8 @@ int main(void) {
         }
         fclose(in);
         printf("Messages: %d\n", count);
-        exit(0);
+        fflush(stdout);
+        _exit(0);
     }
 
     FILE *out = fopen("mailbox", "w");

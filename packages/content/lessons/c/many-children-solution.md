@@ -31,7 +31,7 @@ int main(void) {
         fflush(stdout);
         pids[i] = fork();
         if (pids[i] == 0) {
-            exit(is_prime(numbers[i]));
+            _exit(is_prime(numbers[i]));
         }
     }
 

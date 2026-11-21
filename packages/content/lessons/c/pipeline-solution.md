@@ -27,7 +27,7 @@ pid_t start(char *args[], int fd[2], int end) {
         close(fd[0]);
         close(fd[1]);
         execvp(args[0], args);
-        exit(127);
+        _exit(127);
     }
     return pid;
 }

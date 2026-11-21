@@ -44,7 +44,7 @@ int main(void) {
     for (int i = 0; i < n; i++) {
         fflush(stdout);
         if (fork() == 0) {
-            exit(codes[i]);
+            _exit(codes[i]);
         }
     }
 

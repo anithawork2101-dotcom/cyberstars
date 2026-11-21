@@ -26,7 +26,7 @@ int main(void) {
         fflush(stdout);
         pids[i] = fork();
         if (pids[i] == 0) {
-            exit((i + 1) * 10);
+            _exit((i + 1) * 10);
         }
     }
 

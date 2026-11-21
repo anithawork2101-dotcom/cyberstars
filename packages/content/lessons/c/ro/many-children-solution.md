@@ -31,7 +31,7 @@ int main(void) {
         fflush(stdout);
         pids[i] = fork();
         if (pids[i] == 0) {
-            exit(e_prim(numere[i]));
+            _exit(e_prim(numere[i]));
         }
     }
 

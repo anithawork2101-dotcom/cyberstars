@@ -53,7 +53,7 @@ int main(void) {
         pid_t pid = fork();
         if (pid == 0) {
             execvp(argumente[0], argumente);
-            exit(127);
+            _exit(127);
         }
 
         a_sunat = 0;

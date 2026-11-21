@@ -43,7 +43,7 @@ int main(void) {
     pid_t pid = fork();
     if (pid == 0) {
         pause();
-        exit(0);
+        _exit(0);
     }
     kill(pid, SIGTERM);
     int stare;

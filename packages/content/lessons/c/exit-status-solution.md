@@ -23,7 +23,7 @@ int main(void) {
             if (x < 0) {
                 abort();
             }
-            exit(count_divisors(x));
+            _exit(count_divisors(x));
         }
 
         int status;

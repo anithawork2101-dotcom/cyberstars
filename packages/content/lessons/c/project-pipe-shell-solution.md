@@ -87,7 +87,7 @@ void run(struct stage stages[], int count) {
             }
             execvp(stages[i].args[0], stages[i].args);
             fprintf(stderr, "%s: command not found\n", stages[i].args[0]);
-            exit(127);
+            _exit(127);
         }
     }
 

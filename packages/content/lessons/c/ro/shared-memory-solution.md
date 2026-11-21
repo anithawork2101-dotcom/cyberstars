@@ -39,7 +39,7 @@ int main(void) {
                 numar = numar + e_prim(x);
             }
             numere[i] = numar;
-            exit(0);
+            _exit(0);
         }
     }
 

@@ -33,7 +33,7 @@ int main(void) {
             pid_t pid = fork();
             if (pid == 0) {
                 execlp("printenv", "printenv", name, NULL);
-                exit(127);
+                _exit(127);
             }
             int status;
             waitpid(pid, &status, 0);

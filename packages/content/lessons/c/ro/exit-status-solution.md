@@ -23,7 +23,7 @@ int main(void) {
             if (x < 0) {
                 abort();
             }
-            exit(numara_divizori(x));
+            _exit(numara_divizori(x));
         }
 
         int stare;

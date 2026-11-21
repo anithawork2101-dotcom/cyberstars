@@ -80,7 +80,7 @@ int main(void) {
         if (pids[n] == 0) {
             sigprocmask(SIG_SETMASK, &vechi, NULL);
             execvp(argumente[0], argumente);
-            exit(127);
+            _exit(127);
         }
         n++;
     }

@@ -27,7 +27,7 @@ pid_t porneste(char *argumente[], int fd[2], int capat) {
         close(fd[0]);
         close(fd[1]);
         execvp(argumente[0], argumente);
-        exit(127);
+        _exit(127);
     }
     return pid;
 }

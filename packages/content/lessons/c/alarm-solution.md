@@ -53,7 +53,7 @@ int main(void) {
         pid_t pid = fork();
         if (pid == 0) {
             execvp(args[0], args);
-            exit(127);
+            _exit(127);
         }
 
         rang = 0;

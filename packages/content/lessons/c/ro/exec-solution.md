@@ -29,7 +29,8 @@ int main(void) {
         if (pid == 0) {
             execvp(argumente[0], argumente);
             printf("%s: comanda nu exista\n", argumente[0]);
-            exit(127);
+            fflush(stdout);
+            _exit(127);
         }
 
         int stare;

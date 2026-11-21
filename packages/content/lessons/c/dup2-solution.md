@@ -22,7 +22,7 @@ void run(char *args[], const char *file, int into) {
         close(fd);
         execvp(args[0], args);
         perror(args[0]);
-        exit(127);
+        _exit(127);
     }
     waitpid(pid, NULL, 0);
 }

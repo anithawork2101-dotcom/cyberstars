@@ -29,7 +29,8 @@ int main(void) {
         if (pid == 0) {
             execvp(args[0], args);
             printf("%s: command not found\n", args[0]);
-            exit(127);
+            fflush(stdout);
+            _exit(127);
         }
 
         int status;

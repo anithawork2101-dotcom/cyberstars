@@ -87,7 +87,7 @@ void ruleaza(struct etapa etape[], int numar) {
             }
             execvp(etape[i].argumente[0], etape[i].argumente);
             fprintf(stderr, "%s: comanda nu exista\n", etape[i].argumente[0]);
-            exit(127);
+            _exit(127);
         }
     }
 
