@@ -319,6 +319,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'name = "Ada"\nprint(f"{name:_<10}")\nprint("{:,^10}".format(name))\n',
     ],
     [
+      { kind: 'format_spec' },
+      'x = 2.5\nfmt = ",.2f"\nprint(f"{x:{fmt}}")\nprint(f"{x:>10{fmt}}")\n',
+      'n = 6\nprint(f"{\'Ada\':>{n}}")\n',
+    ],
+    [
       { kind: 'class_attribute', name: 'fleet' },
       'class Ship:\n    next_number, fleet = 1, "Free Fleet"\n',
       'class Ship:\n    fleet: str\n',

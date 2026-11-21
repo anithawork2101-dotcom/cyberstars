@@ -1047,10 +1047,17 @@ def is_number_spec(text):
 
 def spec_text(spec):
     # An f-string's spec with each {nested} field read as a 1: {x:.{n}f}.
+    # A field that ends the spec, alone or after a width ({x:{fmt}},
+    # {x:>10{fmt}}), may hold the type itself, so the spec isn't known.
     if isinstance(spec, ast.Constant):
         return spec.value if isinstance(spec.value, str) else None
     if isinstance(spec, ast.JoinedStr):
-        return "".join(p.value if isinstance(p, ast.Constant) else "1" for p in spec.values)
+        parts = spec.values
+        if parts and not isinstance(parts[-1], ast.Constant):
+            before = parts[-2].value if len(parts) > 1 and isinstance(parts[-2], ast.Constant) else ""
+            if not before or before[-1].isdigit():
+                return None
+        return "".join(p.value if isinstance(p, ast.Constant) else "1" for p in parts)
     return None
 
 
