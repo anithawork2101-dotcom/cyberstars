@@ -32,10 +32,24 @@ numar e o variabilă **locală**. E făcută din nou de fiecare dată când porn
 Un bloc între `{` și `}` are și el domeniul lui. O variabilă făcută într-un if sau într-un for dispare după acolada de închidere
 
 ```c
-for (int i = 0; i < 3; i++) {
-    int dublu = i * 2;
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 0; i < 3; i++) {
+        int dublu = i * 2;
+        printf("%d\n", dublu);
+    }
+    // aici i și dublu nu mai există
+    return 0;
 }
-// aici i și dublu nu mai există
+```
+
+Ieșire
+
+```text
+0
+2
+4
 ```
 
 ---

@@ -33,16 +33,34 @@ But it has two problems
 The simulation needs a loop that picks the next process each time. Mark the processes that are done. When nothing has arrived yet, the processor is idle until the next arrival
 
 ```c
-int pick = -1;
-for (int i = 0; i < n; i++) {
-    if (done[i] || arrival[i] > clock) {
-        continue;
+#include <stdio.h>
+
+int main(void) {
+    int n = 4;
+    int arrival[] = { 0, 1, 2, 3 };
+    int burst[] = { 7, 4, 1, 4 };
+    int done[] = { 1, 0, 0, 0 };
+    int clock = 7;
+
+    int pick = -1;
+    for (int i = 0; i < n; i++) {
+        if (done[i] || arrival[i] > clock) {
+            continue;
+        }
+        if (pick == -1 || burst[i] < burst[pick] ||
+            (burst[i] == burst[pick] && arrival[i] < arrival[pick])) {
+            pick = i;
+        }
     }
-    if (pick == -1 || burst[i] < burst[pick] ||
-        (burst[i] == burst[pick] && arrival[i] < arrival[pick])) {
-        pick = i;
-    }
+    printf("at %d: P%d\n", clock, pick + 1);
+    return 0;
 }
+```
+
+Output
+
+```text
+at 7: P3
 ```
 
 Walking i from 0 up and replacing pick only when the new one is strictly better also keeps the input order for full ties

@@ -8,6 +8,15 @@ Handler-ul strânge copiii cu waitpid, folosind două lucruri noi
 - **WNOHANG**: nu aștepta. Dacă niciun copil nu s-a terminat încă, întoarce 0 imediat
 
 ```c
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+volatile sig_atomic_t stransi = 0;
+
 void la_copil(int sig) {
     (void)sig;
     int salvat = errno;
@@ -17,6 +26,35 @@ void la_copil(int sig) {
     }
     errno = salvat;
 }
+
+int main(void) {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = la_copil;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGCHLD, &sa, NULL);
+
+    int n = 3;
+    for (int i = 0; i < n; i++) {
+        fflush(stdout);
+        if (fork() == 0) {
+            _exit(0);
+        }
+    }
+
+    // sleep se întoarce mai devreme când vine un semnal, așa că verificăm din nou
+    while (stransi < n) {
+        sleep(1);
+    }
+    printf("strans: %d\n", stransi);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+strans: 3
 ```
 
 De ce o **buclă**? Ține minte că semnalele nu stau la coadă. Dacă trei copii se termină aproape în același moment, părintele poate primi un singur SIGCHLD. Un singur waitpid ar strânge un copil și ar lăsa doi zombi. Bucla tot strânge până nu mai rămâne niciun copil terminat
@@ -27,7 +65,7 @@ De ce o **buclă**? Ține minte că semnalele nu stau la coadă. Dacă trei copi
 
 Acum main trebuie să aștepte până sunt strânși toți copiii. O primă idee
 
-```c
+```text
 while (stransi < n) {
     pause();
 }
@@ -38,17 +76,58 @@ Dar există o gaură. Dacă ultimul SIGCHLD vine chiar după verificarea `strans
 Reparația e **sigsuspend**. Ținem SIGCHLD blocat cât verificăm, iar sigsuspend îl deblochează și adoarme **într-un singur pas**, deci nimic nu se poate strecura între ele
 
 ```c
-sigset_t bloc, vechi;
-sigemptyset(&bloc);
-sigaddset(&bloc, SIGCHLD);
-sigprocmask(SIG_BLOCK, &bloc, &vechi);
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
-// ... aici pornim copiii
+volatile sig_atomic_t stransi = 0;
 
-while (stransi < n) {
-    sigsuspend(&vechi);
+void la_copil(int sig) {
+    (void)sig;
+    int salvat = errno;
+    int stare;
+    while (waitpid(-1, &stare, WNOHANG) > 0) {
+        stransi++;
+    }
+    errno = salvat;
 }
-sigprocmask(SIG_SETMASK, &vechi, NULL);
+
+int main(void) {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = la_copil;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGCHLD, &sa, NULL);
+
+    int n = 3;
+    sigset_t bloc, vechi;
+    sigemptyset(&bloc);
+    sigaddset(&bloc, SIGCHLD);
+    sigprocmask(SIG_BLOCK, &bloc, &vechi);
+
+    for (int i = 0; i < n; i++) {
+        fflush(stdout);
+        if (fork() == 0) {
+            _exit(0);
+        }
+    }
+
+    while (stransi < n) {
+        sigsuspend(&vechi);
+    }
+    sigprocmask(SIG_SETMASK, &vechi, NULL);
+    printf("strans: %d\n", stransi);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+strans: 3
 ```
 
 sigsuspend(&vechi) doarme cu masca veche, în care SIGCHLD nu e blocat. Când sosește un SIGCHLD, rulează handler-ul, sigsuspend se întoarce, iar SIGCHLD e iar blocat pentru următoarea verificare. Îl blocăm **înainte** să pornim copiii, așa că nici măcar un copil care se termină foarte repede nu poate fi ratat

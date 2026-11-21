@@ -58,9 +58,29 @@ Output
 The 10 says we count in base 10. After the call, end points to the first char it couldn't read. If that char is the `'\0'` at the end of the string, the whole text was a number. If not, something else was in it. It returns a long, so we print it with **%ld**
 
 ```c
-if (*end == '\0') {
-    // the whole text was a number
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    char *texts[] = { "128", "12abc" };
+    for (int i = 0; i < 2; i++) {
+        char *end;
+        long number = strtol(texts[i], &end, 10);
+        if (*end == '\0') {
+            printf("%s: the number %ld\n", texts[i], number);
+        } else {
+            printf("%s: not a number\n", texts[i]);
+        }
+    }
+    return 0;
 }
+```
+
+Output
+
+```text
+128: the number 128
+12abc: not a number
 ```
 
 One more check: an empty string has no digits at all, and end stays at its start, which is also the `'\0'`. So also check that the text is not empty

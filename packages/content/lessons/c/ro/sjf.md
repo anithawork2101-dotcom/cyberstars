@@ -33,16 +33,34 @@ Dar are două probleme
 Simularea are nevoie de o buclă care alege de fiecare dată următorul proces. Marcăm procesele terminate. Când n-a sosit încă nimic, procesorul stă degeaba până la următoarea sosire
 
 ```c
-int ales = -1;
-for (int i = 0; i < n; i++) {
-    if (gata[i] || sosire[i] > ceas) {
-        continue;
+#include <stdio.h>
+
+int main(void) {
+    int n = 4;
+    int sosire[] = { 0, 1, 2, 3 };
+    int executie[] = { 7, 4, 1, 4 };
+    int gata[] = { 1, 0, 0, 0 };
+    int ceas = 7;
+
+    int ales = -1;
+    for (int i = 0; i < n; i++) {
+        if (gata[i] || sosire[i] > ceas) {
+            continue;
+        }
+        if (ales == -1 || executie[i] < executie[ales] ||
+            (executie[i] == executie[ales] && sosire[i] < sosire[ales])) {
+            ales = i;
+        }
     }
-    if (ales == -1 || executie[i] < executie[ales] ||
-        (executie[i] == executie[ales] && sosire[i] < sosire[ales])) {
-        ales = i;
-    }
+    printf("la %d: P%d\n", ceas, ales + 1);
+    return 0;
 }
+```
+
+Ieșire
+
+```text
+la 7: P3
 ```
 
 Dacă parcurgem i de la 0 în sus și înlocuim ales doar când cel nou e strict mai bun, păstrăm și ordinea de la intrare când totul e egal

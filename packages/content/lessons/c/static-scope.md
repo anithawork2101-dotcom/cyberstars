@@ -32,10 +32,24 @@ count is a **local** variable. It's made fresh every time visit starts, and thro
 A block between `{` and `}` has its own scope too. A variable made inside an if or a for is gone after the closing brace
 
 ```c
-for (int i = 0; i < 3; i++) {
-    int twice = i * 2;
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 0; i < 3; i++) {
+        int twice = i * 2;
+        printf("%d\n", twice);
+    }
+    // i and twice don't exist here
+    return 0;
 }
-// i and twice don't exist here
+```
+
+Output
+
+```text
+0
+2
+4
 ```
 
 ---

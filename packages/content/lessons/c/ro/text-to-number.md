@@ -58,9 +58,29 @@ Ieșire
 10 spune că numărăm în baza 10. După apel, sfarsit arată spre primul caracter pe care nu l-a putut citi. Dacă acel caracter e `'\0'`-ul de la finalul șirului, tot textul a fost un număr. Dacă nu, mai era altceva în el. Întoarce un long, deci îl afișăm cu **%ld**
 
 ```c
-if (*sfarsit == '\0') {
-    // tot textul a fost un număr
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    char *texte[] = { "128", "12abc" };
+    for (int i = 0; i < 2; i++) {
+        char *sfarsit;
+        long numar = strtol(texte[i], &sfarsit, 10);
+        if (*sfarsit == '\0') {
+            printf("%s: numarul %ld\n", texte[i], numar);
+        } else {
+            printf("%s: nu e un numar\n", texte[i]);
+        }
+    }
+    return 0;
 }
+```
+
+Ieșire
+
+```text
+128: numarul 128
+12abc: nu e un numar
 ```
 
 Încă o verificare: un șir gol nu are deloc cifre, iar sfarsit rămâne la începutul lui, care e tot `'\0'`. Așa că verifică și că textul nu e gol
