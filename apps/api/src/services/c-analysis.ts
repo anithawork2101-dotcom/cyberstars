@@ -141,11 +141,13 @@ const C_NODE_KINDS: Record<string, (node: Node) => boolean> = {
   struct: (n) => n.type === 'struct_specifier' && n.childForFieldName('body') !== null,
   enum: (n) => n.type === 'enum_specifier' && n.childForFieldName('body') !== null,
   ternary: (n) => n.type === 'conditional_expression',
-  // A variable kept with `static` (a function's own `static` is about linking).
+  // A variable kept with `static` inside a function. A function's own `static`
+  // is about linking, and a `static` at file scope is just a global.
   static: (n) =>
     n.type === 'storage_class_specifier' &&
     n.text === 'static' &&
     n.parent?.type === 'declaration' &&
+    insideFunction(n.parent) &&
     !n.parent.childrenForFieldName('declarator').some((d) => d && isFunctionDeclarator(d)),
   // int grid[3][4], or a parameter int grid[][4]
   array_2d: (n) =>
@@ -156,6 +158,11 @@ const C_NODE_KINDS: Record<string, (node: Node) => boolean> = {
     n.childForFieldName('declarator')?.type === 'parenthesized_declarator' &&
     n.childForFieldName('declarator')?.namedChild(0)?.type === 'pointer_declarator',
 };
+
+function insideFunction(node: Node): boolean {
+  for (let up = node.parent; up; up = up.parent) if (up.type === 'function_definition') return true;
+  return false;
+}
 
 function isFunctionDeclarator(declarator: Node): boolean {
   let d: Node | null = declarator;

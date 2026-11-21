@@ -186,6 +186,11 @@ describe('checkStructure', () => {
       'static int next(void){ int n = 0; return ++n; }\nint main(void){ return next(); }',
     ],
     [
+      { kind: 'static' },
+      'int next(void){ static int n = 0; return ++n; }\nint main(void){ return next(); }',
+      'static int n = 0;\nint next(void){ return ++n; }\nint main(void){ return next(); }',
+    ],
+    [
       { kind: 'array_2d' },
       'int sum(int g[][3]){ return g[0][0]; }\nint main(void){ int g[2][3] = {{0}}; return sum(g); }',
       'int main(void){ int g[6] = {0}; return g[0]; }',
