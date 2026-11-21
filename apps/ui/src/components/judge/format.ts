@@ -9,11 +9,7 @@ export function structureMessage(failure: StructureFailure, t: TFunction): strin
   const { kind, type, name } = failure.rule;
   const base = `tests.structure.${failure.type}`;
   const specific =
-    kind === 'loop' && type
-      ? `${base}.loop_${type}`
-      : !name
-        ? `${base}.${kind}_any`
-        : null;
+    kind === 'loop' && type ? `${base}.loop_${type}` : !name ? `${base}.${kind}_any` : null;
   const keys = [specific, `${base}.${kind}`, `${base}.other`].filter((k) => k !== null);
   return t(keys, {
     name: failure.rule.name,
