@@ -90,9 +90,29 @@ aplica parcurge array-ul o dată, iar noi hotărâm ce se întâmplă cu fiecare
 Tipul e lung de scris iar și iar. typedef îi dă un nume scurt
 
 ```c
+#include <stdio.h>
+
+int aduna(int a, int b) {
+    return a + b;
+}
+
+int inmulteste(int a, int b) {
+    return a * b;
+}
+
 typedef int (*operatie)(int, int);
 
-operatie operatii[] = { aduna, inmulteste };
+int main(void) {
+    operatie operatii[] = { aduna, inmulteste };
+    printf("%d\n", operatii[1](6, 7));
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+42
 ```
 
 Acum `operatie` e un tip, ca int. Aici am făcut chiar un array de pointeri la funcții: `operatii[1](6, 7)` o apelează pe inmulteste. Tabele ca acesta lasă un program să aleagă o funcție după un număr, fără un lanț lung de if/else

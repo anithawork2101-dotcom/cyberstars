@@ -41,15 +41,33 @@ P3 avea nevoie doar de o unitate, dar a așteptat 6. Ăsta e punctul slab al lui
 Ca să calculăm timpii, ținem un ceas. Pentru fiecare proces, în ordinea sosirii: dacă ceasul e mai devreme decât sosirea lui, procesorul stă degeaba până atunci. Procesul pornește la ceas, se termină la ceas + burst, iar ceasul trece la terminarea lui
 
 ```c
-int ceas = 0;
-for (int i = 0; i < n; i++) {
-    if (ceas < sosire[i]) {
-        ceas = sosire[i];
+#include <stdio.h>
+
+int main(void) {
+    int n = 3;
+    int sosire[] = { 0, 1, 2 };
+    int executie[] = { 5, 3, 1 };
+
+    int ceas = 0;
+    for (int i = 0; i < n; i++) {
+        if (ceas < sosire[i]) {
+            ceas = sosire[i];
+        }
+        int start = ceas;
+        ceas = ceas + executie[i];
+        int final = ceas;
+        printf("%d-%d P%d\n", start, final, i + 1);
     }
-    int start = ceas;
-    ceas = ceas + executie[i];
-    int final = ceas;
+    return 0;
 }
+```
+
+Ieșire
+
+```text
+0-5 P1
+5-8 P2
+8-9 P3
 ```
 
 Ca să afișăm mediile cu două zecimale, împărțim ca double și folosim **%.2f**

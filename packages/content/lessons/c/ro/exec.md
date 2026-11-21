@@ -33,8 +33,21 @@ Familia are mai mulți membri. Literele din numele lor spun cum primesc argument
 Primul argument e programul de rulat. Apoi vin argumentele pe care le primește programul, iar din obișnuință primul dintre ele e tot numele programului. NULL-ul de la final îi spune lui exec unde se termină lista, deci nu-l uita niciodată
 
 ```c
-char *argumente[] = { "expr", "6", "*", "7", NULL };
-execvp(argumente[0], argumente);
+#include <stdio.h>
+#include <unistd.h>
+
+int main(void) {
+    char *argumente[] = { "expr", "6", "*", "7", NULL };
+    execvp(argumente[0], argumente);
+    printf("exec a esuat\n");
+    return 1;
+}
+```
+
+Ieșire
+
+```text
+42
 ```
 
 execvp e cel pe care îl folosim când argumentele vin de la intrare, pentru că putem umple un array pe măsură ce citim

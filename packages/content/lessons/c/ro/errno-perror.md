@@ -74,7 +74,17 @@ open fantoma.txt: No such file or directory
 **perror** face același lucru dintr-un singur apel și scrie la ieșirea de erori, descriptorul 2, care e locul potrivit pentru mesajele de eroare. Scrie textul nostru, două puncte și propoziția
 
 ```c
-perror("open fantoma.txt");
+#include <stdio.h>
+#include <fcntl.h>
+
+int main(void) {
+    int fd = open("fantoma.txt", O_RDONLY);
+    if (fd == -1) {
+        perror("open fantoma.txt");
+        return 1;
+    }
+    return 0;
+}
 ```
 
 Pe ecran

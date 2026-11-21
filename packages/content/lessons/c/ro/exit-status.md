@@ -86,9 +86,29 @@ Acum o capcană în care cade oricine folosește printf împreună cu fork. Țin
 Într-un terminal s-ar putea să nu observi, pentru că acolo printf scrie fiecare linie imediat. Dar când ieșirea merge într-un pipe sau într-un fișier, ca atunci când testele îți verifică programul, bufferul o ține. Reparația e o singură linie: apelează **fflush(stdout)** chiar înainte de fiecare fork, ca bufferul să fie gol când e copiat
 
 ```c
-printf("pornesc lucrarea\n");
-fflush(stdout);
-pid_t pid = fork();
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(void) {
+    printf("pornesc lucrarea\n");
+    fflush(stdout);
+    pid_t pid = fork();
+    if (pid == 0) {
+        _exit(0);
+    }
+
+    waitpid(pid, NULL, 0);
+    printf("lucrarea s-a terminat\n");
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+pornesc lucrarea
+lucrarea s-a terminat
 ```
 
 ---

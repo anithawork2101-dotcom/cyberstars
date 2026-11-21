@@ -41,15 +41,33 @@ P3 needed only 1 unit but waited 6. That's FCFS's weak spot, the **convoy effect
 To work out the times, keep a clock. For each process in arrival order: if the clock is earlier than its arrival, the processor is idle until then. The process starts at the clock, finishes at clock + burst, and the clock moves to its finish
 
 ```c
-int clock = 0;
-for (int i = 0; i < n; i++) {
-    if (clock < arrival[i]) {
-        clock = arrival[i];
+#include <stdio.h>
+
+int main(void) {
+    int n = 3;
+    int arrival[] = { 0, 1, 2 };
+    int burst[] = { 5, 3, 1 };
+
+    int clock = 0;
+    for (int i = 0; i < n; i++) {
+        if (clock < arrival[i]) {
+            clock = arrival[i];
+        }
+        int start = clock;
+        clock = clock + burst[i];
+        int finish = clock;
+        printf("%d-%d P%d\n", start, finish, i + 1);
     }
-    int start = clock;
-    clock = clock + burst[i];
-    int finish = clock;
+    return 0;
 }
+```
+
+Output
+
+```text
+0-5 P1
+5-8 P2
+8-9 P3
 ```
 
 To print averages with two decimals, divide as doubles and use **%.2f**

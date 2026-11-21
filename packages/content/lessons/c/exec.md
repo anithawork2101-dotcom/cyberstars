@@ -33,8 +33,21 @@ The family has several members. The letters in their names tell how they take th
 The first argument is the program to run. Then come the arguments the program gets, and by habit the first of those is the program's name again. The NULL at the end tells exec where the list stops, so never forget it
 
 ```c
-char *args[] = { "expr", "6", "*", "7", NULL };
-execvp(args[0], args);
+#include <stdio.h>
+#include <unistd.h>
+
+int main(void) {
+    char *args[] = { "expr", "6", "*", "7", NULL };
+    execvp(args[0], args);
+    printf("exec failed\n");
+    return 1;
+}
+```
+
+Output
+
+```text
+42
 ```
 
 execvp is the one we use when the arguments come from input, because we can fill an array as we read

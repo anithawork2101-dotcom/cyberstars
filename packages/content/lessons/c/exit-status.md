@@ -86,9 +86,29 @@ Now a trap that catches everyone who uses printf with fork. Remember that printf
 In a terminal you may not notice, because there printf writes each line right away. But when the output goes into a pipe or a file, like when the tests check your program, the buffer holds it. The fix is one line: call **fflush(stdout)** right before every fork, so the buffer is empty when it gets copied
 
 ```c
-printf("starting job\n");
-fflush(stdout);
-pid_t pid = fork();
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(void) {
+    printf("starting job\n");
+    fflush(stdout);
+    pid_t pid = fork();
+    if (pid == 0) {
+        _exit(0);
+    }
+
+    waitpid(pid, NULL, 0);
+    printf("job done\n");
+    return 0;
+}
+```
+
+Output
+
+```text
+starting job
+job done
 ```
 
 ---

@@ -90,9 +90,29 @@ apply walks the array once, and we decide what happens to each value. A function
 The type is long to write again and again. typedef gives it a short name
 
 ```c
+#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}
+
 typedef int (*operation)(int, int);
 
-operation ops[] = { add, multiply };
+int main(void) {
+    operation ops[] = { add, multiply };
+    printf("%d\n", ops[1](6, 7));
+    return 0;
+}
+```
+
+Output
+
+```text
+42
 ```
 
 Now `operation` is a type, like int. Here we even made an array of function pointers: `ops[1](6, 7)` calls multiply. Tables like this let a program pick a function by a number, without a long if/else chain

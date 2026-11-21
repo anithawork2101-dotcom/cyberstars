@@ -74,7 +74,17 @@ open ghost.txt: No such file or directory
 **perror** does the same in one call, and prints to the error output, file descriptor 2, which is the right place for error messages. It writes our text, a colon, and the sentence
 
 ```c
-perror("open ghost.txt");
+#include <stdio.h>
+#include <fcntl.h>
+
+int main(void) {
+    int fd = open("ghost.txt", O_RDONLY);
+    if (fd == -1) {
+        perror("open ghost.txt");
+        return 1;
+    }
+    return 0;
+}
 ```
 
 On the screen
