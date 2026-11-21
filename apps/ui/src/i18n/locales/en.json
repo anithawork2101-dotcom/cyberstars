@@ -1325,6 +1325,7 @@
         "loop_comprehension": "Use a list comprehension ([x for x in ...])",
         "function_any": "Write a function of your own",
         "recursion": "Solve it with recursion: a function that calls itself",
+        "recursion_named": "Make {{name}}() call itself",
         "nested_loop": "Use a loop inside another loop",
         "operator": "Use the {{name}} operator",
         "if": "Use an if",
