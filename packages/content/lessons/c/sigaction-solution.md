@@ -23,13 +23,13 @@ int main(void) {
 
     char word[16];
     while (scanf("%15s", word) == 1) {
-        if (strcmp(word, "RING") == 0) {
+        if (strcmp(word, "ring") == 0) {
             raise(SIGUSR1);
-        } else if (strcmp(word, "BLOCK") == 0) {
+        } else if (strcmp(word, "block") == 0) {
             sigprocmask(SIG_BLOCK, &bell, NULL);
-        } else if (strcmp(word, "UNBLOCK") == 0) {
+        } else if (strcmp(word, "unblock") == 0) {
             sigprocmask(SIG_UNBLOCK, &bell, NULL);
-        } else if (strcmp(word, "CHECK") == 0) {
+        } else if (strcmp(word, "check") == 0) {
             sigset_t waiting;
             sigpending(&waiting);
             printf("heard %d, pending %s\n", heard,

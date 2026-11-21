@@ -29,9 +29,9 @@ int main(void) {
             raise(SIGUSR1);
         } else if (strcmp(word, "USR2") == 0) {
             raise(SIGUSR2);
-        } else if (strcmp(word, "IGNORE") == 0) {
+        } else if (strcmp(word, "ignore") == 0) {
             signal(SIGUSR1, SIG_IGN);
-        } else if (strcmp(word, "CATCH") == 0) {
+        } else if (strcmp(word, "catch") == 0) {
             signal(SIGUSR1, on_usr1);
         }
     }

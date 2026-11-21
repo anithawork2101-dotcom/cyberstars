@@ -10,9 +10,9 @@ int main(void) {
     sigset_t b; sigemptyset(&b); sigaddset(&b, SIGUSR1);
     char w[16];
     while (scanf("%15s", w) == 1) {
-        if (!strcmp(w, "RING")) raise(SIGUSR1);
-        else if (!strcmp(w, "BLOCK")) sigprocmask(SIG_BLOCK, &b, NULL);
-        else if (!strcmp(w, "UNBLOCK")) sigprocmask(SIG_UNBLOCK, &b, NULL);
+        if (!strcmp(w, "ring")) raise(SIGUSR1);
+        else if (!strcmp(w, "block")) sigprocmask(SIG_BLOCK, &b, NULL);
+        else if (!strcmp(w, "unblock")) sigprocmask(SIG_UNBLOCK, &b, NULL);
         else { sigset_t p; sigpending(&p); printf("heard %d, pending %s\n", heard, sigismember(&p, SIGUSR1) ? "yes" : "no"); }
     }
     printf("Heard: %d\n", heard);

@@ -27,7 +27,7 @@ imprumutata e 1 cât timp cineva a împrumutat cartea. O să-ți trebuiască câ
 
 ---
 
-LIST are nevoie de cărțile sortate, dar lista însăși poate rămâne în orice ordine. Construiește un array de pointeri la noduri, sortează acel array cu qsort și afișează din el. Funcția de comparare primește pointeri la căsuțele array-ului, iar fiecare căsuță e un `struct carte *`, deci e un pointer la pointer
+list are nevoie de cărțile sortate, dar lista însăși poate rămâne în orice ordine. Construiește un array de pointeri la noduri, sortează acel array cu qsort și afișează din el. Funcția de comparare primește pointeri la căsuțele array-ului, iar fiecare căsuță e un `struct carte *`, deci e un pointer la pointer
 
 ```c
 int dupa_an(const void *a, const void *b) {
@@ -39,21 +39,21 @@ int dupa_an(const void *a, const void *b) {
 
 ---
 
-SAVE și LOAD țin catalogul într-un fișier text, câte o carte pe linie, cu fprintf și fscanf din lecția despre fișiere. LOAD înlocuiește tot catalogul cu ce e în fișier: golește întâi lista
+save și load țin catalogul într-un fișier text, câte o carte pe linie, cu fprintf și fscanf din lecția despre fișiere. load înlocuiește tot catalogul cu ce e în fișier: golește întâi lista
 
 ---
 
 ## Misiune: Catalogul bibliotecii
 
 1. Citește comenzi, câte una pe linie, până se termină datele, și răspunde la ele
-   - `ADD id titlu an`: adaugă o carte. Dacă id-ul e luat, afișează `Cartea id exista deja`
-   - `REMOVE id`: scoate cartea. Dacă nu există o astfel de carte, afișează `Nu exista cartea id`
-   - `BORROW id`: marcheaz-o ca împrumutată. Afișează `Nu exista cartea id` sau `Cartea id e deja imprumutata`
-   - `RETURN id`: marcheaz-o ca adusă înapoi. Afișează `Nu exista cartea id` sau `Cartea id nu e imprumutata`
-   - `LIST`: afișează fiecare carte ca `id an titlu`, cu ` (imprumutata)` după cele împrumutate, sortate după an, apoi după titlu, apoi după id. Afișează `Catalog gol` când nu e nicio carte
-   - `SAVE fisier`: scrie catalogul în fișier
-   - `LOAD fisier`: înlocuiește catalogul cu cel din fișier. Dacă fișierul nu poate fi deschis, afișează `Nu pot deschide ` și numele fișierului și păstrează catalogul
-2. Ține cărțile într-o listă înlănțuită și sortează cu qsort pentru LIST
+   - `add id titlu an`: adaugă o carte. Dacă id-ul e luat, afișează `Cartea id exista deja`
+   - `remove id`: scoate cartea. Dacă nu există o astfel de carte, afișează `Nu exista cartea id`
+   - `borrow id`: marcheaz-o ca împrumutată. Afișează `Nu exista cartea id` sau `Cartea id e deja imprumutata`
+   - `return id`: marcheaz-o ca adusă înapoi. Afișează `Nu exista cartea id` sau `Cartea id nu e imprumutata`
+   - `list`: afișează fiecare carte ca `id an titlu`, cu ` (imprumutata)` după cele împrumutate, sortate după an, apoi după titlu, apoi după id. Afișează `Catalog gol` când nu e nicio carte
+   - `save fisier`: scrie catalogul în fișier
+   - `load fisier`: înlocuiește catalogul cu cel din fișier. Dacă fișierul nu poate fi deschis, afișează `Nu pot deschide ` și numele fișierului și păstrează catalogul
+2. Ține cărțile într-o listă înlănțuită și sortează cu qsort pentru list
 3. Eliberează fiecare nod înainte să se termine programul
 
 Titlurile sunt un cuvânt de cel mult 30 de caractere. Id-urile sunt între 1 și 9999, anii între 1900 și 2099. Sunt cel mult 300 de comenzi
@@ -63,18 +63,18 @@ Titlurile sunt un cuvânt de cel mult 30 de caractere. Id-urile sunt între 1 ș
 Intrare
 
 ```text
-ADD 7 PayrollManual 1969
-ADD 3 OrbitTables 1962
-ADD 9 CensusReport 1969
-ADD 3 Duplicate 1970
-BORROW 9
-BORROW 9
-SAVE shelf.txt
-REMOVE 7
-LIST
-LOAD shelf.txt
-RETURN 3
-LIST
+add 7 PayrollManual 1969
+add 3 OrbitTables 1962
+add 9 CensusReport 1969
+add 3 Duplicate 1970
+borrow 9
+borrow 9
+save shelf.txt
+remove 7
+list
+load shelf.txt
+return 3
+list
 ```
 
 Ieșire
@@ -90,4 +90,4 @@ Cartea 3 nu e imprumutata
 7 1969 PayrollManual
 ```
 
-Fișierul ține minte ce cărți sunt împrumutate, deci după LOAD cartea 9 e tot împrumutată
+Fișierul ține minte ce cărți sunt împrumutate, deci după load cartea 9 e tot împrumutată

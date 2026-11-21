@@ -165,9 +165,9 @@ Imprimanta de linii tipărește lucrările în ordinea în care sosesc. Uneori u
 1. Scrie **struct nod \*adauga_la_final(struct nod \*cap, int id)** care adaugă o lucrare la final și întoarce capul
 2. Scrie **struct nod \*anuleaza(struct nod \*cap, int id)** care scoate din listă prima lucrare cu acel id, o eliberează și întoarce capul
 3. Citește comenzi, câte una pe linie, până se termină datele, și răspunde la ele
-   - `ADD id`: adaugă lucrarea la finalul cozii. Nu afișa nimic
-   - `CANCEL id`: scoate lucrarea. Dacă nicio lucrare nu are acel id, afișează `Nicio lucrare ` și id-ul
-   - `SHOW`: afișează `Coada:` și id-urile în ordine, fiecare după un spațiu, sau `Coada: goala`
+   - `add id`: adaugă lucrarea la finalul cozii. Nu afișa nimic
+   - `cancel id`: scoate lucrarea. Dacă nicio lucrare nu are acel id, afișează `Nicio lucrare ` și id-ul
+   - `show`: afișează `Coada:` și id-urile în ordine, fiecare după un spațiu, sau `Coada: goala`
 4. Eliberează la final fiecare nod rămas în listă
 
 Id-urile sunt numere întregi de la 1 la 9999. Același id poate fi în coadă de mai multe ori. Sunt cel mult 500 de comenzi
@@ -177,15 +177,15 @@ Id-urile sunt numere întregi de la 1 la 9999. Același id poate fi în coadă d
 Intrare
 
 ```text
-ADD 12
-ADD 40
-ADD 7
-CANCEL 40
-CANCEL 99
-SHOW
-CANCEL 12
-CANCEL 7
-SHOW
+add 12
+add 40
+add 7
+cancel 40
+cancel 99
+show
+cancel 12
+cancel 7
+show
 ```
 
 Ieșire

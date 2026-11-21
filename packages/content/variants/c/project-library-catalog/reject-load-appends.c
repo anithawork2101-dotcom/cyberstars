@@ -125,32 +125,32 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(command, "ADD") == 0 &&
+        if (strcmp(command, "add") == 0 &&
             sscanf(line, "%*s %d %31s %d", &id, word, &year) == 3) {
             if (find(id) != NULL) {
                 printf("Book %d already exists\n", id);
             } else {
                 add(id, word, year, 0);
             }
-        } else if (strcmp(command, "LIST") == 0) {
+        } else if (strcmp(command, "list") == 0) {
             list();
-        } else if (strcmp(command, "SAVE") == 0 && sscanf(line, "%*s %63s", word) == 1) {
+        } else if (strcmp(command, "save") == 0 && sscanf(line, "%*s %63s", word) == 1) {
             save(word);
-        } else if (strcmp(command, "LOAD") == 0 && sscanf(line, "%*s %63s", word) == 1) {
+        } else if (strcmp(command, "load") == 0 && sscanf(line, "%*s %63s", word) == 1) {
             load(word);
         } else if (sscanf(line, "%*s %d", &id) == 1) {
             struct book *b = find(id);
             if (b == NULL) {
                 printf("No book %d\n", id);
-            } else if (strcmp(command, "REMOVE") == 0) {
+            } else if (strcmp(command, "remove") == 0) {
                 remove_book(id);
-            } else if (strcmp(command, "BORROW") == 0) {
+            } else if (strcmp(command, "borrow") == 0) {
                 if (b->out) {
                     printf("Book %d is already out\n", id);
                 } else {
                     b->out = 1;
                 }
-            } else if (strcmp(command, "RETURN") == 0) {
+            } else if (strcmp(command, "return") == 0) {
                 if (!b->out) {
                     printf("Book %d is not out\n", id);
                 } else {

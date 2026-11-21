@@ -165,9 +165,9 @@ The line printer prints jobs in the order they arrive. Sometimes an operator cha
 1. Write **struct node \*append(struct node \*head, int id)** that adds a job at the end and returns the head
 2. Write **struct node \*cancel(struct node \*head, int id)** that takes the first job with that id out of the list, frees it, and returns the head
 3. Read commands, one per line, until the input ends, and answer them
-   - `ADD id`: add the job at the end of the queue. Print nothing
-   - `CANCEL id`: take the job out. If no job has that id, print `No job ` and the id
-   - `SHOW`: print `Queue:` and the ids in order, each after a space, or `Queue: empty`
+   - `add id`: add the job at the end of the queue. Print nothing
+   - `cancel id`: take the job out. If no job has that id, print `No job ` and the id
+   - `show`: print `Queue:` and the ids in order, each after a space, or `Queue: empty`
 4. Free every node that is still in the list at the end
 
 Ids are whole numbers from 1 to 9999. The same id can be in the queue more than once. There are at most 500 commands
@@ -177,15 +177,15 @@ Ids are whole numbers from 1 to 9999. The same id can be in the queue more than 
 Input
 
 ```text
-ADD 12
-ADD 40
-ADD 7
-CANCEL 40
-CANCEL 99
-SHOW
-CANCEL 12
-CANCEL 7
-SHOW
+add 12
+add 40
+add 7
+cancel 40
+cancel 99
+show
+cancel 12
+cancel 7
+show
 ```
 
 Output

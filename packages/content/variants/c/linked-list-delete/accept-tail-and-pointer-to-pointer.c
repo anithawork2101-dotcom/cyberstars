@@ -29,13 +29,13 @@ int main(void) {
     char cmd[32];
     int id;
     while (scanf("%31s", cmd) == 1) {
-        if (!strcmp(cmd, "SHOW")) {
+        if (!strcmp(cmd, "show")) {
             if (!q) { puts("Queue: empty"); continue; }
             printf("Queue:");
             for (struct node *p = q; p; p = p->next) printf(" %d", p->value);
             putchar('\n');
         } else if (scanf("%d", &id) == 1) {
-            if (!strcmp(cmd, "ADD")) q = append(q, id);
+            if (!strcmp(cmd, "add")) q = append(q, id);
             else {
                 struct node *p = q;
                 while (p && p->value != id) p = p->next;

@@ -110,10 +110,10 @@ The doorbell of the machine room is wired to SIGUSR1. When the technicians are b
 
 1. Install a handler for SIGUSR1 with sigaction. It only counts the rings it hears
 2. Read words until the input ends
-   - `RING`: send SIGUSR1 to yourself with raise
-   - `BLOCK`: block SIGUSR1 with sigprocmask
-   - `UNBLOCK`: unblock it
-   - `CHECK`: print the number of rings heard so far, and if a ring is pending, as in the example
+   - `ring`: send SIGUSR1 to yourself with raise
+   - `block`: block SIGUSR1 with sigprocmask
+   - `unblock`: unblock it
+   - `check`: print the number of rings heard so far, and if a ring is pending, as in the example
 3. At the end, unblock SIGUSR1 if it's still blocked, and print `Heard: ` and the final count
 
 There are at most 100 words
@@ -123,7 +123,7 @@ There are at most 100 words
 Input
 
 ```text
-RING CHECK BLOCK RING RING CHECK UNBLOCK CHECK
+ring check block ring ring check unblock check
 ```
 
 Output

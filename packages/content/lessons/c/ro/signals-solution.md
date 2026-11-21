@@ -29,9 +29,9 @@ int main(void) {
             raise(SIGUSR1);
         } else if (strcmp(cuvant, "USR2") == 0) {
             raise(SIGUSR2);
-        } else if (strcmp(cuvant, "IGNORE") == 0) {
+        } else if (strcmp(cuvant, "ignore") == 0) {
             signal(SIGUSR1, SIG_IGN);
-        } else if (strcmp(cuvant, "CATCH") == 0) {
+        } else if (strcmp(cuvant, "catch") == 0) {
             signal(SIGUSR1, la_usr1);
         }
     }

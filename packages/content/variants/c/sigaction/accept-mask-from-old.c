@@ -16,10 +16,10 @@ int main(void) {
     char w[32];
     while (scanf("%31s", w) == 1) {
         switch (w[0]) {
-        case 'R': raise(SIGUSR1); break;
-        case 'B': sigprocmask(SIG_BLOCK, &one, NULL); break;
-        case 'U': sigprocmask(SIG_UNBLOCK, &one, NULL); break;
-        case 'C':
+        case 'r': raise(SIGUSR1); break;
+        case 'b': sigprocmask(SIG_BLOCK, &one, NULL); break;
+        case 'u': sigprocmask(SIG_UNBLOCK, &one, NULL); break;
+        case 'c':
             sigpending(&pend);
             printf("heard %d, pending %s\n", (int)n, sigismember(&pend, SIGUSR1) == 1 ? "yes" : "no");
         }

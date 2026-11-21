@@ -59,15 +59,15 @@ int main(void) {
 
     while (fgets(line, sizeof(line), stdin) != NULL) {
         int found = sscanf(line, "%15s %d", command, &id);
-        if (found == 2 && strcmp(command, "ADD") == 0) {
+        if (found == 2 && strcmp(command, "add") == 0) {
             head = append(head, id);
-        } else if (found == 2 && strcmp(command, "CANCEL") == 0) {
+        } else if (found == 2 && strcmp(command, "cancel") == 0) {
             if (contains(head, id)) {
                 head = cancel(head, id);
             } else {
                 printf("No job %d\n", id);
             }
-        } else if (found >= 1 && strcmp(command, "SHOW") == 0) {
+        } else if (found >= 1 && strcmp(command, "show") == 0) {
             if (head == NULL) {
                 printf("Queue: empty\n");
             } else {

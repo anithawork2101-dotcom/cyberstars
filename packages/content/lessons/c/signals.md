@@ -104,8 +104,8 @@ The operators test the signal wiring of a program by sending it signals in a giv
 2. Read words until the input ends, and do what each one says
    - `USR1`: send SIGUSR1 to yourself with raise
    - `USR2`: send SIGUSR2 to yourself
-   - `IGNORE`: from now on, ignore SIGUSR1
-   - `CATCH`: from now on, catch SIGUSR1 with your handler again
+   - `ignore`: from now on, ignore SIGUSR1
+   - `catch`: from now on, catch SIGUSR1 with your handler again
 3. Print the two counts, as in the example
 4. Then fork a child that waits with pause. Send it SIGTERM with kill, wait for it, and print the number of the signal that ended it
 
@@ -116,7 +116,7 @@ Call fflush(stdout) before the fork. There are at most 100 words
 Input
 
 ```text
-USR1 USR2 IGNORE USR1 USR1 CATCH USR1
+USR1 USR2 ignore USR1 USR1 catch USR1
 ```
 
 Output

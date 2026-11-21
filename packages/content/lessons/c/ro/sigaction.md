@@ -110,10 +110,10 @@ Soneria sălii mașinilor e legată la SIGUSR1. Când tehnicienii sunt ocupați,
 
 1. Instalează cu sigaction un handler pentru SIGUSR1. Doar numără soneriile pe care le aude
 2. Citește cuvinte până se termină datele
-   - `RING`: trimite-ți SIGUSR1 cu raise
-   - `BLOCK`: blochează SIGUSR1 cu sigprocmask
-   - `UNBLOCK`: deblochează-l
-   - `CHECK`: afișează câte sonerii au fost auzite până acum și dacă o sonerie e în așteptare, ca în exemplu
+   - `ring`: trimite-ți SIGUSR1 cu raise
+   - `block`: blochează SIGUSR1 cu sigprocmask
+   - `unblock`: deblochează-l
+   - `check`: afișează câte sonerii au fost auzite până acum și dacă o sonerie e în așteptare, ca în exemplu
 3. La final, deblochează SIGUSR1 dacă e încă blocat și afișează `Auzite: ` și numărul final
 
 Sunt cel mult 100 de cuvinte
@@ -123,7 +123,7 @@ Sunt cel mult 100 de cuvinte
 Intrare
 
 ```text
-RING CHECK BLOCK RING RING CHECK UNBLOCK CHECK
+ring check block ring ring check unblock check
 ```
 
 Ieșire

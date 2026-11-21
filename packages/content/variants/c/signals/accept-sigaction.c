@@ -24,8 +24,8 @@ int main(void) {
     while (scanf("%31s", w) == 1) {
         if (!strcmp(w, "USR1")) raise(SIGUSR1);
         else if (!strcmp(w, "USR2")) raise(SIGUSR2);
-        else if (!strcmp(w, "IGNORE")) signal(SIGUSR1, SIG_IGN);
-        else if (!strcmp(w, "CATCH")) set(SIGUSR1, handler);
+        else if (!strcmp(w, "ignore")) signal(SIGUSR1, SIG_IGN);
+        else if (!strcmp(w, "catch")) set(SIGUSR1, handler);
     }
     printf("USR1: %d\nUSR2: %d\n", (int)counts[0], (int)counts[1]);
     fflush(stdout);

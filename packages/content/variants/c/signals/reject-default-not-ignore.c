@@ -15,8 +15,8 @@ int main(void) {
     while (scanf("%15s", w) == 1) {
         if (!strcmp(w, "USR1")) raise(SIGUSR1);
         else if (!strcmp(w, "USR2")) raise(SIGUSR2);
-        else if (!strcmp(w, "IGNORE")) signal(SIGUSR1, SIG_DFL);
-        else if (!strcmp(w, "CATCH")) signal(SIGUSR1, h1);
+        else if (!strcmp(w, "ignore")) signal(SIGUSR1, SIG_DFL);
+        else if (!strcmp(w, "catch")) signal(SIGUSR1, h1);
     }
     printf("USR1: %d\nUSR2: %d\n", a, b);
     fflush(stdout);

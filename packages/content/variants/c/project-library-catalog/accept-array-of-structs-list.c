@@ -31,20 +31,20 @@ int main(void) {
     char cmd[16], s[64];
     int id, y;
     while (scanf("%15s", cmd) == 1) {
-        if (!strcmp(cmd, "LIST")) {
+        if (!strcmp(cmd, "list")) {
             Book *v[300]; int n = 0;
             for (Book *b = books; b; b = b->next) v[n++] = b;
             if (!n) { puts("Empty catalog"); continue; }
             qsort(v, n, sizeof *v, cmp);
             for (int i = 0; i < n; i++) printf("%d %d %s%s\n", v[i]->id, v[i]->year, v[i]->title, v[i]->out ? " (out)" : "");
-        } else if (!strcmp(cmd, "SAVE") || !strcmp(cmd, "LOAD")) {
+        } else if (!strcmp(cmd, "save") || !strcmp(cmd, "load")) {
             scanf("%63s", s);
-            FILE *f = fopen(s, cmd[0] == 'S' ? "w" : "r");
+            FILE *f = fopen(s, cmd[0] == 's' ? "w" : "r");
             if (!f) { printf("Cannot open %s\n", s); continue; }
-            if (cmd[0] == 'S') for (Book *b = books; b; b = b->next) fprintf(f, "%d %s %d %d\n", b->id, b->title, b->year, b->out);
+            if (cmd[0] == 's') for (Book *b = books; b; b = b->next) fprintf(f, "%d %s %d %d\n", b->id, b->title, b->year, b->out);
             else { wipe(); char t[32]; int o; while (fscanf(f, "%d %31s %d %d", &id, t, &y, &o) == 4) push(id, t, y, o); }
             fclose(f);
-        } else if (!strcmp(cmd, "ADD")) {
+        } else if (!strcmp(cmd, "add")) {
             scanf("%d %31s %d", &id, s, &y);
             if (*slot(id)) printf("Book %d already exists\n", id);
             else push(id, s, y, 0);
@@ -52,8 +52,8 @@ int main(void) {
             scanf("%d", &id);
             Book **pp = slot(id);
             if (!*pp) { printf("No book %d\n", id); continue; }
-            if (!strcmp(cmd, "REMOVE")) { Book *g = *pp; *pp = g->next; free(g); }
-            else if (!strcmp(cmd, "BORROW")) { if ((*pp)->out) printf("Book %d is already out\n", id); else (*pp)->out = 1; }
+            if (!strcmp(cmd, "remove")) { Book *g = *pp; *pp = g->next; free(g); }
+            else if (!strcmp(cmd, "borrow")) { if ((*pp)->out) printf("Book %d is already out\n", id); else (*pp)->out = 1; }
             else { if (!(*pp)->out) printf("Book %d is not out\n", id); else (*pp)->out = 0; }
         }
     }

@@ -127,32 +127,32 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(comanda, "ADD") == 0 &&
+        if (strcmp(comanda, "add") == 0 &&
             sscanf(linie, "%*s %d %31s %d", &id, cuvant, &an) == 3) {
             if (gaseste(id) != NULL) {
                 printf("Cartea %d exista deja\n", id);
             } else {
                 adauga(id, cuvant, an, 0);
             }
-        } else if (strcmp(comanda, "LIST") == 0) {
+        } else if (strcmp(comanda, "list") == 0) {
             listeaza();
-        } else if (strcmp(comanda, "SAVE") == 0 && sscanf(linie, "%*s %63s", cuvant) == 1) {
+        } else if (strcmp(comanda, "save") == 0 && sscanf(linie, "%*s %63s", cuvant) == 1) {
             salveaza(cuvant);
-        } else if (strcmp(comanda, "LOAD") == 0 && sscanf(linie, "%*s %63s", cuvant) == 1) {
+        } else if (strcmp(comanda, "load") == 0 && sscanf(linie, "%*s %63s", cuvant) == 1) {
             incarca(cuvant);
         } else if (sscanf(linie, "%*s %d", &id) == 1) {
             struct carte *b = gaseste(id);
             if (b == NULL) {
                 printf("Nu exista cartea %d\n", id);
-            } else if (strcmp(comanda, "REMOVE") == 0) {
+            } else if (strcmp(comanda, "remove") == 0) {
                 scoate(id);
-            } else if (strcmp(comanda, "BORROW") == 0) {
+            } else if (strcmp(comanda, "borrow") == 0) {
                 if (b->imprumutata) {
                     printf("Cartea %d e deja imprumutata\n", id);
                 } else {
                     b->imprumutata = 1;
                 }
-            } else if (strcmp(comanda, "RETURN") == 0) {
+            } else if (strcmp(comanda, "return") == 0) {
                 if (!b->imprumutata) {
                     printf("Cartea %d nu e imprumutata\n", id);
                 } else {

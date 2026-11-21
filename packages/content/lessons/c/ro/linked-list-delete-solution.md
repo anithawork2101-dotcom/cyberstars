@@ -59,15 +59,15 @@ int main(void) {
 
     while (fgets(linie, sizeof(linie), stdin) != NULL) {
         int gasite = sscanf(linie, "%15s %d", comanda, &id);
-        if (gasite == 2 && strcmp(comanda, "ADD") == 0) {
+        if (gasite == 2 && strcmp(comanda, "add") == 0) {
             cap = adauga_la_final(cap, id);
-        } else if (gasite == 2 && strcmp(comanda, "CANCEL") == 0) {
+        } else if (gasite == 2 && strcmp(comanda, "cancel") == 0) {
             if (contine(cap, id)) {
                 cap = anuleaza(cap, id);
             } else {
                 printf("Nicio lucrare %d\n", id);
             }
-        } else if (gasite >= 1 && strcmp(comanda, "SHOW") == 0) {
+        } else if (gasite >= 1 && strcmp(comanda, "show") == 0) {
             if (cap == NULL) {
                 printf("Coada: goala\n");
             } else {

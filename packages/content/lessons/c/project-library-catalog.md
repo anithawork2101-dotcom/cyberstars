@@ -27,7 +27,7 @@ out is 1 while someone has borrowed the book. You'll want a few small functions
 
 ---
 
-LIST needs the books sorted, but the list itself can stay in any order. Build an array of pointers to the nodes, sort that array with qsort, and print from it. The compare function gets pointers to array cells, and each cell is a `struct book *`, so it's a pointer to a pointer
+list needs the books sorted, but the list itself can stay in any order. Build an array of pointers to the nodes, sort that array with qsort, and print from it. The compare function gets pointers to array cells, and each cell is a `struct book *`, so it's a pointer to a pointer
 
 ```c
 int by_year(const void *a, const void *b) {
@@ -39,21 +39,21 @@ int by_year(const void *a, const void *b) {
 
 ---
 
-SAVE and LOAD keep the catalog in a text file, one book per line, with fprintf and fscanf from the File I/O lesson. LOAD replaces the whole catalog with what's in the file: clear the list first
+save and load keep the catalog in a text file, one book per line, with fprintf and fscanf from the File I/O lesson. load replaces the whole catalog with what's in the file: clear the list first
 
 ---
 
 ## Mission: The Library Catalog
 
 1. Read commands, one per line, until the input ends, and answer them
-   - `ADD id title year`: add a book. If the id is taken, print `Book id already exists`
-   - `REMOVE id`: remove the book. If there's no such book, print `No book id`
-   - `BORROW id`: mark it as out. Print `No book id`, or `Book id is already out`
-   - `RETURN id`: mark it as back. Print `No book id`, or `Book id is not out`
-   - `LIST`: print every book as `id year title`, with ` (out)` after the ones that are out, sorted by year, then by title, then by id. Print `Empty catalog` when there are no books
-   - `SAVE file`: write the catalog into the file
-   - `LOAD file`: replace the catalog with the one in the file. If the file can't be opened, print `Cannot open ` and the file's name, and keep the catalog
-2. Keep the books in a linked list, and sort with qsort for LIST
+   - `add id title year`: add a book. If the id is taken, print `Book id already exists`
+   - `remove id`: remove the book. If there's no such book, print `No book id`
+   - `borrow id`: mark it as out. Print `No book id`, or `Book id is already out`
+   - `return id`: mark it as back. Print `No book id`, or `Book id is not out`
+   - `list`: print every book as `id year title`, with ` (out)` after the ones that are out, sorted by year, then by title, then by id. Print `Empty catalog` when there are no books
+   - `save file`: write the catalog into the file
+   - `load file`: replace the catalog with the one in the file. If the file can't be opened, print `Cannot open ` and the file's name, and keep the catalog
+2. Keep the books in a linked list, and sort with qsort for list
 3. Free every node before the program ends
 
 Titles are one word of at most 30 characters. Ids are from 1 to 9999, years from 1900 to 2099. There are at most 300 commands
@@ -63,18 +63,18 @@ Titles are one word of at most 30 characters. Ids are from 1 to 9999, years from
 Input
 
 ```text
-ADD 7 PayrollManual 1969
-ADD 3 OrbitTables 1962
-ADD 9 CensusReport 1969
-ADD 3 Duplicate 1970
-BORROW 9
-BORROW 9
-SAVE shelf.txt
-REMOVE 7
-LIST
-LOAD shelf.txt
-RETURN 3
-LIST
+add 7 PayrollManual 1969
+add 3 OrbitTables 1962
+add 9 CensusReport 1969
+add 3 Duplicate 1970
+borrow 9
+borrow 9
+save shelf.txt
+remove 7
+list
+load shelf.txt
+return 3
+list
 ```
 
 Output
@@ -90,4 +90,4 @@ Book 3 is not out
 7 1969 PayrollManual
 ```
 
-The file keeps which books are out, so after LOAD, book 9 is still out
+The file keeps which books are out, so after load, book 9 is still out

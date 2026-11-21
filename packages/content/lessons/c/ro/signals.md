@@ -104,8 +104,8 @@ Operatorii testează legăturile de semnale ale unui program trimițându-i semn
 2. Citește cuvinte până se termină datele și fă ce spune fiecare
    - `USR1`: trimite-ți SIGUSR1 cu raise
    - `USR2`: trimite-ți SIGUSR2
-   - `IGNORE`: de acum înainte, ignoră SIGUSR1
-   - `CATCH`: de acum înainte, prinde din nou SIGUSR1 cu handler-ul tău
+   - `ignore`: de acum înainte, ignoră SIGUSR1
+   - `catch`: de acum înainte, prinde din nou SIGUSR1 cu handler-ul tău
 3. Afișează cele două numărători, ca în exemplu
 4. Apoi fă un copil care așteaptă cu pause. Trimite-i SIGTERM cu kill, așteaptă-l și afișează numărul semnalului care l-a oprit
 
@@ -116,7 +116,7 @@ Apelează fflush(stdout) înainte de fork. Sunt cel mult 100 de cuvinte
 Intrare
 
 ```text
-USR1 USR2 IGNORE USR1 USR1 CATCH USR1
+USR1 USR2 ignore USR1 USR1 catch USR1
 ```
 
 Ieșire

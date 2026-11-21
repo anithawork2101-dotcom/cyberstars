@@ -23,13 +23,13 @@ int main(void) {
 
     char cuvant[16];
     while (scanf("%15s", cuvant) == 1) {
-        if (strcmp(cuvant, "RING") == 0) {
+        if (strcmp(cuvant, "ring") == 0) {
             raise(SIGUSR1);
-        } else if (strcmp(cuvant, "BLOCK") == 0) {
+        } else if (strcmp(cuvant, "block") == 0) {
             sigprocmask(SIG_BLOCK, &sonerie, NULL);
-        } else if (strcmp(cuvant, "UNBLOCK") == 0) {
+        } else if (strcmp(cuvant, "unblock") == 0) {
             sigprocmask(SIG_UNBLOCK, &sonerie, NULL);
-        } else if (strcmp(cuvant, "CHECK") == 0) {
+        } else if (strcmp(cuvant, "check") == 0) {
             sigset_t asteapta;
             sigpending(&asteapta);
             printf("auzite %d, in asteptare %s\n", auzite,
