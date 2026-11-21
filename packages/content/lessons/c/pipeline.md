@@ -26,7 +26,7 @@ int main(void) {
         close(fd[0]);
         close(fd[1]);
         execlp("seq", "seq", "5", NULL);
-        exit(127);
+        _exit(127);
     }
 
     pid_t right = fork();
@@ -35,7 +35,7 @@ int main(void) {
         close(fd[0]);
         close(fd[1]);
         execlp("sort", "sort", "-r", NULL);
-        exit(127);
+        _exit(127);
     }
 
     close(fd[0]);

@@ -24,7 +24,8 @@ int main(void) {
         fscanf(in, "%31s", word);
         printf("child got: %s\n", word);
         fclose(in);
-        exit(0);
+        fflush(stdout);
+        _exit(0);
     }
 
     FILE *out = fopen("tube", "w");

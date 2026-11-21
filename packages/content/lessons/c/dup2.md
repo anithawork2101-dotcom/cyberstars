@@ -42,7 +42,7 @@ int main(void) {
         dup2(fd, 1);
         close(fd);
         execlp("seq", "seq", "3", NULL);
-        exit(127);
+        _exit(127);
     }
     waitpid(pid, NULL, 0);
 
@@ -52,7 +52,7 @@ int main(void) {
         dup2(fd, 0);
         close(fd);
         execlp("sort", "sort", "-r", NULL);
-        exit(127);
+        _exit(127);
     }
     waitpid(pid, NULL, 0);
     return 0;
@@ -76,7 +76,7 @@ Since the program's output now goes into the file, an error message printed with
 ```c
 execvp(args[0], args);
 perror(args[0]);
-exit(127);
+_exit(127);
 ```
 
 ---

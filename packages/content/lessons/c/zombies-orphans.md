@@ -40,7 +40,7 @@ int main(void) {
     fflush(stdout);
     pid_t pid = fork();
     if (pid == 0) {
-        exit(3);
+        _exit(3);
     }
 
     siginfo_t info;
@@ -76,7 +76,8 @@ pid_t pid = fork();
 if (pid == 0) {
     sleep(1);
     printf("my parent is now %d\n", getppid());
-    exit(0);
+    fflush(stdout);
+    _exit(0);
 }
 return 0;
 ```

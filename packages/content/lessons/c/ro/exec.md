@@ -57,7 +57,8 @@ int main(void) {
     if (pid == 0) {
         execvp(argumente[0], argumente);
         printf("%s: comanda nu exista\n", argumente[0]);
-        exit(127);
+        fflush(stdout);
+        _exit(127);
     }
 
     int stare;
@@ -76,7 +77,7 @@ Ieșire
 seq s-a terminat cu 0
 ```
 
-Copilul devine seq. Părintele rămâne el însuși, așteaptă și citește codul de ieșire al lui seq, ca pe al oricărui copil. Dacă exec eșuează, de exemplu pentru că nu există un astfel de program, copilul trebuie să se oprească pe loc, cu exit. Altfel ar continua să ruleze codul părintelui și am avea doi părinți. 127 e numărul folosit de shell-uri pentru „comanda nu există”
+Copilul devine seq. Părintele rămâne el însuși, așteaptă și citește codul de ieșire al lui seq, ca pe al oricărui copil. Dacă exec eșuează, de exemplu pentru că nu există un astfel de program, copilul trebuie să se oprească pe loc, cu \_exit, ca în lecția trecută. Altfel ar continua să ruleze codul părintelui și am avea doi părinți. 127 e numărul folosit de shell-uri pentru „comanda nu există”
 
 ---
 

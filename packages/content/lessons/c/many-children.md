@@ -12,7 +12,7 @@ int main(void) {
     for (int i = 1; i <= 3; i++) {
         fflush(stdout);
         if (fork() == 0) {
-            exit(i);
+            _exit(i);
         }
     }
 
@@ -32,7 +32,7 @@ Output
 sum of codes: 6
 ```
 
-Look at the child: it calls exit inside the loop. Without that, the child would go back to the loop and start children of its own, and we would get far more processes than we wanted
+Look at the child: it calls \_exit inside the loop. Without that, the child would go back to the loop and start children of its own, and we would get far more processes than we wanted
 
 ---
 
@@ -52,7 +52,7 @@ for (int i = 0; i < n; i++) {
     fflush(stdout);
     pids[i] = fork();
     if (pids[i] == 0) {
-        exit(do_job(i));
+        _exit(do_job(i));
     }
 }
 

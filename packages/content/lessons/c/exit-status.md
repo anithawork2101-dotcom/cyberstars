@@ -2,18 +2,17 @@ In the Fork lesson, the parent called wait(NULL): "wait until my child is done".
 
 ---
 
-The child sets that number when it ends, with **exit(code)** from stdlib.h, or with return in main. By habit, 0 means "all good" and anything else means something went wrong. The parent collects it with **waitpid**
+The child sets that number when it ends, with **\_exit(code)** from unistd.h. By habit, 0 means "all good" and anything else means something went wrong. The parent collects it with **waitpid**
 
 ```c
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
 int main(void) {
     pid_t pid = fork();
     if (pid == 0) {
-        exit(7);
+        _exit(7);
     }
 
     int status;
@@ -31,20 +30,22 @@ Output
 child exited with 7
 ```
 
+Why \_exit and not exit, from stdlib.h? After fork, the child has a copy of everything the parent had: the input that scanf already read ahead, and the text that printf keeps before it shows it. exit would treat those copies as the child's own, so the parent's input could be read twice and its text printed twice. \_exit ends the child at once and leaves them alone. If the child printed something itself, it calls fflush(stdout) just before \_exit
+
 `waitpid(pid, &status, 0)` waits for that one child, the one with this pid, and writes into status how it ended. wait(NULL) waits for any child and throws that information away
 
 status packs several things into one int, so we don't read it directly. We ask it with macros from sys/wait.h
 
-- `WIFEXITED(status)`: true if the child ended normally, with exit or return
-- `WEXITSTATUS(status)`: then, the number it gave to exit
+- `WIFEXITED(status)`: true if the child ended normally, with \_exit, exit or return
+- `WEXITSTATUS(status)`: then, the number it gave to \_exit
 
 ---
 
-The exit status is only one byte: from 0 to 255. exit(300) arrives as 300 % 256, which is 44. It's made for short answers, like "0 for ok, 1 for this problem, 2 for that one", not for big results
+The exit status is only one byte: from 0 to 255. \_exit(300) arrives as 300 % 256, which is 44. It's made for short answers, like "0 for ok, 1 for this problem, 2 for that one", not for big results
 
 ---
 
-A child can also end without calling exit: it can crash. Then a **signal** ended it, a message from the kernel. We'll learn more about signals soon. For now, two macros tell us which one it was
+A child can also end without calling \_exit: it can crash. Then a **signal** ended it, a message from the kernel. We'll learn more about signals soon. For now, two macros tell us which one it was
 
 - `WIFSIGNALED(status)`: true if a signal killed the child
 - `WTERMSIG(status)`: the number of that signal

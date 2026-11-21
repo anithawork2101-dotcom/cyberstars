@@ -21,7 +21,7 @@ int main(void) {
     if (fork() == 0) {
         normal = 500;
         *comun = 500;
-        exit(0);
+        _exit(0);
     }
     wait(NULL);
 

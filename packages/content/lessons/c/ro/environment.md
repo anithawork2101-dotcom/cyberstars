@@ -75,7 +75,8 @@ int main(void) {
     if (fork() == 0) {
         printf("copilul vede %s\n", getenv("SALA"));
         setenv("SALA", "C7", 1);
-        exit(0);
+        fflush(stdout);
+        _exit(0);
     }
     wait(NULL);
     printf("parintele are tot %s\n", getenv("SALA"));

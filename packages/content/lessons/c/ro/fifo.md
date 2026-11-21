@@ -24,7 +24,8 @@ int main(void) {
         fscanf(in, "%31s", cuvant);
         printf("copilul a primit: %s\n", cuvant);
         fclose(in);
-        exit(0);
+        fflush(stdout);
+        _exit(0);
     }
 
     FILE *out = fopen("teava", "w");

@@ -2,18 +2,17 @@
 
 ---
 
-Copilul pune acest număr când se termină, cu **exit(cod)** din stdlib.h sau cu return în main. Din obișnuință, 0 înseamnă „totul e bine”, iar orice altceva înseamnă că ceva a mers prost. Părintele îl strânge cu **waitpid**
+Copilul pune acest număr când se termină, cu **\_exit(cod)** din unistd.h. Din obișnuință, 0 înseamnă „totul e bine”, iar orice altceva înseamnă că ceva a mers prost. Părintele îl strânge cu **waitpid**
 
 ```c
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
 int main(void) {
     pid_t pid = fork();
     if (pid == 0) {
-        exit(7);
+        _exit(7);
     }
 
     int stare;
@@ -31,20 +30,22 @@ Ieșire
 copilul a iesit cu 7
 ```
 
+De ce \_exit și nu exit, din stdlib.h? După fork, copilul are o copie a tot ce avea părintele: inputul pe care scanf l-a citit deja în avans și textul pe care printf îl ține înainte să-l afișeze. exit ar trata copiile astea ca fiind ale copilului, așa că inputul părintelui ar putea fi citit de două ori și textul lui afișat de două ori. \_exit oprește copilul pe loc și le lasă în pace. Dacă și copilul a afișat ceva, apelează fflush(stdout) chiar înainte de \_exit
+
 `waitpid(pid, &stare, 0)` așteaptă acel copil, pe cel cu acest pid, și scrie în stare cum s-a terminat. wait(NULL) așteaptă orice copil și aruncă informația asta
 
 stare strânge mai multe lucruri într-un singur int, așa că nu-l citim direct. Îl întrebăm prin macro-uri din sys/wait.h
 
-- `WIFEXITED(stare)`: adevărat dacă copilul s-a terminat normal, cu exit sau return
-- `WEXITSTATUS(stare)`: atunci, numărul pe care i l-a dat lui exit
+- `WIFEXITED(stare)`: adevărat dacă copilul s-a terminat normal, cu \_exit, exit sau return
+- `WEXITSTATUS(stare)`: atunci, numărul pe care i l-a dat lui \_exit
 
 ---
 
-Codul de ieșire are doar un byte: de la 0 la 255. exit(300) ajunge ca 300 % 256, adică 44. E făcut pentru răspunsuri scurte, de genul „0 pentru ok, 1 pentru problema asta, 2 pentru cealaltă”, nu pentru rezultate mari
+Codul de ieșire are doar un byte: de la 0 la 255. \_exit(300) ajunge ca 300 % 256, adică 44. E făcut pentru răspunsuri scurte, de genul „0 pentru ok, 1 pentru problema asta, 2 pentru cealaltă”, nu pentru rezultate mari
 
 ---
 
-Un copil se poate termina și fără să apeleze exit: se poate prăbuși. Atunci l-a oprit un **semnal**, un mesaj de la kernel. Vom învăța mai multe despre semnale în curând. Deocamdată, două macro-uri ne spun care a fost
+Un copil se poate termina și fără să apeleze \_exit: se poate prăbuși. Atunci l-a oprit un **semnal**, un mesaj de la kernel. Vom învăța mai multe despre semnale în curând. Deocamdată, două macro-uri ne spun care a fost
 
 - `WIFSIGNALED(stare)`: adevărat dacă un semnal a oprit copilul
 - `WTERMSIG(stare)`: numărul acelui semnal

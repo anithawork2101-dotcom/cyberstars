@@ -57,7 +57,8 @@ int main(void) {
     if (pid == 0) {
         execvp(args[0], args);
         printf("%s: command not found\n", args[0]);
-        exit(127);
+        fflush(stdout);
+        _exit(127);
     }
 
     int status;
@@ -76,7 +77,7 @@ Output
 seq finished with 0
 ```
 
-The child becomes seq. The parent stays itself, waits, and reads seq's exit status like any other child's. If exec fails, for example because there is no such program, the child must stop right there with exit. Otherwise it would go on running the parent's code, and we would have two parents. 127 is the number shells use for "command not found"
+The child becomes seq. The parent stays itself, waits, and reads seq's exit status like any other child's. If exec fails, for example because there is no such program, the child must stop right there with \_exit, as in the last lesson. Otherwise it would go on running the parent's code, and we would have two parents. 127 is the number shells use for "command not found"
 
 ---
 

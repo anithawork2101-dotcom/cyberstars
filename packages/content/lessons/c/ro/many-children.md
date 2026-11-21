@@ -12,7 +12,7 @@ int main(void) {
     for (int i = 1; i <= 3; i++) {
         fflush(stdout);
         if (fork() == 0) {
-            exit(i);
+            _exit(i);
         }
     }
 
@@ -32,7 +32,7 @@ Ieșire
 suma codurilor: 6
 ```
 
-Uită-te la copil: apelează exit în interiorul buclei. Fără asta, copilul s-ar întoarce în buclă și ar porni copii proprii, iar am avea mult mai multe procese decât voiam
+Uită-te la copil: apelează \_exit în interiorul buclei. Fără asta, copilul s-ar întoarce în buclă și ar porni copii proprii, iar am avea mult mai multe procese decât voiam
 
 ---
 
@@ -52,7 +52,7 @@ for (int i = 0; i < n; i++) {
     fflush(stdout);
     pids[i] = fork();
     if (pids[i] == 0) {
-        exit(lucreaza(i));
+        _exit(lucreaza(i));
     }
 }
 

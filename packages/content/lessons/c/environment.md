@@ -75,7 +75,8 @@ int main(void) {
     if (fork() == 0) {
         printf("child sees %s\n", getenv("ROOM"));
         setenv("ROOM", "C7", 1);
-        exit(0);
+        fflush(stdout);
+        _exit(0);
     }
     wait(NULL);
     printf("parent still has %s\n", getenv("ROOM"));
