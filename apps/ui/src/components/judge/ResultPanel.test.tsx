@@ -169,6 +169,7 @@ describe('ResultPanel', () => {
           ...base,
           structureFailures: [
             { type: 'require', rule: { kind: 'recursion' } },
+            { type: 'require', rule: { kind: 'recursion', name: 'count_ones' } },
             { type: 'require', rule: { kind: 'loop', type: 'while' } },
             { type: 'require', rule: { kind: 'function' } },
             { type: 'require', rule: { kind: 'class', name: 'Node' } },
@@ -179,6 +180,7 @@ describe('ResultPanel', () => {
       />,
     );
     expect(screen.getByText(/with recursion/)).toBeInTheDocument();
+    expect(screen.getByText('Make count_ones() call itself')).toBeInTheDocument();
     expect(screen.getByText('Use a while loop')).toBeInTheDocument();
     expect(screen.getByText('Write a function of your own')).toBeInTheDocument();
     expect(screen.getByText('Define the class Node')).toBeInTheDocument();
