@@ -78,7 +78,7 @@ Which exit status does a pipeline have? In the shell, `$?` after a pipeline is t
 
 The operators want to type two-stage pipelines at the console, just like in a shell
 
-1. Read lines until the input ends. Each line has two commands separated by ` | `, like `seq 5 | sort -r`. Each command is a program and its arguments, separated by spaces
+1. Read lines until the input ends. Each line has two commands separated by `|`, like `seq 5 | sort -r`. Each command is a program and its arguments, separated by spaces
 2. For each line, connect the two commands with a pipe, run both, and wait for both
 3. After that, print `[exit N]`, with the exit status of the second command
 4. If exec fails, the child exits with 127

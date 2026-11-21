@@ -29,7 +29,7 @@ int main(void) {
 Output
 
 ```text
-10 20 30 40 
+10 20 30 40
 ```
 
 `realloc(v, new_size)` gives back a block of the new size, with the old values still in it. The new part, after them, holds garbage until we write something there

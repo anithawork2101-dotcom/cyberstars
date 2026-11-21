@@ -78,7 +78,7 @@ Ce cod de ieșire are un pipeline? În shell, `$?` după un pipeline e codul de 
 
 Operatorii vor să scrie la consolă pipeline-uri în două etape, exact ca într-un shell
 
-1. Citește linii până se termină datele. Fiecare linie are două comenzi despărțite prin ` | `, de exemplu `seq 5 | sort -r`. Fiecare comandă e un program și argumentele lui, despărțite prin spații
+1. Citește linii până se termină datele. Fiecare linie are două comenzi despărțite prin `|`, de exemplu `seq 5 | sort -r`. Fiecare comandă e un program și argumentele lui, despărțite prin spații
 2. Pentru fiecare linie, leagă cele două comenzi cu un pipe, rulează-le pe amândouă și așteaptă-le pe amândouă
 3. După asta, afișează `[iesire N]`, cu codul de ieșire al celei de-a doua comenzi
 4. Dacă exec eșuează, copilul iese cu 127

@@ -80,7 +80,7 @@ int main(void) {
 Ieșire
 
 ```text
-4 16 36 64 
+4 16 36 64
 ```
 
 aplica parcurge array-ul o dată, iar noi hotărâm ce se întâmplă cu fiecare valoare. O funcție dată așa se numește **callback**: aplica o cheamă înapoi pentru fiecare valoare

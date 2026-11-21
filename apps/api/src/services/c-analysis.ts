@@ -149,8 +149,7 @@ const C_NODE_KINDS: Record<string, (node: Node) => boolean> = {
     !n.parent.childrenForFieldName('declarator').some((d) => d && isFunctionDeclarator(d)),
   // int grid[3][4], or a parameter int grid[][4]
   array_2d: (n) =>
-    n.type === 'array_declarator' &&
-    n.childForFieldName('declarator')?.type === 'array_declarator',
+    n.type === 'array_declarator' && n.childForFieldName('declarator')?.type === 'array_declarator',
   // int (*op)(int, int): a variable, parameter, field or typedef holding a function's address
   function_pointer: (n) =>
     n.type === 'function_declarator' &&

@@ -26,7 +26,7 @@ int main(void) {
 Ieșire
 
 ```text
-3 7 19 25 42 
+3 7 19 25 42
 ```
 
 ---

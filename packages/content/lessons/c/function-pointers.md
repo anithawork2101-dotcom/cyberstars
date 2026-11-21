@@ -80,7 +80,7 @@ int main(void) {
 Output
 
 ```text
-4 16 36 64 
+4 16 36 64
 ```
 
 apply walks the array once, and we decide what happens to each value. A function given like this is called a **callback**: apply calls it back for every value

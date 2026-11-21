@@ -101,7 +101,7 @@ The mainframe keeps its waiting jobs in a chain. New jobs are always put at the 
 
 1. Write a function **struct node \*push(struct node \*head, int value)** that adds a node at the front of the list and returns the new head
 2. Read whole numbers until the input ends: the minutes of each job. Push each one onto the list
-3. Walk the list and print it as in the example, with ` -> ` between the values and `NULL` at the end
+3. Walk the list and print it as in the example, with `->` between the values and `NULL` at the end
 4. Walk it again to count the nodes and add up their values, and print both
 5. Free every node at the end
 

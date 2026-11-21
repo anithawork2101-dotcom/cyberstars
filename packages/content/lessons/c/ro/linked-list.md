@@ -101,7 +101,7 @@ Mainframe-ul își ține lucrările care așteaptă într-un lanț. Lucrările n
 
 1. Scrie o funcție **struct nod \*adauga(struct nod \*cap, int valoare)** care adaugă un nod în fața listei și întoarce capul nou
 2. Citește numere întregi până se termină datele: minutele fiecărei lucrări. Adaugă-le pe fiecare în listă
-3. Parcurge lista și afișeaz-o ca în exemplu, cu ` -> ` între valori și `NULL` la final
+3. Parcurge lista și afișeaz-o ca în exemplu, cu `->` între valori și `NULL` la final
 4. Parcurge-o din nou ca să numeri nodurile și să aduni valorile lor, apoi afișează-le pe amândouă
 5. Eliberează fiecare nod la final
 
