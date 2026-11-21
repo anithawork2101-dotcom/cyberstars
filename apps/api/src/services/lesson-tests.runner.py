@@ -1099,7 +1099,8 @@ def spec_text(spec):
     if isinstance(spec, ast.Constant):
         return spec.value if isinstance(spec.value, str) else None
     if isinstance(spec, ast.JoinedStr):
-        parts = spec.values
+        # Early 3.12 releases end {x:{fmt}} with an empty constant.
+        parts = [p for p in spec.values if not (isinstance(p, ast.Constant) and p.value == "")]
         if parts and not isinstance(parts[-1], ast.Constant):
             before = parts[-2].value if len(parts) > 1 and isinstance(parts[-2], ast.Constant) else ""
             if not before or before[-1].isdigit():
