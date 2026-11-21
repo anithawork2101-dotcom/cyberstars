@@ -208,7 +208,9 @@ describe('ResultPanel', () => {
     expect(screen.getByText('Import math')).toBeInTheDocument();
     expect(screen.getByText(/argument passed by its name \(name=value\)/)).toBeInTheDocument();
     expect(screen.getByText('Make a class inherit from Exception')).toBeInTheDocument();
-    expect(screen.getByText('Override a method of the parent class')).toBeInTheDocument();
+    expect(
+      screen.getByText('Override a method of the parent class (@Override)'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Use the @dataclass decorator')).toBeInTheDocument();
     expect(screen.getByText(/generator expression/)).toBeInTheDocument();
     expect(screen.getByText(/format spec, like \{x:\.2f\}/)).toBeInTheDocument();
