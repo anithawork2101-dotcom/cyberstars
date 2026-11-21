@@ -339,6 +339,16 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'from functools import cache as dataclass\n\n@dataclass\ndef f():\n    pass\n',
     ],
     [
+      { kind: 'decorator', name: 'dataclass' },
+      'import dataclasses\ndataclass = dataclasses.dataclass\n\n@dataclass\nclass Point:\n    x: int\n',
+      'import functools\ndataclass = functools.cache\n\n@dataclass\ndef f():\n    pass\n',
+    ],
+    [
+      { kind: 'decorator', name: 'dataclass' },
+      'import dataclasses\ndc = dataclasses\n\n@dc.dataclass\nclass Point:\n    x: int\n',
+      'import dataclasses\ndataclass = dataclasses.dataclass\n\ndef dataclass(c):\n    return c\n\n@dataclass\nclass Point:\n    x: int\n',
+    ],
+    [
       { kind: 'keyword_arg' },
       'class Ship:\n    def move(self, x):\n        pass\n\nShip().move(x=1)\n',
       'class Box:\n    def sort(self):\n        pass\n\nitems = [2, 1]\nitems.sort(reverse=True)\n',

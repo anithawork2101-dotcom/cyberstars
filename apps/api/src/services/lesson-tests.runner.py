@@ -931,12 +931,38 @@ def has_var_param(tree, field):
     return any(getattr(fn.args, field) is not None for fn in function_defs(tree))
 
 
-def own_bindings(tree):
+def own_bindings(tree, skip=()):
     # The names the student makes themselves: a def, a class, an assignment or
-    # a loop variable, not an import.
+    # a loop variable, not an import. skip: assigned names that don't count.
     names = {n.name for n in ast.walk(tree) if isinstance(n, FUNCTION_NODES + (ast.ClassDef,))}
-    names |= {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and not isinstance(n.ctx, ast.Load)}
+    names |= {
+        n.id
+        for n in ast.walk(tree)
+        if isinstance(n, ast.Name) and not isinstance(n.ctx, ast.Load) and n not in skip
+    }
     return names
+
+
+def library_aliases(tree):
+    # A name the student binds straight to something imported, and the name
+    # it reaches: dataclass = dataclasses.dataclass, dc = dataclasses.
+    imported = {
+        (a.asname or a.name).split(".")[0]
+        for n in ast.walk(tree)
+        if isinstance(n, (ast.Import, ast.ImportFrom))
+        for a in n.names
+    }
+    found = {}
+    for n in ast.walk(tree):
+        if (
+            isinstance(n, ast.Assign)
+            and len(n.targets) == 1
+            and isinstance(n.targets[0], ast.Name)
+            and isinstance(n.value, (ast.Name, ast.Attribute))
+            and root_name(n.value) in imported
+        ):
+            found[n.targets[0]] = base_name(n.value)
+    return found
 
 
 def root_name(node):
@@ -953,8 +979,12 @@ def has_decorator(tree, name=None):
     # A decorator a lesson names is the library's (@dataclass): a function of
     # the student's own by that name, or a name of theirs it is reached
     # through, isn't it.
-    # from dataclasses import dataclass as dc makes @dc the library's too.
-    own = own_bindings(tree) if name is not None else set()
+    # from dataclasses import dataclass as dc makes @dc the library's too, and
+    # so does a name bound only to the library's (ds = dataclasses.dataclass,
+    # dc = dataclasses for @dc.dataclass).
+    library = library_aliases(tree) if name is not None else {}
+    own = own_bindings(tree, skip=set(library)) if name is not None else set()
+    reached = {target.id: value for target, value in library.items()}
     aliases = {
         a.asname: a.name
         for n in ast.walk(tree)
@@ -962,8 +992,15 @@ def has_decorator(tree, name=None):
         for a in n.names
         if a.asname
     }
+
+    def library_name(d):
+        found = base_name(d)
+        if found == root_name(d) and found in reached:
+            return reached[found]
+        return aliases.get(found, found)
+
     return any(
-        name is None or (aliases.get(base_name(d), base_name(d)) == name and root_name(d) not in own)
+        name is None or (library_name(d) == name and root_name(d) not in own)
         for node in ast.walk(tree)
         if isinstance(node, FUNCTION_NODES + (ast.ClassDef,))
         for d in node.decorator_list
