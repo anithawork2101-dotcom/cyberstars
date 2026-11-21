@@ -101,25 +101,25 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(command, "LIST") == 0) {
+        if (strcmp(command, "list") == 0) {
             list();
-        } else if (strcmp(command, "WRITE") == 0 && found == 3) {
+        } else if (strcmp(command, "write") == 0 && found == 3) {
             if (write_word(a, b, O_WRONLY | O_CREAT | O_TRUNC) == -1) {
                 fail(command, a);
             }
-        } else if (strcmp(command, "APPEND") == 0 && found == 3) {
+        } else if (strcmp(command, "append") == 0 && found == 3) {
             if (write_word(a, b, O_WRONLY | O_APPEND) == -1) {
                 fail(command, a);
             }
-        } else if (strcmp(command, "COPY") == 0 && found == 3) {
+        } else if (strcmp(command, "copy") == 0 && found == 3) {
             if (copy(a, b) == -1) {
                 fail(command, a);
             }
-        } else if (strcmp(command, "SHOW") == 0 && found >= 2) {
+        } else if (strcmp(command, "show") == 0 && found >= 2) {
             if (show(a) == -1) {
                 fail(command, a);
             }
-        } else if (strcmp(command, "REMOVE") == 0 && found >= 2) {
+        } else if (strcmp(command, "remove") == 0 && found >= 2) {
             if (unlink(a) == -1) {
                 fail(command, a);
             }

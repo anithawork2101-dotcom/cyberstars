@@ -24,10 +24,10 @@ int main(void) {
         int k = sscanf(line, "%31s %63s %63s", cmd, a, b);
         if (k <= 0) continue;
         int r = 0;
-        if (!strcmp(cmd, "WRITE")) r = put(a, b, O_CREAT | O_TRUNC | O_WRONLY);
-        else if (!strcmp(cmd, "APPEND")) r = put(a, b, O_APPEND | O_WRONLY);
-        else if (!strcmp(cmd, "REMOVE")) r = unlink(a);
-        else if (!strcmp(cmd, "SHOW")) {
+        if (!strcmp(cmd, "write")) r = put(a, b, O_CREAT | O_TRUNC | O_WRONLY);
+        else if (!strcmp(cmd, "append")) r = put(a, b, O_APPEND | O_WRONLY);
+        else if (!strcmp(cmd, "remove")) r = unlink(a);
+        else if (!strcmp(cmd, "show")) {
             int fd = open(a, O_RDONLY);
             if (fd < 0) r = -1;
             else {
@@ -39,7 +39,7 @@ int main(void) {
                 fputs(buf, stdout);
                 free(buf);
             }
-        } else if (!strcmp(cmd, "COPY")) {
+        } else if (!strcmp(cmd, "copy")) {
             int in = open(a, O_RDONLY);
             if (in < 0) r = -1;
             else {
@@ -50,7 +50,7 @@ int main(void) {
                 close(in);
                 close(out);
             }
-        } else if (!strcmp(cmd, "LIST")) {
+        } else if (!strcmp(cmd, "list")) {
             char *names[256];
             int n = 0;
             DIR *d = opendir(".");

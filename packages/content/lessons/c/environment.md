@@ -99,10 +99,10 @@ That's also why a program can never change the environment of the shell that sta
 The shift chief keeps the night settings in environment variables, and wants to check that the programs started for the shift really get them
 
 1. Read commands, one per line, until the input ends
-   - `SET name value`: set the variable, replacing an old value
-   - `UNSET name`: remove the variable
-   - `GET name`: print `name=value`, or `name is not set`
-   - `CHILD name`: start the program printenv with the name as its argument, with fork and exec, and wait for it. printenv prints the value and exits with 0, or prints nothing and exits with 1 when the variable is not set. When it exits with 1, print `name is not set in the child`
+   - `set name value`: set the variable, replacing an old value
+   - `unset name`: remove the variable
+   - `get name`: print `name=value`, or `name is not set`
+   - `child name`: start the program printenv with the name as its argument, with fork and exec, and wait for it. printenv prints the value and exits with 0, or prints nothing and exits with 1 when the variable is not set. When it exits with 1, print `name is not set in the child`
 2. Call fflush(stdout) before every fork
 
 Names are in capital letters, at most 20 characters. Values are one word of at most 30 characters
@@ -112,12 +112,12 @@ Names are in capital letters, at most 20 characters. Values are one word of at m
 Input
 
 ```text
-SET SHIFT night
-GET SHIFT
-CHILD SHIFT
-UNSET SHIFT
-GET SHIFT
-CHILD SHIFT
+set SHIFT night
+get SHIFT
+child SHIFT
+unset SHIFT
+get SHIFT
+child SHIFT
 ```
 
 Output

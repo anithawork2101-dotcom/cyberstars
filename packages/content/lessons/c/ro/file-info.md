@@ -95,8 +95,8 @@ Ieșire
 
 Funcționarul de la arhivă pregătește fișiere de test și apoi le verifică. Programul tău le face pe amândouă, după comenzi scrise câte una pe linie, până se termină datele
 
-1. `MAKE nume bytes mod`: fă fișierul nou și gol, scrie în el atâtea caractere `x`, apoi pune-i permisiunile mod cu chmod. Modul e scris în octal, de exemplu 640: citește-l cu **%o** din scanf
-2. `INFO nume`: uită-te la nume cu stat și afișează o linie
+1. `make nume bytes mod`: fă fișierul nou și gol, scrie în el atâtea caractere `x`, apoi pune-i permisiunile mod cu chmod. Modul e scris în octal, de exemplu 640: citește-l cu **%o** din scanf
+2. `info nume`: uită-te la nume cu stat și afișează o linie
    - pentru un fișier obișnuit: `nume: fisier, N bytes, mod M`, cu M în octal
    - pentru un director: `nume: director`
    - dacă stat eșuează: `nume: ` și motivul dat de strerror
@@ -108,12 +108,12 @@ Numele au cel mult 30 de caractere. bytes e între 0 și 5000, iar mod e unul di
 Intrare
 
 ```text
-MAKE report.txt 120 640
-INFO report.txt
-INFO .
-INFO ghost.txt
-MAKE report.txt 5 600
-INFO report.txt
+make report.txt 120 640
+info report.txt
+info .
+info ghost.txt
+make report.txt 5 600
+info report.txt
 ```
 
 Ieșire

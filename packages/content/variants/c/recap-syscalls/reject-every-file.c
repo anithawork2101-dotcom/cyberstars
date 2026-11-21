@@ -15,17 +15,17 @@ int main(void) {
         int k = sscanf(line, "%15s %63s %63s", cmd, a, b);
         if (k < 1) continue;
         int r = 0;
-        if (!strcmp(cmd, "WRITE") || !strcmp(cmd, "APPEND")) {
-            int fd = open(a, cmd[0] == 'W' ? (O_WRONLY | O_CREAT | O_TRUNC) : (O_WRONLY | O_APPEND), 0644);
+        if (!strcmp(cmd, "write") || !strcmp(cmd, "append")) {
+            int fd = open(a, cmd[0] == 'w' ? (O_WRONLY | O_CREAT | O_TRUNC) : (O_WRONLY | O_APPEND), 0644);
             if (fd < 0) r = -1; else { write(fd, b, strlen(b)); write(fd, "\n", 1); close(fd); }
-        } else if (!strcmp(cmd, "SHOW")) {
+        } else if (!strcmp(cmd, "show")) {
             char buf[4096]; int fd = open(a, O_RDONLY);
             if (fd < 0) r = -1; else { ssize_t n = read(fd, buf, 4095); close(fd); buf[n > 0 ? n : 0] = 0; printf("%s", buf); }
-        } else if (!strcmp(cmd, "COPY")) {
+        } else if (!strcmp(cmd, "copy")) {
             int in = open(a, O_RDONLY);
             if (in < 0) r = -1; else { int out = open(b, O_WRONLY | O_CREAT | O_TRUNC, 0644); char buf[512]; ssize_t n; while ((n = read(in, buf, 512)) > 0) write(out, buf, n); close(in); close(out); }
-        } else if (!strcmp(cmd, "REMOVE")) r = unlink(a);
-        else if (!strcmp(cmd, "LIST")) {
+        } else if (!strcmp(cmd, "remove")) r = unlink(a);
+        else if (!strcmp(cmd, "list")) {
             char names[256][256]; int n = 0; DIR *d = opendir("."); struct dirent *e;
             while ((e = readdir(d))) { size_t L = strlen(e->d_name); if (L && strcmp(e->d_name, ".") && strcmp(e->d_name, "..")) strcpy(names[n++], e->d_name); }
             closedir(d); qsort(names, n, sizeof names[0], by);

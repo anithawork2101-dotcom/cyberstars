@@ -14,11 +14,11 @@ int main(void) {
         for (char *t = strtok(line, " "); t && n < 11; t = strtok(NULL, " ")) w[n++] = t;
         w[n] = NULL;
         if (n < 2) continue;
-        if (!strcmp(w[0], "SHOW")) {
+        if (!strcmp(w[0], "show")) {
             char b[4096]; int fd = open(w[1], O_RDONLY); ssize_t k = read(fd, b, 4095); close(fd);
             b[k > 0 ? k : 0] = 0; printf("%s", b); continue;
         }
-        int into = !strcmp(w[0], "RUN");
+        int into = !strcmp(w[0], "run");
         fflush(stdout);
         pid_t p = fork();
         if (p == 0) {

@@ -95,8 +95,8 @@ Output
 
 The archive clerk prepares test files and then checks them. Your program does both, from commands typed one per line, until the input ends
 
-1. `MAKE name bytes mode`: make the file, new and empty, write that many `x` characters into it, then set its permissions to mode with chmod. The mode is written in octal, like 640: read it with scanf's **%o**
-2. `INFO name`: look at the name with stat, and print one line
+1. `make name bytes mode`: make the file, new and empty, write that many `x` characters into it, then set its permissions to mode with chmod. The mode is written in octal, like 640: read it with scanf's **%o**
+2. `info name`: look at the name with stat, and print one line
    - for a regular file: `name: file, N bytes, mode M`, with M in octal
    - for a directory: `name: directory`
    - if stat fails: `name: ` and the reason from strerror
@@ -108,12 +108,12 @@ Names have at most 30 characters. bytes is from 0 to 5000, and mode is one of 60
 Input
 
 ```text
-MAKE report.txt 120 640
-INFO report.txt
-INFO .
-INFO ghost.txt
-MAKE report.txt 5 600
-INFO report.txt
+make report.txt 120 640
+info report.txt
+info .
+info ghost.txt
+make report.txt 5 600
+info report.txt
 ```
 
 Output

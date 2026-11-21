@@ -7,9 +7,9 @@
 int main(void) {
     char cmd[16], name[32], value[64];
     while (scanf("%15s %31s", cmd, name) == 2) {
-        if (!strcmp(cmd, "SET")) { scanf("%63s", value); setenv(name, value, 0); }
-        else if (!strcmp(cmd, "UNSET")) unsetenv(name);
-        else if (!strcmp(cmd, "GET")) { char *v = getenv(name); if (v) printf("%s=%s\n", name, v); else printf("%s is not set\n", name); }
+        if (!strcmp(cmd, "set")) { scanf("%63s", value); setenv(name, value, 0); }
+        else if (!strcmp(cmd, "unset")) unsetenv(name);
+        else if (!strcmp(cmd, "get")) { char *v = getenv(name); if (v) printf("%s=%s\n", name, v); else printf("%s is not set\n", name); }
         else {
             fflush(stdout);
             pid_t p = fork();

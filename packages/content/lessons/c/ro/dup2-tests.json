@@ -23,74 +23,74 @@
   "cases": [
     {
       "visible": true,
-      "stdin": "RUN list.txt seq 3\nSHOW list.txt\nFEED list.txt sort -r\nFEED list.txt wc -l\nRUN out.txt nosuchcmd\n"
+      "stdin": "run list.txt seq 3\nshow list.txt\nfeed list.txt sort -r\nfeed list.txt wc -l\nrun out.txt nosuchcmd\n"
     },
     {
-      "stdin": "RUN a.txt echo hello tape\nFEED a.txt tr a-z A-Z\n"
+      "stdin": "run a.txt echo hello tape\nfeed a.txt tr a-z A-Z\n"
     },
     {
-      "stdin": "RUN big.txt seq 1000\nRUN big.txt seq 2\nSHOW big.txt\n"
+      "stdin": "run big.txt seq 1000\nrun big.txt seq 2\nshow big.txt\n"
     },
     {
-      "stdin": "RUN e.txt true\nSHOW e.txt\nFEED e.txt wc -c\n"
+      "stdin": "run e.txt true\nshow e.txt\nfeed e.txt wc -c\n"
     },
     {
-      "stdin": "RUN n.txt seq 5 -1 1\nFEED n.txt sort -n\nFEED n.txt head -n 2"
+      "stdin": "run n.txt seq 5 -1 1\nfeed n.txt sort -n\nfeed n.txt head -n 2"
     },
     {
-      "stdin": "RUN b.txt uname\nRUN a.txt nosuch-thing\nFEED b.txt head -n 1\nRUN b.txt seq 10 -3 1\nRUN b.txt expr 6 * 7\n",
+      "stdin": "run b.txt uname\nrun a.txt nosuch-thing\nfeed b.txt head -n 1\nrun b.txt seq 10 -3 1\nrun b.txt expr 6 * 7\n",
       "generated": true
     },
     {
-      "stdin": "RUN a.txt seq 4\nFEED a.txt sort -r\nRUN b.txt uname\nSHOW b.txt\nFEED b.txt rev\n",
+      "stdin": "run a.txt seq 4\nfeed a.txt sort -r\nrun b.txt uname\nshow b.txt\nfeed b.txt rev\n",
       "generated": true
     },
     {
-      "stdin": "RUN c.txt echo b a c\nFEED c.txt sort -n\nRUN a.txt expr 6 * 7\nFEED a.txt rev\nFEED a.txt head -n 1\nSHOW c.txt\n",
+      "stdin": "run c.txt echo b a c\nfeed c.txt sort -n\nrun a.txt expr 6 * 7\nfeed a.txt rev\nfeed a.txt head -n 1\nshow c.txt\n",
       "generated": true
     },
     {
-      "stdin": "RUN c.txt echo b a c\nFEED c.txt sort -n\nRUN c.txt uname\n",
+      "stdin": "run c.txt echo b a c\nfeed c.txt sort -n\nrun c.txt uname\n",
       "generated": true
     },
     {
-      "stdin": "RUN a.txt true\n",
+      "stdin": "run a.txt true\n",
       "generated": true
     },
     {
-      "stdin": "RUN a.txt echo reel seven\nFEED a.txt sort\n",
+      "stdin": "run a.txt echo reel seven\nfeed a.txt sort\n",
       "generated": true
     },
     {
-      "stdin": "RUN a.txt seq 4\nSHOW a.txt\nFEED a.txt sort\nSHOW a.txt\nRUN b.txt seq 4\n",
+      "stdin": "run a.txt seq 4\nshow a.txt\nfeed a.txt sort\nshow a.txt\nrun b.txt seq 4\n",
       "generated": true
     },
     {
-      "stdin": "RUN b.txt nosuch-thing\nRUN b.txt nosuch-thing\nFEED b.txt sort -r\nFEED b.txt wc -l\nFEED b.txt head -n 1\n",
+      "stdin": "run b.txt nosuch-thing\nrun b.txt nosuch-thing\nfeed b.txt sort -r\nfeed b.txt wc -l\nfeed b.txt head -n 1\n",
       "generated": true
     },
     {
-      "stdin": "RUN a.txt seq 4\nSHOW a.txt\nFEED a.txt sort -r\nSHOW a.txt\nRUN c.txt echo reel seven\nRUN a.txt expr 6 * 7\n",
+      "stdin": "run a.txt seq 4\nshow a.txt\nfeed a.txt sort -r\nshow a.txt\nrun c.txt echo reel seven\nrun a.txt expr 6 * 7\n",
       "generated": true
     },
     {
-      "stdin": "RUN b.txt uname\nRUN b.txt uname\nSHOW b.txt\nFEED b.txt tr a-z A-Z\n",
+      "stdin": "run b.txt uname\nrun b.txt uname\nshow b.txt\nfeed b.txt tr a-z A-Z\n",
       "generated": true
     },
     {
-      "stdin": "RUN c.txt nosuch-thing\nRUN a.txt echo b a c\nRUN b.txt seq 4\nRUN b.txt echo b a c\n",
+      "stdin": "run c.txt nosuch-thing\nrun a.txt echo b a c\nrun b.txt seq 4\nrun b.txt echo b a c\n",
       "generated": true
     },
     {
-      "stdin": "RUN b.txt true\nFEED b.txt tr a-z A-Z\nSHOW b.txt\nRUN a.txt expr 6 * 7\n",
+      "stdin": "run b.txt true\nfeed b.txt tr a-z A-Z\nshow b.txt\nrun a.txt expr 6 * 7\n",
       "generated": true
     },
     {
-      "stdin": "RUN c.txt uname\nFEED c.txt sort\nFEED c.txt rev\nRUN c.txt uname\nRUN a.txt seq 4\nSHOW a.txt\n",
+      "stdin": "run c.txt uname\nfeed c.txt sort\nfeed c.txt rev\nrun c.txt uname\nrun a.txt seq 4\nshow a.txt\n",
       "generated": true
     },
     {
-      "stdin": "RUN a.txt nosuch-thing\nFEED a.txt sort -r\nRUN a.txt nosuch-thing\n",
+      "stdin": "run a.txt nosuch-thing\nfeed a.txt sort -r\nrun a.txt nosuch-thing\n",
       "generated": true
     }
   ]

@@ -60,14 +60,14 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(words[0], "SHOW") == 0) {
+        if (strcmp(words[0], "show") == 0) {
             show(words[1]);
-        } else if (count >= 3 && strcmp(words[0], "RUN") == 0) {
+        } else if (count >= 3 && strcmp(words[0], "run") == 0) {
             run(words + 2, words[1], 1);
             struct stat st;
             stat(words[1], &st);
             printf("%s: %ld bytes\n", words[1], (long)st.st_size);
-        } else if (count >= 3 && strcmp(words[0], "FEED") == 0) {
+        } else if (count >= 3 && strcmp(words[0], "feed") == 0) {
             run(words + 2, words[1], 0);
         }
     }

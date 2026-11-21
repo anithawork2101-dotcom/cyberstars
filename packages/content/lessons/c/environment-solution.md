@@ -17,18 +17,18 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(command, "SET") == 0 && found == 3) {
+        if (strcmp(command, "set") == 0 && found == 3) {
             setenv(name, value, 1);
-        } else if (strcmp(command, "UNSET") == 0) {
+        } else if (strcmp(command, "unset") == 0) {
             unsetenv(name);
-        } else if (strcmp(command, "GET") == 0) {
+        } else if (strcmp(command, "get") == 0) {
             char *v = getenv(name);
             if (v == NULL) {
                 printf("%s is not set\n", name);
             } else {
                 printf("%s=%s\n", name, v);
             }
-        } else if (strcmp(command, "CHILD") == 0) {
+        } else if (strcmp(command, "child") == 0) {
             fflush(stdout);
             pid_t pid = fork();
             if (pid == 0) {

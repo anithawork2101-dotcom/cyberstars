@@ -8,7 +8,7 @@
 int main(void) {
     char cmd[16], name[64];
     while (scanf("%15s %63s", cmd, name) == 2) {
-        if (!strcmp(cmd, "MAKE")) {
+        if (!strcmp(cmd, "make")) {
             int bytes; unsigned mode;
             scanf("%d %o", &bytes, &mode);
             int fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, mode);

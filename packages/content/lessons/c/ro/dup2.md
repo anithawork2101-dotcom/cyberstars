@@ -101,24 +101,24 @@ Observă fflush-ul dinainte de comutarea înapoi: textul care încă așteaptă 
 Operatorii vor să salveze ce afișează programele, să se uite la asta mai târziu și să le-o dea altor programe
 
 1. Citește comenzi, câte una pe linie, până se termină datele
-   - `RUN fisier program argumente...`: rulează programul într-un copil, cu ieșirea standard mergând în fisier, făcut întâi nou și gol. Când a terminat, afișează numele fișierului și mărimea lui, ca în exemplu
-   - `FEED fisier program argumente...`: rulează programul într-un copil, cu intrarea standard venind din fisier. Ieșirea lui merge pe ecran, ca de obicei
-   - `SHOW fisier`: afișează ce e în fișier
+   - `run fisier program argumente...`: rulează programul într-un copil, cu ieșirea standard mergând în fisier, făcut întâi nou și gol. Când a terminat, afișează numele fișierului și mărimea lui, ca în exemplu
+   - `feed fisier program argumente...`: rulează programul într-un copil, cu intrarea standard venind din fisier. Ieșirea lui merge pe ecran, ca de obicei
+   - `show fisier`: afișează ce e în fișier
 2. Dacă exec eșuează, copilul afișează eroarea cu perror, care merge în stderr, și iese cu 127
 3. Apelează fflush(stdout) înainte de fiecare fork
 
-Liniile au cel mult 100 de caractere și 10 cuvinte. Programele citesc date doar la FEED, iar un fișier dat la FEED există mereu
+Liniile au cel mult 100 de caractere și 10 cuvinte. Programele citesc date doar la feed, iar un fișier dat la feed există mereu
 
 **Exemplu**
 
 Intrare
 
 ```text
-RUN list.txt seq 3
-SHOW list.txt
-FEED list.txt sort -r
-FEED list.txt wc -l
-RUN out.txt nosuchcmd
+run list.txt seq 3
+show list.txt
+feed list.txt sort -r
+feed list.txt wc -l
+run out.txt nosuchcmd
 ```
 
 Ieșire

@@ -60,14 +60,14 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(cuvinte[0], "SHOW") == 0) {
+        if (strcmp(cuvinte[0], "show") == 0) {
             arata(cuvinte[1]);
-        } else if (numar >= 3 && strcmp(cuvinte[0], "RUN") == 0) {
+        } else if (numar >= 3 && strcmp(cuvinte[0], "run") == 0) {
             ruleaza(cuvinte + 2, cuvinte[1], 1);
             struct stat st;
             stat(cuvinte[1], &st);
             printf("%s: %ld bytes\n", cuvinte[1], (long)st.st_size);
-        } else if (numar >= 3 && strcmp(cuvinte[0], "FEED") == 0) {
+        } else if (numar >= 3 && strcmp(cuvinte[0], "feed") == 0) {
             ruleaza(cuvinte + 2, cuvinte[1], 0);
         }
     }

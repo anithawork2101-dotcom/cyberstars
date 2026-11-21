@@ -9,7 +9,7 @@
 int main(void) {
     char cmd[16], path[64];
     while (scanf("%15s %63s", cmd, path) == 2) {
-        if (cmd[0] == 'M') {
+        if (cmd[0] == 'm') {
             int n; unsigned m;
             scanf("%d %o", &n, &m);
             char *buf = malloc(n + 1);

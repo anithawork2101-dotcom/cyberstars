@@ -101,24 +101,24 @@ Note the fflush before switching back: text still waiting in printf's buffer wou
 The operators want to save what programs print, look at it later, and feed it to other programs
 
 1. Read commands, one per line, until the input ends
-   - `RUN file program args...`: run the program in a child, with its standard output going into file, made new and empty first. When it's done, print the file's name and its size, as in the example
-   - `FEED file program args...`: run the program in a child, with its standard input coming from file. Its output goes to the screen as usual
-   - `SHOW file`: print what's in the file
+   - `run file program args...`: run the program in a child, with its standard output going into file, made new and empty first. When it's done, print the file's name and its size, as in the example
+   - `feed file program args...`: run the program in a child, with its standard input coming from file. Its output goes to the screen as usual
+   - `show file`: print what's in the file
 2. If exec fails, the child prints the error with perror, which goes to stderr, and exits with 127
 3. Call fflush(stdout) before every fork
 
-Lines have at most 100 characters and 10 words. The programs only read input in FEED, and a FEED file always exists
+Lines have at most 100 characters and 10 words. The programs only read input in feed, and a feed file always exists
 
 **Example**
 
 Input
 
 ```text
-RUN list.txt seq 3
-SHOW list.txt
-FEED list.txt sort -r
-FEED list.txt wc -l
-RUN out.txt nosuchcmd
+run list.txt seq 3
+show list.txt
+feed list.txt sort -r
+feed list.txt wc -l
+run out.txt nosuchcmd
 ```
 
 Output

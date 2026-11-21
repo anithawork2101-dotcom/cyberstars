@@ -14,7 +14,7 @@ int main(void) {
         for (char *t = strtok(line, " "); t && n < 11; t = strtok(NULL, " ")) w[n++] = t;
         w[n] = NULL;
         if (n < 2) continue;
-        if (!strcmp(w[0], "SHOW")) continue;
+        if (!strcmp(w[0], "show")) continue;
         fflush(stdout);
         pid_t p = fork();
         if (p == 0) {
@@ -23,7 +23,7 @@ int main(void) {
             execvp(w[2], w + 2); perror(w[2]); exit(127);
         }
         waitpid(p, NULL, 0);
-        if (!strcmp(w[0], "RUN")) { struct stat st; stat(w[1], &st); printf("%s: %ld bytes\n", w[1], (long)st.st_size); }
+        if (!strcmp(w[0], "run")) { struct stat st; stat(w[1], &st); printf("%s: %ld bytes\n", w[1], (long)st.st_size); }
     }
     return 0;
 }

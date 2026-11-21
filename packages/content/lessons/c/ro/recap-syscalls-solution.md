@@ -101,25 +101,25 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(comanda, "LIST") == 0) {
+        if (strcmp(comanda, "list") == 0) {
             listeaza();
-        } else if (strcmp(comanda, "WRITE") == 0 && gasite == 3) {
+        } else if (strcmp(comanda, "write") == 0 && gasite == 3) {
             if (scrie_cuvant(a, b, O_WRONLY | O_CREAT | O_TRUNC) == -1) {
                 esec(comanda, a);
             }
-        } else if (strcmp(comanda, "APPEND") == 0 && gasite == 3) {
+        } else if (strcmp(comanda, "append") == 0 && gasite == 3) {
             if (scrie_cuvant(a, b, O_WRONLY | O_APPEND) == -1) {
                 esec(comanda, a);
             }
-        } else if (strcmp(comanda, "COPY") == 0 && gasite == 3) {
+        } else if (strcmp(comanda, "copy") == 0 && gasite == 3) {
             if (copiaza(a, b) == -1) {
                 esec(comanda, a);
             }
-        } else if (strcmp(comanda, "SHOW") == 0 && gasite >= 2) {
+        } else if (strcmp(comanda, "show") == 0 && gasite >= 2) {
             if (arata(a) == -1) {
                 esec(comanda, a);
             }
-        } else if (strcmp(comanda, "REMOVE") == 0 && gasite >= 2) {
+        } else if (strcmp(comanda, "remove") == 0 && gasite >= 2) {
             if (unlink(a) == -1) {
                 esec(comanda, a);
             }

@@ -22,14 +22,14 @@ int main(void) {
         for (char *t = strtok(buf, " \n"); t && n < 15; t = strtok(NULL, " \n")) w[n++] = t;
         w[n] = NULL;
         if (n < 2) continue;
-        if (!strcmp(w[0], "SHOW")) {
+        if (!strcmp(w[0], "show")) {
             FILE *f = fopen(w[1], "r");
             int c;
             while (f && (c = fgetc(f)) != EOF) putchar(c);
             if (f) fclose(f);
             continue;
         }
-        int into = !strcmp(w[0], "RUN");
+        int into = !strcmp(w[0], "run");
         fflush(stdout);
         pid_t p = fork();
         if (p == 0) child(w + 2, w[1], into ? 1 : 0);

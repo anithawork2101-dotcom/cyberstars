@@ -11,7 +11,7 @@ int main(void) {
     char name[64];
 
     while (scanf("%15s %63s", command, name) == 2) {
-        if (strcmp(command, "MAKE") == 0) {
+        if (strcmp(command, "make") == 0) {
             int bytes;
             unsigned int mode;
             scanf("%d %o", &bytes, &mode);
@@ -24,7 +24,7 @@ int main(void) {
             }
             close(fd);
             chmod(name, mode);
-        } else if (strcmp(command, "INFO") == 0) {
+        } else if (strcmp(command, "info") == 0) {
             struct stat st;
             if (stat(name, &st) == -1) {
                 printf("%s: %s\n", name, strerror(errno));

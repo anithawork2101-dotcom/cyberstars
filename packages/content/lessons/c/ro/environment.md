@@ -99,10 +99,10 @@ De aceea un program nu poate schimba niciodată mediul shell-ului care l-a porni
 Șeful de tură ține setările de noapte în variabile de mediu și vrea să verifice că programele pornite pentru tură chiar le primesc
 
 1. Citește comenzi, câte una pe linie, până se termină datele
-   - `SET nume valoare`: setează variabila, înlocuind o valoare veche
-   - `UNSET nume`: șterge variabila
-   - `GET nume`: afișează `nume=valoare` sau `nume nu e setata`
-   - `CHILD nume`: pornește programul printenv cu numele ca argument, cu fork și exec, și așteaptă-l. printenv afișează valoarea și iese cu 0, sau nu afișează nimic și iese cu 1 când variabila nu e setată. Când iese cu 1, afișează `nume nu e setata in copil`
+   - `set nume valoare`: setează variabila, înlocuind o valoare veche
+   - `unset nume`: șterge variabila
+   - `get nume`: afișează `nume=valoare` sau `nume nu e setata`
+   - `child nume`: pornește programul printenv cu numele ca argument, cu fork și exec, și așteaptă-l. printenv afișează valoarea și iese cu 0, sau nu afișează nimic și iese cu 1 când variabila nu e setată. Când iese cu 1, afișează `nume nu e setata in copil`
 2. Apelează fflush(stdout) înainte de fiecare fork
 
 Numele sunt cu majuscule, de cel mult 20 de caractere. Valorile sunt un cuvânt de cel mult 30 de caractere
@@ -112,12 +112,12 @@ Numele sunt cu majuscule, de cel mult 20 de caractere. Valorile sunt un cuvânt 
 Intrare
 
 ```text
-SET SHIFT night
-GET SHIFT
-CHILD SHIFT
-UNSET SHIFT
-GET SHIFT
-CHILD SHIFT
+set SHIFT night
+get SHIFT
+child SHIFT
+unset SHIFT
+get SHIFT
+child SHIFT
 ```
 
 Ieșire
