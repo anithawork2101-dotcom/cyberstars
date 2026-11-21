@@ -90,6 +90,23 @@ describe('auditSolution', () => {
     expect(problems[0]).toContain('temperature');
   });
 
+  it('flags a named method or base class the solution never writes', async () => {
+    const code =
+      'class Alarma:\n    def sun(self):\n        pass\n\nclass Sirena(Alarma):\n    def sun(self):\n        pass\n';
+    const spec: LessonTestsSpec = {
+      structure: {
+        requires: [
+          { kind: 'extends', name: 'Alarma' },
+          { kind: 'override', name: 'descrie' },
+        ],
+      },
+      cases: [{}],
+    };
+    const problems = await auditSolution('python', code, spec);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain('descrie');
+  });
+
   it('handles a case with no inject block (structure-only lesson)', async () => {
     const code = 'age = 5\nprint(age)';
     const spec: LessonTestsSpec = {

@@ -47,6 +47,29 @@ type StructureKind =
   | 'return'
   | 'default_param'
   | 'slice'
+  | 'lambda'
+  /** a generator: yield or yield from */
+  | 'yield'
+  | 'with'
+  | 'raise'
+  /** import of a module by its name (`from x import y` counts as x), or of any without one */
+  | 'import'
+  /** an argument passed by its name: with a name to any call (key=), else to a function or class of the student's own */
+  | 'keyword_arg'
+  /** a *args parameter, however named */
+  | 'var_args'
+  /** a **kwargs parameter, however named */
+  | 'var_kwargs'
+  /** a decorator (@name), by its name or any */
+  | 'decorator'
+  /** a value set in a class body, outside its methods */
+  | 'class_attribute'
+  /** a number shaped by a format spec: f"{x:.2f}", format(x, ".2f") */
+  | 'format_spec'
+  /** a try with an else block (a loop's else doesn't count) */
+  | 'try_else'
+  /** a try with a finally block */
+  | 'finally'
   // c
   | 'struct'
   | 'typedef'
@@ -64,7 +87,16 @@ type StructureKind =
   /** c: int (*op)(int, int), as a variable, parameter, field or typedef */
   | 'function_pointer';
 
-type LoopType = 'for' | 'while' | 'do_while' | 'comprehension';
+type LoopType =
+  | 'for'
+  | 'while'
+  | 'do_while'
+  | 'comprehension'
+  // python, one kind of comprehension each
+  | 'list_comprehension'
+  | 'dict_comprehension'
+  | 'set_comprehension'
+  | 'generator_expression';
 
 interface StructureRule {
   kind: StructureKind;
@@ -79,6 +111,8 @@ interface StructureRule {
    * with it only that statement does (Java's for-each counts as 'for'), so a
    * for lesson can't be passed with a while. 'comprehension' is Python's
    * [x for x in ...] (any comprehension or generator); C and Java have none.
+   * Python's list_comprehension, dict_comprehension, set_comprehension and
+   * generator_expression ask for that one kind.
    */
   type?: LoopType;
   /** python: check the rule only inside the function with this name. */
