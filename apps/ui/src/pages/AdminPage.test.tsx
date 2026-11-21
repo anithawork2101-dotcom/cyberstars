@@ -26,10 +26,11 @@ vi.mock('../services/adminService', () => ({ getStats }));
 const { AdminPage } = await import('./AdminPage');
 
 const stats: AdminStatsDTO = {
-  tutor: { promptsLast7Days: 37 },
+  tutor: { promptsLast7Days: 37, promptsLast30Days: 90 },
   users: {
     total: 12,
     byRole: { USER: 10, MODERATOR: 0, ADMIN: 1, FOUNDER: 1 },
+    bots: 4,
     newLast7Days: 1,
     newLast30Days: 3,
   },
@@ -66,17 +67,21 @@ describe('AdminPage', () => {
     expect(screen.getByText('Announcement')).toBeInTheDocument();
   });
 
-  it('shows the messages sent to the tutor last in the users row, after the new accounts', async () => {
+  it('shows the messages sent to the tutor, 7 then 30 days, last in the users row', async () => {
     getStats.mockResolvedValue(stats);
     renderPage();
     const tutor = await screen.findByText('Messages to the tutor (7 days)');
     expect(tutor.previousElementSibling).toHaveTextContent('37');
+    expect(
+      screen.getByText('Messages to the tutor (30 days)').previousElementSibling,
+    ).toHaveTextContent('90');
     const row = tutor.closest('div')!.parentElement!;
     expect(Array.from(row.children, (c) => c.lastElementChild?.textContent)).toEqual([
       'Total users',
       'New (7 days)',
       'New (30 days)',
       'Messages to the tutor (7 days)',
+      'Messages to the tutor (30 days)',
     ]);
     expect(screen.queryByText('Active (with progress)')).not.toBeInTheDocument();
   });
@@ -108,11 +113,12 @@ describe('AdminPage', () => {
     expect(screen.getByText('Poll')).toBeInTheDocument();
   });
 
-  it('shows how many users and guests are online now in the role row, after the User count', async () => {
+  it('shows how many users and guests are online now in the role row, after the User and Bot counts', async () => {
     getStats.mockResolvedValue(stats);
     renderPage();
     const online = await screen.findByText('Online now: 3 signed in · 5 guests');
-    expect(online.previousElementSibling).toHaveTextContent(/^User \d+$/);
+    expect(online.previousElementSibling).toHaveTextContent('Bot 4');
+    expect(online.previousElementSibling?.previousElementSibling).toHaveTextContent('User 10');
   });
 
   it('says the stats could not be loaded, and clears it once a refresh brings them', async () => {
