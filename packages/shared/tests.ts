@@ -54,7 +54,15 @@ type StructureKind =
   /** c: reading or writing through a pointer (*p, p->field) */
   | 'deref'
   | 'sizeof'
-  | 'define';
+  | 'define'
+  /** c: cond ? a : b */
+  | 'ternary'
+  /** c: a variable declared static (not a static function) */
+  | 'static'
+  /** c: an array of arrays, int grid[3][4] */
+  | 'array_2d'
+  /** c: int (*op)(int, int), as a variable, parameter, field or typedef */
+  | 'function_pointer';
 
 type LoopType = 'for' | 'while' | 'do_while' | 'comprehension';
 
@@ -62,7 +70,7 @@ interface StructureRule {
   kind: StructureKind;
   /**
    * call / variable / function / class name, operator spelling, modifier
-   * keyword, or define name. A function or class rule without one asks for any
+   * keyword, define name, or (c) the function a recursion rule wants recursive. A function or class rule without one asks for any
    * function / class of the student's own (main aside), named however they like.
    */
   name?: string;
