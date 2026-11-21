@@ -116,7 +116,7 @@ Fiecare proces poate avea deschiși doar un număr limitat de descriptori deodat
 Înainte ca o bandă să plece la arhivă, stația îi face o copie pe disc și îi pune o ștampilă la final. Apoi citește copia înapoi, ca să fie sigură că e toată acolo
 
 1. Citește toate datele de intrare. Scrie-le în fișierul `copy.txt`, făcând întâi fișierul nou și gol
-2. Închide-l, apoi deschide-l din nou cu O_APPEND și adaugă linia `END OF TAPE`
+2. Închide-l, apoi deschide-l din nou cu O_APPEND și adaugă linia `end of tape`
 3. Închide-l, deschide-l pentru citire și afișează tot fișierul la ieșire, cu read și write
 4. Afișează o ultimă linie cu mărimea fișierului în bytes, ca în exemplu
 
@@ -136,6 +136,6 @@ Ieșire
 ```text
 reel 7
 payroll 1969
-END OF TAPE
+end of tape
 Marime: 32 bytes
 ```

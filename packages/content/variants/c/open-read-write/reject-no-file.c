@@ -9,7 +9,7 @@ int main(void) {
     int fd = open("/dev/null", O_RDONLY);
     close(fd);
     while ((n = read(0, buf, sizeof(buf))) > 0) { write(1, buf, n); size += n; }
-    write(1, "END OF TAPE\n", 12);
+    write(1, "end of tape\n", 12);
     printf("Size: %ld bytes\n", size);
     return 0;
 }

@@ -24,7 +24,7 @@ int main(void) {
     int i;
     while (scanf("%7s %d", command, &i) == 2) {
         char rec[SIZE] = { 0 };
-        if (strcmp(command, "SET") == 0) {
+        if (strcmp(command, "set") == 0) {
             scanf("%15s", rec);
         }
         if (i >= n) {
@@ -32,7 +32,7 @@ int main(void) {
             continue;
         }
         lseek(fd, (off_t)i * SIZE, SEEK_SET);
-        if (strcmp(command, "GET") == 0) {
+        if (strcmp(command, "get") == 0) {
             read(fd, rec, SIZE);
             printf("%s\n", rec);
         } else {

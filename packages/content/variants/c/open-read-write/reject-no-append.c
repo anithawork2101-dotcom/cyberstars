@@ -9,7 +9,7 @@ int main(void) {
     while ((n = read(0, buf, sizeof(buf))) > 0) write(fd, buf, n);
     close(fd);
     fd = open("copy.txt", O_WRONLY);
-    write(fd, "END OF TAPE\n", 12);
+    write(fd, "end of tape\n", 12);
     close(fd);
     long size = 0;
     fd = open("copy.txt", O_RDONLY);

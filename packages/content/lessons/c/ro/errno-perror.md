@@ -128,9 +128,9 @@ a doua stergere: No such file or directory
 Operatorii scriu comenzi pentru fișiere la un terminal și mai greșesc. În loc de un -1 de neînțeles, terminalul ar trebui să spună exact ce a mers prost
 
 1. Citește comenzi, câte una pe linie, până se termină datele. Fiecare e un cuvânt și un nume de fișier
-   - `CREATE nume`: creează un fișier nou cu O_CREAT și O_EXCL, apoi închide-l
-   - `OPEN nume`: deschide fișierul pentru citire, apoi închide-l
-   - `REMOVE nume`: șterge fișierul cu unlink
+   - `create nume`: creează un fișier nou cu O_CREAT și O_EXCL, apoi închide-l
+   - `open nume`: deschide fișierul pentru citire, apoi închide-l
+   - `remove nume`: șterge fișierul cu unlink
 2. Pentru fiecare comandă, afișează comanda, numele și `ok`, sau motivul pentru care a eșuat, găsit cu strerror, ca în exemplu
 3. La final, afișează câte comenzi au eșuat
 
@@ -141,25 +141,25 @@ Numele au cel mult 30 de caractere
 Intrare
 
 ```text
-OPEN ghost.txt
-CREATE notes.txt
-CREATE notes.txt
-OPEN notes.txt
-OPEN notes.txt/inside
-REMOVE notes.txt
-REMOVE notes.txt
+open ghost.txt
+create notes.txt
+create notes.txt
+open notes.txt
+open notes.txt/inside
+remove notes.txt
+remove notes.txt
 ```
 
 Ieșire
 
 ```text
-OPEN ghost.txt: No such file or directory
-CREATE notes.txt: ok
-CREATE notes.txt: File exists
-OPEN notes.txt: ok
-OPEN notes.txt/inside: Not a directory
-REMOVE notes.txt: ok
-REMOVE notes.txt: No such file or directory
+open ghost.txt: No such file or directory
+create notes.txt: ok
+create notes.txt: File exists
+open notes.txt: ok
+open notes.txt/inside: Not a directory
+remove notes.txt: ok
+remove notes.txt: No such file or directory
 Esuate: 4
 ```
 

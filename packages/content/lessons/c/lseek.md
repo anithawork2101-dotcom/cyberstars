@@ -105,8 +105,8 @@ The center keeps its crew list on a drum, as records of exactly 16 bytes: a name
 
 1. Read a whole number n, then n names. Write them, in order, as 16 byte records into the file `drum.dat`, made new and empty first
 2. Then read commands until the input ends
-   - `GET i`: jump to record i with lseek, read it and print the name. If there is no record i, print `No record ` and i
-   - `SET i name`: jump to record i and write the new name over it. If there is no record i, print `No record ` and i
+   - `get i`: jump to record i with lseek, read it and print the name. If there is no record i, print `No record ` and i
+   - `set i name`: jump to record i and write the new name over it. If there is no record i, print `No record ` and i
 3. At the end, print the file's size, found with lseek, as in the example
 
 Records are numbered from 0. Names are one word of at most 15 letters. n is from 1 to 100, i from 0 to 999
@@ -120,10 +120,10 @@ Input
 ada
 grace
 ken
-GET 1
-SET 1 linus
-GET 1
-GET 5
+get 1
+set 1 linus
+get 1
+get 5
 ```
 
 Output

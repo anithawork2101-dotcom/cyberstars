@@ -11,7 +11,7 @@ int main(void) {
     for (int k = 0; k < n; k++) { char rec[16] = {0}; scanf("%15s", rec); write(fd, rec, 16); }
     while (scanf("%7s %d", cmd, &i) == 2) {
         char rec[16] = {0};
-        if (!strcmp(cmd, "SET")) {
+        if (!strcmp(cmd, "set")) {
             scanf("%15s", rec);
             lseek(fd, i * 16, SEEK_SET);
             write(fd, rec, 16);

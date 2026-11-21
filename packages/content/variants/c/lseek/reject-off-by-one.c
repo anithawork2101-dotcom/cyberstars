@@ -11,10 +11,10 @@ int main(void) {
     for (int k = 0; k < n; k++) { char rec[16] = {0}; scanf("%15s", rec); write(fd, rec, 16); }
     while (scanf("%7s %d", cmd, &i) == 2) {
         char rec[16] = {0};
-        if (!strcmp(cmd, "SET")) scanf("%15s", rec);
+        if (!strcmp(cmd, "set")) scanf("%15s", rec);
         if (i > n) { printf("No record %d\n", i); continue; }
         lseek(fd, i * 16, SEEK_SET);
-        if (!strcmp(cmd, "GET")) { read(fd, rec, 16); printf("%s\n", rec); }
+        if (!strcmp(cmd, "get")) { read(fd, rec, 16); printf("%s\n", rec); }
         else write(fd, rec, 16);
     }
     printf("Size: %ld bytes\n", (long)lseek(fd, 0, SEEK_END));

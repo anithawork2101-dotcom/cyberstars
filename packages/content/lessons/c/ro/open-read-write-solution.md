@@ -17,7 +17,7 @@ int main(void) {
     close(fd);
 
     fd = open("copy.txt", O_WRONLY | O_APPEND);
-    write(fd, "END OF TAPE\n", 12);
+    write(fd, "end of tape\n", 12);
     close(fd);
 
     long marime = 0;

@@ -105,8 +105,8 @@ Centrul își ține lista echipajului pe un tambur, ca înregistrări de exact 1
 
 1. Citește un număr întreg n, apoi n nume. Scrie-le, în ordine, ca înregistrări de 16 bytes în fișierul `drum.dat`, făcut întâi nou și gol
 2. Apoi citește comenzi până se termină datele
-   - `GET i`: sari la înregistrarea i cu lseek, citește-o și afișează numele. Dacă nu există înregistrarea i, afișează `Nu exista ` și i
-   - `SET i nume`: sari la înregistrarea i și scrie numele nou peste ea. Dacă nu există înregistrarea i, afișează `Nu exista ` și i
+   - `get i`: sari la înregistrarea i cu lseek, citește-o și afișează numele. Dacă nu există înregistrarea i, afișează `Nu exista ` și i
+   - `set i nume`: sari la înregistrarea i și scrie numele nou peste ea. Dacă nu există înregistrarea i, afișează `Nu exista ` și i
 3. La final, afișează mărimea fișierului, aflată cu lseek, ca în exemplu
 
 Înregistrările sunt numerotate de la 0. Numele sunt un cuvânt de cel mult 15 litere. n e între 1 și 100, iar i între 0 și 999
@@ -120,10 +120,10 @@ Intrare
 ada
 grace
 ken
-GET 1
-SET 1 linus
-GET 1
-GET 5
+get 1
+set 1 linus
+get 1
+get 5
 ```
 
 Ieșire

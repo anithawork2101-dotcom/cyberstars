@@ -12,17 +12,17 @@ int main(void) {
 
     while (scanf("%15s %63s", comanda, nume) == 2) {
         int rezultat = -1;
-        if (strcmp(comanda, "CREATE") == 0) {
+        if (strcmp(comanda, "create") == 0) {
             rezultat = open(nume, O_WRONLY | O_CREAT | O_EXCL, 0644);
             if (rezultat != -1) {
                 close(rezultat);
             }
-        } else if (strcmp(comanda, "OPEN") == 0) {
+        } else if (strcmp(comanda, "open") == 0) {
             rezultat = open(nume, O_RDONLY);
             if (rezultat != -1) {
                 close(rezultat);
             }
-        } else if (strcmp(comanda, "REMOVE") == 0) {
+        } else if (strcmp(comanda, "remove") == 0) {
             rezultat = unlink(nume);
         }
 

@@ -89,14 +89,14 @@ Nu folosi scanf, fgets, getchar sau alte funcții stdio ca să citești. Intrare
 Intrare
 
 ```text
-LOAD TAPE 7
-RUN
+load tape 7
+run
 ```
 
 Ieșire
 
 ```text
-LOAD TAPE 7
-RUN
+load tape 7
+run
 Bytes: 16, linii: 2
 ```

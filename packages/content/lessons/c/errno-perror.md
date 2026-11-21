@@ -128,9 +128,9 @@ second unlink: No such file or directory
 The operators type file commands at a terminal, and they make mistakes. Instead of a cryptic -1, the terminal should say exactly what went wrong
 
 1. Read commands, one per line, until the input ends. Each one is a word and a file name
-   - `CREATE name`: make a new file with O_CREAT and O_EXCL, then close it
-   - `OPEN name`: open the file for reading, then close it
-   - `REMOVE name`: delete the file with unlink
+   - `create name`: make a new file with O_CREAT and O_EXCL, then close it
+   - `open name`: open the file for reading, then close it
+   - `remove name`: delete the file with unlink
 2. For each command, print the command, the name and `ok`, or the reason it failed, found with strerror, as in the example
 3. At the end, print how many commands failed
 
@@ -141,25 +141,25 @@ Names have at most 30 characters
 Input
 
 ```text
-OPEN ghost.txt
-CREATE notes.txt
-CREATE notes.txt
-OPEN notes.txt
-OPEN notes.txt/inside
-REMOVE notes.txt
-REMOVE notes.txt
+open ghost.txt
+create notes.txt
+create notes.txt
+open notes.txt
+open notes.txt/inside
+remove notes.txt
+remove notes.txt
 ```
 
 Output
 
 ```text
-OPEN ghost.txt: No such file or directory
-CREATE notes.txt: ok
-CREATE notes.txt: File exists
-OPEN notes.txt: ok
-OPEN notes.txt/inside: Not a directory
-REMOVE notes.txt: ok
-REMOVE notes.txt: No such file or directory
+open ghost.txt: No such file or directory
+create notes.txt: ok
+create notes.txt: File exists
+open notes.txt: ok
+open notes.txt/inside: Not a directory
+remove notes.txt: ok
+remove notes.txt: No such file or directory
 Failed: 4
 ```
 

@@ -16,7 +16,7 @@ int main(void) {
         write(fd, rec, REC);
     }
     while (scanf("%15s %d", cmd, &i) == 2) {
-        int set = cmd[0] == 'S';
+        int set = cmd[0] == 's';
         memset(rec, 0, REC);
         if (set) scanf("%15s", rec);
         if (i < 0 || i >= n) { printf("No record %d\n", i); continue; }

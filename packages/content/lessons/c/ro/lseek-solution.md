@@ -24,7 +24,7 @@ int main(void) {
     int i;
     while (scanf("%7s %d", comanda, &i) == 2) {
         char rec[MARIME] = { 0 };
-        if (strcmp(comanda, "SET") == 0) {
+        if (strcmp(comanda, "set") == 0) {
             scanf("%15s", rec);
         }
         if (i >= n) {
@@ -32,7 +32,7 @@ int main(void) {
             continue;
         }
         lseek(fd, (off_t)i * MARIME, SEEK_SET);
-        if (strcmp(comanda, "GET") == 0) {
+        if (strcmp(comanda, "get") == 0) {
             read(fd, rec, MARIME);
             printf("%s\n", rec);
         } else {

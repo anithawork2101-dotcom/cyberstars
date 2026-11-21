@@ -7,8 +7,8 @@
 static int run(const char *cmd, const char *path) {
     int fd;
     switch (cmd[0]) {
-    case 'C': fd = open(path, O_CREAT | O_EXCL | O_RDWR, 0600); break;
-    case 'O': fd = open(path, O_RDONLY); break;
+    case 'c': fd = open(path, O_CREAT | O_EXCL | O_RDWR, 0600); break;
+    case 'o': fd = open(path, O_RDONLY); break;
     default: return unlink(path);
     }
     if (fd < 0) return -1;

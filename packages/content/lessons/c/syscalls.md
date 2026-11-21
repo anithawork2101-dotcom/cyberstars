@@ -89,14 +89,14 @@ Don't use scanf, fgets, getchar or other stdio functions to read. The input has 
 Input
 
 ```text
-LOAD TAPE 7
-RUN
+load tape 7
+run
 ```
 
 Output
 
 ```text
-LOAD TAPE 7
-RUN
+load tape 7
+run
 Bytes: 16, lines: 2
 ```

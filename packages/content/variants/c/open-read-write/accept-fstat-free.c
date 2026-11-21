@@ -17,7 +17,7 @@ int main(void) {
     copy(0, out, NULL);
     close(out);
     int app = open("copy.txt", O_APPEND | O_WRONLY);
-    const char *stamp = "END OF TAPE\n";
+    const char *stamp = "end of tape\n";
     write(app, stamp, strlen(stamp));
     close(app);
     long total = 0;

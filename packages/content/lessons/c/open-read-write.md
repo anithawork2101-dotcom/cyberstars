@@ -116,7 +116,7 @@ Every process can only have a limited number of descriptors open at once. That's
 Before a tape goes to the archive, the station makes a copy on disk and stamps the end of it. Then it reads the copy back, to be sure it's all there
 
 1. Read all the input. Write it into the file `copy.txt`, making the file new and empty first
-2. Close it, then open it again with O_APPEND and add the line `END OF TAPE`
+2. Close it, then open it again with O_APPEND and add the line `end of tape`
 3. Close it, open it for reading, and print the whole file to the output with read and write
 4. Print one last line with the size of the file in bytes, as in the example
 
@@ -136,6 +136,6 @@ Output
 ```text
 reel 7
 payroll 1969
-END OF TAPE
+end of tape
 Size: 32 bytes
 ```

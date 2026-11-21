@@ -33,41 +33,41 @@
   "cases": [
     {
       "visible": true,
-      "stdin": "3\nada\ngrace\nken\nGET 1\nSET 1 linus\nGET 1\nGET 5\n"
+      "stdin": "3\nada\ngrace\nken\nget 1\nset 1 linus\nget 1\nget 5\n"
     },
     {
-      "stdin": "1\nsolo\nGET 0\nGET 1\n"
+      "stdin": "1\nsolo\nget 0\nget 1\n"
     },
     {
       "stdin": "2\na\nb\n"
     },
     {
-      "stdin": "2\nabcdefghijklmno\nx\nGET 0\nSET 0 y\nGET 0\nGET 1\n"
+      "stdin": "2\nabcdefghijklmno\nx\nget 0\nset 0 y\nget 0\nget 1\n"
     },
     {
-      "stdin": "1\nada\nSET 3 ken\nGET 3\nGET 0\n"
+      "stdin": "1\nada\nset 3 ken\nget 3\nget 0\n"
     },
     {
-      "stdin": "3\nada\nken\nlinus\nSET 2 abcdefghijklmno\nSET 2 b\nGET 2\n"
+      "stdin": "3\nada\nken\nlinus\nset 2 abcdefghijklmno\nset 2 b\nget 2\n"
     },
     {
-      "stdin": "1\nbjarne\nGET 2\nSET 1 linus\nGET 0\nSET 3 john\nSET 1 grace\nGET 1\nGET 3\nSET 1 john\nSET 0 bjarne\nGET 894\nSET 0 john\nSET 3 grace\nGET 0\nGET 2\nGET 2\nSET 0 margaret\nGET 1\nGET 0\nSET 0 abcdefghijklmno\nGET 889\nGET 2\n",
+      "stdin": "1\nbjarne\nget 2\nset 1 linus\nget 0\nset 3 john\nset 1 grace\nget 1\nget 3\nset 1 john\nset 0 bjarne\nget 894\nset 0 john\nset 3 grace\nget 0\nget 2\nget 2\nset 0 margaret\nget 1\nget 0\nset 0 abcdefghijklmno\nget 889\nget 2\n",
       "generated": true
     },
     {
-      "stdin": "23\nfrances\nbjarne\ndonald\nguido\nbjarne\nfrances\nlinus\nedsger\nedsger\ngrace\nradia\nada\nedsger\nguido\nada\nada\nken\nedsger\nbarbara\ngrace\nlinus\nbjarne\nfrances\nGET 1\nGET 20\nGET 644\nSET 24 radia\nGET 18\nGET 16\nGET 19\nGET 16\nGET 23\nGET 11\nGET 24\nSET 1 grace\nSET 8 radia\nGET 1\nGET 21\nGET 16\nSET 10 bjarne\nGET 21\nSET 8 linus\n",
+      "stdin": "23\nfrances\nbjarne\ndonald\nguido\nbjarne\nfrances\nlinus\nedsger\nedsger\ngrace\nradia\nada\nedsger\nguido\nada\nada\nken\nedsger\nbarbara\ngrace\nlinus\nbjarne\nfrances\nget 1\nget 20\nget 644\nset 24 radia\nget 18\nget 16\nget 19\nget 16\nget 23\nget 11\nget 24\nset 1 grace\nset 8 radia\nget 1\nget 21\nget 16\nset 10 bjarne\nget 21\nset 8 linus\n",
       "generated": true
     },
     {
-      "stdin": "30\nbarbara\nniklaus\nradia\nfrances\nken\nbarbara\nabcdefghijklmno\nalan\nedsger\nbjarne\nken\ndennis\nbjarne\nedsger\nbarbara\nguido\nabcdefghijklmno\nada\nedsger\nabcdefghijklmno\nniklaus\nguido\nedsger\nlinus\nlinus\nradia\nken\nken\nalan\nlinus\nGET 660\nGET 0\n",
+      "stdin": "30\nbarbara\nniklaus\nradia\nfrances\nken\nbarbara\nabcdefghijklmno\nalan\nedsger\nbjarne\nken\ndennis\nbjarne\nedsger\nbarbara\nguido\nabcdefghijklmno\nada\nedsger\nabcdefghijklmno\nniklaus\nguido\nedsger\nlinus\nlinus\nradia\nken\nken\nalan\nlinus\nget 660\nget 0\n",
       "generated": true
     },
     {
-      "stdin": "33\nbarbara\nmargaret\nmargaret\nada\nada\nmargaret\nradia\ngrace\ndonald\nbarbara\nlinus\nbjarne\nradia\ndonald\nfrances\nada\nradia\nbjarne\nabcdefghijklmno\nabcdefghijklmno\nabcdefghijklmno\ndennis\ndennis\nmargaret\ndennis\nada\nedsger\nlinus\nbarbara\nbjarne\ndonald\nfrances\nken\nGET 4\nGET 11\nGET 10\nGET 29\nGET 34\n",
+      "stdin": "33\nbarbara\nmargaret\nmargaret\nada\nada\nmargaret\nradia\ngrace\ndonald\nbarbara\nlinus\nbjarne\nradia\ndonald\nfrances\nada\nradia\nbjarne\nabcdefghijklmno\nabcdefghijklmno\nabcdefghijklmno\ndennis\ndennis\nmargaret\ndennis\nada\nedsger\nlinus\nbarbara\nbjarne\ndonald\nfrances\nken\nget 4\nget 11\nget 10\nget 29\nget 34\n",
       "generated": true
     },
     {
-      "stdin": "2\nniklaus\nniklaus\nSET 2 bjarne\nSET 1 abcdefghijklmno\nGET 0\nSET 2 barbara\nSET 2 edsger\nSET 2 john\nSET 4 ken\nGET 4\nGET 2\n",
+      "stdin": "2\nniklaus\nniklaus\nset 2 bjarne\nset 1 abcdefghijklmno\nget 0\nset 2 barbara\nset 2 edsger\nset 2 john\nset 4 ken\nget 4\nget 2\n",
       "generated": true
     },
     {
@@ -75,79 +75,79 @@
       "generated": true
     },
     {
-      "stdin": "60\ndennis\nalan\nabcdefghijklmno\nbarbara\ngrace\njohn\ndennis\nguido\nradia\nguido\nalan\nmargaret\nlinus\nmargaret\nalan\nbarbara\nbjarne\ndennis\nfrances\nbjarne\nalan\nradia\nken\nfrances\nedsger\njohn\nabcdefghijklmno\nalan\nalan\nbjarne\nniklaus\nabcdefghijklmno\nken\nfrances\nada\nfrances\ndennis\nbarbara\nguido\nfrances\nedsger\nbjarne\nbjarne\nada\nlinus\nken\nedsger\nbjarne\ndennis\nfrances\nedsger\nradia\ndennis\nfrances\nken\nlinus\nradia\ndennis\nlinus\nabcdefghijklmno\nSET 33 donald\nGET 45\nGET 41\nSET 32 guido\nSET 52 barbara\nGET 18\nSET 528 grace\nSET 43 john\nGET 62\nGET 60\nGET 30\nSET 27 guido\nSET 23 edsger\nSET 8 john\nGET 46\nGET 2\nSET 61 dennis\nSET 39 grace\nGET 33\nGET 48\nGET 55\nSET 25 frances\nSET 29 guido\nSET 43 barbara\nGET 19\nGET 45\n",
+      "stdin": "60\ndennis\nalan\nabcdefghijklmno\nbarbara\ngrace\njohn\ndennis\nguido\nradia\nguido\nalan\nmargaret\nlinus\nmargaret\nalan\nbarbara\nbjarne\ndennis\nfrances\nbjarne\nalan\nradia\nken\nfrances\nedsger\njohn\nabcdefghijklmno\nalan\nalan\nbjarne\nniklaus\nabcdefghijklmno\nken\nfrances\nada\nfrances\ndennis\nbarbara\nguido\nfrances\nedsger\nbjarne\nbjarne\nada\nlinus\nken\nedsger\nbjarne\ndennis\nfrances\nedsger\nradia\ndennis\nfrances\nken\nlinus\nradia\ndennis\nlinus\nabcdefghijklmno\nset 33 donald\nget 45\nget 41\nset 32 guido\nset 52 barbara\nget 18\nset 528 grace\nset 43 john\nget 62\nget 60\nget 30\nset 27 guido\nset 23 edsger\nset 8 john\nget 46\nget 2\nset 61 dennis\nset 39 grace\nget 33\nget 48\nget 55\nset 25 frances\nset 29 guido\nset 43 barbara\nget 19\nget 45\n",
       "generated": true
     },
     {
-      "stdin": "4\ndonald\nbjarne\nedsger\nmargaret\nGET 4\nGET 0\nSET 3 guido\nGET 4\nGET 379\nGET 1\nSET 6 barbara\nGET 766\nGET 1\nGET 4\nGET 1\nSET 5 niklaus\nSET 2 john\nSET 4 margaret\nGET 5\nGET 0\nSET 4 bjarne\nSET 352 abcdefghijklmno\nSET 2 john\nGET 3\nGET 6\n",
+      "stdin": "4\ndonald\nbjarne\nedsger\nmargaret\nget 4\nget 0\nset 3 guido\nget 4\nget 379\nget 1\nset 6 barbara\nget 766\nget 1\nget 4\nget 1\nset 5 niklaus\nset 2 john\nset 4 margaret\nget 5\nget 0\nset 4 bjarne\nset 352 abcdefghijklmno\nset 2 john\nget 3\nget 6\n",
       "generated": true
     },
     {
-      "stdin": "1\nguido\nGET 2\nGET 1\nSET 0 barbara\nGET 0\nGET 3\nGET 2\nGET 0\nGET 0\nGET 2\nGET 1\nGET 0\nSET 0 frances\nSET 0 barbara\nSET 2 niklaus\nGET 0\n",
+      "stdin": "1\nguido\nget 2\nget 1\nset 0 barbara\nget 0\nget 3\nget 2\nget 0\nget 0\nget 2\nget 1\nget 0\nset 0 frances\nset 0 barbara\nset 2 niklaus\nget 0\n",
       "generated": true
     },
     {
-      "stdin": "4\nfrances\ndonald\nlinus\nbarbara\nGET 6\nGET 3\nSET 279 edsger\nGET 0\nGET 3\nGET 2\nGET 0\nGET 4\nSET 2 ken\nGET 0\nGET 5\nGET 2\nGET 249\nSET 6 ada\nGET 246\nGET 0\nGET 1\nGET 6\nSET 1 edsger\nGET 493\nGET 0\nSET 4 margaret\nGET 3\nGET 5\nGET 3\nSET 0 barbara\n",
+      "stdin": "4\nfrances\ndonald\nlinus\nbarbara\nget 6\nget 3\nset 279 edsger\nget 0\nget 3\nget 2\nget 0\nget 4\nset 2 ken\nget 0\nget 5\nget 2\nget 249\nset 6 ada\nget 246\nget 0\nget 1\nget 6\nset 1 edsger\nget 493\nget 0\nset 4 margaret\nget 3\nget 5\nget 3\nset 0 barbara\n",
       "generated": true
     },
     {
-      "stdin": "3\nbjarne\nalan\nguido\nGET 1\nGET 5\nGET 4\nSET 2 barbara\nSET 4 abcdefghijklmno\n",
+      "stdin": "3\nbjarne\nalan\nguido\nget 1\nget 5\nget 4\nset 2 barbara\nset 4 abcdefghijklmno\n",
       "generated": true
     },
     {
-      "stdin": "36\nken\nedsger\nlinus\nbarbara\nguido\nniklaus\nradia\ndennis\nalan\nmargaret\ndonald\ngrace\nabcdefghijklmno\ngrace\nbjarne\nalan\nbarbara\nradia\nada\nabcdefghijklmno\nbjarne\nmargaret\njohn\ndonald\ndonald\nniklaus\nmargaret\nalan\ndennis\nken\ndennis\nalan\nmargaret\ngrace\nbjarne\ngrace\nSET 16 donald\nSET 37 ada\nSET 34 alan\nGET 36\nSET 30 ken\nSET 0 niklaus\nGET 864\nSET 26 john\nGET 7\nGET 7\nSET 217 bjarne\nSET 702 ada\nSET 31 barbara\nSET 6 ken\nGET 364\nSET 28 donald\nSET 33 edsger\nSET 8 john\nSET 11 linus\nGET 28\nSET 34 edsger\nSET 27 grace\nSET 17 dennis\nSET 15 grace\nGET 38\nGET 5\n",
+      "stdin": "36\nken\nedsger\nlinus\nbarbara\nguido\nniklaus\nradia\ndennis\nalan\nmargaret\ndonald\ngrace\nabcdefghijklmno\ngrace\nbjarne\nalan\nbarbara\nradia\nada\nabcdefghijklmno\nbjarne\nmargaret\njohn\ndonald\ndonald\nniklaus\nmargaret\nalan\ndennis\nken\ndennis\nalan\nmargaret\ngrace\nbjarne\ngrace\nset 16 donald\nset 37 ada\nset 34 alan\nget 36\nset 30 ken\nset 0 niklaus\nget 864\nset 26 john\nget 7\nget 7\nset 217 bjarne\nset 702 ada\nset 31 barbara\nset 6 ken\nget 364\nset 28 donald\nset 33 edsger\nset 8 john\nset 11 linus\nget 28\nset 34 edsger\nset 27 grace\nset 17 dennis\nset 15 grace\nget 38\nget 5\n",
       "generated": true
     },
     {
-      "stdin": "2\nguido\nfrances\nSET 0 alan\nGET 3\nGET 8\nSET 3 edsger\n",
+      "stdin": "2\nguido\nfrances\nset 0 alan\nget 3\nget 8\nset 3 edsger\n",
       "generated": true
     },
     {
-      "stdin": "2\nalan\njohn\nGET 3\nGET 1\nSET 3 niklaus\nSET 4 donald\nGET 2\nGET 2\nGET 78\nGET 1\nGET 2\nGET 2\nGET 1\n",
+      "stdin": "2\nalan\njohn\nget 3\nget 1\nset 3 niklaus\nset 4 donald\nget 2\nget 2\nget 78\nget 1\nget 2\nget 2\nget 1\n",
       "generated": true
     },
     {
-      "stdin": "4\nfrances\nabcdefghijklmno\ndennis\nlinus\nGET 475\nSET 1 ken\nGET 5\nGET 6\n",
+      "stdin": "4\nfrances\nabcdefghijklmno\ndennis\nlinus\nget 475\nset 1 ken\nget 5\nget 6\n",
       "generated": true
     },
     {
-      "stdin": "3\nguido\nniklaus\ndonald\nSET 4 alan\nSET 486 barbara\n",
+      "stdin": "3\nguido\nniklaus\ndonald\nset 4 alan\nset 486 barbara\n",
       "generated": true
     },
     {
-      "stdin": "2\nbjarne\nfrances\nGET 2\nGET 4\nSET 1 dennis\nGET 3\nGET 50\nGET 2\nGET 2\nSET 0 abcdefghijklmno\nSET 1 alan\nGET 1\nSET 4 abcdefghijklmno\nGET 2\nGET 2\nGET 802\nGET 3\nSET 1 radia\nSET 4 guido\nGET 295\nSET 4 john\nSET 3 margaret\nGET 147\nGET 2\nGET 1\nGET 4\nGET 3\nGET 4\nSET 1 donald\nGET 3\nSET 0 grace\n",
+      "stdin": "2\nbjarne\nfrances\nget 2\nget 4\nset 1 dennis\nget 3\nget 50\nget 2\nget 2\nset 0 abcdefghijklmno\nset 1 alan\nget 1\nset 4 abcdefghijklmno\nget 2\nget 2\nget 802\nget 3\nset 1 radia\nset 4 guido\nget 295\nset 4 john\nset 3 margaret\nget 147\nget 2\nget 1\nget 4\nget 3\nget 4\nset 1 donald\nget 3\nset 0 grace\n",
       "generated": true
     },
     {
-      "stdin": "52\nmargaret\ngrace\nedsger\nfrances\nbarbara\nmargaret\nbarbara\nedsger\nbarbara\nabcdefghijklmno\ndonald\ngrace\nedsger\nniklaus\nfrances\nbjarne\nniklaus\nfrances\ngrace\nradia\nbjarne\nradia\ndonald\nniklaus\nfrances\nguido\nmargaret\ngrace\nmargaret\nniklaus\nedsger\nlinus\nguido\nbarbara\nniklaus\ndennis\nken\nken\nken\ndonald\ngrace\nlinus\nguido\ngrace\nbjarne\nbarbara\ngrace\ndennis\nmargaret\nguido\nguido\nbjarne\nGET 10\nGET 27\nSET 9 niklaus\nGET 18\nGET 54\nGET 4\nGET 899\nGET 5\nSET 36 grace\nGET 30\nGET 48\nGET 21\nGET 14\nSET 41 barbara\nGET 927\nSET 8 frances\nGET 55\nGET 7\nGET 33\nSET 30 guido\nGET 38\nSET 329 bjarne\nGET 15\n",
+      "stdin": "52\nmargaret\ngrace\nedsger\nfrances\nbarbara\nmargaret\nbarbara\nedsger\nbarbara\nabcdefghijklmno\ndonald\ngrace\nedsger\nniklaus\nfrances\nbjarne\nniklaus\nfrances\ngrace\nradia\nbjarne\nradia\ndonald\nniklaus\nfrances\nguido\nmargaret\ngrace\nmargaret\nniklaus\nedsger\nlinus\nguido\nbarbara\nniklaus\ndennis\nken\nken\nken\ndonald\ngrace\nlinus\nguido\ngrace\nbjarne\nbarbara\ngrace\ndennis\nmargaret\nguido\nguido\nbjarne\nget 10\nget 27\nset 9 niklaus\nget 18\nget 54\nget 4\nget 899\nget 5\nset 36 grace\nget 30\nget 48\nget 21\nget 14\nset 41 barbara\nget 927\nset 8 frances\nget 55\nget 7\nget 33\nset 30 guido\nget 38\nset 329 bjarne\nget 15\n",
       "generated": true
     },
     {
-      "stdin": "5\nmargaret\nfrances\ndonald\nbjarne\ndonald\nGET 0\nGET 1\nGET 3\nGET 3\nGET 2\nGET 5\nSET 0 abcdefghijklmno\nSET 7 guido\n",
+      "stdin": "5\nmargaret\nfrances\ndonald\nbjarne\ndonald\nget 0\nget 1\nget 3\nget 3\nget 2\nget 5\nset 0 abcdefghijklmno\nset 7 guido\n",
       "generated": true
     },
     {
-      "stdin": "1\nbjarne\nGET 3\nGET 2\nSET 3 guido\nSET 3 margaret\nGET 1\nGET 1\nGET 617\nGET 0\nSET 3 ken\nSET 3 niklaus\nSET 0 ada\nGET 2\nGET 2\nSET 1 niklaus\nGET 1\nSET 2 bjarne\nGET 0\nSET 3 ada\nSET 3 niklaus\nGET 957\nSET 757 niklaus\nSET 2 bjarne\nGET 2\nGET 0\nSET 0 dennis\nGET 0\nGET 0\nSET 656 abcdefghijklmno\nSET 709 alan\nSET 68 donald\n",
+      "stdin": "1\nbjarne\nget 3\nget 2\nset 3 guido\nset 3 margaret\nget 1\nget 1\nget 617\nget 0\nset 3 ken\nset 3 niklaus\nset 0 ada\nget 2\nget 2\nset 1 niklaus\nget 1\nset 2 bjarne\nget 0\nset 3 ada\nset 3 niklaus\nget 957\nset 757 niklaus\nset 2 bjarne\nget 2\nget 0\nset 0 dennis\nget 0\nget 0\nset 656 abcdefghijklmno\nset 709 alan\nset 68 donald\n",
       "generated": true
     },
     {
-      "stdin": "3\nguido\nalan\nbarbara\nGET 4\nGET 4\nGET 3\nSET 3 grace\nSET 4 donald\nGET 783\nGET 3\nGET 3\nSET 5 abcdefghijklmno\nGET 3\nGET 128\nSET 5 ada\nGET 4\nSET 3 john\nSET 0 edsger\nGET 525\nGET 4\nSET 5 alan\nGET 4\nSET 5 dennis\nGET 0\nSET 2 barbara\nSET 5 dennis\nGET 2\n",
+      "stdin": "3\nguido\nalan\nbarbara\nget 4\nget 4\nget 3\nset 3 grace\nset 4 donald\nget 783\nget 3\nget 3\nset 5 abcdefghijklmno\nget 3\nget 128\nset 5 ada\nget 4\nset 3 john\nset 0 edsger\nget 525\nget 4\nset 5 alan\nget 4\nset 5 dennis\nget 0\nset 2 barbara\nset 5 dennis\nget 2\n",
       "generated": true
     },
     {
-      "stdin": "5\njohn\nbjarne\nedsger\ndennis\nalan\nSET 0 frances\nGET 0\nSET 7 grace\nGET 5\nSET 6 alan\nGET 1\nGET 6\nGET 5\nGET 1\nGET 284\nGET 5\nSET 1 john\nSET 4 dennis\nSET 4 grace\nGET 723\nSET 6 ada\nGET 4\nSET 2 radia\nSET 1 edsger\nGET 2\nSET 0 frances\nGET 749\nGET 285\nGET 6\nGET 0\n",
+      "stdin": "5\njohn\nbjarne\nedsger\ndennis\nalan\nset 0 frances\nget 0\nset 7 grace\nget 5\nset 6 alan\nget 1\nget 6\nget 5\nget 1\nget 284\nget 5\nset 1 john\nset 4 dennis\nset 4 grace\nget 723\nset 6 ada\nget 4\nset 2 radia\nset 1 edsger\nget 2\nset 0 frances\nget 749\nget 285\nget 6\nget 0\n",
       "generated": true
     },
     {
-      "stdin": "5\ndonald\njohn\nbarbara\nbjarne\nedsger\nGET 0\nGET 4\nSET 3 abcdefghijklmno\n",
+      "stdin": "5\ndonald\njohn\nbarbara\nbjarne\nedsger\nget 0\nget 4\nset 3 abcdefghijklmno\n",
       "generated": true
     },
     {
-      "stdin": "61\nlinus\nabcdefghijklmno\ngrace\nabcdefghijklmno\nradia\nada\nmargaret\nbarbara\nfrances\nbarbara\nabcdefghijklmno\ndonald\ngrace\nmargaret\nedsger\nfrances\nken\nfrances\nken\nfrances\ngrace\ndennis\nmargaret\nbarbara\nada\nfrances\nken\nken\nfrances\nradia\nradia\nbjarne\njohn\nlinus\nbarbara\nlinus\nada\nken\nlinus\nedsger\nguido\nbjarne\nbarbara\nbarbara\ndennis\nguido\ngrace\nfrances\nalan\ndonald\nedsger\nken\ndennis\nniklaus\nlinus\nada\nedsger\ngrace\nbjarne\nmargaret\nniklaus\nGET 35\nGET 13\nGET 63\nSET 19 ken\nGET 49\nGET 624\nGET 60\nGET 19\nGET 62\nSET 33 edsger\nSET 11 frances\nSET 24 guido\nGET 48\nGET 46\nSET 59 niklaus\nSET 43 frances\nGET 38\n",
+      "stdin": "61\nlinus\nabcdefghijklmno\ngrace\nabcdefghijklmno\nradia\nada\nmargaret\nbarbara\nfrances\nbarbara\nabcdefghijklmno\ndonald\ngrace\nmargaret\nedsger\nfrances\nken\nfrances\nken\nfrances\ngrace\ndennis\nmargaret\nbarbara\nada\nfrances\nken\nken\nfrances\nradia\nradia\nbjarne\njohn\nlinus\nbarbara\nlinus\nada\nken\nlinus\nedsger\nguido\nbjarne\nbarbara\nbarbara\ndennis\nguido\ngrace\nfrances\nalan\ndonald\nedsger\nken\ndennis\nniklaus\nlinus\nada\nedsger\ngrace\nbjarne\nmargaret\nniklaus\nget 35\nget 13\nget 63\nset 19 ken\nget 49\nget 624\nget 60\nget 19\nget 62\nset 33 edsger\nset 11 frances\nset 24 guido\nget 48\nget 46\nset 59 niklaus\nset 43 frances\nget 38\n",
       "generated": true
     },
     {
-      "stdin": "5\nbarbara\nedsger\ndennis\nlinus\nken\nGET 7\nSET 2 radia\nSET 5 frances\nSET 6 alan\nGET 2\nGET 6\nSET 3 alan\nGET 1\nSET 6 grace\nGET 0\nSET 3 barbara\nSET 6 ada\nGET 1\nGET 5\nGET 1\nGET 5\nGET 756\nSET 7 alan\nGET 5\nGET 4\nSET 7 radia\nGET 2\nGET 6\nSET 2 dennis\nGET 3\nGET 5\n",
+      "stdin": "5\nbarbara\nedsger\ndennis\nlinus\nken\nget 7\nset 2 radia\nset 5 frances\nset 6 alan\nget 2\nget 6\nset 3 alan\nget 1\nset 6 grace\nget 0\nset 3 barbara\nset 6 ada\nget 1\nget 5\nget 1\nget 5\nget 756\nset 7 alan\nget 5\nget 4\nset 7 radia\nget 2\nget 6\nset 2 dennis\nget 3\nget 5\n",
       "generated": true
     }
   ]

@@ -9,8 +9,8 @@ int main(void) {
     int failed = 0;
     while (scanf("%15s %63s", command, name) == 2) {
         int r = -1;
-        if (!strcmp(command, "CREATE")) { r = open(name, O_WRONLY | O_CREAT | O_EXCL, 0644); if (r != -1) close(r); }
-        else if (!strcmp(command, "OPEN")) { r = open(name, O_RDONLY); if (r != -1) close(r); }
+        if (!strcmp(command, "create")) { r = open(name, O_WRONLY | O_CREAT | O_EXCL, 0644); if (r != -1) close(r); }
+        else if (!strcmp(command, "open")) { r = open(name, O_RDONLY); if (r != -1) close(r); }
         else r = unlink(name);
         if (r == -1) failed++;
         printf("%s %s: %s\n", command, name, r == -1 ? strerror(ENOENT) : "ok");
