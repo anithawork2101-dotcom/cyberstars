@@ -11,10 +11,25 @@ head -> [ 3 | * ] -> [ 7 | * ] -> [ 9 | * ] -> NULL
 A node is a struct with a value and a pointer to the next node, which is a struct of the same kind
 
 ```c
+#include <stdio.h>
+
 struct node {
     int value;
     struct node *next;
 };
+
+int main(void) {
+    struct node second = { 7, NULL };
+    struct node first = { 3, &second };
+    printf("%d -> %d\n", first.value, first.next->value);
+    return 0;
+}
+```
+
+Output
+
+```text
+3 -> 7
 ```
 
 A struct can't hold another whole struct of its own type inside it, it would never end. But it can hold a pointer to one, and that's all we need. The last node's next is NULL: that's how we know the chain ends there
@@ -71,12 +86,39 @@ Output
 Adding a value at the front is quick, whatever the length of the list: make a node, point its next to the old head, and the new node becomes the head
 
 ```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int value;
+    struct node *next;
+};
+
 struct node *push(struct node *head, int value) {
     struct node *n = malloc(sizeof(struct node));
     n->value = value;
     n->next = head;
     return n;
 }
+
+int main(void) {
+    struct node *head = NULL;
+    head = push(head, 9);
+    head = push(head, 7);
+    head = push(head, 3);
+    for (struct node *p = head; p != NULL; p = p->next) {
+        printf("%d\n", p->value);
+    }
+    return 0;
+}
+```
+
+Output
+
+```text
+3
+7
+9
 ```
 
 The function returns the new head, so we call it like this: `head = push(head, 5);`. An empty list is just `struct node *head = NULL;`, and push works on it too
@@ -86,11 +128,43 @@ The function returns the new head, so we call it like this: `head = push(head, 5
 When we're done, every node must be freed. But careful: after `free(p)`, we must not read `p->next` any more. So we save the next node first
 
 ```c
-while (head != NULL) {
-    struct node *next = head->next;
-    free(head);
-    head = next;
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int value;
+    struct node *next;
+};
+
+struct node *push(struct node *head, int value) {
+    struct node *n = malloc(sizeof(struct node));
+    n->value = value;
+    n->next = head;
+    return n;
 }
+
+int main(void) {
+    struct node *head = NULL;
+    for (int i = 1; i <= 3; i++) {
+        head = push(head, i);
+    }
+
+    int freed = 0;
+    while (head != NULL) {
+        struct node *next = head->next;
+        free(head);
+        head = next;
+        freed++;
+    }
+    printf("freed %d nodes\n", freed);
+    return 0;
+}
+```
+
+Output
+
+```text
+freed 3 nodes
 ```
 
 ---

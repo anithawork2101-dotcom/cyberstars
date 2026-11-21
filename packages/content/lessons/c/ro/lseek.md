@@ -44,7 +44,27 @@ DJ
 Valoarea întoarsă ne dă o cale rapidă de a afla mărimea unui fișier: sărim la final și vedem unde suntem
 
 ```c
-off_t marime = lseek(fd, 0, SEEK_END);
+#include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main(void) {
+    char text[] = "bobina 7, fata A\n";
+    int fd = open("banda.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    write(fd, text, strlen(text));
+
+    off_t marime = lseek(fd, 0, SEEK_END);
+    printf("%ld bytes\n", (long)marime);
+    close(fd);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+17 bytes
 ```
 
 off_t e tipul pentru poziții într-un fișier. E un număr întreg mare, așa că îl afișăm cu %ld, după un cast la long

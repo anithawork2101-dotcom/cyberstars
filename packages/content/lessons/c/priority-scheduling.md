@@ -24,7 +24,7 @@ P1 starts alone. At 1, P2 arrives with priority 1, more important than P1's 3, s
 
 Simulating it one unit at a time is the easiest way
 
-```c
+```text
 for (int t = 0; finished < n; t++) {
     int pick = -1;
     // among the arrived, unfinished processes, find the smallest priority

@@ -11,10 +11,25 @@ cap -> [ 3 | * ] -> [ 7 | * ] -> [ 9 | * ] -> NULL
 Un nod e un struct cu o valoare și un pointer spre nodul următor, care e un struct de același fel
 
 ```c
+#include <stdio.h>
+
 struct nod {
     int valoare;
     struct nod *urmator;
 };
+
+int main(void) {
+    struct nod al_doilea = { 7, NULL };
+    struct nod primul = { 3, &al_doilea };
+    printf("%d -> %d\n", primul.valoare, primul.urmator->valoare);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+3 -> 7
 ```
 
 Un struct nu poate ține în el un alt struct întreg de același tip, nu s-ar mai termina. Dar poate ține un pointer spre unul, și asta e tot ce ne trebuie. Câmpul urmator al ultimului nod e NULL: așa știm că lanțul se termină acolo
@@ -71,12 +86,39 @@ Ieșire
 Adăugarea unei valori în față e rapidă, oricât de lungă ar fi lista: facem un nod, îi legăm urmator de capul vechi, iar nodul nou devine capul
 
 ```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct nod {
+    int valoare;
+    struct nod *urmator;
+};
+
 struct nod *adauga(struct nod *cap, int valoare) {
     struct nod *n = malloc(sizeof(struct nod));
     n->valoare = valoare;
     n->urmator = cap;
     return n;
 }
+
+int main(void) {
+    struct nod *cap = NULL;
+    cap = adauga(cap, 9);
+    cap = adauga(cap, 7);
+    cap = adauga(cap, 3);
+    for (struct nod *p = cap; p != NULL; p = p->urmator) {
+        printf("%d\n", p->valoare);
+    }
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+3
+7
+9
 ```
 
 Funcția întoarce capul nou, deci o apelăm așa: `cap = adauga(cap, 5);`. O listă goală e pur și simplu `struct nod *cap = NULL;`, iar adauga merge și pe ea
@@ -86,11 +128,43 @@ Funcția întoarce capul nou, deci o apelăm așa: `cap = adauga(cap, 5);`. O li
 Când am terminat, fiecare nod trebuie eliberat. Dar atenție: după `free(p)` nu mai avem voie să citim `p->urmator`. Așa că întâi salvăm nodul următor
 
 ```c
-while (cap != NULL) {
-    struct nod *urmator = cap->urmator;
-    free(cap);
-    cap = urmator;
+#include <stdio.h>
+#include <stdlib.h>
+
+struct nod {
+    int valoare;
+    struct nod *urmator;
+};
+
+struct nod *adauga(struct nod *cap, int valoare) {
+    struct nod *n = malloc(sizeof(struct nod));
+    n->valoare = valoare;
+    n->urmator = cap;
+    return n;
 }
+
+int main(void) {
+    struct nod *cap = NULL;
+    for (int i = 1; i <= 3; i++) {
+        cap = adauga(cap, i);
+    }
+
+    int eliberate = 0;
+    while (cap != NULL) {
+        struct nod *urmator = cap->urmator;
+        free(cap);
+        cap = urmator;
+        eliberate++;
+    }
+    printf("am eliberat %d noduri\n", eliberate);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+am eliberat 3 noduri
 ```
 
 ---

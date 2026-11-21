@@ -10,26 +10,59 @@ Two rules keep it working
 The buffer is an array used in a circle: a **ring buffer**. We keep where the next item goes in, where the next item comes out, and how many items are inside. When an index reaches the end of the array, it goes back to 0, with %
 
 ```c
+#include <stdio.h>
+
 #define SIZE 4
 int buffer[SIZE];
 int in = 0, out = 0, count = 0;
 
-// put
-buffer[in] = item;
-in = (in + 1) % SIZE;
-count++;
+void put(int item) {
+    buffer[in] = item;
+    in = (in + 1) % SIZE;
+    count++;
+}
 
-// take
-item = buffer[out];
-out = (out + 1) % SIZE;
-count--;
+int take(void) {
+    int item = buffer[out];
+    out = (out + 1) % SIZE;
+    count--;
+    return item;
+}
+
+int main(void) {
+    for (int i = 1; i <= 3; i++) {
+        put(i);
+    }
+    printf("%d\n", take());
+    printf("%d\n", take());
+
+    // 4, 5 and 6 go round the end of the array, back to 0
+    for (int i = 4; i <= 6; i++) {
+        put(i);
+    }
+    while (count > 0) {
+        printf("%d\n", take());
+    }
+    return 0;
+}
+```
+
+Output
+
+```text
+1
+2
+3
+4
+5
+6
 ```
 
 ---
 
 All of it is shared, so a mutex protects it. And the two kinds of waiting need two condition variables: one for "there is room now", one for "there is an item now"
 
-```c
+```text
 pthread_mutex_lock(&lock);
 while (count == SIZE) {
     pthread_cond_wait(&not_full, &lock);

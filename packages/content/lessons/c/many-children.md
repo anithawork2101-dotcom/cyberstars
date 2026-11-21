@@ -45,26 +45,50 @@ The order is not fixed. The child started last may end first. If the work is dif
 So how do we know which answer belongs to which child? We keep the PIDs that fork returned, in an array, in the order we started them. When wait gives us a PID, we look it up in that array
 
 ```c
-pid_t pids[10];
-int results[10];
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
-for (int i = 0; i < n; i++) {
-    fflush(stdout);
-    pids[i] = fork();
-    if (pids[i] == 0) {
-        _exit(do_job(i));
-    }
+int do_job(int i) {
+    return (i + 1) * 10;
 }
 
-for (int k = 0; k < n; k++) {
-    int status;
-    pid_t done = wait(&status);
+int main(void) {
+    int n = 3;
+    pid_t pids[10];
+    int results[10];
+
     for (int i = 0; i < n; i++) {
-        if (pids[i] == done) {
-            results[i] = WEXITSTATUS(status);
+        fflush(stdout);
+        pids[i] = fork();
+        if (pids[i] == 0) {
+            _exit(do_job(i));
         }
     }
+
+    for (int k = 0; k < n; k++) {
+        int status;
+        pid_t done = wait(&status);
+        for (int i = 0; i < n; i++) {
+            if (pids[i] == done) {
+                results[i] = WEXITSTATUS(status);
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("child %d: %d\n", i, results[i]);
+    }
+    return 0;
 }
+```
+
+Output
+
+```text
+child 0: 10
+child 1: 20
+child 2: 30
 ```
 
 After this, results[i] holds the answer of child i, whatever the order they finished in. Then we can print everything in a fixed order

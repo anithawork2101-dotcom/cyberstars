@@ -9,6 +9,10 @@ There is no code to copy here, only a plan. Take it one command at a time, and t
 Each book is a node of a linked list
 
 ```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 struct book {
     int id;
     char title[32];
@@ -16,6 +20,25 @@ struct book {
     int out;
     struct book *next;
 };
+
+int main(void) {
+    struct book *b = malloc(sizeof(struct book));
+    b->id = 7;
+    strcpy(b->title, "PayrollManual");
+    b->year = 1969;
+    b->out = 0;
+    b->next = NULL;
+
+    printf("%d %s %d %d\n", b->id, b->title, b->year, b->out);
+    free(b);
+    return 0;
+}
+```
+
+Output
+
+```text
+7 PayrollManual 1969 0
 ```
 
 out is 1 while someone has borrowed the book. You'll want a few small functions
@@ -29,7 +52,7 @@ out is 1 while someone has borrowed the book. You'll want a few small functions
 
 list needs the books sorted, but the list itself can stay in any order. Build an array of pointers to the nodes, sort that array with qsort, and print from it. The compare function gets pointers to array cells, and each cell is a `struct book *`, so it's a pointer to a pointer
 
-```c
+```text
 int by_year(const void *a, const void *b) {
     const struct book *x = *(struct book *const *)a;
     const struct book *y = *(struct book *const *)b;

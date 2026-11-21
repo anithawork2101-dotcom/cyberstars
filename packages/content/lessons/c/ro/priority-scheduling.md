@@ -24,7 +24,7 @@ P1 pornește singur. La 1 sosește P2 cu prioritatea 1, mai important decât 3-u
 
 Cel mai ușor o simulăm câte o unitate de timp o dată
 
-```c
+```text
 for (int t = 0; terminate < n; t++) {
     int ales = -1;
     // dintre procesele sosite și neterminate, găsește prioritatea cea mai mică

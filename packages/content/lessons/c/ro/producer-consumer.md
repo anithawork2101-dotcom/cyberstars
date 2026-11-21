@@ -10,26 +10,59 @@ Două reguli îl țin în funcțiune
 Bufferul e un array folosit în cerc: un **buffer circular** (ring buffer). Ținem minte unde intră următorul obiect, de unde iese următorul obiect și câte obiecte sunt înăuntru. Când un indice ajunge la capătul array-ului, se întoarce la 0, cu %
 
 ```c
+#include <stdio.h>
+
 #define MARIME 4
 int buffer[MARIME];
 int intra = 0, iese = 0, numar = 0;
 
-// punem
-buffer[intra] = obiect;
-intra = (intra + 1) % MARIME;
-numar++;
+void pune(int obiect) {
+    buffer[intra] = obiect;
+    intra = (intra + 1) % MARIME;
+    numar++;
+}
 
-// luăm
-obiect = buffer[iese];
-iese = (iese + 1) % MARIME;
-numar--;
+int ia(void) {
+    int obiect = buffer[iese];
+    iese = (iese + 1) % MARIME;
+    numar--;
+    return obiect;
+}
+
+int main(void) {
+    for (int i = 1; i <= 3; i++) {
+        pune(i);
+    }
+    printf("%d\n", ia());
+    printf("%d\n", ia());
+
+    // 4, 5 și 6 trec de capătul array-ului, înapoi la 0
+    for (int i = 4; i <= 6; i++) {
+        pune(i);
+    }
+    while (numar > 0) {
+        printf("%d\n", ia());
+    }
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+1
+2
+3
+4
+5
+6
 ```
 
 ---
 
 Toate astea sunt comune, deci un mutex le apără. Iar cele două feluri de așteptare au nevoie de două variabile de condiție: una pentru „acum e loc”, una pentru „acum e un obiect”
 
-```c
+```text
 pthread_mutex_lock(&lacat);
 while (numar == MARIME) {
     pthread_cond_wait(&nu_e_plin, &lacat);

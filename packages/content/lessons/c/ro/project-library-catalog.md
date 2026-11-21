@@ -9,6 +9,10 @@ Aici nu e cod de copiat, doar un plan. Ia-o câte o comandă pe rând și testea
 Fiecare carte e un nod al unei liste înlănțuite
 
 ```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 struct carte {
     int id;
     char titlu[32];
@@ -16,6 +20,25 @@ struct carte {
     int imprumutata;
     struct carte *urmator;
 };
+
+int main(void) {
+    struct carte *b = malloc(sizeof(struct carte));
+    b->id = 7;
+    strcpy(b->titlu, "PayrollManual");
+    b->an = 1969;
+    b->imprumutata = 0;
+    b->urmator = NULL;
+
+    printf("%d %s %d %d\n", b->id, b->titlu, b->an, b->imprumutata);
+    free(b);
+    return 0;
+}
+```
+
+Ieșire
+
+```text
+7 PayrollManual 1969 0
 ```
 
 imprumutata e 1 cât timp cineva a împrumutat cartea. O să-ți trebuiască câteva funcții mici
@@ -29,7 +52,7 @@ imprumutata e 1 cât timp cineva a împrumutat cartea. O să-ți trebuiască câ
 
 list are nevoie de cărțile sortate, dar lista însăși poate rămâne în orice ordine. Construiește un array de pointeri la noduri, sortează acel array cu qsort și afișează din el. Funcția de comparare primește pointeri la căsuțele array-ului, iar fiecare căsuță e un `struct carte *`, deci e un pointer la pointer
 
-```c
+```text
 int dupa_an(const void *a, const void *b) {
     const struct carte *x = *(struct carte *const *)a;
     const struct carte *y = *(struct carte *const *)b;

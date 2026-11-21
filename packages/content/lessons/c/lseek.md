@@ -44,7 +44,27 @@ It returns the new position, counted from the start
 That return value gives us a quick way to find a file's size: jump to the end, and see where we are
 
 ```c
-off_t size = lseek(fd, 0, SEEK_END);
+#include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main(void) {
+    char text[] = "reel 7, side A\n";
+    int fd = open("tape.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    write(fd, text, strlen(text));
+
+    off_t size = lseek(fd, 0, SEEK_END);
+    printf("%ld bytes\n", (long)size);
+    close(fd);
+    return 0;
+}
+```
+
+Output
+
+```text
+15 bytes
 ```
 
 off_t is the type for positions in a file. It's a big whole number, so we print it with %ld after a cast to long

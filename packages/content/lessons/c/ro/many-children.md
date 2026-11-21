@@ -45,26 +45,50 @@ Ordinea nu e fixă. Copilul pornit ultimul se poate termina primul. Dacă munca 
 Atunci cum știm ce răspuns e al cărui copil? Păstrăm PID-urile întoarse de fork într-un array, în ordinea în care am pornit copiii. Când wait ne dă un PID, îl căutăm în acel array
 
 ```c
-pid_t pids[10];
-int rezultate[10];
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
-for (int i = 0; i < n; i++) {
-    fflush(stdout);
-    pids[i] = fork();
-    if (pids[i] == 0) {
-        _exit(lucreaza(i));
-    }
+int lucreaza(int i) {
+    return (i + 1) * 10;
 }
 
-for (int k = 0; k < n; k++) {
-    int stare;
-    pid_t gata = wait(&stare);
+int main(void) {
+    int n = 3;
+    pid_t pids[10];
+    int rezultate[10];
+
     for (int i = 0; i < n; i++) {
-        if (pids[i] == gata) {
-            rezultate[i] = WEXITSTATUS(stare);
+        fflush(stdout);
+        pids[i] = fork();
+        if (pids[i] == 0) {
+            _exit(lucreaza(i));
         }
     }
+
+    for (int k = 0; k < n; k++) {
+        int stare;
+        pid_t gata = wait(&stare);
+        for (int i = 0; i < n; i++) {
+            if (pids[i] == gata) {
+                rezultate[i] = WEXITSTATUS(stare);
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("copilul %d: %d\n", i, rezultate[i]);
+    }
+    return 0;
 }
+```
+
+Ieșire
+
+```text
+copilul 0: 10
+copilul 1: 20
+copilul 2: 30
 ```
 
 După asta, rezultate[i] ține răspunsul copilului i, indiferent de ordinea în care s-au terminat. Apoi putem afișa totul într-o ordine fixă
