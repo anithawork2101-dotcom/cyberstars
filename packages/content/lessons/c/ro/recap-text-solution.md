@@ -13,7 +13,7 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(comanda, "ECHO") == 0) {
+        if (strcmp(comanda, "echo") == 0) {
             char *cuvant = strtok(NULL, " ");
             int primul = 1;
             while (cuvant != NULL) {
@@ -22,8 +22,8 @@ int main(void) {
                 cuvant = strtok(NULL, " ");
             }
             printf("\n");
-        } else if (strcmp(comanda, "ADD") == 0 || strcmp(comanda, "MAX") == 0) {
-            int e_adunare = strcmp(comanda, "ADD") == 0;
+        } else if (strcmp(comanda, "add") == 0 || strcmp(comanda, "max") == 0) {
+            int e_adunare = strcmp(comanda, "add") == 0;
             long rezultat = 0;
             int numar = 0;
             int gresit = 0;

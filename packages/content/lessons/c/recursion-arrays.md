@@ -117,7 +117,7 @@ Output
 
 ```text
 Over 30: 3
-Rising: YES
+Rising: yes
 ```
 
 **Example**
@@ -133,5 +133,5 @@ Output
 
 ```text
 Over 25: 3
-Rising: NO
+Rising: no
 ```

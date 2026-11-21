@@ -27,9 +27,9 @@ int main(void) {
         buf[strcspn(buf, "\n")] = 0;
         char *cmd = strtok(buf, " ");
         if (!cmd) continue;
-        if (!strcmp(cmd, "ADD")) numbers(1);
-        else if (!strcmp(cmd, "MAX")) numbers(0);
-        else if (!strcmp(cmd, "ECHO")) {
+        if (!strcmp(cmd, "add")) numbers(1);
+        else if (!strcmp(cmd, "max")) numbers(0);
+        else if (!strcmp(cmd, "echo")) {
             char *w; const char *sep = "";
             while ((w = strtok(NULL, " "))) { printf("%s%s", sep, w); sep = " "; }
             putchar('\n');

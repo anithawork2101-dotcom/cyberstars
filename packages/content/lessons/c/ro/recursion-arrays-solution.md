@@ -28,7 +28,7 @@ int main(void) {
     }
 
     printf("Peste %d: %d\n", limita, numara_peste(v, n, limita));
-    printf("Crescator: %s\n", e_crescator(v, n) ? "DA" : "NU");
+    printf("Crescator: %s\n", e_crescator(v, n) ? "da" : "nu");
     return 0;
 }
 ```

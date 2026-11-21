@@ -103,7 +103,7 @@ Folosește operatorul ternar pentru o alegere scurtă între două valori. Când
 
 1. Citește două numere întregi de la input: numărul de role, apoi temperatura în grade
 2. Afișează prima linie cu numărul de role. Scrie „rola incarcata” pentru exact 1 rolă și „role incarcate” pentru orice alt număr, inclusiv 0
-3. Afișează a doua linie: „Sala: CALD” când temperatura trece de 30, altfel „Sala: OK”
+3. Afișează a doua linie: „Sala: cald” când temperatura trece de 30, altfel „Sala: OK”
 4. Alege ambele texte cu operatorul ternar. Nu folosi if sau switch în acest program
 
 **Exemplu**
@@ -118,7 +118,7 @@ Ieșire
 
 ```text
 3 role incarcate
-Sala: CALD
+Sala: cald
 ```
 
 **Exemplu**

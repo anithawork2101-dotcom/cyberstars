@@ -77,9 +77,9 @@ int dupa_an(const void *a, const void *b) {
 
 int main(void) {
     struct rola role[] = {
-        { "PAYROLL", 1971 },
-        { "CENSUS", 1969 },
-        { "ORBIT", 1971 }
+        { "payroll", 1971 },
+        { "census", 1969 },
+        { "orbit", 1971 }
     };
     qsort(role, 3, sizeof(struct rola), dupa_an);
     for (int i = 0; i < 3; i++) {
@@ -92,9 +92,9 @@ int main(void) {
 Ieșire
 
 ```text
-1969 CENSUS
-1971 ORBIT
-1971 PAYROLL
+1969 census
+1971 orbit
+1971 payroll
 ```
 
 Un `void *` poate intra într-un pointer cu tip fără cast, deci `const struct rola *x = a;` e de ajuns. strcmp întoarce deja negativ, 0 sau pozitiv, exact ce vrea qsort

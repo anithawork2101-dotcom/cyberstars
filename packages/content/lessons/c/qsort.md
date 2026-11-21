@@ -77,9 +77,9 @@ int by_year(const void *a, const void *b) {
 
 int main(void) {
     struct reel reels[] = {
-        { "PAYROLL", 1971 },
-        { "CENSUS", 1969 },
-        { "ORBIT", 1971 }
+        { "payroll", 1971 },
+        { "census", 1969 },
+        { "orbit", 1971 }
     };
     qsort(reels, 3, sizeof(struct reel), by_year);
     for (int i = 0; i < 3; i++) {
@@ -92,9 +92,9 @@ int main(void) {
 Output
 
 ```text
-1969 CENSUS
-1971 ORBIT
-1971 PAYROLL
+1969 census
+1971 orbit
+1971 payroll
 ```
 
 A `void *` can go into a typed pointer without a cast, so `const struct reel *x = a;` is enough. strcmp already returns negative, 0 or positive, exactly what qsort wants

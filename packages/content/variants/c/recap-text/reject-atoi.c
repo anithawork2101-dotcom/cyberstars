@@ -8,12 +8,12 @@ int main(void) {
         line[strcspn(line, "\n")] = '\0';
         char *cmd = strtok(line, " ");
         if (!cmd) continue;
-        if (!strcmp(cmd, "ECHO")) {
+        if (!strcmp(cmd, "echo")) {
             char *w = strtok(NULL, " "); int first = 1;
             while (w) { printf(first ? "%s" : " %s", w); first = 0; w = strtok(NULL, " "); }
             printf("\n");
-        } else if (!strcmp(cmd, "ADD") || !strcmp(cmd, "MAX")) {
-            int add = !strcmp(cmd, "ADD"); long r = 0; int c = 0;
+        } else if (!strcmp(cmd, "add") || !strcmp(cmd, "max")) {
+            int add = !strcmp(cmd, "add"); long r = 0; int c = 0;
             for (char *w = strtok(NULL, " "); w; w = strtok(NULL, " ")) {
                 long n = atoi(w);
                 if (add) r += n; else if (c == 0 || n > r) r = n;

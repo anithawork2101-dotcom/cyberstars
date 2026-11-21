@@ -13,7 +13,7 @@ int main(void) {
             continue;
         }
 
-        if (strcmp(command, "ECHO") == 0) {
+        if (strcmp(command, "echo") == 0) {
             char *word = strtok(NULL, " ");
             int first = 1;
             while (word != NULL) {
@@ -22,8 +22,8 @@ int main(void) {
                 word = strtok(NULL, " ");
             }
             printf("\n");
-        } else if (strcmp(command, "ADD") == 0 || strcmp(command, "MAX") == 0) {
-            int is_add = strcmp(command, "ADD") == 0;
+        } else if (strcmp(command, "add") == 0 || strcmp(command, "max") == 0) {
+            int is_add = strcmp(command, "add") == 0;
             long result = 0;
             int count = 0;
             int bad = 0;

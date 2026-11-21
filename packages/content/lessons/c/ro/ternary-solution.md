@@ -6,7 +6,7 @@ int main(void) {
     scanf("%d %d", &role, &temp);
 
     printf("%d %s\n", role, role == 1 ? "rola incarcata" : "role incarcate");
-    printf("Sala: %s\n", temp > 30 ? "CALD" : "OK");
+    printf("Sala: %s\n", temp > 30 ? "cald" : "OK");
     return 0;
 }
 ```

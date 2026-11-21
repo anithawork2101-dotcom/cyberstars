@@ -28,7 +28,7 @@ int main(void) {
     }
 
     printf("Over %d: %d\n", limit, count_over(v, n, limit));
-    printf("Rising: %s\n", is_rising(v, n) ? "YES" : "NO");
+    printf("Rising: %s\n", is_rising(v, n) ? "yes" : "no");
     return 0;
 }
 ```

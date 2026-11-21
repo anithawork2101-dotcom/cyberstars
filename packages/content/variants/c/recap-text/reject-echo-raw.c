@@ -6,14 +6,14 @@ int main(void) {
     char line[128];
     while (fgets(line, sizeof(line), stdin) != NULL) {
         line[strcspn(line, "\n")] = '\0';
-        if (!strncmp(line, "ECHO", 4) && (line[4] == ' ' || line[4] == '\0')) {
+        if (!strncmp(line, "echo", 4) && (line[4] == ' ' || line[4] == '\0')) {
             printf("%s\n", line[4] ? line + 5 : "");
             continue;
         }
         char *cmd = strtok(line, " ");
         if (!cmd) continue;
-        if (!strcmp(cmd, "ADD") || !strcmp(cmd, "MAX")) {
-            int add = !strcmp(cmd, "ADD"), bad = 0, c = 0; long r = 0;
+        if (!strcmp(cmd, "add") || !strcmp(cmd, "max")) {
+            int add = !strcmp(cmd, "add"), bad = 0, c = 0; long r = 0;
             for (char *w = strtok(NULL, " "); w; w = strtok(NULL, " ")) {
                 char *end; long n = strtol(w, &end, 10);
                 if (*end) { printf("Bad number: %s\n", w); bad = 1; break; }

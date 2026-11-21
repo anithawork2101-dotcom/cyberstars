@@ -103,7 +103,7 @@ Every hour, the tape room sends a short report to the shift chief. It says how m
 
 1. Read two whole numbers from input: the number of reels, then the temperature in degrees
 2. Print the first line with the number of reels. Write "reel" for exactly 1 reel and "reels" for any other number, 0 included
-3. Print the second line: "Room: HOT" when the temperature is over 30, "Room: OK" otherwise
+3. Print the second line: "Room: hot" when the temperature is over 30, "Room: OK" otherwise
 4. Choose both words with the ternary operator. Don't use if or switch in this program
 
 **Example**
@@ -118,7 +118,7 @@ Output
 
 ```text
 3 reels loaded
-Room: HOT
+Room: hot
 ```
 
 **Example**

@@ -117,7 +117,7 @@ Ieșire
 
 ```text
 Peste 30: 3
-Crescator: DA
+Crescator: da
 ```
 
 **Exemplu**
@@ -133,5 +133,5 @@ Ieșire
 
 ```text
 Peste 25: 3
-Crescator: NU
+Crescator: nu
 ```
