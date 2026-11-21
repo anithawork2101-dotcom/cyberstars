@@ -329,6 +329,11 @@ describe.skipIf(!has('python3'))('python runner', () => {
       'class Ship:\n    fleet: str\n',
     ],
     [
+      { kind: 'class_attribute', name: 'made' },
+      'class Robot:\n    try:\n        made = int("0")\n    except ValueError:\n        made = 0\n',
+      'class Robot:\n    def __init__(self):\n        if True:\n            made = 0\n',
+    ],
+    [
       { kind: 'variable', name: 'fleet' },
       'fleet = "Star Fleet"\n',
       'class Ship:\n    fleet = "Star Fleet"\n\nprint(Ship.fleet)\n',

@@ -1050,12 +1050,22 @@ def has_override(tree, name=None):
     return False
 
 
+def class_body_statements(node):
+    # The statements a class body runs itself, inside an if or a try too, but
+    # not those of its methods or of a class inside it.
+    for child in ast.iter_child_nodes(node):
+        if isinstance(child, ast.stmt):
+            yield child
+            if not isinstance(child, FUNCTION_NODES + (ast.ClassDef,)):
+                yield from class_body_statements(child)
+
+
 def has_class_attribute(tree, name=None):
     # A value set in the class body itself, outside its methods: shared by
     # every object made from it.
     # A bare annotation (fleet: str) sets nothing; a, b = 1, 2 sets both.
     for cls in (n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)):
-        for stmt in cls.body:
+        for stmt in class_body_statements(cls):
             if isinstance(stmt, ast.Assign):
                 targets = stmt.targets
             elif isinstance(stmt, (ast.AnnAssign, ast.AugAssign)) and stmt.value is not None:
