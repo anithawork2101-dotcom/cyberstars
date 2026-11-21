@@ -30,7 +30,8 @@ describe('userStats', () => {
     mockPrisma.user.count
       .mockResolvedValueOnce(10) // total
       .mockResolvedValueOnce(3) // newLast7Days
-      .mockResolvedValueOnce(6); // newLast30Days
+      .mockResolvedValueOnce(6) // newLast30Days
+      .mockResolvedValueOnce(2); // bots
     mockPrisma.user.groupBy.mockResolvedValueOnce([
       { role: 'ADMIN', _count: { _all: 1 } },
       { role: 'USER', _count: { _all: 8 } },
@@ -38,7 +39,8 @@ describe('userStats', () => {
     const result = await repo.userStats();
 
     expect(result.total).toBe(10);
-    expect(result.byRole).toEqual({ USER: 8, MODERATOR: 0, ADMIN: 1, FOUNDER: 0 });
+    expect(result.byRole).toEqual({ USER: 6, MODERATOR: 0, ADMIN: 1, FOUNDER: 0 });
+    expect(result.bots).toBe(2);
     expect(result.newLast7Days).toBe(3);
     expect(result.newLast30Days).toBe(6);
   });
@@ -118,16 +120,19 @@ describe('progressStats', () => {
 });
 
 describe('tutorStats', () => {
-  it('counts the messages sent to the tutor in the last 7 days', async () => {
+  it('counts the messages sent to the tutor in the last 7 and 30 days', async () => {
     vi.useFakeTimers({ now: new Date('2026-11-15T12:00:00Z') });
-    mockPrisma.tutorPrompt.count.mockResolvedValue(42);
+    mockPrisma.tutorPrompt.count.mockResolvedValueOnce(42).mockResolvedValueOnce(120);
 
     const result = await repo.tutorStats();
     vi.useRealTimers();
 
-    expect(result).toEqual({ promptsLast7Days: 42 });
+    expect(result).toEqual({ promptsLast7Days: 42, promptsLast30Days: 120 });
     expect(mockPrisma.tutorPrompt.count).toHaveBeenCalledWith({
       where: { createdAt: { gte: new Date('2026-11-08T12:00:00Z') } },
+    });
+    expect(mockPrisma.tutorPrompt.count).toHaveBeenCalledWith({
+      where: { createdAt: { gte: new Date('2026-10-16T12:00:00Z') } },
     });
   });
 });
